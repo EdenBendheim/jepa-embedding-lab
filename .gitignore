@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.env.*
+data/
+checkpoints/
+runs/
+build/
+dist/
+*.pt
+*.pth
+*.ckpt
+.DS_Store
