@@ -9,8 +9,12 @@ description = "Reproducible patch and masking foundations for a small JEPA exper
 requires-python = ">=3.11"
 dependencies = []
 
+[project.optional-dependencies]
+training = ["torch==2.8.0", "numpy>=1.26,<3"]
+
 [project.scripts]
 jepa-masks = "jepa_lab.demo:main"
+jepa-smoke = "jepa_lab.train:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

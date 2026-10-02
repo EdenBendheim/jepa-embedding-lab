@@ -17,5 +17,8 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: ${{ matrix.python-version }}
+      - run: python -m pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install -e '.[training]'
       - run: python -m unittest discover -s tests -v
       - run: python -m jepa_lab.demo --seed 29
+      - run: python -m jepa_lab.train --steps 3 --checkpoint /tmp/jepa-smoke.pt

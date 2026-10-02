@@ -1,6 +1,6 @@
 # Experiment plan
 
-Started September 29, 2026; begin the model implementation October 1. Image/geospatial scope is provisional until a dataset and downstream task are selected.
+Started September 29, 2026; model implementation completed its first working synthetic training/checkpoint milestone October 2. Image/geospatial scope is provisional until a dataset and downstream task are selected.
 
 ## Foundation
 
@@ -13,10 +13,10 @@ Started September 29, 2026; begin the model implementation October 1. Image/geos
 
 ## Compact model — begin October 1
 
-- [ ] Add PyTorch context encoder, stop-gradient target encoder, and predictor.
-- [ ] Implement EMA updates and checkpoint/config persistence.
-- [ ] Verify gradient boundaries, mask gather shapes, and EMA behavior.
-- [ ] Run a small smoke experiment; log embedding variance and training loss.
+- [x] Add PyTorch context encoder, stop-gradient target encoder, and predictor.
+- [x] Implement EMA updates and checkpoint/config persistence.
+- [x] Verify gradient boundaries, mask gather shapes, and EMA behavior.
+- [x] Run a small smoke experiment; log embedding variance and training loss.
 - [ ] Establish a frozen pretrained baseline appropriate to the selected modality.
 
 ## Custom embeddings and useful comparisons
@@ -29,4 +29,4 @@ Started September 29, 2026; begin the model implementation October 1. Image/geos
 
 ## Next session
 
-Choose the dataset/task and write the split manifest before training. On October 1, start a compact encoder/predictor implementation. Record actual experiments and checks in DEVLOG; measured results enter the résumé only after the experiments run.
+Select a small public dataset and downstream task, then write fixed splits/manifests before dataset training. Add its input adapter (including multiple channels if required), then evaluate frozen embeddings against an appropriate baseline. The current model runs on synthetic inputs only. Record actual experiments and checks in DEVLOG; measured quality results enter the résumé only after evaluation. The daily development run implements, checks, commits, and pushes an update; small useful steps are sufficient.
