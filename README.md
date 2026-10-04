@@ -2,11 +2,11 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 2, 2026:** patch preparation, reproducible masking, and a compact PyTorch JEPA model with EMA updates, synthetic CPU training, diagnostics, and resumable checkpoints work. Public-dataset training and downstream embedding evaluation remain pending. Synthetic smoke training does not establish useful learned representations.
+**Status — October 3, 2026:** patch preparation, reproducible masking, a compact PyTorch JEPA model with EMA updates, synthetic checkpoint resume, and an RGB CIFAR-10 input/split pipeline work. A three-step public-data CPU smoke run completed. A sustained public-data trainer, downstream embedding evaluation, and comparison results remain pending; smoke runs do not establish useful learned representations.
 
 ## Why this experiment
 
-I want to explore the relationship between the input representation, masking geometry, and what an embedding retains. Satellite/geospatial imagery is a candidate because it connects to my research, but the final dataset and downstream task are still open. The initial image adapter is intentionally small and uses only synthetic single-channel images.
+I want to explore the relationship between the input representation, masking geometry, and what an embedding retains. The first public experiment uses [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) and frozen-embedding image classification. Its small RGB images make bounded local iteration practical. Satellite/geospatial imagery remains a later direction because it connects to my research; no unreleased research data is used here.
 
 The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [official implementation](https://github.com/facebookresearch/ijepa). The current single-target-block sampler is a simplified experiment foundation, not a reproduction of the official multi-block training recipe.
 
@@ -18,6 +18,8 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
 - Reproducible CLI mask inspection and tests covering partition integrity, preserved pixels, invalid shapes, and random-seed isolation.
 - Context/target Transformer encoders and a masked-target predictor with learned patch positions. Context gathers visible raw patches before encoding; target encoding is frozen and uses no gradients.
 - EMA target updates, training loss plus embedding standard-deviation/covariance diagnostics, and CPU checkpoint resume including optimizer and random-generator state.
+- Official CIFAR-10 binary ingestion without pickle, a fixed RGB patch adapter, dataset fingerprints, and disjoint stratified train/validation indices while retaining the official test partition.
+- A bounded RGB training smoke command that validates its manifest, samples training images only, and records loss/variance diagnostics without claiming downstream accuracy.
 
 ## Run the mask demo
 
@@ -46,7 +48,26 @@ export PYTHONPATH=src
 
 The default model uses an 8x8 patch grid, four values per patch, width 32, two encoder blocks, and one predictor block. The CLI runs on CPU with one thread and locally generated spatial patterns. Every sample receives a deterministic mask. Checkpoints include model/configuration, optimizer, step count, and data/PyTorch RNG state; resume requires matching seed, batch size, learning rate, and momentum. `--steps` means additional steps. Tests compare a resumed run with an uninterrupted run in the same environment. Reproducibility across hardware or library versions is not guaranteed.
 
-Checkpoints and run metrics are ignored by Git. No weights or private research inputs are committed. Small synthetic loss changes and nonzero embedding variance are execution diagnostics, not evidence of downstream accuracy or immunity to collapse. Select a public dataset and fixed evaluation protocol before claiming representation quality.
+Checkpoints and run metrics are ignored by Git. No weights or private research inputs are committed. Small synthetic loss changes and nonzero embedding variance are execution diagnostics, not evidence of downstream accuracy or immunity to collapse. The public dataset/protocol below is selected; quality claims still require downstream evaluation.
+
+## Prepare the first public dataset
+
+Download the **binary version** from the [official CIFAR-10 page](https://www.cs.toronto.edu/~kriz/cifar.html). Its published archive MD5 is `c32a1d4ab5d03f1284b67883e8d87530`; verify the download and unpack it beneath ignored `data/`. Images are not redistributed in this repository. The loader requires the six official `.bin` files, validates record sizes/labels, and hashes their contents. No network request occurs inside the loader.
+
+```sh
+export PYTHONPATH=src
+.venv/bin/python -m jepa_lab.cifar10 data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json
+.venv/bin/python -m jepa_lab.cifar10_smoke data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --steps 3 \
+  --output runs/cifar10-adapter-smoke.json
+```
+
+The version-one protocol uses 45,000 official training images for JEPA/probe fitting, 5,000 for validation (500 per class), and all 10,000 official test images for final evaluation. SHA-256 ordering of original training indices with seed `20261003` makes the split independent of global RNG state or Python's shuffle implementation. The manifest preserves official split names, exact indices, batch hashes, transform configuration, and its own fingerprint. Training and test indices have separate namespaces; numeric overlap alone does not mean shared examples. The smoke command rebuilds the manifest from local files and rejects stale or edited splits.
+
+The adapter accepts uint8 NCHW RGB images and applies the fixed `x / 127.5 - 1` transform. A 32x32 image becomes an 8x8 grid of 4x4 RGB patches (`patch_dim=48`); patches follow row-major grid order with channel-major pixels. Class labels are used for stratification and future probe evaluation, not the JEPA training objective. The three-step smoke run uses only training images, one CPU thread, and no paid API. Its command is capped at 50 steps / batch size 32; it is not the resumable long-run trainer.
+
+See [the experiment protocol](experiments/CIFAR10.md) and [version-one provenance](experiments/cifar10-v1.json). Frozen-embedding extraction, probes, and baseline measurements are the next steps. No CIFAR-10 classification accuracy has been measured yet.
 
 ## Implemented model contract
 

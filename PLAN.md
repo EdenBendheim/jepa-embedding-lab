@@ -1,15 +1,17 @@
 # Experiment plan
 
-Started September 29, 2026; model implementation completed its first working synthetic training/checkpoint milestone October 2. Image/geospatial scope is provisional until a dataset and downstream task are selected.
+Started September 29, 2026; model implementation completed its first working synthetic training/checkpoint milestone October 2. CIFAR-10 RGB images and frozen-embedding classification were selected October 3 as the first public-data experiment. Geospatial experiments remain a later direction.
 
 ## Foundation
 
 - [x] Synthetic single-channel image patchification with shape and finite-value checks.
 - [x] Seeded target-block/context masking; target/context separation and index tests.
 - [x] CLI inspection of patch and mask contracts.
-- [ ] Select one small public dataset and a fixed downstream task.
-- [ ] Write train/evaluation manifests, with event-level splits if using fire data.
-- [ ] Add multi-channel input support if needed by the selected dataset.
+- [x] Select CIFAR-10 and frozen-embedding ten-class classification as the first public experiment.
+- [x] Write fixed train/validation/test manifests while preserving the official test partition.
+- [x] Add RGB input adaptation with tested channel/patch order and a fixed transform.
+- [x] Run a bounded public-data training smoke check using training images only.
+- [ ] Extend resumable training/checkpoints to public data, preserving manifest identity and sample RNG state.
 
 ## Compact model — begin October 1
 
@@ -29,4 +31,4 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-Select a small public dataset and downstream task, then write fixed splits/manifests before dataset training. Add its input adapter (including multiple channels if required), then evaluate frozen embeddings against an appropriate baseline. The current model runs on synthetic inputs only. Record actual experiments and checks in DEVLOG; measured quality results enter the résumé only after evaluation. The daily development run implements, checks, commits, and pushes an update; small useful steps are sufficient.
+Add a resumable CIFAR-10 training path that binds every checkpoint to the fixed data-manifest fingerprint and preserves sampling state. Add full-image frozen embeddings and a linear probe, with validation-only hyperparameter selection and raw-pixel/random-encoder baselines on the same splits. Run a bounded pilot before choosing a sustained compute budget, then add an appropriate pretrained comparison. Only the three-step real-data wiring check has run; downstream accuracy is still unmeasured. Record actual experiments and checks in DEVLOG; measured quality results enter the résumé only after evaluation. The daily development run implements, checks, commits, and pushes an update; small useful steps are sufficient.
