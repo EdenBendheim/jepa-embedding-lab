@@ -23,4 +23,6 @@ Full-image embedding extraction, linear-probe fitting, and these measurements ar
 
 ## Completed check
 
-October 3: verified the official archive, produced the version-one manifest, and ran three CPU JEPA updates from four RGB training images per step. The smoke command uses no held-out images and rejects an edited/stale manifest. These checks establish the data-to-model path; they do not provide classification accuracy or validate representation quality. Resumable public-data training remains separate work.
+October 3: verified the official archive, produced the version-one manifest, and ran three CPU JEPA updates from four RGB training images per step. The smoke command uses no held-out images and rejects an edited/stale manifest.
+
+October 4: implemented manifest-bound public-data checkpoints and ran 20 CPU steps (batch four), followed by three additional steps from the saved checkpoint. Unit tests compare continuous and resumed sampling, diagnostics, weights, optimizer, and RNG states. The manifest fingerprint is unchanged. Checkpoints save at successful invocation boundaries and require matching model/settings/PyTorch version/thread count. These checks establish training and resume behavior; they do not provide classification accuracy or validate representation quality.

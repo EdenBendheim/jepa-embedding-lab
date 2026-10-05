@@ -2,7 +2,7 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 3, 2026:** patch preparation, reproducible masking, a compact PyTorch JEPA model with EMA updates, synthetic checkpoint resume, and an RGB CIFAR-10 input/split pipeline work. A three-step public-data CPU smoke run completed. A sustained public-data trainer, downstream embedding evaluation, and comparison results remain pending; smoke runs do not establish useful learned representations.
+**Status — October 4, 2026:** patch preparation, reproducible masking, a compact PyTorch JEPA model with EMA updates, and an RGB CIFAR-10 input/split pipeline work. Public-data training now resumes from manifest-bound checkpoints; a 20-step CPU pilot resumed for three more steps. Sustained training, downstream embedding evaluation, and comparison results remain pending; bounded pilots do not establish useful learned representations.
 
 ## Why this experiment
 
@@ -20,6 +20,7 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
 - EMA target updates, training loss plus embedding standard-deviation/covariance diagnostics, and CPU checkpoint resume including optimizer and random-generator state.
 - Official CIFAR-10 binary ingestion without pickle, a fixed RGB patch adapter, dataset fingerprints, and disjoint stratified train/validation indices while retaining the official test partition.
 - A bounded RGB training smoke command that validates its manifest, samples training images only, and records loss/variance diagnostics without claiming downstream accuracy.
+- A resumable public-data CPU trainer with atomic checkpoints, matching manifest/model/settings/runtime checks, optimizer and sampling/PyTorch RNG restoration, and split-versus-continuous reproducibility checks.
 
 ## Run the mask demo
 
@@ -67,7 +68,26 @@ The version-one protocol uses 45,000 official training images for JEPA/probe fit
 
 The adapter accepts uint8 NCHW RGB images and applies the fixed `x / 127.5 - 1` transform. A 32x32 image becomes an 8x8 grid of 4x4 RGB patches (`patch_dim=48`); patches follow row-major grid order with channel-major pixels. Class labels are used for stratification and future probe evaluation, not the JEPA training objective. The three-step smoke run uses only training images, one CPU thread, and no paid API. Its command is capped at 50 steps / batch size 32; it is not the resumable long-run trainer.
 
-See [the experiment protocol](experiments/CIFAR10.md) and [version-one provenance](experiments/cifar10-v1.json). Frozen-embedding extraction, probes, and baseline measurements are the next steps. No CIFAR-10 classification accuracy has been measured yet.
+See [the experiment protocol](experiments/CIFAR10.md) and [version-one provenance](experiments/cifar10-v1.json). No CIFAR-10 classification accuracy has been measured yet.
+
+## Resume a public-data training pilot
+
+```sh
+export PYTHONPATH=src
+.venv/bin/python -m jepa_lab.cifar10_train data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --steps 20 \
+  --checkpoint checkpoints/cifar10-pilot.pt --output runs/cifar10-pilot.json
+.venv/bin/python -m jepa_lab.cifar10_train data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --steps 3 \
+  --resume checkpoints/cifar10-pilot.pt --checkpoint checkpoints/cifar10-pilot.pt \
+  --output runs/cifar10-pilot-resumed.json
+```
+
+`--steps` is the number of **additional** optimizer steps, capped at 1,000 per invocation with batch size 1–32. Defaults are batch four, learning rate 0.001, EMA momentum 0.99, the manifest seed, and one CPU thread. This is a bounded local trainer, with no download, API request, paid compute, or automatic prolonged run. Reports record the start/completed step counts, exact sampled training indices, loss, gradient norm, and embedding variance/covariance for that invocation.
+
+Checkpoint version one binds state to the verified manifest fingerprint, model configuration, seed, batch size, learning rate, momentum, PyTorch version, and CPU thread count. Resume rejects mismatches before sampling. Model, optimizer, sample RNG, and PyTorch RNG are restored; mask seeds advance from the saved global step. Tests require a resumed run to match uninterrupted diagnostics, weights, optimizer, and RNG state in the same environment. This does not guarantee identical results across platforms or library versions; incompatible recorded runtimes are rejected.
+
+Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen full-image embeddings, validation-tuned probes, and raw-pixel/random-encoder/pretrained comparisons remain the next milestone.
 
 ## Implemented model contract
 

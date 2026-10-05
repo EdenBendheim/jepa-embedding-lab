@@ -11,7 +11,8 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Write fixed train/validation/test manifests while preserving the official test partition.
 - [x] Add RGB input adaptation with tested channel/patch order and a fixed transform.
 - [x] Run a bounded public-data training smoke check using training images only.
-- [ ] Extend resumable training/checkpoints to public data, preserving manifest identity and sample RNG state.
+- [x] Extend resumable training/checkpoints to public data, preserving manifest identity and sample RNG state.
+- [x] Run a bounded public-data pilot and resume it while preserving training state.
 
 ## Compact model — begin October 1
 
@@ -31,4 +32,4 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-Add a resumable CIFAR-10 training path that binds every checkpoint to the fixed data-manifest fingerprint and preserves sampling state. Add full-image frozen embeddings and a linear probe, with validation-only hyperparameter selection and raw-pixel/random-encoder baselines on the same splits. Run a bounded pilot before choosing a sustained compute budget, then add an appropriate pretrained comparison. Only the three-step real-data wiring check has run; downstream accuracy is still unmeasured. Record actual experiments and checks in DEVLOG; measured quality results enter the résumé only after evaluation. The daily development run implements, checks, commits, and pushes an update; small useful steps are sufficient.
+Add full-image frozen embeddings and a linear probe, with validation-only hyperparameter selection and raw-pixel/random-encoder baselines on the same splits. The resumable public-data trainer passed a 20+3-step real-image pilot; choose a bounded sustained training budget after the evaluation pipeline works, then add an appropriate pretrained comparison. Downstream accuracy is still unmeasured. Checkpoints are saved at successful invocation boundaries; periodic interruption recovery can be added if longer runs need it. Record actual experiments and checks in DEVLOG; measured quality results enter the résumé only after evaluation. The daily development run implements, checks, commits, and pushes an update; small useful steps are sufficient.

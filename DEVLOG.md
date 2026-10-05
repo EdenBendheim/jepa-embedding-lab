@@ -1,5 +1,14 @@
 # Development log
 
+## October 4, 2026
+
+- Added bounded, resumable CIFAR-10 CPU training with manifest/model/settings/runtime identity checks. Checkpoints preserve the model, optimizer, global step, sampling RNG, and PyTorch RNG; deterministic mask seeds continue from the restored step. Labels are never used in the JEPA objective and only the fixed training partition is sampled.
+- Added atomic checkpoint replacement and clear additional-step semantics, gradient norms, and loss/embedding diagnostics. Failed saves preserve the previous checkpoint. Saving is at invocation boundaries; interrupted unsaved steps are not recovered.
+- Verification: 23 unit tests passed. Split-versus-continuous training matched diagnostics, all model/optimizer tensors, and both RNG states exactly in the same CPU environment. Mismatched splits, settings, model, runtime, missing state, and edited manifests were rejected before image sampling; a simulated disk error preserved the old checkpoint and cleaned its temporary file.
+- Ran a real-image CPU pilot for 20 steps (batch four), then resumed the checkpoint for three additional steps. All losses/gradient norms were finite. Manifest hash remains `0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44`. Data, model artifacts, and metrics stay in ignored local directories; no paid API/cloud compute was used.
+- Interview explanation: "I made real-data JEPA runs reproducibly resumable and tied each checkpoint to the exact data split, so an experiment cannot silently resume against different examples or training settings."
+- Still pending: frozen full-image embeddings, probes, sustained training, and raw-pixel/random-encoder/pretrained comparisons. The pilot verifies training and recovery, not downstream accuracy or useful representations.
+
 ## October 3, 2026
 
 - Selected official CIFAR-10 RGB images and frozen-embedding ten-class classification as the first public experiment. Downloaded the binary archive locally and verified its published MD5 before extracting the six expected files into ignored `data/`.
