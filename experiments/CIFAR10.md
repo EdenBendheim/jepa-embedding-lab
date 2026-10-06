@@ -19,10 +19,20 @@ The downstream task is ten-class classification from a frozen, full-image embedd
 
 The primary metric will be top-1 classification accuracy, with per-class outcomes and failure examples. Compare learned JEPA embeddings against a frozen random encoder of the same architecture and a raw-pixel linear classifier. Use identical probe-fitting data, validation selection, and evaluation examples. Add an appropriate pretrained visual encoder as a separate external-pretraining baseline, documenting its source/pretraining data and input adaptation.
 
-Full-image embedding extraction, linear-probe fitting, and these measurements are not implemented yet. Select a bounded pilot budget before sustained training; retain shared step/image budgets, seeds and settings for later ablations. Report training cost and embedding variance/covariance alongside downstream results. Lower JEPA loss alone does not establish better embeddings.
+Full-image embedding extraction and baseline feature representations are implemented; linear-probe fitting and quality measurements are not. Select a bounded pilot budget before sustained training; retain shared step/image budgets, seeds and settings for later ablations. Report training cost and embedding variance/covariance alongside downstream results. Lower JEPA loss alone does not establish better embeddings.
+
+## Frozen representation contract
+
+- Context or target encoder receives all 64 RGB patches; mean-pool the final patch-token embeddings. Do not run the masked predictor for full-image evaluation.
+- Disable gradients and keep checkpoint weights fixed. Record encoder choice, pooling, architecture, training step/settings, and a hash of the exact checkpoint bytes loaded.
+- A seeded random encoder of the same architecture and flattened normalized NCHW pixels supply baseline features. They use the same selected indices and labels as checkpoint features; no normalization statistics are fitted.
+- Feature artifacts preserve manifest fingerprint, official split namespace, exact indices, feature hash, configuration, and extraction settings. Labels are only for future classification probes.
+- The current CLI extracts the first 1–1,000 fixed partition indices for bounded wiring checks. These subsets are not guaranteed class-balanced. Use a shared balanced pilot manifest or the complete protocol before reporting a downstream comparison; do not silently compare different subsets/architectures.
 
 ## Completed check
 
 October 3: verified the official archive, produced the version-one manifest, and ran three CPU JEPA updates from four RGB training images per step. The smoke command uses no held-out images and rejects an edited/stale manifest.
 
 October 4: implemented manifest-bound public-data checkpoints and ran 20 CPU steps (batch four), followed by three additional steps from the saved checkpoint. Unit tests compare continuous and resumed sampling, diagnostics, weights, optimizer, and RNG states. The manifest fingerprint is unchanged. Checkpoints save at successful invocation boundaries and require matching model/settings/PyTorch version/thread count. These checks establish training and resume behavior; they do not provide classification accuracy or validate representation quality.
+
+October 5: extracted checkpoint/random-encoder/pixel features on the same 64 real training examples, and checkpoint features on 64 validation examples. Features were finite and artifacts retain exact example/weight identity. No classifier was fitted or test score measured; representation quality remains unmeasured.

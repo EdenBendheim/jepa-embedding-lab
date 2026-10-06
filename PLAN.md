@@ -24,6 +24,9 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Custom embeddings and useful comparisons
 
+- [x] Extract frozen full-image context/target embeddings with a documented pooling rule.
+- [x] Add seeded random-encoder and raw-pixel feature representations on identical fixed examples.
+- [x] Persist features/labels with exact partition indices, manifest/checkpoint identity, and configuration.
 - [ ] Compare two or three embedding widths and position/input-feature choices.
 - [ ] Hold the data split, downstream task, training budget, and evaluation code fixed.
 - [ ] Fit a linear probe or small task head to frozen representations.
@@ -32,4 +35,4 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-Add full-image frozen embeddings and a linear probe, with validation-only hyperparameter selection and raw-pixel/random-encoder baselines on the same splits. The resumable public-data trainer passed a 20+3-step real-image pilot; choose a bounded sustained training budget after the evaluation pipeline works, then add an appropriate pretrained comparison. Downstream accuracy is still unmeasured. Checkpoints are saved at successful invocation boundaries; periodic interruption recovery can be added if longer runs need it. Record actual experiments and checks in DEVLOG; measured quality results enter the résumé only after evaluation. The daily development run implements, checks, commits, and pushes an update; small useful steps are sufficient.
+Add a linear-probe evaluation path over the frozen feature artifacts, validating partition identity and fitting on training examples only. Choose hyperparameters using validation, compare raw-pixel/random-encoder/checkpoint representations on the same selected examples, and reserve test for final reporting. The feature extractor currently handles bounded first-index subsets, not the full 45k/5k protocol; add a shared balanced pilot-selection manifest or full extraction before making quality comparisons. Then choose a bounded sustained training budget and an appropriate pretrained comparison. Downstream accuracy is still unmeasured. Record actual experiments and checks in DEVLOG; measured quality results enter the résumé only after evaluation. The daily development run implements, checks, commits, and pushes an update; small useful steps are sufficient.

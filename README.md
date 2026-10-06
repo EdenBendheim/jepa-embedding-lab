@@ -2,7 +2,7 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 4, 2026:** patch preparation, reproducible masking, a compact PyTorch JEPA model with EMA updates, and an RGB CIFAR-10 input/split pipeline work. Public-data training now resumes from manifest-bound checkpoints; a 20-step CPU pilot resumed for three more steps. Sustained training, downstream embedding evaluation, and comparison results remain pending; bounded pilots do not establish useful learned representations.
+**Status — October 5, 2026:** the compact JEPA model, EMA updates, fixed CIFAR-10 input/splits, and resumable public-data training work. Frozen full-image features, seeded random-encoder features, and raw-pixel baseline features now extract on matching examples. A 20+3-step training pilot and bounded real-image feature checks completed. Probe fitting, sustained training, and classification comparison results remain pending; execution checks do not establish useful learned representations.
 
 ## Why this experiment
 
@@ -21,6 +21,7 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
 - Official CIFAR-10 binary ingestion without pickle, a fixed RGB patch adapter, dataset fingerprints, and disjoint stratified train/validation indices while retaining the official test partition.
 - A bounded RGB training smoke command that validates its manifest, samples training images only, and records loss/variance diagnostics without claiming downstream accuracy.
 - A resumable public-data CPU trainer with atomic checkpoints, matching manifest/model/settings/runtime checks, optimizer and sampling/PyTorch RNG restoration, and split-versus-continuous reproducibility checks.
+- Frozen context/target full-image embeddings with mean pooling across all 64 patches, seeded random-encoder and raw-pixel feature baselines, and atomic feature artifacts bound to exact example indices, data identity, and checkpoint bytes.
 
 ## Run the mask demo
 
@@ -87,7 +88,28 @@ export PYTHONPATH=src
 
 Checkpoint version one binds state to the verified manifest fingerprint, model configuration, seed, batch size, learning rate, momentum, PyTorch version, and CPU thread count. Resume rejects mismatches before sampling. Model, optimizer, sample RNG, and PyTorch RNG are restored; mask seeds advance from the saved global step. Tests require a resumed run to match uninterrupted diagnostics, weights, optimizer, and RNG state in the same environment. This does not guarantee identical results across platforms or library versions; incompatible recorded runtimes are rejected.
 
-Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen full-image embeddings, validation-tuned probes, and raw-pixel/random-encoder/pretrained comparisons remain the next milestone.
+Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen feature extraction below works; validation-tuned probes and measured raw-pixel/random-encoder/pretrained comparisons remain the next milestone.
+
+## Extract frozen image features and baseline features
+
+```sh
+export PYTHONPATH=src
+.venv/bin/python -m jepa_lab.embeddings data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --checkpoint checkpoints/cifar10-pilot.pt \
+  --partition train --limit 64 --output runs/features-checkpoint-train.pt
+.venv/bin/python -m jepa_lab.embeddings data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --representation random --seed 29 \
+  --partition train --limit 64 --output runs/features-random-train.pt
+.venv/bin/python -m jepa_lab.embeddings data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --representation pixels \
+  --partition train --limit 64 --output runs/features-pixels-train.pt
+```
+
+The context encoder is the default; `--encoder target` extracts from the EMA teacher. Both process all 64 patches without a mask or predictor, then mean-pool token embeddings. Inference disables gradients and leaves weights unchanged; the API restores the model's prior training mode. Random baseline initialization preserves the caller's CPU RNG and records its seed/architecture. The current default random architecture matches the 32-dimensional pilot. For other model configurations, pass the matching `ModelConfig` to the extraction API before comparing; a future comparison runner should enforce architecture equality.
+
+Raw-pixel features flatten NCHW values using the same fixed `x / 127.5 - 1` scaling, producing 3,072 dimensions. Labels accompany feature artifacts for future probes but do not enter an encoder. Every representation uses the same first `--limit` indices from the selected fixed partition (default 64, cap 1,000, batch size 1–32). These bounded subsets are not guaranteed class-balanced and are not the complete experiment. Validation uses original training-file indices; test indices remain in the official test namespace. Extraction never fits normalization or a classifier on held-out examples.
+
+Each local `.pt` artifact contains features, labels, exact indices/namespace, manifest identity, pooling/scaling/configuration, extraction settings, and a feature fingerprint. Checkpoint extraction also records the training step/settings and the SHA-256 of the exact bytes loaded. Mismatched manifests/checkpoints fail before image sampling or output replacement. Features and raw-pixel artifacts remain in ignored `runs/`; do not redistribute the images or commit artifacts. Reports contain metadata/diagnostics, not feature arrays. The real-image check extracted the same 64 training images in all three representations and another 64 validation images from the checkpoint, with finite features throughout. No probe or classification accuracy has been measured.
 
 ## Implemented model contract
 

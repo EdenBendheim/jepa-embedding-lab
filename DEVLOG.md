@@ -1,5 +1,14 @@
 # Development log
 
+## October 5, 2026
+
+- Implemented frozen context/target full-image embeddings: fixed RGB patches, all 64 positions, mean pooling, inference without gradients, and restoration of caller model mode. Added seeded random-encoder and normalized NCHW raw-pixel feature baselines.
+- Added bounded extraction from fixed train/validation/test namespaces and atomic local feature artifacts containing labels, exact indices, manifest identity, configuration/scaling/pooling, extraction settings, and feature hashes. Checkpoint provenance hashes the exact bytes loaded; invalid data/checkpoint identity is rejected before sampling. Random model construction preserves caller CPU RNG.
+- Verification: 30 unit tests passed, covering pooling against direct full-position encoding, unchanged weights/gradients, restored modes on failure, seeded baselines/RNG isolation, exact example/label/namespace identity, repeatable artifacts, mismatched data/checkpoints, invalid bounds, and non-finite encoders.
+- Real CIFAR-10 check: extracted the same 64 training examples using the 23-step checkpoint (32 dimensions), a matching random encoder (32), and raw pixels (3,072), plus 64 validation examples from the checkpoint via the CLI. All features were finite. Manifest hash remains `0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44`. Artifacts/metrics remain local and ignored; no paid compute or research data was used.
+- Interview explanation: "I separated representation learning from evaluation and made checkpoint, random-encoder, and pixel features traceable to the same examples, so the next probe compares representations fairly."
+- Still pending: linear probes, balanced pilot/full-split extraction, validation-only model selection, sustained training, pretrained comparisons, and any classification-quality result. The first-index feature checks are execution checks, not class-balanced benchmarks or measured representation quality.
+
 ## October 4, 2026
 
 - Added bounded, resumable CIFAR-10 CPU training with manifest/model/settings/runtime identity checks. Checkpoints preserve the model, optimizer, global step, sampling RNG, and PyTorch RNG; deterministic mask seeds continue from the restored step. Labels are never used in the JEPA objective and only the fixed training partition is sampled.
