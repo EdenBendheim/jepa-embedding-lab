@@ -12,6 +12,7 @@ import torch
 from .cifar10 import CIFAR10Binary, make_manifest, patchify_rgb
 from .cifar10_train import atomic_checkpoint
 from .model import JEPA, ModelConfig
+from .selection import validate_pilot
 
 
 def rgb_config(config: ModelConfig):
@@ -88,10 +89,14 @@ def load_encoder(checkpoint: str | Path, manifest_sha256: str) -> tuple[JEPA, di
 
 def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: str = "train",
                     representation: str = "checkpoint", checkpoint: str | Path | None = None,
-                    encoder: str = "context", seed: int = 29, limit: int = 64, batch_size: int = 16,
+                    encoder: str = "context", seed: int = 29, limit: int | None = None, batch_size: int = 16,
+                    selection_path: str | Path | None = None,
                     config: ModelConfig | None = None, output: str | Path | None = None) -> dict:
     if partition not in ("train", "validation", "test") or representation not in ("checkpoint", "random", "pixels"):
         raise ValueError("Choose a fixed partition and checkpoint/random/pixels representation")
+    if selection_path is not None and (limit is not None or partition == "test"):
+        raise ValueError("Balanced pilot extraction uses all selected train/validation indices; no limit or test")
+    limit = 64 if limit is None else limit
     if type(limit) is not int or not 1 <= limit <= 1000 or type(batch_size) is not int or not 1 <= batch_size <= 32:
         raise ValueError("Bounded extraction allows 1-1000 images and batch size 1-32")
     if encoder not in ("context", "target"):
@@ -104,6 +109,7 @@ def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: s
     train, test = CIFAR10Binary(root), CIFAR10Binary(root, train=False)
     if manifest != make_manifest(train, test, seed=manifest["seed"]):
         raise ValueError("Manifest does not match current data or the fixed split protocol")
+    selection = validate_pilot(json.loads(Path(selection_path).read_text()), manifest, train.labels) if selection_path else None
     metadata = dict(representation=representation, pooling="mean of all 64 patch tokens" if representation != "pixels"
                     else "flatten NCHW RGB values", normalization="x / 127.5 - 1")
     model = None
@@ -115,7 +121,7 @@ def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: s
         model = random_encoder(config, seed)
         metadata |= dict(encoder=encoder, seed=seed, config=asdict(config))
     selected = manifest["partitions"][partition]
-    indices = selected["indices"][:limit]
+    indices = selection["partitions"][partition]["indices"] if selection else selected["indices"][:limit]
     dataset = train if selected["official_split"] == "train" else test
     features, labels = [], []
     for start in range(0, len(indices), batch_size):
@@ -129,7 +135,8 @@ def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: s
     identity = dict(format_version=1, dataset="CIFAR-10", manifest_sha256=manifest["manifest_sha256"],
                     partition=partition, official_split=selected["official_split"], indices=indices,
                     feature_metadata=metadata, features_sha256=fingerprint,
-                    extraction_settings=dict(limit=limit, batch_size=batch_size),
+                    selection_sha256=selection["selection_sha256"] if selection else None,
+                    extraction_settings=dict(limit=len(indices), batch_size=batch_size),
                     runtime=dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()))
     if output:
         atomic_checkpoint(Path(output), identity | dict(features=values, labels=torch.tensor(labels, dtype=torch.long)))
@@ -147,7 +154,8 @@ def main():
     parser.add_argument("--checkpoint", type=Path)
     parser.add_argument("--encoder", choices=("context", "target"), default="context")
     parser.add_argument("--seed", type=int, default=29, help="Random-encoder seed")
-    parser.add_argument("--limit", type=int, default=64, help="First N fixed partition indices; 1-1000")
+    parser.add_argument("--limit", type=int, help="First N fixed indices (default 64); cannot combine with --selection")
+    parser.add_argument("--selection", type=Path, help="Shared balanced pilot manifest; extracts its full selected partition")
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--output", type=Path, required=True, help="Local feature artifact; use ignored runs/ and .pt")
     args = parser.parse_args()
@@ -155,7 +163,7 @@ def main():
     try:
         report = extract_cifar10(args.root, args.manifest, partition=args.partition, representation=args.representation,
                                 checkpoint=args.checkpoint, encoder=args.encoder, seed=args.seed, limit=args.limit,
-                                batch_size=args.batch_size, output=args.output)
+                                batch_size=args.batch_size, selection_path=args.selection, output=args.output)
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.error(str(exc))
     print(json.dumps(report, indent=2))

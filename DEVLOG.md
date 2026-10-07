@@ -1,5 +1,11 @@
 # Development log
 
+## October 7, 2026
+
+- Added a manifest-bound balanced pilot selector: deterministic per-class ordering within fixed train/validation partitions, exact indices, per-class counts and a fingerprint. Integrated full-selected-subset extraction; combining a pilot with test or a truncating limit is rejected before sampling.
+- Verification for this step: three new synthetic tests passed for balance/disjointness/reproducibility/RNG isolation, malformed or edited selections, and exact extraction/no-test boundaries. Created the real local 100-train/50-validation selection after rebuilding the dataset manifest; image/model artifacts remain ignored.
+- Interview explanation: "I fixed the same balanced examples for every representation, so a pilot comparison cannot silently change class mix or cross a data split."
+
 ## October 5, 2026
 
 - Implemented frozen context/target full-image embeddings: fixed RGB patches, all 64 positions, mean pooling, inference without gradients, and restoration of caller model mode. Added seeded random-encoder and normalized NCHW raw-pixel feature baselines.
