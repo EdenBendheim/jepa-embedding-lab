@@ -2,6 +2,12 @@
 
 ## October 7, 2026
 
+- Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.
+- Final verification: all 43 tests passed locally. New end-to-end tests cover fixture extraction/verification/comparison, reuse without image reads, fairness failures before fitting, and report-write rollback. Real local CPU pilot: 100 training/50 validation examples, 23-step checkpoint, eight shared 200-step probe candidates; selected validation accuracy checkpoint 24% (12/50), random 30% (15/50), pixels 28% (14/50). No test features or scores, paid API/cloud, private/research data, or public weight/image artifacts.
+- An initial LR 0.01/0.05, decay 0.01 grid exposed pixel overfitting (100% train, 20% validation, cross-entropy 102.4547); expanded the same grid for all representations. Scores are exploratory validation selection, not independent confirmation. The checkpoint has not demonstrated an advantage. Manifest is unchanged; selection hash cddc893ced41a1a7421977f78f929eec98e04f0bfa0ce39e29da5cf4902ab85b.
+- Interview explanation: "I separated frozen representation evaluation from encoder training, matched the examples and architecture across baselines, and found that the early checkpoint still trails a random encoder on the exploratory pilot."
+- Still pending: larger fixed pilots, stronger regularized baselines, multiple seeds, sustained JEPA training, pretrained comparison, probe-state persistence, and final official test evaluation.
+
 - Implemented detached, bounded full-batch AdamW linear probes with training-only mean/std, near-constant-column handling, repeatable seeded initialization, weight-only decay, and preserved caller RNG. Added validation-only setting selection with fixed seed/budget, accuracy/cross-entropy, per-class counts and confusion matrices.
 - Verification for this step: four new synthetic tests passed: ten-class separable features classify correctly, repeated fits match, changing validation values leaves fitted normalization/weights unchanged, source gradients/values are untouched, and malformed inputs or unequal candidate budgets fail.
 

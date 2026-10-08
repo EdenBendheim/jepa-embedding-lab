@@ -111,17 +111,24 @@ def fit_probe(features: torch.Tensor, labels: torch.Tensor, config: ProbeConfig 
     return LinearProbe(mean, scale, constant, weight, bias, config)
 
 
-def select_probe(train: torch.Tensor, train_labels: torch.Tensor, validation: torch.Tensor,
-                 validation_labels: torch.Tensor, candidates: tuple[ProbeConfig, ...]) -> tuple[LinearProbe, dict]:
-    _values(train)
-    _labels(train_labels, train.shape[0], all_classes=True)
-    _values(validation, train.shape[1])
-    _labels(validation_labels, validation.shape[0])
+def validate_probe_data(features: torch.Tensor, labels: torch.Tensor, *, dimension=None, fitting=False):
+    _values(features, dimension)
+    _labels(labels, features.shape[0], all_classes=fitting)
+
+
+def validate_candidates(candidates):
     if (not isinstance(candidates, (tuple, list)) or not 1 <= len(candidates) <= 8
             or any(not isinstance(config, ProbeConfig) for config in candidates)
             or len(set(candidates)) != len(candidates)
             or len({(config.seed, config.steps) for config in candidates}) != 1):
         raise ValueError("Use 1-8 distinct candidates with the same seed and step budget")
+
+
+def select_probe(train: torch.Tensor, train_labels: torch.Tensor, validation: torch.Tensor,
+                 validation_labels: torch.Tensor, candidates: tuple[ProbeConfig, ...]) -> tuple[LinearProbe, dict]:
+    validate_probe_data(train, train_labels, fitting=True)
+    validate_probe_data(validation, validation_labels, dimension=train.shape[1])
+    validate_candidates(candidates)
     probes, results = [], []
     for index, config in enumerate(candidates):
         probe = fit_probe(train, train_labels, config)
