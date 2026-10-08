@@ -140,3 +140,12 @@ export PYTHONPATH=src
 The pilot uses deterministic within-class SHA-256 ordering inside the already locked train/validation partitions. Defaults select 100 training and 50 validation examples, balanced across all ten classes. The selection records exact indices, seed, per-class counts and a fingerprint bound to the full dataset manifest. It never includes test. Counts are bounded at 100 per class.
 
 All feature representations can pass the same `--selection`; extraction rebuilds it against current labels and data identity before sampling. It uses the complete selected partition and rejects `--limit` or test extraction with a pilot selection. The earlier first-index wiring-check path remains available without `--selection`. Balanced pilot results will describe this small subset only; probe evaluation is still pending.
+
+## Verify a feature artifact before evaluation
+
+```sh
+.venv/bin/python -m jepa_lab.features data/cifar-10-batches-bin runs/pilot-pixels-train.pt \
+  --manifest runs/cifar10-manifest.json --selection runs/pilot-selection.json --partition train
+```
+
+The loader uses `weights_only=True` on bounded local files and verifies exact selection/manifest identity, train/validation namespace, indices, official labels, feature shape/dtype/finiteness/content hash, normalization, encoder architecture, checkpoint/random provenance, and recorded PyTorch runtime. Reports omit arrays and retain the hash of the exact artifact bytes loaded. A checksum checks consistency; it does not authenticate the producer or prove that an encoder was trained well. Use artifacts generated locally by the extraction command. Test artifacts are excluded from this pilot evaluation loader.

@@ -2,6 +2,9 @@
 
 ## October 7, 2026
 
+- Added a reusable feature-artifact verifier and metadata-only inspection CLI. It checks exact balanced selection/namespace/labels, finite frozen float32 rows, recorded content hashes, normalization/pooling/architecture, checkpoint/random provenance, and runtime; test artifacts are excluded. File hashes bind reports to the actual loaded bytes without claiming producer authenticity.
+- Verification for this step: three new tests passed for round-trip rows/file identity, array-copy isolation, wrong labels/indices/splits, edited features, incompatible metadata/runtime, and corrupted file rejection.
+
 - Added a manifest-bound balanced pilot selector: deterministic per-class ordering within fixed train/validation partitions, exact indices, per-class counts and a fingerprint. Integrated full-selected-subset extraction; combining a pilot with test or a truncating limit is rejected before sampling.
 - Verification for this step: three new synthetic tests passed for balance/disjointness/reproducibility/RNG isolation, malformed or edited selections, and exact extraction/no-test boundaries. Created the real local 100-train/50-validation selection after rebuilding the dataset manifest; image/model artifacts remain ignored.
 - Interview explanation: "I fixed the same balanced examples for every representation, so a pilot comparison cannot silently change class mix or cross a data split."

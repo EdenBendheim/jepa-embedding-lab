@@ -26,6 +26,7 @@ Started September 29, 2026; model implementation completed its first working syn
 
 - [x] Extract frozen full-image context/target embeddings with a documented pooling rule.
 - [x] Add seeded random-encoder and raw-pixel feature representations on identical fixed examples.
+- [x] Verify feature artifacts against selected examples/labels, numerical integrity, architecture, and weight/runtime provenance before evaluation.
 - [x] Add a shared class-balanced pilot manifest and exact-subset feature extraction without test selection.
 - [x] Persist features/labels with exact partition indices, manifest/checkpoint identity, and configuration.
 - [ ] Compare two or three embedding widths and position/input-feature choices.
