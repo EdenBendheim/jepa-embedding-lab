@@ -2,6 +2,9 @@
 
 ## October 7, 2026
 
+- Implemented detached, bounded full-batch AdamW linear probes with training-only mean/std, near-constant-column handling, repeatable seeded initialization, weight-only decay, and preserved caller RNG. Added validation-only setting selection with fixed seed/budget, accuracy/cross-entropy, per-class counts and confusion matrices.
+- Verification for this step: four new synthetic tests passed: ten-class separable features classify correctly, repeated fits match, changing validation values leaves fitted normalization/weights unchanged, source gradients/values are untouched, and malformed inputs or unequal candidate budgets fail.
+
 - Added a reusable feature-artifact verifier and metadata-only inspection CLI. It checks exact balanced selection/namespace/labels, finite frozen float32 rows, recorded content hashes, normalization/pooling/architecture, checkpoint/random provenance, and runtime; test artifacts are excluded. File hashes bind reports to the actual loaded bytes without claiming producer authenticity.
 - Verification for this step: three new tests passed for round-trip rows/file identity, array-copy isolation, wrong labels/indices/splits, edited features, incompatible metadata/runtime, and corrupted file rejection.
 

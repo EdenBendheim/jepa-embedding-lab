@@ -31,7 +31,8 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Persist features/labels with exact partition indices, manifest/checkpoint identity, and configuration.
 - [ ] Compare two or three embedding widths and position/input-feature choices.
 - [ ] Hold the data split, downstream task, training budget, and evaluation code fixed.
-- [ ] Fit a linear probe or small task head to frozen representations.
+- [x] Fit bounded linear probes with training-only normalization and validation-only hyperparameter selection.
+- [ ] Run the fair real-image checkpoint/random/pixel comparison and report its pilot limitations.
 - [ ] Run multiple seeds where compute allows; report uncertainty and collapse/failure cases.
 - [ ] Publish configurations, provenance, plots, a results table, and a small embedding explorer.
 

@@ -149,3 +149,9 @@ All feature representations can pass the same `--selection`; extraction rebuilds
 ```
 
 The loader uses `weights_only=True` on bounded local files and verifies exact selection/manifest identity, train/validation namespace, indices, official labels, feature shape/dtype/finiteness/content hash, normalization, encoder architecture, checkpoint/random provenance, and recorded PyTorch runtime. Reports omit arrays and retain the hash of the exact artifact bytes loaded. A checksum checks consistency; it does not authenticate the producer or prove that an encoder was trained well. Use artifacts generated locally by the extraction command. Test artifacts are excluded from this pilot evaluation loader.
+
+## Fit and select a frozen linear probe
+
+`fit_probe(train_features, train_labels, ProbeConfig(...))` fits a ten-class, full-batch AdamW linear classifier on detached CPU feature copies. It learns population mean/std from training rows only; dimensions with std below `1e-6` use scale one. Weight decay applies to classifier weights, not its bias. Source encoder features and caller RNG remain unchanged. Runs allow 1–1,000 steps on at most 1,000x4,096 features.
+
+`select_probe(train_features, train_labels, validation_features, validation_labels, candidates)` considers up to eight distinct learning-rate/weight-decay settings with the same seed and step budget. Selection uses highest validation accuracy, then lowest cross-entropy, then declared order. Reports include counts, per-class outcomes, a confusion matrix, and normalization/optimizer rules. No test input enters fitting or selection. Same-environment reproducibility is tested; real-image comparison and multi-seed uncertainty follow this implementation.
