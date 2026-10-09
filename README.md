@@ -190,3 +190,9 @@ Use the `selected_probe_artifact.path` recorded by the comparison report as the 
 ```
 
 Replace `STATE_HASH` with the actual report path. The command verifies current dataset identity, both feature artifacts, and the saved classifier before reproducing train/validation scores. It neither refits nor samples raw images nor evaluates the official test partition. This is a reproducibility check on the original validation result, not new evaluation evidence.
+
+## Regularized ridge baseline
+
+`fit_ridge(features, labels, RidgeConfig(alpha))` fits ten one-hot targets using training-only normalization and a closed-form float64 ridge solve. The objective is mean squared error plus `alpha * ||W||²`; the intercept is unpenalized. It uses a smaller row-space dual solve for high-dimensional pixel features and a column-space primal solve for narrow embeddings. Returned frozen coefficients are float32 and use the same bounded inputs/score contract as AdamW probes.
+
+`select_ridge(train, train_labels, validation, validation_labels, alphas)` selects up to eight distinct positive penalties on validation accuracy, then MSE, then declared order. It never fits statistics/coefficients on validation. Scores are linear least-squares outputs, not calibrated probabilities. Saved-probe persistence also supports ridge state. This provides a regularized alternative for the overfitting pixel baseline; an actual matched comparison is still needed.

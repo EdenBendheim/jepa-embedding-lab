@@ -69,3 +69,5 @@
 - Integrated selected-probe persistence into the matched comparison API/CLI. Reports record content-addressed classifier files and source/state hashes. Existing identical states are verified/reused; earlier classifiers survive subsequent runs. Synthetic checks reproduce each saved score and verify an identical rerun retains the same bytes/paths.
 
 - Added a saved-probe scoring API/CLI that revalidates data, selection, feature artifacts and classifier identity, then reproduces scores without refitting or sampling raw images. A complete synthetic pipeline test checks identical recorded validation outcomes, no image reads/refitting, and rejection of edited labels before scoring.
+
+- Added a training-only normalized multiclass ridge baseline with unpenalized intercept, bounded alpha selection, and smaller primal/dual float64 solves. Fitted ridge classifiers can use the same atomic artifact/recheck path. Synthetic tests check shrinkage, caller RNG/gradient isolation, validation independence, primal/dual equivalence, selection metrics, invalid settings, and artifact score round trips.

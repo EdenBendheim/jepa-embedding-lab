@@ -13,6 +13,8 @@ from .cifar10_train import atomic_checkpoint
 from .features import FeatureSet, _sha
 from .probes import LinearProbe, ProbeConfig, validate_probe_data
 
+from .ridge import RidgeProbe, RidgeConfig
+
 STATE_FIELDS = ("mean", "scale", "constant_columns", "weight", "bias")
 
 
@@ -62,7 +64,7 @@ def state_fingerprint(state: dict, config: dict, context: dict) -> str:
 
 
 def save_probe(path: str | Path, probe: LinearProbe, train: FeatureSet, validation: FeatureSet) -> dict:
-    if not isinstance(probe, LinearProbe) or not isinstance(probe.config, ProbeConfig):
+    if not isinstance(probe, LinearProbe) or not isinstance(probe.config, (ProbeConfig, RidgeConfig)):
         raise ValueError("Save a fitted linear probe with a validated configuration")
     context = probe_context(train, validation)
     state = {name: getattr(probe, name).detach().clone() for name in STATE_FIELDS}
@@ -70,7 +72,8 @@ def save_probe(path: str | Path, probe: LinearProbe, train: FeatureSet, validati
     config = asdict(probe.config)
     scores = dict(training=probe.score(train.features, train.labels),
                   validation=probe.score(validation.features, validation.labels))
-    saved = dict(format_version=1, kind="CIFAR-10 fitted linear probe", context=context, config=config,
+    saved = dict(format_version=1, kind="CIFAR-10 fitted ridge probe" if isinstance(probe, RidgeProbe) else "CIFAR-10 fitted linear probe",
+                 context=context, config=config,
                  state=state, state_sha256=state_fingerprint(state, config, context), scores=scores,
                  runtime=dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()), test_evaluated=False)
     atomic_checkpoint(Path(path), saved)
@@ -88,18 +91,19 @@ def load_probe(path: str | Path, train: FeatureSet, validation: FeatureSet) -> t
     except (ValueError, RuntimeError, EOFError, pickle.UnpicklingError) as exc:
         raise ValueError("Invalid local fitted probe artifact") from exc
     if (not isinstance(saved, dict) or type(saved.get("format_version")) is not int or saved["format_version"] != 1
-            or saved.get("kind") != "CIFAR-10 fitted linear probe" or saved.get("context") != context
+            or saved.get("kind") not in ("CIFAR-10 fitted linear probe", "CIFAR-10 fitted ridge probe") or saved.get("context") != context
             or saved.get("runtime") != dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()) or saved.get("test_evaluated") is not False):
         raise ValueError("Probe artifact identity, sources, runtime, or evaluation boundary differ")
     state, config = saved.get("state"), saved.get("config")
     validate_probe_state(state, context["feature_dim"])
     try:
-        settings = ProbeConfig(**config)
+        settings = (RidgeConfig if saved["kind"] == "CIFAR-10 fitted ridge probe" else ProbeConfig)(**config)
     except (TypeError, ValueError) as exc:
         raise ValueError("Invalid saved probe configuration") from exc
     if saved.get("state_sha256") != state_fingerprint(state, asdict(settings), context):
         raise ValueError("Probe state fingerprint differs from the saved artifact")
-    probe = LinearProbe(*(state[name].clone() for name in STATE_FIELDS), settings)
+    probe_class = RidgeProbe if isinstance(settings, RidgeConfig) else LinearProbe
+    probe = probe_class(*(state[name].clone() for name in STATE_FIELDS), settings)
     scores = dict(training=probe.score(train.features, train.labels),
                   validation=probe.score(validation.features, validation.labels))
     if saved.get("scores") != scores:
