@@ -175,3 +175,18 @@ See [the October 7 results and failure analysis](experiments/PILOT-2026-10-07.md
 ## Persist a fitted linear probe
 
 `jepa_lab.probe_artifacts.save_probe(path, probe, train, validation)` saves a fitted classifier and its training-only normalization atomically. `load_probe(path, train, validation)` restores it using CPU `weights_only=True`, checks the exact source-artifact/manifest/selection identities, tensor dimensions/dtypes/finiteness, positive normalization scales, configuration and runtime, and reproduces its saved train/validation scores. A failed replacement preserves the previous file. Checksums detect inconsistency, not producer authenticity; use locally generated artifacts. Probe files stay in ignored `runs/` or `checkpoints/`. Test evaluation remains reserved. The matched comparison CLI accepts `--probe-dir` to persist selected probes after all six feature artifacts pass verification and fairness checks.
+
+## Recheck a saved classifier without refitting
+
+Use the `selected_probe_artifact.path` recorded by the comparison report as the probe argument:
+
+```sh
+.venv/bin/python -m jepa_lab.probe_score data/cifar-10-batches-bin \
+  runs/pilot-probes/checkpoint-STATE_HASH.pt \
+  --manifest runs/cifar10-manifest.json --selection runs/pilot-selection.json \
+  --train-features runs/pilot-features/checkpoint-train.pt \
+  --validation-features runs/pilot-features/checkpoint-validation.pt \
+  --output runs/rechecked-probe.json
+```
+
+Replace `STATE_HASH` with the actual report path. The command verifies current dataset identity, both feature artifacts, and the saved classifier before reproducing train/validation scores. It neither refits nor samples raw images nor evaluates the official test partition. This is a reproducibility check on the original validation result, not new evaluation evidence.
