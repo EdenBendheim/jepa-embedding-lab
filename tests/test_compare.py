@@ -14,6 +14,7 @@ from jepa_lab.embeddings import random_encoder
 from jepa_lab.features import FeatureSet
 from jepa_lab.model import ModelConfig
 from jepa_lab.probes import ProbeConfig
+from jepa_lab.probe_artifacts import load_probe
 from jepa_lab.selection import make_pilot
 from test_embeddings import Fixture
 
@@ -61,6 +62,21 @@ class ComparisonTests(unittest.TestCase):
             data["random"] = (train,validation)
             with self.subTest(change=change),patch("jepa_lab.compare.select_probe",side_effect=AssertionError("fit ran")),self.assertRaises(ValueError):
                 compare_features(data,(ProbeConfig(steps=2),))
+
+    def test_selected_probes_persist_reproduce_and_reuse_without_replacing_prior_files(self):
+        data = sets()
+        with tempfile.TemporaryDirectory() as directory:
+            first = compare_features(data, (ProbeConfig(steps=3),), probe_dir=Path(directory))
+            before = {p.name: p.read_bytes() for p in Path(directory).glob("*.pt")}
+            second = compare_features(data, (ProbeConfig(steps=3),), probe_dir=Path(directory))
+            self.assertEqual(before, {p.name: p.read_bytes() for p in Path(directory).glob("*.pt")})
+            self.assertEqual(3, len(before))
+            for name, result in first["representations"].items():
+                artifact = result["selected_probe_artifact"]
+                probe, summary = load_probe(artifact["path"], *data[name])
+                self.assertEqual(result["validation"], probe.score(data[name][1].features, data[name][1].labels))
+                self.assertEqual(artifact, second["representations"][name]["selected_probe_artifact"])
+                self.assertEqual(artifact["artifact_sha256"], summary["artifact_sha256"])
 
     def test_complete_fixture_extraction_verification_comparison_and_atomic_report(self):
         with tempfile.TemporaryDirectory() as directory:

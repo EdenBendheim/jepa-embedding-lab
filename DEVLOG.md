@@ -65,3 +65,5 @@
 ## October 9, 2026
 
 - Added atomic fitted-linear-probe persistence, tied to the exact verified training/validation feature artifacts. Loading validates state/configuration/runtime/fingerprints and reproduces recorded scores; it never refits or evaluates test. Round-trip checks cover restored scores/weights, caller RNG, tensor copy isolation, altered inputs/state/schema/runtime, corrupt files, and failed-save rollback. Runner integration remains next.
+
+- Integrated selected-probe persistence into the matched comparison API/CLI. Reports record content-addressed classifier files and source/state hashes. Existing identical states are verified/reused; earlier classifiers survive subsequent runs. Synthetic checks reproduce each saved score and verify an identical rerun retains the same bytes/paths.

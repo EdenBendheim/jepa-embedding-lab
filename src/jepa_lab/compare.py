@@ -15,13 +15,15 @@ from .embeddings import extract_cifar10, load_encoder
 from .features import FeatureSet, load_features
 from .model import ModelConfig
 from .probes import ProbeConfig, select_probe, validate_candidates, validate_probe_data
+from .probe_artifacts import STATE_FIELDS, load_probe, probe_context, save_probe, state_fingerprint
 from .selection import validate_pilot
 
 
 REPRESENTATIONS = ("checkpoint", "random", "pixels")
 
 
-def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates: tuple[ProbeConfig, ...]) -> dict:
+def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates: tuple[ProbeConfig, ...], *,
+                     probe_dir: Path | None = None) -> dict:
     validate_candidates(candidates)
     if set(sets) != set(REPRESENTATIONS):
         raise ValueError("A fair pilot requires checkpoint, random, and pixel representations")
@@ -61,12 +63,25 @@ def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates:
     for name in REPRESENTATIONS:
         train, validation = sets[name]
         start = perf_counter()
-        _, result = select_probe(train.features, train.labels, validation.features, validation.labels, candidates)
+        probe, result = select_probe(train.features, train.labels, validation.features, validation.labels, candidates)
         selected = result["candidates"][result["selected_candidate"]]
+        artifact = None
+        if probe_dir is not None:
+            state = {field: getattr(probe, field) for field in STATE_FIELDS}
+            fingerprint = state_fingerprint(state, asdict(probe.config), probe_context(train, validation))
+            path = Path(probe_dir) / f"{name}-{fingerprint}.pt"
+            # Content-addressed names preserve files referenced by earlier reports.
+            if path.exists():
+                _, artifact = load_probe(path, train, validation)
+                if artifact["state_sha256"] != fingerprint:
+                    raise ValueError("Existing content-addressed probe differs from selected state")
+            else:
+                artifact = save_probe(path, probe, train, validation)
+            artifact = dict(path=str(path), **artifact)
         reports[name] = dict(train_artifact=train.summary(), validation_artifact=validation.summary(),
                             probe_selection=result, selected_config=selected["config"],
                             training=selected["training"], validation=selected["validation"],
-                            fitting_and_scoring_seconds=perf_counter()-start)
+                            fitting_and_scoring_seconds=perf_counter()-start, selected_probe_artifact=artifact)
     return dict(version=1, task="Frozen ten-class CIFAR-10 pilot classification",
                 manifest_sha256=reference[0].manifest_sha256, selection_sha256=reference[0].selection_sha256,
                 counts=dict(train=len(reference[0].indices),validation=len(reference[1].indices)),
@@ -78,7 +93,7 @@ def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates:
 
 def run_comparison(root: Path, manifest_path: Path, selection_path: Path, feature_dir: Path, *,
                    candidates: tuple[ProbeConfig, ...], checkpoint: Path | None = None,
-                   encoder: str = "context", random_seed: int = 29) -> dict:
+                   encoder: str = "context", random_seed: int = 29, probe_dir: Path | None = None) -> dict:
     validate_candidates(candidates)
     train, test = CIFAR10Binary(root), CIFAR10Binary(root,train=False)
     manifest = json.loads(Path(manifest_path).read_text())
@@ -99,7 +114,7 @@ def run_comparison(root: Path, manifest_path: Path, selection_path: Path, featur
                         selection=selection,training_labels=train.labels,partition=partition)
                        for partition in ("train","validation")) for name in REPRESENTATIONS}
     # All six artifacts pass identity/fairness checks before any classifier is fitted.
-    return compare_features(sets,candidates)
+    return compare_features(sets,candidates,probe_dir=probe_dir)
 
 
 def write_report(path: Path, report: dict):
@@ -120,6 +135,7 @@ def main():
     parser.add_argument("--manifest",type=Path,required=True)
     parser.add_argument("--selection",type=Path,required=True)
     parser.add_argument("--feature-dir",type=Path,required=True,help="Ignored local directory for six .pt feature artifacts")
+    parser.add_argument("--probe-dir",type=Path,help="Save selected fitted probes in an ignored local directory")
     parser.add_argument("--checkpoint",type=Path,help="Extract fresh matched features; omit to verify/reuse existing artifacts")
     parser.add_argument("--encoder",choices=("context","target"),default="context")
     parser.add_argument("--random-seed",type=int,default=29)
@@ -134,7 +150,7 @@ def main():
         candidates = tuple(ProbeConfig(args.steps,lr,wd,args.probe_seed)
                            for lr in args.learning_rates for wd in args.weight_decays)
         report = run_comparison(args.root,args.manifest,args.selection,args.feature_dir,candidates=candidates,
-                                 checkpoint=args.checkpoint,encoder=args.encoder,random_seed=args.random_seed)
+                                 checkpoint=args.checkpoint,encoder=args.encoder,random_seed=args.random_seed,probe_dir=args.probe_dir)
         write_report(args.output,report)
     except (ValueError,OSError,KeyError,TypeError,RuntimeError) as exc:
         parser.error(str(exc))
