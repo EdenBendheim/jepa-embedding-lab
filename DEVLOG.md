@@ -61,3 +61,7 @@
 - Added tests for target/context separation, complete grid coverage, input validation, pixel preservation, and seed isolation.
 - Model training and custom learned embeddings remain future work, beginning October 1.
 - Verification: six unit tests passed; the seeded CLI demo generated 64 patches, 45 context patches, and four target patches. Added GitHub Actions checks for Python 3.11 and 3.13.
+
+## October 9, 2026
+
+- Added atomic fitted-linear-probe persistence, tied to the exact verified training/validation feature artifacts. Loading validates state/configuration/runtime/fingerprints and reproduces recorded scores; it never refits or evaluates test. Round-trip checks cover restored scores/weights, caller RNG, tensor copy isolation, altered inputs/state/schema/runtime, corrupt files, and failed-save rollback. Runner integration remains next.
