@@ -2,7 +2,7 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 7, 2026:** compact JEPA/EMA, fixed CIFAR-10 splits, resumable training, frozen feature extraction, shared balanced pilot selection, verified artifacts, and validation-selected linear probes work. A matched 100-training/50-validation pilot measured 24% checkpoint, 30% random-encoder, and 28% pixel accuracy. The checkpoint has only 23 training steps; these small exploratory validation scores do not establish improved learned representations. Official test evaluation, sustained training, multiple seeds, and pretrained comparisons remain pending.
+**Status — October 9, 2026:** compact JEPA/EMA, fixed CIFAR-10 splits, resumable training, verified frozen features, matched AdamW/ridge probes, classifier-seed sensitivity, and saved-classifier rechecks work. The predeclared 500-training/200-validation pilot used a 223-step checkpoint: AdamW means were 24.83% checkpoint, 24.00% random, and 28.00% pixels; ridge scored 27.0%, 24.5%, and 30.0%. These validation-selected scores do not establish learned-feature improvement. Independent encoder-training seeds, pretrained comparisons, sustained training and final official test evaluation remain pending. See [the October 9 results](experiments/PILOT-2026-10-09.md).
 
 ## Why this experiment
 
@@ -105,7 +105,7 @@ export PYTHONPATH=src
   --partition train --limit 64 --output runs/features-pixels-train.pt
 ```
 
-The context encoder is the default; `--encoder target` extracts from the EMA teacher. Both process all 64 patches without a mask or predictor, then mean-pool token embeddings. Inference disables gradients and leaves weights unchanged; the API restores the model's prior training mode. Random baseline initialization preserves the caller's CPU RNG and records its seed/architecture. The current default random architecture matches the 32-dimensional pilot. For other model configurations, pass the matching `ModelConfig` to the extraction API before comparing; a future comparison runner should enforce architecture equality.
+The context encoder is the default; `--encoder target` extracts from the EMA teacher. Both process all 64 patches without a mask or predictor, then mean-pool token embeddings. Inference disables gradients and leaves weights unchanged; the API restores the model's prior training mode. Random baseline initialization preserves the caller's CPU RNG and records its seed/architecture. The current default random architecture matches the 32-dimensional pilot. For other model configurations, pass the matching `ModelConfig` to the extraction API before comparing; the matched comparison runner enforces architecture equality.
 
 Raw-pixel features flatten NCHW values using the same fixed `x / 127.5 - 1` scaling, producing 3,072 dimensions. Labels accompany feature artifacts for classification probes but do not enter an encoder. Every representation uses the same first `--limit` indices from the selected fixed partition (default 64, cap 1,000, batch size 1–32). These bounded subsets are not guaranteed class-balanced and are not the complete experiment. Validation uses original training-file indices; test indices remain in the official test namespace. Extraction never fits normalization or a classifier on held-out examples.
 

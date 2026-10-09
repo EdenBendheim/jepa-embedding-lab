@@ -32,11 +32,15 @@ Started September 29, 2026; model implementation completed its first working syn
 - [ ] Compare two or three embedding widths and position/input-feature choices.
 - [ ] Hold the data split, downstream task, training budget, and evaluation code fixed.
 - [x] Persist selected probe weights/normalization with source identity and reproduced scores.
+- [x] Add a matched regularized ridge head and a larger predeclared pilot.
 - [x] Fit bounded linear probes with training-only normalization and validation-only hyperparameter selection.
 - [x] Run a matched real-image checkpoint/random/pixel comparison and report its exploratory pilot limitations.
-- [ ] Run multiple seeds where compute allows; report uncertainty and collapse/failure cases.
+- [x] Repeat classifier initialization on matched frozen features and label the limited uncertainty scope.
+- [ ] Repeat encoder-training/random-encoder seeds; report uncertainty and collapse/failure cases.
 - [ ] Publish configurations, provenance, plots, a results table, and a small embedding explorer.
 
 ## Next session
 
-The balanced 100-train/50-validation pilot now supports verified frozen artifacts, matched architectures/examples, training-only normalization, common probe grids/budgets, and validation-only selection. Its 23-step checkpoint scored 24%, random encoder 30%, and pixels 28%; this small exploratory result does not establish learned-feature improvement. Next: predeclare a larger balanced selection and regularization grid, run a bounded longer JEPA training budget on training data only, compare several seeds/checkpoints with the same downstream protocol, and diagnose pixel overfitting. Keep test reserved for a final fixed evaluation. Add an appropriate pretrained comparison before full evaluation; selected probe state can now be persisted. Sustained quality results enter the résumé only when supported. Record actual work/checks in DEVLOG; small coherent daily steps are sufficient.
+The October 9 predeclared 500/200 pilot advanced the model to 223 steps and compared three AdamW classifier seeds plus deterministic ridge probes. AdamW means: checkpoint 24.83%, random 24.00%, pixels 28.00%; ridge: 27.0%, 24.5%, 30.0%. All twelve selected classifiers reproduce their saved scores. These remain validation-selected results from one learned encoder and one random encoder, not learned-feature improvement or test accuracy.
+
+Next: predeclare a controlled 23-step versus longer-checkpoint comparison on the same examples/head grids, then repeat encoder training and random initialization seeds. Investigate class-specific errors and pooling/masking. Add an appropriate frozen pretrained comparison before final test evaluation. Keep source/image/model artifacts ignored and record actual checks in DEVLOG. Résumé quality claims require stronger evidence.
