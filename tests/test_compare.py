@@ -9,7 +9,7 @@ from unittest.mock import patch
 import torch
 
 from jepa_lab.cifar10 import make_manifest
-from jepa_lab.compare import compare_features, run_comparison, write_report
+from jepa_lab.compare import compare_features, compare_repeated_features, run_comparison, write_report
 from jepa_lab.embeddings import random_encoder
 from jepa_lab.features import FeatureSet
 from jepa_lab.model import ModelConfig
@@ -77,6 +77,34 @@ class ComparisonTests(unittest.TestCase):
                 self.assertEqual(result["validation"], probe.score(data[name][1].features, data[name][1].labels))
                 self.assertEqual(artifact, second["representations"][name]["selected_probe_artifact"])
                 self.assertEqual(artifact["artifact_sha256"], summary["artifact_sha256"])
+
+    def test_repeated_probe_seeds_share_inputs_grid_and_deterministic_ridge_baseline(self):
+        data = sets()
+        rng = torch.get_rng_state().clone()
+        configs = (ProbeConfig(steps=3, learning_rate=0.01), ProbeConfig(steps=3, learning_rate=0.1))
+        with tempfile.TemporaryDirectory() as directory:
+            result = compare_repeated_features(data, configs, [29, 31], ridge_alphas=[0.1, 1], probe_dir=Path(directory))
+            self.assertEqual([29, 31], result["seeds"])
+            self.assertEqual(dict(train=10, validation=10), result["counts"])
+            self.assertFalse(result["test_evaluated"])
+            self.assertTrue(torch.equal(rng, torch.get_rng_state()))
+            for name in data:
+                values = [run["representations"][name]["validation"]["accuracy"] for run in result["runs"]]
+                self.assertEqual(sum(values)/2, result["summary"][name]["mean_accuracy"])
+                ridge = result["ridge_baseline"][name]
+                self.assertEqual(1.0, ridge["validation"]["accuracy"])
+                self.assertEqual(ridge["validation"], load_probe(ridge["selected_probe_artifact"]["path"], *data[name])[1]["scores"]["validation"])
+            for seed, run in zip(result["seeds"], result["runs"]):
+                self.assertEqual({seed}, {item["seed"] for item in run["candidate_grid"]})
+                self.assertEqual(2, len(run["candidate_grid"]))
+                for name in data:
+                    self.assertEqual("c"*64, run["representations"][name]["train_artifact"]["artifact_sha256"])
+            self.assertEqual(9, len(list(Path(directory).glob("**/*.pt"))))
+        for seeds in ([], [29, 29], [True], [-1], list(range(6))):
+            with patch("jepa_lab.compare.select_probe", side_effect=AssertionError("fit ran")), self.assertRaises(ValueError):
+                compare_repeated_features(data, configs, seeds)
+        with patch("jepa_lab.compare.select_probe", side_effect=AssertionError("fit ran")), self.assertRaises(ValueError):
+            compare_repeated_features(data, configs, [29, 31], ridge_alphas=[0])
 
     def test_complete_fixture_extraction_verification_comparison_and_atomic_report(self):
         with tempfile.TemporaryDirectory() as directory:

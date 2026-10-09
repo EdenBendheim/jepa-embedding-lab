@@ -42,6 +42,15 @@ class RidgeTests(unittest.TestCase):
         torch.testing.assert_close(probe.weight, expected.T.float())
         torch.testing.assert_close(probe.bias, (prior - center @ expected).float())
 
+    def test_numerical_overflow_is_rejected_in_fit_and_scoring(self):
+        labels = torch.arange(10).repeat(2)
+        values = torch.full((20, 2), torch.finfo(torch.float32).max)
+        values[:19] *= -1
+        with self.assertRaises(ValueError): fit_ridge(values, labels)
+        values, labels = synthetic()
+        probe = fit_ridge(values, labels)
+        with self.assertRaises(ValueError): probe.score(values * 1e30, labels)
+
     def test_selection_validation_metrics_invalid_candidates_and_artifact_round_trip(self):
         train, validation = sources()
         probe, report = select_ridge(train.features, train.labels, validation.features, validation.labels, [0.1, 1, 10])

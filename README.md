@@ -196,3 +196,9 @@ Replace `STATE_HASH` with the actual report path. The command verifies current d
 `fit_ridge(features, labels, RidgeConfig(alpha))` fits ten one-hot targets using training-only normalization and a closed-form float64 ridge solve. The objective is mean squared error plus `alpha * ||W||²`; the intercept is unpenalized. It uses a smaller row-space dual solve for high-dimensional pixel features and a column-space primal solve for narrow embeddings. Returned frozen coefficients are float32 and use the same bounded inputs/score contract as AdamW probes.
 
 `select_ridge(train, train_labels, validation, validation_labels, alphas)` selects up to eight distinct positive penalties on validation accuracy, then MSE, then declared order. It never fits statistics/coefficients on validation. Scores are linear least-squares outputs, not calibrated probabilities. Saved-probe persistence also supports ridge state. This provides a regularized alternative for the overfitting pixel baseline; an actual matched comparison is still needed.
+
+## Repeat probe initialization and compare a ridge baseline
+
+The comparison CLI accepts mutually exclusive `--probe-seed 29` or `--probe-seeds 29 31 37`. It verifies the same frozen features once, gives every representation the identical grid/step budget for each classifier seed, and retains all per-seed selections plus mean/sample standard deviation. `--ridge-alphas 0.01 0.1 1 10` adds a matched deterministic ridge comparison, fitted once per representation and stored separately. `--probe-dir` also persists selected ridge classifiers. Invalid/duplicate seeds or penalties fail before fitting.
+
+This measures classifier-initialization sensitivity only. It does not vary encoder training, random encoder initialization, pilot examples or data splits, and its validation-selected scores are not test results or independent confirmation. See the [predeclared October 9 larger pilot](experiments/PILOT-2026-10-09-PROTOCOL.md).

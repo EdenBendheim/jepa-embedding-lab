@@ -1,7 +1,8 @@
 """Matched-data, validation-selected checkpoint/random/pixel pilot comparisons."""
 
 import argparse
-from dataclasses import asdict
+from dataclasses import asdict, replace
+from statistics import mean, stdev
 import json
 import os
 from pathlib import Path
@@ -17,13 +18,13 @@ from .model import ModelConfig
 from .probes import ProbeConfig, select_probe, validate_candidates, validate_probe_data
 from .probe_artifacts import STATE_FIELDS, load_probe, probe_context, save_probe, state_fingerprint
 from .selection import validate_pilot
+from .ridge import select_ridge, validate_ridge_candidates
 
 
 REPRESENTATIONS = ("checkpoint", "random", "pixels")
 
 
-def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates: tuple[ProbeConfig, ...], *,
-                     probe_dir: Path | None = None) -> dict:
+def validate_comparison_inputs(sets, candidates):
     validate_candidates(candidates)
     if set(sets) != set(REPRESENTATIONS):
         raise ValueError("A fair pilot requires checkpoint, random, and pixel representations")
@@ -59,33 +60,84 @@ def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates:
             or sets["random"][0].features.shape[1] != reference[0].features.shape[1]
             or learned.get("encoder") != random.get("encoder") or learned.get("pooling") != random.get("pooling")):
         raise ValueError("The random baseline must match checkpoint architecture, encoder choice, and pooling")
+    return reference
+
+
+def persist_selected_probe(probe, train, validation, name, directory):
+    if directory is None:
+        return None
+    state = {field: getattr(probe, field) for field in STATE_FIELDS}
+    fingerprint = state_fingerprint(state, asdict(probe.config), probe_context(train, validation))
+    path = Path(directory) / f"{name}-{fingerprint}.pt"
+    if path.exists():
+        _, artifact = load_probe(path, train, validation)
+        if artifact["state_sha256"] != fingerprint:
+            raise ValueError("Existing content-addressed probe differs from selected state")
+    else:
+        artifact = save_probe(path, probe, train, validation)
+    return dict(path=str(path), **artifact)
+
+
+def validate_probe_seeds(seeds):
+    if (not isinstance(seeds, (list, tuple)) or not 1 <= len(seeds) <= 5
+            or any(type(seed) is not int or not 0 <= seed < 2**63 for seed in seeds)
+            or len(set(seeds)) != len(seeds)):
+        raise ValueError("Use 1-5 distinct probe initialization seeds in [0, 2**63)")
+
+
+def compare_repeated_features(sets, candidates, seeds, *, probe_dir=None, ridge_alphas=None):
+    validate_probe_seeds(seeds)
+    reference = validate_comparison_inputs(sets, candidates)
+    if ridge_alphas is not None:
+        validate_ridge_candidates(ridge_alphas)
+    runs = [compare_features(sets, tuple(replace(config, seed=seed) for config in candidates),
+                             probe_dir=Path(probe_dir)/f"seed-{seed}" if probe_dir is not None else None,
+                             ridge_alphas=ridge_alphas if index == 0 else None)
+            for index, seed in enumerate(seeds)]
+    summary = {}
+    for name in REPRESENTATIONS:
+        values = [run["representations"][name]["validation"]["accuracy"] for run in runs]
+        summary[name] = dict(validation_accuracies=values, mean_accuracy=mean(values),
+                             sample_standard_deviation=stdev(values) if len(values) > 1 else 0.0)
+    return dict(version=1, task="Probe-initialization sensitivity on identical frozen features", seeds=list(seeds),
+                manifest_sha256=reference[0].manifest_sha256, selection_sha256=reference[0].selection_sha256,
+                counts=runs[0]["counts"], runs=runs, summary=summary,
+                ridge_baseline={name:runs[0]["representations"][name]["ridge"] for name in REPRESENTATIONS}
+                               if ridge_alphas is not None else None,
+                test_evaluated=False,
+                limitation="Variation across probe initialization only: encoder, data, splits and validation tuning are shared; not independent training seeds or test uncertainty")
+
+
+def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates: tuple[ProbeConfig, ...], *,
+                     probe_dir: Path | None = None, ridge_alphas=None) -> dict:
+    reference = validate_comparison_inputs(sets, candidates)
+    if ridge_alphas is not None:
+        validate_ridge_candidates(ridge_alphas)
     reports = {}
     for name in REPRESENTATIONS:
         train, validation = sets[name]
         start = perf_counter()
         probe, result = select_probe(train.features, train.labels, validation.features, validation.labels, candidates)
         selected = result["candidates"][result["selected_candidate"]]
-        artifact = None
-        if probe_dir is not None:
-            state = {field: getattr(probe, field) for field in STATE_FIELDS}
-            fingerprint = state_fingerprint(state, asdict(probe.config), probe_context(train, validation))
-            path = Path(probe_dir) / f"{name}-{fingerprint}.pt"
-            # Content-addressed names preserve files referenced by earlier reports.
-            if path.exists():
-                _, artifact = load_probe(path, train, validation)
-                if artifact["state_sha256"] != fingerprint:
-                    raise ValueError("Existing content-addressed probe differs from selected state")
-            else:
-                artifact = save_probe(path, probe, train, validation)
-            artifact = dict(path=str(path), **artifact)
+        artifact = persist_selected_probe(probe, train, validation, name, probe_dir)
         reports[name] = dict(train_artifact=train.summary(), validation_artifact=validation.summary(),
                             probe_selection=result, selected_config=selected["config"],
                             training=selected["training"], validation=selected["validation"],
                             fitting_and_scoring_seconds=perf_counter()-start, selected_probe_artifact=artifact)
+    if ridge_alphas is not None:
+        for name in REPRESENTATIONS:
+            train, validation = sets[name]
+            start = perf_counter()
+            probe, selection = select_ridge(train.features, train.labels, validation.features, validation.labels, ridge_alphas)
+            chosen = selection["candidates"][selection["selected_candidate"]]
+            reports[name]["ridge"] = dict(probe_selection=selection, selected_config=chosen["config"],
+                training=chosen["training"], validation=chosen["validation"],
+                fitting_and_scoring_seconds=perf_counter()-start,
+                selected_probe_artifact=persist_selected_probe(probe, train, validation, name+"-ridge", probe_dir))
     return dict(version=1, task="Frozen ten-class CIFAR-10 pilot classification",
                 manifest_sha256=reference[0].manifest_sha256, selection_sha256=reference[0].selection_sha256,
                 counts=dict(train=len(reference[0].indices),validation=len(reference[1].indices)),
-                candidate_grid=[asdict(config) for config in candidates], representations=reports,
+                candidate_grid=[asdict(config) for config in candidates], ridge_alpha_grid=ridge_alphas, representations=reports,
                 runtime=dict(torch=str(torch.__version__),cpu_threads=torch.get_num_threads()),
                 test_evaluated=False,
                 limitation="Small single-seed validation-selected pilot; not official test accuracy, independent confirmation, or a full-training result")
@@ -93,8 +145,13 @@ def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates:
 
 def run_comparison(root: Path, manifest_path: Path, selection_path: Path, feature_dir: Path, *,
                    candidates: tuple[ProbeConfig, ...], checkpoint: Path | None = None,
-                   encoder: str = "context", random_seed: int = 29, probe_dir: Path | None = None) -> dict:
+                   encoder: str = "context", random_seed: int = 29, probe_dir: Path | None = None,
+                   probe_seeds=None, ridge_alphas=None) -> dict:
     validate_candidates(candidates)
+    if probe_seeds is not None:
+        validate_probe_seeds(probe_seeds)
+    if ridge_alphas is not None:
+        validate_ridge_candidates(ridge_alphas)
     train, test = CIFAR10Binary(root), CIFAR10Binary(root,train=False)
     manifest = json.loads(Path(manifest_path).read_text())
     if manifest != make_manifest(train,test,seed=manifest["seed"]):
@@ -114,7 +171,9 @@ def run_comparison(root: Path, manifest_path: Path, selection_path: Path, featur
                         selection=selection,training_labels=train.labels,partition=partition)
                        for partition in ("train","validation")) for name in REPRESENTATIONS}
     # All six artifacts pass identity/fairness checks before any classifier is fitted.
-    return compare_features(sets,candidates,probe_dir=probe_dir)
+    if probe_seeds is not None:
+        return compare_repeated_features(sets, candidates, probe_seeds, probe_dir=probe_dir, ridge_alphas=ridge_alphas)
+    return compare_features(sets,candidates,probe_dir=probe_dir,ridge_alphas=ridge_alphas)
 
 
 def write_report(path: Path, report: dict):
@@ -139,7 +198,10 @@ def main():
     parser.add_argument("--checkpoint",type=Path,help="Extract fresh matched features; omit to verify/reuse existing artifacts")
     parser.add_argument("--encoder",choices=("context","target"),default="context")
     parser.add_argument("--random-seed",type=int,default=29)
-    parser.add_argument("--probe-seed",type=int,default=29)
+    seeds = parser.add_mutually_exclusive_group()
+    seeds.add_argument("--probe-seed",type=int,default=29)
+    seeds.add_argument("--probe-seeds",type=int,nargs="+",help="1-5 classifier seeds on the same frozen features")
+    parser.add_argument("--ridge-alphas",type=float,nargs="+",help="Also fit a deterministic matched ridge baseline")
     parser.add_argument("--steps",type=int,default=200)
     parser.add_argument("--learning-rates",type=float,nargs="+",default=[0.0001,0.001,0.01,0.05])
     parser.add_argument("--weight-decays",type=float,nargs="+",default=[0.01,0.1])
@@ -150,7 +212,7 @@ def main():
         candidates = tuple(ProbeConfig(args.steps,lr,wd,args.probe_seed)
                            for lr in args.learning_rates for wd in args.weight_decays)
         report = run_comparison(args.root,args.manifest,args.selection,args.feature_dir,candidates=candidates,
-                                 checkpoint=args.checkpoint,encoder=args.encoder,random_seed=args.random_seed,probe_dir=args.probe_dir)
+                                 checkpoint=args.checkpoint,encoder=args.encoder,random_seed=args.random_seed,probe_dir=args.probe_dir,probe_seeds=args.probe_seeds,ridge_alphas=args.ridge_alphas)
         write_report(args.output,report)
     except (ValueError,OSError,KeyError,TypeError,RuntimeError) as exc:
         parser.error(str(exc))

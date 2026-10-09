@@ -26,7 +26,10 @@ class RidgeProbe(LinearProbe):
     @torch.inference_mode()
     def score(self, features, labels):
         result = super().score(features, labels)
-        result["mean_squared_error"] = float(F.mse_loss(self.logits(features), F.one_hot(labels, 10).float()))
+        loss = F.mse_loss(self.logits(features), F.one_hot(labels, 10).float())
+        if not torch.isfinite(loss):
+            raise ValueError("Ridge scoring produced non-finite MSE")
+        result["mean_squared_error"] = float(loss)
         return result
 
 
@@ -41,6 +44,8 @@ def fit_ridge(features, labels, config: RidgeConfig = RidgeConfig()) -> RidgePro
     scale = torch.where(constant, torch.ones_like(std), std)
     # Center a second time in float64 to make the intercept unpenalized despite float32 rounding.
     normalized = ((features.detach().clone() - mean) / scale).double()
+    if not torch.isfinite(mean).all() or not torch.isfinite(scale).all() or not torch.isfinite(normalized).all():
+        raise ValueError("Ridge normalization produced non-finite values")
     center = normalized.mean(0)
     x = normalized - center
     y = F.one_hot(labels, 10).double()

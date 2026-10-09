@@ -9,6 +9,7 @@ import torch
 from jepa_lab.features import FeatureSet
 from jepa_lab.probe_artifacts import load_probe, save_probe
 from jepa_lab.probes import ProbeConfig, fit_probe
+from jepa_lab.ridge import RidgeConfig
 from test_probes import synthetic
 
 
@@ -75,3 +76,13 @@ class ProbeArtifactTests(unittest.TestCase):
                 save_probe(path, probe, train, validation)
             self.assertEqual(previous, path.read_bytes())
             self.assertEqual([], list(Path(directory).glob(".probe.pt.*")))
+
+    def test_wrong_probe_family_config_fails_before_replacing_file(self):
+        train, validation = sources()
+        probe = fit_probe(train.features, train.labels, ProbeConfig(steps=2))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "probe.pt"
+            save_probe(path, probe, train, validation)
+            before = path.read_bytes()
+            with self.assertRaises(ValueError): save_probe(path, replace(probe, config=RidgeConfig()), train, validation)
+            self.assertEqual(before, path.read_bytes())

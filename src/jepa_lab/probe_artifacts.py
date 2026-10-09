@@ -66,6 +66,8 @@ def state_fingerprint(state: dict, config: dict, context: dict) -> str:
 def save_probe(path: str | Path, probe: LinearProbe, train: FeatureSet, validation: FeatureSet) -> dict:
     if not isinstance(probe, LinearProbe) or not isinstance(probe.config, (ProbeConfig, RidgeConfig)):
         raise ValueError("Save a fitted linear probe with a validated configuration")
+    if isinstance(probe, RidgeProbe) != isinstance(probe.config, RidgeConfig):
+        raise ValueError("Probe family and configuration must agree before saving")
     context = probe_context(train, validation)
     state = {name: getattr(probe, name).detach().clone() for name in STATE_FIELDS}
     validate_probe_state(state, context["feature_dim"])
