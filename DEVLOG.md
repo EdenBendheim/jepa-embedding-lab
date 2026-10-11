@@ -76,3 +76,7 @@
 
 - Executed the predeclared 500-training/200-validation pilot after committing its protocol. Resumed 23 to 223 JEPA steps; training-only sampling and finite diagnostics verified. Three AdamW classifier seeds measured means 24.83% checkpoint, 24.00% random, 28.00% pixels; matched ridge scored 27.0%, 24.5%, 30.0%. All twelve selected saved classifiers reproduced their scores; standalone no-refit CLI check passed. Published aggregate metrics/configuration/fingerprints, with no images/features/weights. All 54 local tests pass. Pixel baselines remain ahead; classifier-seed variation is not encoder-training uncertainty, and no official test score or learned-quality advantage is claimed.
 - Interview explanation: "I compared learned, random and pixel features on the same examples, tested both AdamW and ridge heads, and made every selected classifier's score reproducible from its saved state. The pixel baseline still wins this pilot, guiding the next model/training experiment."
+
+## October 10 — paired error diagnostics
+
+Added bounded, descriptive paired classification counts: recovered/regressed predictions, per-class changes, confusion deltas and prediction histograms. Synthetic checks cover opposing changes, absent classes, identity, and invalid vectors; 2 focused tests passed. These do not imply statistical significance.
