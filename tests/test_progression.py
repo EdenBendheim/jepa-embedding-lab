@@ -1,5 +1,6 @@
 from copy import deepcopy
-from dataclasses import replace
+from dataclasses import asdict, replace
+import json
 import unittest
 from pathlib import Path
 import tempfile
@@ -7,10 +8,15 @@ from unittest.mock import patch
 
 import torch
 
-from jepa_lab.progression import compare_progression, validate_progression
+from jepa_lab.progression import compare_progression, run_progression, validate_progression
+from jepa_lab.cifar10 import make_manifest
+from jepa_lab.embeddings import extract_cifar10, random_encoder
+from jepa_lab.model import ModelConfig
+from jepa_lab.selection import make_pilot
 from jepa_lab.probes import ProbeConfig, select_probe
 from jepa_lab.ridge import select_ridge
 from test_compare import sets
+from test_embeddings import Fixture
 
 
 def arms():
@@ -85,3 +91,33 @@ class ProgressionContractTests(unittest.TestCase):
             for value, seeds, alphas in ((data, [29], None), (arms(), [29, 29], None), (arms(), [29], [0])):
                 with self.assertRaises(ValueError):
                     compare_progression(value, (ProbeConfig(steps=2),), seeds, ridge_alphas=alphas)
+
+    def test_saved_feature_workflow_never_reads_images_and_preserves_sources(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = make_manifest(Fixture(root), Fixture(root, train=False))
+            selection = make_pilot(manifest, Fixture(root).labels, train_per_class=1, validation_per_class=1)
+            m, s = root/"manifest.json", root/"selection.json"
+            m.write_text(json.dumps(manifest)); s.write_text(json.dumps(selection))
+            config = ModelConfig(patch_dim=48, embedding_dim=16, encoder_depth=1)
+            with patch("jepa_lab.embeddings.CIFAR10Binary", Fixture):
+                for name, step in (("early", 3), ("later", 6)):
+                    checkpoint = root/f"{name}.pt"
+                    torch.save(dict(format_version=1, dataset="CIFAR-10", manifest_sha256=manifest["manifest_sha256"],
+                        config=asdict(config), runtime=dict(torch=str(torch.__version__), cpu_threads=1), step=step,
+                        model=random_encoder(config, step).state_dict(), settings=dict(seed=29)), checkpoint)
+                    for partition in ("train", "validation"):
+                        extract_cifar10(root, m, selection_path=s, checkpoint=checkpoint, partition=partition,
+                                       output=root/name/f"checkpoint-{partition}.pt")
+                for name in ("random", "pixels"):
+                    for partition in ("train", "validation"):
+                        extract_cifar10(root, m, selection_path=s, representation=name, config=config,
+                                       partition=partition, output=root/"shared"/f"{name}-{partition}.pt")
+            before = {str(p): p.read_bytes() for p in root.glob("**/*.pt")}
+            Fixture.accessed.clear()
+            with patch("jepa_lab.progression.CIFAR10Binary", Fixture):
+                result = run_progression(root, m, s, root/"shared", {"early": root/"early", "later": root/"later"},
+                                         candidates=(ProbeConfig(steps=2),), seeds=[29])
+            self.assertEqual([], Fixture.accessed)
+            self.assertEqual(before, {str(p): p.read_bytes() for p in root.glob("**/*.pt")})
+            self.assertEqual(dict(train=10, validation=10), result["counts"])

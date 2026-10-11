@@ -212,3 +212,17 @@ Comparison reports also include `paired_validation`: checkpoint predictions vers
 ## Controlled checkpoint-age comparison
 
 `compare_progression(arms, candidates, seeds, probe_dir=..., ridge_alphas=...)` compares 2–4 increasing checkpoint ages with identical architecture/training settings and exact shared baseline artifacts. Every arm is checked before fitting. Random/pixel classifiers are fitted once per classifier seed, and ridge once total; each checkpoint receives the same grid and budget. Reports retain every selected classifier, paired age/baseline errors, and classifier-seed summaries. Matching metadata does not establish checkpoint ancestry, and this is a validation-selected comparison from one encoder training seed.
+
+The saved-feature CLI leaves source artifacts untouched and does not sample images:
+
+```sh
+.venv/bin/python -m jepa_lab.progression data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --selection runs/pilot-selection-20261009.json \
+  --baseline-dir runs/pilot-features-20261009 \
+  --arm early runs/pilot-features-early-20261010 \
+  --arm later runs/pilot-features-20261009 \
+  --probe-seeds 29 31 37 --ridge-alphas 0.01 0.1 1 10 \
+  --probe-dir runs/progression-probes-20261010 --output runs/progression-20261010.json
+```
+
+Each arm directory must contain verified `checkpoint-train.pt` and `checkpoint-validation.pt`; the shared directory supplies `random-*.pt` and `pixels-*.pt`. Use the existing embedding extractor to prepare missing features with the same selection. The [October 10 protocol](experiments/PILOT-2026-10-10-PROTOCOL.md) fixes the age comparison and two additional encoder-training seeds before the new runs.

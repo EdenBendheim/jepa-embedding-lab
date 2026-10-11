@@ -1,5 +1,7 @@
 """Controlled checkpoint-age comparisons with a single shared baseline pair."""
 
+import argparse
+import json
 import re
 from dataclasses import asdict, replace
 from pathlib import Path
@@ -7,18 +9,25 @@ from statistics import mean, stdev
 
 import torch
 
-from .compare import fit_representation, validate_comparison_inputs, validate_probe_seeds
+from .compare import fit_representation, validate_comparison_inputs, validate_probe_seeds, write_report
+from .cifar10 import CIFAR10Binary, make_manifest
 from .diagnostics import paired_diagnostics
-from .features import _sha
+from .features import _sha, load_features
+from .probes import ProbeConfig
 from .ridge import validate_ridge_candidates
+from .selection import validate_pilot
 
 
-def validate_progression(arms, candidates):
-    """Validate every arm before fitting; matching settings do not prove ancestry."""
+def validate_arm_names(arms):
     if (not isinstance(arms, dict) or not 2 <= len(arms) <= 4
             or any(not isinstance(name, str) or name in ("random", "pixels")
                    or re.fullmatch(r"[a-z][a-z0-9-]{0,47}", name) is None for name in arms)):
         raise ValueError("Use 2-4 ordered checkpoint arms with distinct short lowercase names")
+
+
+def validate_progression(arms, candidates):
+    """Validate every arm before fitting; matching settings do not prove ancestry."""
+    validate_arm_names(arms)
     first = next(iter(arms.values()))
     reference = validate_comparison_inputs(first, candidates)
     contract = {key: reference[0].metadata.get(key) for key in
@@ -85,3 +94,57 @@ def compare_progression(arms, candidates, seeds, *, probe_dir=None, ridge_alphas
         shared_baseline_policy="Exact same random/pixel artifacts; AdamW fitted once per classifier seed and ridge once total",
         test_evaluated=False,
         limitation="Validation-selected checkpoint ages from matching recorded settings; metadata alone does not prove ancestry. Classifier-seed variation is not independent encoder training or test uncertainty")
+
+
+def run_progression(root, manifest_path, selection_path, baseline_dir, checkpoint_dirs, *,
+                    candidates, seeds, probe_dir=None, ridge_alphas=None):
+    """Verify existing local features only; never extract or sample images."""
+    validate_arm_names(checkpoint_dirs)
+    train, test = CIFAR10Binary(root), CIFAR10Binary(root, train=False)
+    manifest = json.loads(Path(manifest_path).read_text())
+    if manifest != make_manifest(train, test, seed=manifest["seed"]):
+        raise ValueError("Current dataset files differ from the locked manifest")
+    selection = validate_pilot(json.loads(Path(selection_path).read_text()), manifest, train.labels)
+
+    def pair(directory, representation):
+        return tuple(load_features(Path(directory)/f"{representation}-{partition}.pt", manifest=manifest,
+            selection=selection, training_labels=train.labels, partition=partition) for partition in ("train", "validation"))
+
+    shared = {name: pair(baseline_dir, name) for name in ("random", "pixels")}
+    arms = {name: shared | dict(checkpoint=pair(directory, "checkpoint")) for name, directory in checkpoint_dirs.items()}
+    return compare_progression(arms, candidates, seeds, probe_dir=probe_dir, ridge_alphas=ridge_alphas)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Compare increasing checkpoint ages using verified saved features")
+    parser.add_argument("root", type=Path)
+    parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--selection", type=Path, required=True)
+    parser.add_argument("--baseline-dir", type=Path, required=True)
+    parser.add_argument("--arm", nargs=2, action="append", required=True, metavar=("NAME", "FEATURE_DIRECTORY"))
+    parser.add_argument("--probe-dir", type=Path)
+    parser.add_argument("--probe-seeds", type=int, nargs="+", default=[29, 31, 37])
+    parser.add_argument("--steps", type=int, default=200)
+    parser.add_argument("--learning-rates", type=float, nargs="+", default=[0.0001, 0.001, 0.01, 0.05])
+    parser.add_argument("--weight-decays", type=float, nargs="+", default=[0.01, 0.1])
+    parser.add_argument("--ridge-alphas", type=float, nargs="+")
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    torch.set_num_threads(1)
+    try:
+        directories = dict(args.arm)
+        if len(directories) != len(args.arm):
+            raise ValueError("Checkpoint arm names must be distinct")
+        candidates = tuple(ProbeConfig(args.steps, lr, wd, args.probe_seeds[0])
+                           for lr in args.learning_rates for wd in args.weight_decays)
+        report = run_progression(args.root, args.manifest, args.selection, args.baseline_dir, directories,
+                                 candidates=candidates, seeds=args.probe_seeds, probe_dir=args.probe_dir,
+                                 ridge_alphas=args.ridge_alphas)
+        write_report(args.output, report)
+    except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
+        parser.error(str(exc))
+    print(json.dumps(report, indent=2))
+
+
+if __name__ == "__main__":
+    main()
