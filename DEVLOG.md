@@ -82,3 +82,5 @@
 Added bounded, descriptive paired classification counts: recovered/regressed predictions, per-class changes, confusion deltas and prediction histograms. Synthetic checks cover opposing changes, absent classes, identity, and invalid vectors; 2 focused tests passed. These do not imply statistical significance.
 
 Integrated paired errors into matched comparisons for both classifier families using their selected predictions. Extracted one-representation fitting for later shared-baseline evaluation. Six comparison tests passed, including a deliberately permuted baseline and an exact three-fit assertion.
+
+Added a saved-probe pair audit CLI with exact source alignment and score/state reproduction. A synthetic test covers both AdamW/ridge and rejects mismatched sources before scoring. A local real-data audit of the October 9 seed-29 checkpoint versus pixels reproduced 30 recoveries and 36 regressions on 200 validation examples (−3 percentage points), without refitting. Raw artifacts remain ignored. CLI help checked.

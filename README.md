@@ -204,3 +204,7 @@ The comparison CLI accepts mutually exclusive `--probe-seed 29` or `--probe-seed
 This measures classifier-initialization sensitivity only. It does not vary encoder training, random encoder initialization, pilot examples or data splits, and its validation-selected scores are not test results or independent confirmation. See the [predeclared October 9 larger pilot](experiments/PILOT-2026-10-09-PROTOCOL.md).
 
 Comparison reports also include `paired_validation`: checkpoint predictions versus random and pixels, separately for AdamW and ridge. Recoveries, regressions, per-class changes and confusion deltas use the same verified ordered validation examples and the already-selected classifiers; no extra fits are performed. Counts are descriptive and validation-selected.
+
+## Audit paired saved classifiers
+
+`python -m jepa_lab.probe_compare ROOT --manifest MANIFEST --selection SELECTION --baseline TRAIN_FEATURES VALIDATION_FEATURES PROBE --candidate TRAIN_FEATURES VALIDATION_FEATURES PROBE --output runs/paired-audit.json` verifies both classifiers and exact ordered sources, then reports paired errors without refitting or sampling images. Feature dimensions may differ between representations. Each saved classifier retains its original training-only normalization. The audit can compare checkpoint ages or a learned encoder against a baseline; it provides no new evaluation evidence.
