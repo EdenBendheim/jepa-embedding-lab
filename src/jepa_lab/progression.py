@@ -40,7 +40,7 @@ def validate_progression(arms, candidates):
         if (type(step) is not int or step <= previous_step or not _sha(fingerprint) or fingerprint in hashes
                 or not isinstance(metadata.get("training_settings"), dict)
                 or {key: metadata.get(key) for key in contract} != contract):
-            raise ValueError("Checkpoint ages must increase with distinct weights and identical architecture/training settings")
+            raise ValueError("Checkpoint ages must increase with distinct fingerprints and identical architecture/training settings")
         for item, expected in zip(pair, reference):
             if (item.indices != expected.indices or not torch.equal(item.labels, expected.labels)
                     or item.manifest_sha256 != expected.manifest_sha256

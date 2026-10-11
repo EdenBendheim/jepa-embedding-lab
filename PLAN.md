@@ -41,6 +41,6 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-The October 9 predeclared 500/200 pilot advanced the model to 223 steps and compared three AdamW classifier seeds plus deterministic ridge probes. AdamW means: checkpoint 24.83%, random 24.00%, pixels 28.00%; ridge: 27.0%, 24.5%, 30.0%. All twelve selected classifiers reproduce their saved scores. These remain validation-selected results from one learned encoder and one random encoder, not learned-feature improvement or test accuracy.
+October 10 comparison A holds examples, grids and baselines fixed across 23/223-step checkpoints. AdamW means were 25.67%/26.67%; random 25.17%, pixels 28.00%; ridge 26%/27% versus 24.5%/30%. All sixteen saved classifiers and paired error counts reproduce. The later checkpoint gained one percentage point in this limited reused-validation comparison; pixels remain ahead. See the protocol and controlled results.
 
-Next: predeclare a controlled 23-step versus longer-checkpoint comparison on the same examples/head grids, then repeat encoder training and random initialization seeds. Investigate class-specific errors and pooling/masking. Add an appropriate frozen pretrained comparison before final test evaluation. Keep source/image/model artifacts ignored and record actual checks in DEVLOG. Résumé quality claims require stronger evidence.
+Continue the already-declared comparison B: two additional 223-step encoder training seeds with matching random-encoder seeds and identical evaluation grids. Then investigate class-specific errors and pooling/masking, add an appropriate frozen pretrained comparison, and reserve the official test set for a final fixed protocol. Résumé quality claims require stronger evidence.
