@@ -14,6 +14,7 @@ from jepa_lab.embeddings import random_encoder
 from jepa_lab.features import FeatureSet
 from jepa_lab.model import ModelConfig
 from jepa_lab.probes import ProbeConfig
+from jepa_lab.probes import select_probe
 from jepa_lab.probe_artifacts import load_probe
 from jepa_lab.selection import make_pilot
 from test_embeddings import Fixture
@@ -44,6 +45,7 @@ class ComparisonTests(unittest.TestCase):
         self.assertEqual(dict(train=10,validation=10),report["counts"])
         self.assertFalse(report["test_evaluated"])
         self.assertTrue(torch.equal(state,torch.get_rng_state()))
+        self.assertEqual(10, report["paired_validation"]["adamw"]["checkpoint_vs_random"]["both_correct"])
         for result in report["representations"].values():
             self.assertEqual(1.0,result["validation"]["accuracy"])
             self.assertEqual("c"*64,result["train_artifact"]["artifact_sha256"])
@@ -62,6 +64,19 @@ class ComparisonTests(unittest.TestCase):
             data["random"] = (train,validation)
             with self.subTest(change=change),patch("jepa_lab.compare.select_probe",side_effect=AssertionError("fit ran")),self.assertRaises(ValueError):
                 compare_features(data,(ProbeConfig(steps=2),))
+
+    def test_paired_errors_use_selected_predictions_without_extra_fits(self):
+        data = sets()
+        train, validation = data["random"]
+        data["random"] = train, replace(validation, features=validation.features.roll(1, 0))
+        with patch("jepa_lab.compare.select_probe", wraps=select_probe) as fitted:
+            report = compare_features(data, (ProbeConfig(steps=30),))
+        self.assertEqual(3, fitted.call_count)
+        paired = report["paired_validation"]["adamw"]["checkpoint_vs_random"]
+        self.assertEqual(10, paired["recovered"])
+        self.assertEqual(0, paired["regressed"])
+        self.assertEqual(report["representations"]["checkpoint"]["validation"]["accuracy"]
+                         - report["representations"]["random"]["validation"]["accuracy"], paired["accuracy_delta"])
 
     def test_selected_probes_persist_reproduce_and_reuse_without_replacing_prior_files(self):
         data = sets()
@@ -87,6 +102,11 @@ class ComparisonTests(unittest.TestCase):
             self.assertEqual([29, 31], result["seeds"])
             self.assertEqual(dict(train=10, validation=10), result["counts"])
             self.assertFalse(result["test_evaluated"])
+            paired = result["runs"][0]["paired_validation"]
+            self.assertEqual({"adamw", "ridge"}, set(paired))
+            for head in paired.values():
+                for diagnostic in head.values():
+                    self.assertEqual(0, diagnostic["recovered"] - diagnostic["regressed"])
             self.assertTrue(torch.equal(rng, torch.get_rng_state()))
             for name in data:
                 values = [run["representations"][name]["validation"]["accuracy"] for run in result["runs"]]

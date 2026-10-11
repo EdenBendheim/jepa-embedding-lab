@@ -80,3 +80,5 @@
 ## October 10 — paired error diagnostics
 
 Added bounded, descriptive paired classification counts: recovered/regressed predictions, per-class changes, confusion deltas and prediction histograms. Synthetic checks cover opposing changes, absent classes, identity, and invalid vectors; 2 focused tests passed. These do not imply statistical significance.
+
+Integrated paired errors into matched comparisons for both classifier families using their selected predictions. Extracted one-representation fitting for later shared-baseline evaluation. Six comparison tests passed, including a deliberately permuted baseline and an exact three-fit assertion.

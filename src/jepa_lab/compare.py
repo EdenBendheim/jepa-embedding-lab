@@ -19,6 +19,7 @@ from .probes import ProbeConfig, select_probe, validate_candidates, validate_pro
 from .probe_artifacts import STATE_FIELDS, load_probe, probe_context, save_probe, state_fingerprint
 from .selection import validate_pilot
 from .ridge import select_ridge, validate_ridge_candidates
+from .diagnostics import paired_diagnostics
 
 
 REPRESENTATIONS = ("checkpoint", "random", "pixels")
@@ -108,37 +109,46 @@ def compare_repeated_features(sets, candidates, seeds, *, probe_dir=None, ridge_
                 limitation="Variation across probe initialization only: encoder, data, splits and validation tuning are shared; not independent training seeds or test uncertainty")
 
 
+def fit_representation(pair, candidates, name, probe_dir=None, ridge_alphas=None):
+    """Fit one prevalidated representation and retain predictions for paired auditing."""
+    train, validation = pair
+    start = perf_counter()
+    probe, result = select_probe(train.features, train.labels, validation.features, validation.labels, candidates)
+    selected = result["candidates"][result["selected_candidate"]]
+    report = dict(train_artifact=train.summary(), validation_artifact=validation.summary(),
+                  probe_selection=result, selected_config=selected["config"],
+                  training=selected["training"], validation=selected["validation"],
+                  fitting_and_scoring_seconds=perf_counter()-start,
+                  selected_probe_artifact=persist_selected_probe(probe, train, validation, name, probe_dir))
+    predictions = dict(adamw=probe.logits(validation.features).argmax(1))
+    if ridge_alphas is not None:
+        start = perf_counter()
+        probe, selection = select_ridge(train.features, train.labels, validation.features, validation.labels, ridge_alphas)
+        chosen = selection["candidates"][selection["selected_candidate"]]
+        report["ridge"] = dict(probe_selection=selection, selected_config=chosen["config"],
+            training=chosen["training"], validation=chosen["validation"],
+            fitting_and_scoring_seconds=perf_counter()-start,
+            selected_probe_artifact=persist_selected_probe(probe, train, validation, name+"-ridge", probe_dir))
+        predictions["ridge"] = probe.logits(validation.features).argmax(1)
+    return report, predictions
+
+
 def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates: tuple[ProbeConfig, ...], *,
                      probe_dir: Path | None = None, ridge_alphas=None) -> dict:
     reference = validate_comparison_inputs(sets, candidates)
     if ridge_alphas is not None:
         validate_ridge_candidates(ridge_alphas)
-    reports = {}
+    reports, predictions = {}, {}
     for name in REPRESENTATIONS:
-        train, validation = sets[name]
-        start = perf_counter()
-        probe, result = select_probe(train.features, train.labels, validation.features, validation.labels, candidates)
-        selected = result["candidates"][result["selected_candidate"]]
-        artifact = persist_selected_probe(probe, train, validation, name, probe_dir)
-        reports[name] = dict(train_artifact=train.summary(), validation_artifact=validation.summary(),
-                            probe_selection=result, selected_config=selected["config"],
-                            training=selected["training"], validation=selected["validation"],
-                            fitting_and_scoring_seconds=perf_counter()-start, selected_probe_artifact=artifact)
-    if ridge_alphas is not None:
-        for name in REPRESENTATIONS:
-            train, validation = sets[name]
-            start = perf_counter()
-            probe, selection = select_ridge(train.features, train.labels, validation.features, validation.labels, ridge_alphas)
-            chosen = selection["candidates"][selection["selected_candidate"]]
-            reports[name]["ridge"] = dict(probe_selection=selection, selected_config=chosen["config"],
-                training=chosen["training"], validation=chosen["validation"],
-                fitting_and_scoring_seconds=perf_counter()-start,
-                selected_probe_artifact=persist_selected_probe(probe, train, validation, name+"-ridge", probe_dir))
+        reports[name], predictions[name] = fit_representation(sets[name], candidates, name, probe_dir, ridge_alphas)
+    paired = {head: {f"checkpoint_vs_{name}": paired_diagnostics(reference[1].labels,
+                predictions[name][head], predictions["checkpoint"][head]) for name in ("random", "pixels")}
+              for head in predictions["checkpoint"]}
     return dict(version=1, task="Frozen ten-class CIFAR-10 pilot classification",
                 manifest_sha256=reference[0].manifest_sha256, selection_sha256=reference[0].selection_sha256,
                 counts=dict(train=len(reference[0].indices),validation=len(reference[1].indices)),
                 candidate_grid=[asdict(config) for config in candidates], ridge_alpha_grid=ridge_alphas, representations=reports,
-                runtime=dict(torch=str(torch.__version__),cpu_threads=torch.get_num_threads()),
+                paired_validation=paired, runtime=dict(torch=str(torch.__version__),cpu_threads=torch.get_num_threads()),
                 test_evaluated=False,
                 limitation="Small single-seed validation-selected pilot; not official test accuracy, independent confirmation, or a full-training result")
 
