@@ -2,7 +2,7 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 10, 2026:** controlled checkpoint-age comparison and saved paired-error audits now work. On the same 500/200 pilot and new shared classifier grid, AdamW means are 25.67% at 23 training steps and 26.67% at 223 steps, versus 25.17% random and 28.00% pixels; ridge is 26%, 27%, 24.5%, and 30%. All sixteen saved classifiers and paired errors reproduce. These reused validation scores do not establish learned-feature improvement. Additional encoder-training seeds, pretrained comparisons, sustained training and final official test evaluation remain pending. See [the controlled age results](experiments/PROGRESSION-2026-10-10.md).
+**Status — October 10, 2026:** controlled checkpoint-age comparisons, paired error audits and three encoder-training seeds now work. At 223 steps on the fixed 500/200 pilot, AdamW means across encoder runs were 27.11% learned, 25.67% random and 28.00% pixels; ridge means were 25.67%, 25.33% and 30.00%. All 36 selected classifiers and paired errors reproduce. Reused validation tuning and three small training runs do not establish a reliable learned-feature advantage. Pretrained comparisons, pooling/masking improvements, sustained training and final official test evaluation remain pending. See [training-seed results](experiments/TRAINING-SEEDS-2026-10-10.md) and [controlled checkpoint ages](experiments/PROGRESSION-2026-10-10.md).
 
 ## Why this experiment
 

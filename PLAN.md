@@ -36,11 +36,11 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Fit bounded linear probes with training-only normalization and validation-only hyperparameter selection.
 - [x] Run a matched real-image checkpoint/random/pixel comparison and report its exploratory pilot limitations.
 - [x] Repeat classifier initialization on matched frozen features and label the limited uncertainty scope.
-- [ ] Repeat encoder-training/random-encoder seeds; report uncertainty and collapse/failure cases.
+- [x] Repeat encoder-training/random-encoder seeds in a bounded pilot and distinguish descriptive seed variation from test/data uncertainty.
 - [ ] Publish configurations, provenance, plots, a results table, and a small embedding explorer.
 
 ## Next session
 
-October 10 comparison A holds examples, grids and baselines fixed across 23/223-step checkpoints. AdamW means were 25.67%/26.67%; random 25.17%, pixels 28.00%; ridge 26%/27% versus 24.5%/30%. All sixteen saved classifiers and paired error counts reproduce. The later checkpoint gained one percentage point in this limited reused-validation comparison; pixels remain ahead. See the protocol and controlled results.
+Both October 10 protocol parts completed: controlled 23/223-step comparison and three encoder/random initialization seeds. Under matched 500/200 examples and grids, the later-age mean gained 1 pp in one trajectory. Across three 223-step encoder runs, AdamW learned/random/pixel means were 27.11%/25.67%/28.00%; ridge 25.67%/25.33%/30.00%. All 36 selected classifiers for the seed comparison reproduce, along with paired class errors. One favorable seed/head is not a reliable improvement; reused validation and short training remain limiting.
 
-Continue the already-declared comparison B: two additional 223-step encoder training seeds with matching random-encoder seeds and identical evaluation grids. Then investigate class-specific errors and pooling/masking, add an appropriate frozen pretrained comparison, and reserve the official test set for a final fixed protocol. Résumé quality claims require stronger evidence.
+Next: inspect class confusions, mean pooling and mask geometry; select an appropriate frozen pretrained baseline; predeclare a tightly bounded pooling/masking ablation. Then extend training with explicit budgets and reserve the official test set for a final fixed protocol. Width/input-feature comparisons, plots and an embedding explorer remain pending. Résumé quality claims require stronger evidence.
