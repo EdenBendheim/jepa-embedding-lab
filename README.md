@@ -208,3 +208,7 @@ Comparison reports also include `paired_validation`: checkpoint predictions vers
 ## Audit paired saved classifiers
 
 `python -m jepa_lab.probe_compare ROOT --manifest MANIFEST --selection SELECTION --baseline TRAIN_FEATURES VALIDATION_FEATURES PROBE --candidate TRAIN_FEATURES VALIDATION_FEATURES PROBE --output runs/paired-audit.json` verifies both classifiers and exact ordered sources, then reports paired errors without refitting or sampling images. Feature dimensions may differ between representations. Each saved classifier retains its original training-only normalization. The audit can compare checkpoint ages or a learned encoder against a baseline; it provides no new evaluation evidence.
+
+## Controlled checkpoint-age comparison
+
+`compare_progression(arms, candidates, seeds, probe_dir=..., ridge_alphas=...)` compares 2–4 increasing checkpoint ages with identical architecture/training settings and exact shared baseline artifacts. Every arm is checked before fitting. Random/pixel classifiers are fitted once per classifier seed, and ridge once total; each checkpoint receives the same grid and budget. Reports retain every selected classifier, paired age/baseline errors, and classifier-seed summaries. Matching metadata does not establish checkpoint ancestry, and this is a validation-selected comparison from one encoder training seed.
