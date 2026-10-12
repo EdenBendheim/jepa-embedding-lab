@@ -4,6 +4,15 @@ A small, reproducible representation-learning experiment: predict target embeddi
 
 **Status — October 10, 2026:** controlled checkpoint-age comparisons, paired error audits and three encoder-training seeds now work. At 223 steps on the fixed 500/200 pilot, AdamW means across encoder runs were 27.11% learned, 25.67% random and 28.00% pixels; ridge means were 25.67%, 25.33% and 30.00%. All 36 selected classifiers and paired errors reproduce. Reused validation tuning and three small training runs do not establish a reliable learned-feature advantage. Pretrained comparisons, pooling/masking improvements, sustained training and final official test evaluation remain pending. See [training-seed results](experiments/TRAINING-SEEDS-2026-10-10.md) and [controlled checkpoint ages](experiments/PROGRESSION-2026-10-10.md).
 
+**October 11 pooling update:** fixed-checkpoint mean/max/mean_std ablation
+completed; learned mean_std AdamW validation mean is 28.67%, matching random
+mean_std 33.83%, pixels 28.00%. The doubled 64-dimensional readout improved
+the learned encoder over its own mean pooling, but the matching random
+encoder improved more. All 28 saved states and paired errors reproduce;
+77 synthetic tests pass. [Pooling results and limits](experiments/POOLING-2026-10-11.md).
+Configurable training masks and verified geometry diagnostics work; phase B
+is next. Useful learned-feature advantage remains unproven.
+
 ## Why this experiment
 
 The [October 11 pooling/mask protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md)

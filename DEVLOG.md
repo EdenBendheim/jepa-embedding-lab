@@ -40,6 +40,14 @@
   image-order equality. Mean_std capacity and mask-token/compute confounding
   are explicit. Driver compilation/help checked before execution.
 
+- Executed phase A on the declared checkpoint/500+200 examples. Learned
+  mean/max/mean_std AdamW means: 26.67%/26.67%/28.67%; matching random:
+  25.17%/27.33%/33.83%; pixels 28.00%. Ridge learned: 27%/24%/29.5%, random:
+  24.5%/24.5%/30%, pixels 30%. Reproduced all 28 saved states and paired
+  errors. Published aggregate metrics/provenance/geometry only. Full suite:
+  77 tests. Spatial variance helped but does not demonstrate training benefit;
+  reused validation and doubled mean_std classifier capacity are explicit.
+
 ## October 7, 2026
 
 - Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.
