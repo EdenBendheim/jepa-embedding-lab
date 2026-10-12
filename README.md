@@ -147,6 +147,24 @@ Add `--arm mean_std runs/pooling/mean_std` to include spatial variance. Default
 classifier grids/budgets match the existing comparison CLI. This is a
 validation-selected ablation; it does not evaluate the official test set.
 
+## Inspect frozen-feature geometry
+
+```sh
+.venv/bin/python -m jepa_lab.feature_geometry data/cifar-10-batches-bin \
+  runs/pilot-features-20261009/checkpoint-train.pt \
+  --manifest runs/cifar10-manifest.json --selection runs/pilot-selection-20261009.json \
+  --partition train --output runs/feature-geometry.json
+```
+
+This verifies the source artifact and reports row norms, zero-norm rows,
+constant columns, population standard deviations, centered numerical rank,
+covariance-spectrum entropy effective rank, and mean cosine between nonzero
+rows. Zero-variance sets have effective rank zero; fewer than two nonzero rows
+have no pair cosine (`null`). Eigenvalues below a float64 relative numerical
+tolerance are excluded. No transform is fitted, no images are sampled, and no
+arrays are included in the report. These are descriptive diagnostics, not
+evidence of useful representations or a guarantee against collapse.
+
 1. A context encoder receives only visible patches and their positions.
 2. A stop-gradient target encoder encodes the full input; target positions select prediction targets.
 3. A predictor combines context embeddings with target positions to predict target representations.

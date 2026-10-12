@@ -22,6 +22,12 @@
   synthetic workflow confirms zero image reads, unchanged source artifacts,
   matched dimensions, and edited labels rejected before any fitting. CLI help checked.
 
+- Added provenance-verified feature geometry inspection: numerical/effective
+  rank, spatial-feature variance, row norms and mean pair cosine. Three
+  synthetic checks cover analytic spectra, constant/zero rows, invariance,
+  RNG/gradient isolation and a saved-artifact workflow with no image reads.
+  Diagnostics are descriptive and never presented as classification quality.
+
 ## October 7, 2026
 
 - Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.
