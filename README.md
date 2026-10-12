@@ -123,6 +123,12 @@ verification binds the pooling description to the feature dimension; matched
 random encoders use the same rule. Pixel features keep their fixed flattening.
 Reusing a directory with a different requested encoder/pooling fails before fitting.
 
+`pooling_compare.compare_pooling` compares 2–3 verified feature arms with
+`mean` first. It fixes checkpoint bytes/age/training settings, ordered examples,
+encoder choice, architecture and random seed. Each random baseline uses its
+arm's pooling, while the exact pixel artifacts/classifiers are shared. It
+records per-arm dimensions, all selected states and paired prediction errors.
+
 1. A context encoder receives only visible patches and their positions.
 2. A stop-gradient target encoder encodes the full input; target positions select prediction targets.
 3. A predictor combines context embeddings with target positions to predict target representations.

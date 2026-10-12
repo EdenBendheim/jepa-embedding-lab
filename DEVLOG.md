@@ -12,6 +12,11 @@
   tests cover all three contracts, mislabelled dimensions, matched random
   features, and wrong-directory reuse rejected before fitting.
 
+- Added a controlled fixed-checkpoint pooling comparison API with matched
+  random pooling and shared pixel classifiers. Three synthetic checks reject
+  changed checkpoint/seed/examples, reproduce saved scores and paired errors,
+  and prove one pixel fit per classifier seed (ridge once overall).
+
 ## October 7, 2026
 
 - Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.
