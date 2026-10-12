@@ -27,11 +27,11 @@ def block_mask(rows: int, cols: int, *, target_rows: int = 2, target_cols: int =
     Fraction is relative to the remaining non-target patches. This is a simple
     experiment contract, not the official I-JEPA multi-block mask distribution.
     """
-    if any(not isinstance(value, int) or value < 1 for value in (rows, cols, target_rows, target_cols)):
+    if any(type(value) is not int or value < 1 for value in (rows, cols, target_rows, target_cols)):
         raise ValueError("Grid and target dimensions must be positive integers")
     if target_rows > rows or target_cols > cols or target_rows * target_cols >= rows * cols:
         raise ValueError("Target must fit in the grid and leave visible context")
-    if not math.isfinite(context_fraction) or not 0 < context_fraction <= 1:
+    if type(context_fraction) not in (int, float) or not math.isfinite(context_fraction) or not 0 < context_fraction <= 1:
         raise ValueError("context_fraction must be in (0, 1]")
     rng = random.Random(seed)
     top, left = rng.randrange(rows - target_rows + 1), rng.randrange(cols - target_cols + 1)

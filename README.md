@@ -92,6 +92,14 @@ Checkpoints load with `weights_only=True` on CPU and are written via temporary f
 
 ## Extract frozen image features and baseline features
 
+The real-data trainer also accepts `--target-rows`, `--target-cols` and
+`--context-fraction`. Custom geometry is validated before image sampling,
+recorded in `settings.mask`, and must match on resume. Version-one checkpoints
+without that field mean exactly the historical 2x2 target / 0.75 context
+fraction; default runs preserve that identity. Reports include visible, target
+and unused patch counts. Context fractions apply to non-target patches, so
+changing block size changes both prediction and visible-token budgets.
+
 ```sh
 export PYTHONPATH=src
 .venv/bin/python -m jepa_lab.embeddings data/cifar-10-batches-bin \

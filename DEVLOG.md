@@ -28,6 +28,12 @@
   RNG/gradient isolation and a saved-artifact workflow with no image reads.
   Diagnostics are descriptive and never presented as classification quality.
 
+- Added configurable target rectangles/context fractions to resumable RGB
+  training, with explicit custom-mask checkpoint identity and patch counts.
+  Three synthetic checks cover custom split-versus-continuous runs, changed
+  masks rejected before sampling/replacement, malformed mask metadata and
+  legacy default-checkpoint compatibility. Boolean geometry is rejected.
+
 ## October 7, 2026
 
 - Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.

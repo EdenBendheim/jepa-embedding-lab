@@ -12,6 +12,7 @@ import torch
 from .cifar10 import CIFAR10Binary, make_manifest, patchify_rgb
 from .cifar10_train import atomic_checkpoint
 from .model import JEPA, ModelConfig
+from .masking import block_mask
 from .pooling import POOLING, pool_tokens, pooling_dimension
 from .selection import validate_pilot
 
@@ -83,6 +84,11 @@ def load_encoder(checkpoint: str | Path, manifest_sha256: str) -> tuple[JEPA, di
         settings = saved["settings"]
         if not isinstance(settings, dict):
             raise ValueError("Training settings must be a recorded dictionary")
+        if "mask" in settings:
+            mask = settings["mask"]
+            if not isinstance(mask, dict) or set(mask) != {"target_rows", "target_cols", "context_fraction"}:
+                raise ValueError("Recorded custom mask settings are invalid")
+            block_mask(config.rows, config.cols, **mask, seed=0)
     except (KeyError, TypeError, ValueError, RuntimeError) as exc:
         raise ValueError("Checkpoint encoder configuration or weights are invalid") from exc
     metadata = dict(checkpoint_sha256=hashlib.sha256(payload).hexdigest(),

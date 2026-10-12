@@ -16,6 +16,8 @@ from .masking import block_mask
 from .model import JEPA, ModelConfig
 from .train import embedding_stats
 
+DEFAULT_MASK = dict(target_rows=2, target_cols=2, context_fraction=0.75)
+
 
 def atomic_checkpoint(path: Path, state: dict):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -32,6 +34,7 @@ def atomic_checkpoint(path: Path, state: dict):
 def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 20,
                   batch_size: int = 4, learning_rate: float = 1e-3, momentum: float = 0.99,
                   seed: int | None = None, config: ModelConfig | None = None,
+                  target_rows: int = 2, target_cols: int = 2, context_fraction: float = 0.75,
                   checkpoint: str | Path | None = None, resume: str | Path | None = None) -> dict:
     if type(steps) is not int or not 1 <= steps <= 1000 or type(batch_size) is not int or not 1 <= batch_size <= 32:
         raise ValueError("Local runs allow 1-1000 additional steps and a batch size of 1-32")
@@ -40,6 +43,9 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
     config = config if config is not None else ModelConfig(patch_dim=48)
     if (config.rows, config.cols, config.patch_dim) != (8, 8, 48):
         raise ValueError("CIFAR-10 protocol requires an 8x8 grid of 4x4 RGB patches (patch_dim=48)")
+    initial_mask = block_mask(8, 8, target_rows=target_rows, target_cols=target_cols,
+                              context_fraction=context_fraction, seed=0)
+    mask_settings = dict(target_rows=target_rows, target_cols=target_cols, context_fraction=float(context_fraction))
     manifest = json.loads(Path(manifest_path).read_text())
     dataset, test = CIFAR10Binary(root), CIFAR10Binary(root, train=False)
     if manifest != make_manifest(dataset, test, seed=manifest["seed"]):
@@ -48,6 +54,10 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
     if type(seed) is not int or not 0 <= seed < 2**63:
         raise ValueError("Seed must be an integer in [0, 2**63)")
     settings = dict(seed=seed, batch_size=batch_size, learning_rate=learning_rate, momentum=momentum)
+    # Historical v1 checkpoints omit mask settings and mean exactly the old default.
+    # Preserve default identities; custom masks are recorded explicitly.
+    if mask_settings != DEFAULT_MASK:
+        settings["mask"] = mask_settings
     runtime = dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads())
     identity = dict(format_version=1, dataset="CIFAR-10", manifest_sha256=manifest["manifest_sha256"],
                     config=asdict(config), settings=settings, runtime=runtime)
@@ -79,7 +89,7 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
         # Labels define the fixed split and future probes, never the JEPA objective.
         images = torch.stack([dataset[index][0] for index in chosen])
         patches = patchify_rgb(images)
-        masks = [block_mask(8, 8, target_rows=2, target_cols=2, seed=seed+step*batch_size+i)
+        masks = [block_mask(8, 8, **mask_settings, seed=seed+step*batch_size+i)
                  for i in range(batch_size)]
         optimizer.zero_grad(set_to_none=True)
         predictions, targets = model(patches, [mask.context for mask in masks], [mask.target for mask in masks])
@@ -99,6 +109,8 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
                           optimizer=optimizer.state_dict(), sample_rng=generator.getstate(),
                           torch_rng=torch.get_rng_state()))
     return identity | dict(start_step=start, completed_steps=start+steps, additional_steps=steps, history=history,
+                           mask_geometry=dict(**mask_settings, context_patches=len(initial_mask.context),
+                                              target_patches=len(initial_mask.target), unused_patches=len(initial_mask.unused)),
                            limitation="Bounded training pilot; downstream accuracy and useful embeddings remain unmeasured")
 
 
@@ -110,6 +122,10 @@ def main():
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--learning-rate", type=float, default=1e-3)
     parser.add_argument("--momentum", type=float, default=0.99)
+    parser.add_argument("--target-rows", type=int, default=2)
+    parser.add_argument("--target-cols", type=int, default=2)
+    parser.add_argument("--context-fraction", type=float, default=0.75,
+                        help="Fraction of non-target patches visible to context; custom settings must match on resume")
     parser.add_argument("--seed", type=int, help="Defaults to the fixed manifest seed")
     parser.add_argument("--checkpoint", type=Path, help="Save training state atomically beneath ignored checkpoints/")
     parser.add_argument("--resume", type=Path, help="Restore a matching checkpoint; never unpickle untrusted files")
@@ -119,6 +135,7 @@ def main():
     try:
         report = train_cifar10(args.root, args.manifest, steps=args.steps, batch_size=args.batch_size,
                               learning_rate=args.learning_rate, momentum=args.momentum, seed=args.seed,
+                              target_rows=args.target_rows, target_cols=args.target_cols, context_fraction=args.context_fraction,
                               checkpoint=args.checkpoint, resume=args.resume)
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.error(str(exc))
