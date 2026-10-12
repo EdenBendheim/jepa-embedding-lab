@@ -135,6 +135,7 @@ def mask():
     if not checkpoint.exists() and not log_path.exists():
         training = train_cifar10(ROOT, MANIFEST, steps=223, batch_size=4, seed=20261003,
             config=config, target_rows=4, target_cols=4, context_fraction=0.75, checkpoint=checkpoint)
+        training["checkpoint_sha256"] = hashlib.sha256(checkpoint.read_bytes()).hexdigest()
         write_report(log_path, training)
     else:
         if not checkpoint.exists() or not log_path.exists():
@@ -143,7 +144,8 @@ def mask():
     _, metadata = load_encoder(checkpoint, MANIFEST_SHA)
     expected_settings = dict(seed=20261003, batch_size=4, learning_rate=0.001, momentum=0.99,
                              mask=dict(target_rows=4, target_cols=4, context_fraction=0.75))
-    if (metadata["completed_steps"] != 223 or metadata["config"] != arms["mean"]["checkpoint"][0].metadata["config"]
+    if (training.get("checkpoint_sha256") != metadata["checkpoint_sha256"]
+            or metadata["completed_steps"] != 223 or metadata["config"] != arms["mean"]["checkpoint"][0].metadata["config"]
             or metadata["training_settings"] != expected_settings or training["settings"] != expected_settings
             or training["manifest_sha256"] != MANIFEST_SHA or training["start_step"] != 0
             or training["completed_steps"] != 223 or len(training["history"]) != 223):

@@ -2,22 +2,24 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 10, 2026:** controlled checkpoint-age comparisons, paired error audits and three encoder-training seeds now work. At 223 steps on the fixed 500/200 pilot, AdamW means across encoder runs were 27.11% learned, 25.67% random and 28.00% pixels; ridge means were 25.67%, 25.33% and 30.00%. All 36 selected classifiers and paired errors reproduce. Reused validation tuning and three small training runs do not establish a reliable learned-feature advantage. Pretrained comparisons, pooling/masking improvements, sustained training and final official test evaluation remain pending. See [training-seed results](experiments/TRAINING-SEEDS-2026-10-10.md) and [controlled checkpoint ages](experiments/PROGRESSION-2026-10-10.md).
-
-**October 11 pooling update:** fixed-checkpoint mean/max/mean_std ablation
-completed; learned mean_std AdamW validation mean is 28.67%, matching random
-mean_std 33.83%, pixels 28.00%. The doubled 64-dimensional readout improved
-the learned encoder over its own mean pooling, but the matching random
-encoder improved more. All 28 saved states and paired errors reproduce;
-77 synthetic tests pass. [Pooling results and limits](experiments/POOLING-2026-10-11.md).
-Configurable training masks and verified geometry diagnostics work; phase B
-is next. Useful learned-feature advantage remains unproven.
+**Status — October 11, 2026:** frozen pooling ablations, configurable resumable
+training masks and verified geometry diagnostics work. Mean_std learned /
+matching-random AdamW validation means are 28.67% / 33.83%. A fixed-seed,
+image-order-matched 4x4 target run reached 27.50%, versus default mean 26.67%
+and pixels 28.00%. All 40 newly selected classifier states and paired errors
+reproduce; 77 synthetic tests pass. These reused-validation pilots do not
+establish reliable useful-learning gains. Pretrained comparison, stronger
+training/confirmation and final official test evaluation remain unfinished.
+See [pooling results](experiments/POOLING-2026-10-11.md),
+[mask results](experiments/MASK-2026-10-11.md), and the earlier
+[encoder-seed](experiments/TRAINING-SEEDS-2026-10-10.md) /
+[checkpoint-age](experiments/PROGRESSION-2026-10-10.md) comparisons.
 
 ## Why this experiment
 
 The [October 11 pooling/mask protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md)
-is committed before new scores: fixed-weight mean/max/mean_std evaluation,
-then a 223-step 4x4-target trajectory matched to the historical image order.
+was committed before new scores; both fixed-weight pooling and the 223-step
+4x4-target trajectory matched to historical image order are now completed.
 The driver reproduces every saved classifier and paired error before producing
 aggregate-only summaries; features, logs and weights remain ignored.
 
@@ -36,7 +38,9 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
 - Official CIFAR-10 binary ingestion without pickle, a fixed RGB patch adapter, dataset fingerprints, and disjoint stratified train/validation indices while retaining the official test partition.
 - A bounded RGB training smoke command that validates its manifest, samples training images only, and records loss/variance diagnostics without claiming downstream accuracy.
 - A resumable public-data CPU trainer with atomic checkpoints, matching manifest/model/settings/runtime checks, optimizer and sampling/PyTorch RNG restoration, and split-versus-continuous reproducibility checks.
-- Frozen context/target full-image embeddings with mean pooling across all 64 patches, seeded random-encoder and raw-pixel feature baselines, and atomic feature artifacts bound to exact example indices, data identity, and checkpoint bytes.
+- Frozen context/target full-image embeddings with mean/max/mean_std pooling, matched random-encoder and raw-pixel baselines, and atomic feature artifacts bound to exact examples, pooling dimensions, data identity and checkpoint bytes.
+- Saved-feature pooling comparisons with shared pixel classifiers, reproduced selected states and paired class errors; descriptive numerical/effective rank and cosine inspection.
+- Configurable target-mask training with resume-bound geometry, patch counts, and legacy default-checkpoint compatibility; a declared real-data mask pilot with verified image-order equality.
 
 ## Run the mask demo
 
@@ -103,7 +107,7 @@ export PYTHONPATH=src
 
 Checkpoint version one binds state to the verified manifest fingerprint, model configuration, seed, batch size, learning rate, momentum, PyTorch version, and CPU thread count. Resume rejects mismatches before sampling. Model, optimizer, sample RNG, and PyTorch RNG are restored; mask seeds advance from the saved global step. Tests require a resumed run to match uninterrupted diagnostics, weights, optimizer, and RNG state in the same environment. This does not guarantee identical results across platforms or library versions; incompatible recorded runtimes are rejected.
 
-Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen feature extraction and validation-tuned checkpoint/random/pixel probes now work; sustained training, multiple seeds, and pretrained comparisons remain pending.
+Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen features, classifier/encoder-seed checks and declared pooling/mask pilots now work. Stronger training, pretrained comparison and fresh confirmation remain pending.
 
 ## Extract frozen image features and baseline features
 
@@ -128,13 +132,13 @@ export PYTHONPATH=src
   --partition train --limit 64 --output runs/features-pixels-train.pt
 ```
 
-The context encoder is the default; `--encoder target` extracts from the EMA teacher. Both process all 64 patches without a mask or predictor, then mean-pool token embeddings. Inference disables gradients and leaves weights unchanged; the API restores the model's prior training mode. Random baseline initialization preserves the caller's CPU RNG and records its seed/architecture. The current default random architecture matches the 32-dimensional pilot. For other model configurations, pass the matching `ModelConfig` to the extraction API before comparing; the matched comparison runner enforces architecture equality.
+The context encoder is the default; `--encoder target` extracts from the EMA teacher. Both process all 64 patches without a mask or predictor, then apply the selected pooling rule (mean by default). Inference disables gradients and leaves weights unchanged; the API restores the model's prior training mode. Random baseline initialization preserves the caller's CPU RNG and records its seed/architecture. The current default random architecture matches the 32-dimensional pilot. For other model configurations, pass the matching `ModelConfig` to the extraction API before comparing; the matched comparison runner enforces architecture equality.
 
 Raw-pixel features flatten NCHW values using the same fixed `x / 127.5 - 1` scaling, producing 3,072 dimensions. Labels accompany feature artifacts for classification probes but do not enter an encoder. Every representation uses the same first `--limit` indices from the selected fixed partition (default 64, cap 1,000, batch size 1–32). These bounded subsets are not guaranteed class-balanced and are not the complete experiment. Validation uses original training-file indices; test indices remain in the official test namespace. Extraction never fits normalization or a classifier on held-out examples.
 
 Each local `.pt` artifact contains features, labels, exact indices/namespace, manifest identity, pooling/scaling/configuration, extraction settings, and a feature fingerprint. Checkpoint extraction also records the training step/settings and the SHA-256 of the exact bytes loaded. Mismatched manifests/checkpoints fail before image sampling or output replacement. Features and raw-pixel artifacts remain in ignored `runs/`; do not redistribute the images or commit artifacts. Reports contain metadata/diagnostics, not feature arrays. The real-image check extracted the same 64 training images in all three representations and another 64 validation images from the checkpoint, with finite features throughout. The balanced pilot comparison below fits probes and reports exploratory validation scores.
 
-## Implemented model contract
+## Compare full-image pooling
 
 The frozen `image_embeddings(..., pooling=...)` API supports `mean`, `max`, and
 `mean_std` across all 64 spatial tokens. `mean_std` concatenates the mean and
@@ -188,6 +192,8 @@ tolerance are excluded. No transform is fitted, no images are sampled, and no
 arrays are included in the report. These are descriptive diagnostics, not
 evidence of useful representations or a guarantee against collapse.
 
+## Implemented model contract
+
 1. A context encoder receives only visible patches and their positions.
 2. A stop-gradient target encoder encodes the full input; target positions select prediction targets.
 3. A predictor combines context embeddings with target positions to predict target representations.
@@ -229,7 +235,7 @@ The loader uses `weights_only=True` on bounded local files and verifies exact se
 
 `fit_probe(train_features, train_labels, ProbeConfig(...))` fits a ten-class, full-batch AdamW linear classifier on detached CPU feature copies. It learns population mean/std from training rows only; dimensions with std below `1e-6` use scale one. Weight decay applies to classifier weights, not its bias. Source encoder features and caller RNG remain unchanged. Runs allow 1–1,000 steps on at most 1,000x4,096 features.
 
-`select_probe(train_features, train_labels, validation_features, validation_labels, candidates)` considers up to eight distinct learning-rate/weight-decay settings with the same seed and step budget. Selection uses highest validation accuracy, then lowest cross-entropy, then declared order. Reports include counts, per-class outcomes, a confusion matrix, and normalization/optimizer rules. No test input enters fitting or selection. Same-environment reproducibility is tested; the real-image comparison below works, while multi-seed uncertainty remains pending.
+`select_probe(train_features, train_labels, validation_features, validation_labels, candidates)` considers up to eight distinct learning-rate/weight-decay settings with the same seed and step budget. Selection uses highest validation accuracy, then lowest cross-entropy, then declared order. Reports include counts, per-class outcomes, a confusion matrix, and normalization/optimizer rules. No test input enters fitting or selection. Same-environment reproducibility is tested; the classifier/encoder-seed pilots below report descriptive variation. Independent confirmation and test uncertainty remain unmeasured.
 
 ## Run a matched pilot comparison
 

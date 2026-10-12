@@ -37,22 +37,23 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Run a matched real-image checkpoint/random/pixel comparison and report its exploratory pilot limitations.
 - [x] Repeat classifier initialization on matched frozen features and label the limited uncertainty scope.
 - [x] Repeat encoder-training/random-encoder seeds in a bounded pilot and distinguish descriptive seed variation from test/data uncertainty.
+- [x] Compare fixed-checkpoint mean/max/mean_std with matching random pooling and shared pixel classifiers.
+- [x] Inspect verified feature geometry and reproduce selected classifiers/paired class errors.
+- [x] Implement resume-bound custom masks and run a declared 4x4-target pilot matched to actual historical image order.
 - [ ] Publish configurations, provenance, plots, a results table, and a small embedding explorer.
 
 ## Next session
 
-October 11: pooling API/artifacts/comparison/geometry and configurable training
-masks are implemented and synthetically checked. The
-[pooling/mask protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md) fixes
-phase-A weights/grid/examples and phase-B 223-step budget before new scores.
-Run and publish each phase with reproduced saved classifiers; official test
-evaluation remains reserved. Pretrained and multi-training-seed confirmation follow.
+Both phases of the [October 11 protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md)
+completed. Learned mean_std 28.67% trails matching random 33.83%; the 4x4
+target run reached 27.50%, versus default mean 26.67% and pixels 28.00%.
+All 40 new selected states/paired errors reproduce; 77 synthetic tests pass.
+Readout dimension and mask-token budgets differ, and validation is reused;
+these pilots do not establish reliable useful-learning gains.
 
-Phase A completed under the declared protocol: learned mean_std 28.67%,
-matching random 33.83%, pixels 28.00% AdamW validation means. All 28 states
-and paired errors reproduce; 77 tests pass. No useful learning advantage is
-established. Phase B's 4x4 target geometry is next, without changing its budget.
-
-Both October 10 protocol parts completed: controlled 23/223-step comparison and three encoder/random initialization seeds. Under matched 500/200 examples and grids, the later-age mean gained 1 pp in one trajectory. Across three 223-step encoder runs, AdamW learned/random/pixel means were 27.11%/25.67%/28.00%; ridge 25.67%/25.33%/30.00%. All 36 selected classifiers for the seed comparison reproduce, along with paired class errors. One favorable seed/head is not a reliable improvement; reused validation and short training remain limiting.
-
-Next: inspect class confusions, mean pooling and mask geometry; select an appropriate frozen pretrained baseline; predeclare a tightly bounded pooling/masking ablation. Then extend training with explicit budgets and reserve the official test set for a final fixed protocol. Width/input-feature comparisons, plots and an embedding explorer remain pending. Résumé quality claims require stronger evidence.
+Next: select and predeclare a frozen pretrained comparator, choose a bounded
+stronger training budget, and repeat selected mask settings across encoder
+seeds. Use fresh confirmation examples before final protocol selection and
+keep the official test set reserved. Width/input-feature comparisons, plots
+and an embedding explorer remain pending. Résumé quality claims require
+stronger independent evidence.

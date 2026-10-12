@@ -48,6 +48,18 @@
   77 tests. Spatial variance helped but does not demonstrate training benefit;
   reused validation and doubled mean_std classifier capacity are explicit.
 
+- Executed phase B's 223-step 4x4-target run with identical initialization
+  seed/optimizer/actual image order to the original 2x2 logs. AdamW learned
+  validation mean 27.50% versus default 26.67%, random 25.17%, pixels 28.00%;
+  ridge 27.5% versus default 27%, random 24.5%, pixels 30%. All 12 selected
+  states and paired errors reproduce. Published aggregate results only;
+  token counts/compute, one encoder seed and reused validation are explicit.
+  Bound the cached training log to exact checkpoint bytes; a simulated
+  mismatch preserved old output, and a retry with training disabled produced
+  a byte-identical summary. Interview explanation: "I held initialization and
+  image order fixed while changing mask coverage, reproduced every selected
+  state, and reported a small pilot gain with its compute/data limitations."
+
 ## October 7, 2026
 
 - Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.
