@@ -34,6 +34,12 @@
   masks rejected before sampling/replacement, malformed mask metadata and
   legacy default-checkpoint compatibility. Boolean geometry is rejected.
 
+- Declared the fixed 500/200 pooling and 223-step target-mask experiment before
+  observing its scores. Added a bounded two-phase driver that verifies source
+  fingerprints, selected classifiers/paired errors, and actual historical
+  image-order equality. Mean_std capacity and mask-token/compute confounding
+  are explicit. Driver compilation/help checked before execution.
+
 ## October 7, 2026
 
 - Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.

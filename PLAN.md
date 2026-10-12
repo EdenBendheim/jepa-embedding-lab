@@ -41,6 +41,13 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
+October 11: pooling API/artifacts/comparison/geometry and configurable training
+masks are implemented and synthetically checked. The
+[pooling/mask protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md) fixes
+phase-A weights/grid/examples and phase-B 223-step budget before new scores.
+Run and publish each phase with reproduced saved classifiers; official test
+evaluation remains reserved. Pretrained and multi-training-seed confirmation follow.
+
 Both October 10 protocol parts completed: controlled 23/223-step comparison and three encoder/random initialization seeds. Under matched 500/200 examples and grids, the later-age mean gained 1 pp in one trajectory. Across three 223-step encoder runs, AdamW learned/random/pixel means were 27.11%/25.67%/28.00%; ridge 25.67%/25.33%/30.00%. All 36 selected classifiers for the seed comparison reproduce, along with paired class errors. One favorable seed/head is not a reliable improvement; reused validation and short training remain limiting.
 
 Next: inspect class confusions, mean pooling and mask geometry; select an appropriate frozen pretrained baseline; predeclare a tightly bounded pooling/masking ablation. Then extend training with explicit budgets and reserve the official test set for a final fixed protocol. Width/input-feature comparisons, plots and an embedding explorer remain pending. Résumé quality claims require stronger evidence.

@@ -6,6 +6,12 @@ A small, reproducible representation-learning experiment: predict target embeddi
 
 ## Why this experiment
 
+The [October 11 pooling/mask protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md)
+is committed before new scores: fixed-weight mean/max/mean_std evaluation,
+then a 223-step 4x4-target trajectory matched to the historical image order.
+The driver reproduces every saved classifier and paired error before producing
+aggregate-only summaries; features, logs and weights remain ignored.
+
 I want to explore the relationship between the input representation, masking geometry, and what an embedding retains. The first public experiment uses [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) and frozen-embedding image classification. Its small RGB images make bounded local iteration practical. Satellite/geospatial imagery remains a later direction because it connects to my research; no unreleased research data is used here.
 
 The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [official implementation](https://github.com/facebookresearch/ijepa). The current single-target-block sampler is a simplified experiment foundation, not a reproduction of the official multi-block training recipe.
