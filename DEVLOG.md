@@ -1,5 +1,12 @@
 # Development log
 
+## October 11, 2026
+
+- Added fixed mean/max/mean-plus-population-std pooling to the frozen image API.
+  Three synthetic tests check analytic moments, batch isolation, constant
+  tokens, invalid inputs, no gradients/mutations, and preserved encoder state.
+  The doubled mean_std feature width is explicit; no quality result is claimed.
+
 ## October 7, 2026
 
 - Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.

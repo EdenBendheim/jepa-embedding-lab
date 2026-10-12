@@ -12,6 +12,7 @@ import torch
 from .cifar10 import CIFAR10Binary, make_manifest, patchify_rgb
 from .cifar10_train import atomic_checkpoint
 from .model import JEPA, ModelConfig
+from .pooling import pool_tokens, pooling_dimension
 from .selection import validate_pilot
 
 
@@ -21,11 +22,13 @@ def rgb_config(config: ModelConfig):
 
 
 @torch.inference_mode()
-def image_embeddings(model: JEPA, images: torch.Tensor, *, encoder: str = "context") -> torch.Tensor:
-    """Mean-pool all 64 encoded patches; do not use masks or the predictor."""
+def image_embeddings(model: JEPA, images: torch.Tensor, *, encoder: str = "context",
+                     pooling: str = "mean") -> torch.Tensor:
+    """Pool all 64 encoded patches; do not use masks or the predictor."""
     if encoder not in ("context", "target"):
         raise ValueError("Encoder must be context or target")
     rgb_config(model.config)
+    pooling_dimension(model.config.embedding_dim, pooling)
     patches = patchify_rgb(images)
     if patches.shape[1:] != (64, 48):
         raise ValueError("Protocol requires 32x32 RGB images")
@@ -34,7 +37,7 @@ def image_embeddings(model: JEPA, images: torch.Tensor, *, encoder: str = "conte
         model.eval()
         module = model.context_encoder if encoder == "context" else model.target_encoder
         positions = torch.arange(64, device=patches.device).expand(images.shape[0], -1)
-        features = module(patches, positions).mean(dim=1)
+        features = pool_tokens(module(patches, positions), pooling)
         if not torch.isfinite(features).all():
             raise ValueError("Encoder produced non-finite embeddings")
         return features
