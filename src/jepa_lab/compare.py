@@ -20,6 +20,7 @@ from .probe_artifacts import STATE_FIELDS, load_probe, probe_context, save_probe
 from .selection import validate_pilot
 from .ridge import select_ridge, validate_ridge_candidates
 from .diagnostics import paired_diagnostics
+from .pooling import POOLING, pooling_dimension, pooling_mode
 
 
 REPRESENTATIONS = ("checkpoint", "random", "pixels")
@@ -54,10 +55,12 @@ def validate_comparison_inputs(sets, candidates):
                     or item.indices != expected.indices or not torch.equal(item.labels,expected.labels)):
                 raise ValueError("All representations must use the exact same ordered examples and labels")
     learned, random = reference[0].metadata, sets["random"][0].metadata
-    if (not isinstance(learned.get("config"),dict) or learned["config"] != random.get("config")
-            or learned.get("pooling") != "mean of all 64 patch tokens"
+    if not isinstance(learned.get("config"), dict):
+        raise ValueError("Checkpoint features require architecture metadata")
+    dimension = pooling_dimension(learned["config"].get("embedding_dim"), pooling_mode(learned.get("pooling")))
+    if (learned["config"] != random.get("config")
             or learned.get("encoder") not in ("context","target")
-            or reference[0].features.shape[1] != learned["config"].get("embedding_dim")
+            or reference[0].features.shape[1] != dimension
             or sets["random"][0].features.shape[1] != reference[0].features.shape[1]
             or learned.get("encoder") != random.get("encoder") or learned.get("pooling") != random.get("pooling")):
         raise ValueError("The random baseline must match checkpoint architecture, encoder choice, and pooling")
@@ -155,9 +158,10 @@ def compare_features(sets: dict[str, tuple[FeatureSet, FeatureSet]], candidates:
 
 def run_comparison(root: Path, manifest_path: Path, selection_path: Path, feature_dir: Path, *,
                    candidates: tuple[ProbeConfig, ...], checkpoint: Path | None = None,
-                   encoder: str = "context", random_seed: int = 29, probe_dir: Path | None = None,
+                   encoder: str = "context", pooling: str = "mean", random_seed: int = 29, probe_dir: Path | None = None,
                    probe_seeds=None, ridge_alphas=None) -> dict:
     validate_candidates(candidates)
+    pooling_dimension(1, pooling)
     if probe_seeds is not None:
         validate_probe_seeds(probe_seeds)
     if ridge_alphas is not None:
@@ -175,11 +179,14 @@ def run_comparison(root: Path, manifest_path: Path, selection_path: Path, featur
             for partition in ("train","validation"):
                 extract_cifar10(root,manifest_path,partition=partition,representation=representation,
                     checkpoint=checkpoint if representation == "checkpoint" else None,
-                    config=config if representation == "random" else None,encoder=encoder,seed=random_seed,
+                    config=config if representation == "random" else None,encoder=encoder,
+                    pooling=pooling if representation != "pixels" else "mean", seed=random_seed,
                     selection_path=selection_path,output=feature_dir/f"{representation}-{partition}.pt")
     sets = {name:tuple(load_features(feature_dir/f"{name}-{partition}.pt",manifest=manifest,
                         selection=selection,training_labels=train.labels,partition=partition)
                        for partition in ("train","validation")) for name in REPRESENTATIONS}
+    if sets["checkpoint"][0].metadata.get("pooling") != POOLING[pooling] or sets["checkpoint"][0].metadata.get("encoder") != encoder:
+        raise ValueError("Saved features do not match the requested encoder/pooling")
     # All six artifacts pass identity/fairness checks before any classifier is fitted.
     if probe_seeds is not None:
         return compare_repeated_features(sets, candidates, probe_seeds, probe_dir=probe_dir, ridge_alphas=ridge_alphas)
@@ -207,6 +214,7 @@ def main():
     parser.add_argument("--probe-dir",type=Path,help="Save selected fitted probes in an ignored local directory")
     parser.add_argument("--checkpoint",type=Path,help="Extract fresh matched features; omit to verify/reuse existing artifacts")
     parser.add_argument("--encoder",choices=("context","target"),default="context")
+    parser.add_argument("--pooling", choices=tuple(POOLING), default="mean")
     parser.add_argument("--random-seed",type=int,default=29)
     seeds = parser.add_mutually_exclusive_group()
     seeds.add_argument("--probe-seed",type=int,default=29)
@@ -222,7 +230,7 @@ def main():
         candidates = tuple(ProbeConfig(args.steps,lr,wd,args.probe_seed)
                            for lr in args.learning_rates for wd in args.weight_decays)
         report = run_comparison(args.root,args.manifest,args.selection,args.feature_dir,candidates=candidates,
-                                 checkpoint=args.checkpoint,encoder=args.encoder,random_seed=args.random_seed,probe_dir=args.probe_dir,probe_seeds=args.probe_seeds,ridge_alphas=args.ridge_alphas)
+                                 checkpoint=args.checkpoint,encoder=args.encoder,pooling=args.pooling,random_seed=args.random_seed,probe_dir=args.probe_dir,probe_seeds=args.probe_seeds,ridge_alphas=args.ridge_alphas)
         write_report(args.output,report)
     except (ValueError,OSError,KeyError,TypeError,RuntimeError) as exc:
         parser.error(str(exc))

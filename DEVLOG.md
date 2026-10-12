@@ -7,6 +7,11 @@
   tokens, invalid inputs, no gradients/mutations, and preserved encoder state.
   The doubled mean_std feature width is explicit; no quality result is claimed.
 
+- Integrated pooling into feature artifacts, verification and the matched
+  comparison CLI. Old mean artifacts remain valid. Two synthetic pipeline
+  tests cover all three contracts, mislabelled dimensions, matched random
+  features, and wrong-directory reuse rejected before fitting.
+
 ## October 7, 2026
 
 - Added a matched comparison CLI that extracts/reuses six balanced feature artifacts, copies checkpoint architecture for the random baseline, validates all data/provenance/configuration before fitting, shares probe grid/budget/seed, records all candidates/class outcomes/source hashes, and writes reports atomically. Published protocol, results and failure analysis in experiments/PILOT-2026-10-07.md.

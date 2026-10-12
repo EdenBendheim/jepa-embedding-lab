@@ -117,8 +117,11 @@ The frozen `image_embeddings(..., pooling=...)` API supports `mean`, `max`, and
 `mean_std` across all 64 spatial tokens. `mean_std` concatenates the mean and
 population standard deviation, doubling the classifier's input dimension;
 any comparison must disclose that capacity difference. Pooling fits no state,
-uses no labels, and preserves encoder weights/mode. Artifact/CLI extraction
-currently retains the existing mean default.
+uses no labels, and preserves encoder weights/mode. Both `embeddings` and
+`compare` accept `--pooling mean|max|mean_std` (default `mean`). Artifact
+verification binds the pooling description to the feature dimension; matched
+random encoders use the same rule. Pixel features keep their fixed flattening.
+Reusing a directory with a different requested encoder/pooling fails before fitting.
 
 1. A context encoder receives only visible patches and their positions.
 2. A stop-gradient target encoder encodes the full input; target positions select prediction targets.

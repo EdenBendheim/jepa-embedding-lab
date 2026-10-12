@@ -12,7 +12,7 @@ import torch
 from .cifar10 import CIFAR10Binary, make_manifest, patchify_rgb
 from .cifar10_train import atomic_checkpoint
 from .model import JEPA, ModelConfig
-from .pooling import pool_tokens, pooling_dimension
+from .pooling import POOLING, pool_tokens, pooling_dimension
 from .selection import validate_pilot
 
 
@@ -92,11 +92,15 @@ def load_encoder(checkpoint: str | Path, manifest_sha256: str) -> tuple[JEPA, di
 
 def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: str = "train",
                     representation: str = "checkpoint", checkpoint: str | Path | None = None,
-                    encoder: str = "context", seed: int = 29, limit: int | None = None, batch_size: int = 16,
+                    encoder: str = "context", pooling: str = "mean", seed: int = 29,
+                    limit: int | None = None, batch_size: int = 16,
                     selection_path: str | Path | None = None,
                     config: ModelConfig | None = None, output: str | Path | None = None) -> dict:
     if partition not in ("train", "validation", "test") or representation not in ("checkpoint", "random", "pixels"):
         raise ValueError("Choose a fixed partition and checkpoint/random/pixels representation")
+    pooling_dimension(1, pooling)
+    if representation == "pixels" and pooling != "mean":
+        raise ValueError("Pixel features have a fixed flattening contract; encoder pooling is inapplicable")
     if selection_path is not None and (limit is not None or partition == "test"):
         raise ValueError("Balanced pilot extraction uses all selected train/validation indices; no limit or test")
     limit = 64 if limit is None else limit
@@ -113,7 +117,7 @@ def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: s
     if manifest != make_manifest(train, test, seed=manifest["seed"]):
         raise ValueError("Manifest does not match current data or the fixed split protocol")
     selection = validate_pilot(json.loads(Path(selection_path).read_text()), manifest, train.labels) if selection_path else None
-    metadata = dict(representation=representation, pooling="mean of all 64 patch tokens" if representation != "pixels"
+    metadata = dict(representation=representation, pooling=POOLING[pooling] if representation != "pixels"
                     else "flatten NCHW RGB values", normalization="x / 127.5 - 1")
     model = None
     if representation == "checkpoint":
@@ -131,7 +135,7 @@ def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: s
         batch = [dataset[index] for index in indices[start:start+batch_size]]
         images = torch.stack([image for image, _ in batch])
         labels.extend(label for _, label in batch)
-        values = pixel_features(images) if model is None else image_embeddings(model, images, encoder=encoder)
+        values = pixel_features(images) if model is None else image_embeddings(model, images, encoder=encoder, pooling=pooling)
         features.append(values.cpu())
     values = torch.cat(features)
     fingerprint = hashlib.sha256(values.contiguous().numpy().tobytes()).hexdigest()
@@ -156,6 +160,7 @@ def main():
     parser.add_argument("--representation", choices=("checkpoint", "random", "pixels"), default="checkpoint")
     parser.add_argument("--checkpoint", type=Path)
     parser.add_argument("--encoder", choices=("context", "target"), default="context")
+    parser.add_argument("--pooling", choices=tuple(POOLING), default="mean")
     parser.add_argument("--seed", type=int, default=29, help="Random-encoder seed")
     parser.add_argument("--limit", type=int, help="First N fixed indices (default 64); cannot combine with --selection")
     parser.add_argument("--selection", type=Path, help="Shared balanced pilot manifest; extracts its full selected partition")
@@ -165,7 +170,7 @@ def main():
     torch.set_num_threads(1)
     try:
         report = extract_cifar10(args.root, args.manifest, partition=args.partition, representation=args.representation,
-                                checkpoint=args.checkpoint, encoder=args.encoder, seed=args.seed, limit=args.limit,
+                                checkpoint=args.checkpoint, encoder=args.encoder, pooling=args.pooling, seed=args.seed, limit=args.limit,
                                 batch_size=args.batch_size, selection_path=args.selection, output=args.output)
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.error(str(exc))

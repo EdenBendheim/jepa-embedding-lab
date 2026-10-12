@@ -15,6 +15,7 @@ import torch
 from .cifar10 import CIFAR10Binary, make_manifest
 from .embeddings import rgb_config
 from .model import ModelConfig
+from .pooling import pooling_dimension, pooling_mode
 from .selection import validate_pilot
 
 
@@ -95,8 +96,8 @@ def load_features(path: str | Path, *, manifest: dict, selection: dict, training
             rgb_config(config)
         except (KeyError, TypeError, ValueError) as exc:
             raise ValueError("Encoder architecture metadata is invalid") from exc
-        if (values.shape[1] != config.embedding_dim or metadata.get("encoder") not in ("context", "target")
-                or metadata.get("pooling") != "mean of all 64 patch tokens"):
+        dimension = pooling_dimension(config.embedding_dim, pooling_mode(metadata.get("pooling")))
+        if values.shape[1] != dimension or metadata.get("encoder") not in ("context", "target"):
             raise ValueError("Encoder dimension, choice, or pooling differs from its feature contract")
         if representation == "checkpoint":
             if (not _sha(metadata.get("checkpoint_sha256")) or type(metadata.get("completed_steps")) is not int
