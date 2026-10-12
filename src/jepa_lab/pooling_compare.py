@@ -1,22 +1,31 @@
 """Compare fixed pooling rules on the same checkpoint and examples."""
 
+import argparse
 from dataclasses import asdict, replace
+import json
 from pathlib import Path
 from statistics import mean, stdev
 
 import torch
 
-from .compare import fit_representation, validate_comparison_inputs, validate_probe_seeds
+from .compare import fit_representation, validate_comparison_inputs, validate_probe_seeds, write_report
+from .cifar10 import CIFAR10Binary, make_manifest
 from .diagnostics import paired_diagnostics
-from .features import _sha
+from .features import _sha, load_features
 from .pooling import POOLING
 from .ridge import validate_ridge_candidates
+from .probes import ProbeConfig
+from .selection import validate_pilot
 
 
-def validate_pooling_arms(arms, candidates):
+def validate_pooling_names(arms):
     if (not isinstance(arms, dict) or not 2 <= len(arms) <= 3
             or next(iter(arms), None) != "mean" or any(name not in POOLING for name in arms)):
         raise ValueError("Use 2-3 distinct pooling arms with mean first")
+
+
+def validate_pooling_arms(arms, candidates):
+    validate_pooling_names(arms)
     anchor = arms["mean"]
     reference = validate_comparison_inputs(anchor, candidates)
     fixed = ("checkpoint_sha256", "completed_steps", "training_settings", "config", "encoder", "normalization")
@@ -92,3 +101,60 @@ def compare_pooling(arms, candidates, seeds, *, probe_dir=None, ridge_alphas=Non
         test_evaluated=False,
         baseline_policy="Same random encoder with matching pooling per arm; pixel artifacts/classifiers shared; ridge fitted once",
         limitation="Validation-selected pooling on one fixed checkpoint. mean_std doubles classifier dimension; probe seeds are not encoder-training or test uncertainty")
+
+
+def run_pooling(root, manifest_path, selection_path, pixel_dir, arm_dirs, *, candidates, seeds,
+                probe_dir=None, ridge_alphas=None):
+    """Load/verify saved pooling artifacts; do not extract features or read images."""
+    validate_pooling_names(arm_dirs)
+    train, test = CIFAR10Binary(root), CIFAR10Binary(root, train=False)
+    manifest = json.loads(Path(manifest_path).read_text())
+    if manifest != make_manifest(train, test, seed=manifest["seed"]):
+        raise ValueError("Current data differs from the fixed manifest")
+    selection = validate_pilot(json.loads(Path(selection_path).read_text()), manifest, train.labels)
+
+    def pair(directory, name):
+        return tuple(load_features(Path(directory)/f"{name}-{partition}.pt", manifest=manifest,
+            selection=selection, training_labels=train.labels, partition=partition) for partition in ("train", "validation"))
+
+    pixels = pair(pixel_dir, "pixels")
+    arms = {mode: dict(pixels=pixels, checkpoint=pair(directory, "checkpoint"), random=pair(directory, "random"))
+            for mode, directory in arm_dirs.items()}
+    return compare_pooling(arms, candidates, seeds, probe_dir=probe_dir, ridge_alphas=ridge_alphas)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Compare verified saved pooling arms on one checkpoint; no test evaluation")
+    parser.add_argument("root", type=Path)
+    parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--selection", type=Path, required=True)
+    parser.add_argument("--pixel-dir", type=Path, required=True)
+    parser.add_argument("--arm", nargs=2, action="append", required=True, metavar=("POOLING", "FEATURE_DIRECTORY"))
+    parser.add_argument("--probe-dir", type=Path)
+    parser.add_argument("--probe-seeds", type=int, nargs="+", default=[29, 31, 37])
+    parser.add_argument("--steps", type=int, default=200)
+    parser.add_argument("--learning-rates", type=float, nargs="+", default=[0.0001, 0.001, 0.01, 0.05])
+    parser.add_argument("--weight-decays", type=float, nargs="+", default=[0.01, 0.1])
+    parser.add_argument("--ridge-alphas", type=float, nargs="+")
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    torch.set_num_threads(1)
+    try:
+        directories = dict(args.arm)
+        if len(directories) != len(args.arm):
+            raise ValueError("Pooling arm names must be distinct")
+        if not args.probe_seeds:
+            raise ValueError("At least one probe seed is required")
+        candidates = tuple(ProbeConfig(args.steps, lr, wd, args.probe_seeds[0])
+                           for lr in args.learning_rates for wd in args.weight_decays)
+        report = run_pooling(args.root, args.manifest, args.selection, args.pixel_dir, directories,
+                             candidates=candidates, seeds=args.probe_seeds, probe_dir=args.probe_dir,
+                             ridge_alphas=args.ridge_alphas)
+        write_report(args.output, report)
+    except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
+        parser.error(str(exc))
+    print(json.dumps(report, indent=2))
+
+
+if __name__ == "__main__":
+    main()

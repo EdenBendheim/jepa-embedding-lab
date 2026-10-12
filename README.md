@@ -129,6 +129,24 @@ encoder choice, architecture and random seed. Each random baseline uses its
 arm's pooling, while the exact pixel artifacts/classifiers are shared. It
 records per-arm dimensions, all selected states and paired prediction errors.
 
+The saved-feature CLI verifies every arm before fitting and never samples raw
+images. Prepare checkpoint/random files in each arm directory with the matching
+`embeddings --pooling` setting, using one checkpoint and random seed throughout.
+Reuse one directory containing the exact selected pixel train/validation files:
+
+```sh
+.venv/bin/python -m jepa_lab.pooling_compare data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --selection runs/pilot-selection-20261009.json \
+  --pixel-dir runs/pilot-features-20261009 \
+  --arm mean runs/pooling/mean --arm max runs/pooling/max \
+  --probe-seeds 29 31 37 --ridge-alphas 0.01 0.1 1 10 \
+  --probe-dir runs/pooling/probes --output runs/pooling/comparison.json
+```
+
+Add `--arm mean_std runs/pooling/mean_std` to include spatial variance. Default
+classifier grids/budgets match the existing comparison CLI. This is a
+validation-selected ablation; it does not evaluate the official test set.
+
 1. A context encoder receives only visible patches and their positions.
 2. A stop-gradient target encoder encodes the full input; target positions select prediction targets.
 3. A predictor combines context embeddings with target positions to predict target representations.
