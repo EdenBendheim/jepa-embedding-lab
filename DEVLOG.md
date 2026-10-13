@@ -2,6 +2,13 @@
 
 ## October 12, 2026
 
+- Added fixed saved-classifier confirmation scoring for AdamW and ridge.
+  Original scores/state must reproduce before fresh rows are evaluated; exact
+  feature provenance and no overlap with prior tuning/training rows are required.
+  Two synthetic tests verify unchanged normalization/state/source bytes/RNG and
+  rejection of altered representations, dimensions, indices and protocol.
+  Content fingerprints also reject features/labels mutated after verification.
+
 - Added confirmation selection CLI and validation-only feature extraction.
   Verified artifacts retain their confirmation status; matched fitting and
   saved-classifier persistence reject these rows to prevent retuning.

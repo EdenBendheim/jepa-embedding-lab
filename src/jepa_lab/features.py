@@ -30,6 +30,8 @@ class FeatureSet:
     metadata: dict
     artifact_sha256: str
     selection_kind: str = "pilot"
+    features_sha256: str | None = None
+    labels_sha256: str | None = None
 
     def summary(self) -> dict:
         return dict(partition=self.partition, official_split="train", selection_kind=self.selection_kind, count=len(self.indices),
@@ -114,7 +116,8 @@ def load_features(path: str | Path, *, manifest: dict, selection: dict, training
         raise ValueError("Unsupported feature representation")
     return FeatureSet(values.detach().clone(), labels.clone(), tuple(indices), partition,
                       manifest["manifest_sha256"], selection["selection_sha256"], deepcopy(metadata),
-                      hashlib.sha256(payload).hexdigest(), kind)
+                      hashlib.sha256(payload).hexdigest(), kind, fingerprint,
+                      hashlib.sha256(labels.contiguous().numpy().tobytes()).hexdigest())
 
 
 def main():

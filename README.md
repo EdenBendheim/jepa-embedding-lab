@@ -268,8 +268,15 @@ validation examples from that pilot and additional historical selections:
 Pass the resulting `--selection` to `embeddings` with `--partition validation`.
 It rejects training/test extraction; the feature loader marks these rows as
 confirmation data, and fitting/selection/persistence runners reject them.
-Version-one pilot files and classifiers remain valid. A no-refit scoring
-workflow for the newly reserved rows is the next implementation step.
+Version-one pilot files and classifiers remain valid.
+
+`confirmation.score_confirmation(probe_path, train, tuning_validation, fresh,
+selection)` verifies exact source/representation identity and disjoint fresh
+rows, restores the selected classifier against its original artifacts, then
+scores the new rows with its unchanged training-only normalization and weights.
+It supports AdamW and ridge, fits/selects nothing and emits aggregate metrics.
+The no-refit CLI is the next step; official test remains reserved. Once used for
+new tuning, these examples no longer provide an untuned confirmation check.
 
 ## Persist a fitted linear probe
 
