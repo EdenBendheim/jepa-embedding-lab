@@ -123,6 +123,8 @@ def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: s
     if manifest != make_manifest(train, test, seed=manifest["seed"]):
         raise ValueError("Manifest does not match current data or the fixed split protocol")
     selection = validate_pilot(json.loads(Path(selection_path).read_text()), manifest, train.labels) if selection_path else None
+    if selection and selection.get("kind") == "confirmation" and partition != "validation":
+        raise ValueError("Confirmation extraction is validation-only; reuse the original fitted training artifacts")
     metadata = dict(representation=representation, pooling=POOLING[pooling] if representation != "pixels"
                     else "flatten NCHW RGB values", normalization="x / 127.5 - 1")
     model = None
@@ -149,6 +151,7 @@ def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: s
                     partition=partition, official_split=selected["official_split"], indices=indices,
                     feature_metadata=metadata, features_sha256=fingerprint,
                     selection_sha256=selection["selection_sha256"] if selection else None,
+                    selection_kind=selection.get("kind", "pilot") if selection else "fixed_partition",
                     extraction_settings=dict(limit=len(indices), batch_size=batch_size),
                     runtime=dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()))
     if output:

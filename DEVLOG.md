@@ -2,6 +2,12 @@
 
 ## October 12, 2026
 
+- Added confirmation selection CLI and validation-only feature extraction.
+  Verified artifacts retain their confirmation status; matched fitting and
+  saved-classifier persistence reject these rows to prevent retuning.
+  Two synthetic workflow tests passed, including unchanged old output after
+  invalid CLI input and legacy pilot compatibility checked by the full suite.
+
 - Added reproducible confirmation selection: preserve the fitted pilot's exact
   training rows, exclude every validation row used by declared earlier pilots,
   and select balanced fresh rows only inside the fixed validation partition.

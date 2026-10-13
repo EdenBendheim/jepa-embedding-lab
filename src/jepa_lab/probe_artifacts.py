@@ -21,6 +21,8 @@ STATE_FIELDS = ("mean", "scale", "constant_columns", "weight", "bias")
 def probe_context(train: FeatureSet, validation: FeatureSet) -> dict:
     if not isinstance(train, FeatureSet) or not isinstance(validation, FeatureSet):
         raise ValueError("Probe persistence requires verified feature sets")
+    if train.selection_kind != "pilot" or validation.selection_kind != "pilot":
+        raise ValueError("Confirmation rows cannot bind a refitted or selected classifier")
     validate_probe_data(train.features, train.labels, fitting=True)
     validate_probe_data(validation.features, validation.labels, dimension=train.features.shape[1])
     if (train.partition != "train" or validation.partition != "validation"

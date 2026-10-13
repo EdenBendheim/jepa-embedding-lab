@@ -47,6 +47,8 @@ class ConfirmationSelectionTests(unittest.TestCase):
             with self.subTest(changes=list(changes)), self.assertRaises(ValueError): self.build(**changes)
         bad = deepcopy(self.older); bad["seed"] += 1
         with self.assertRaises(ValueError): self.build(exclusions=(bad,))
+        for value in (self.reference | dict(version=True), self.reference | dict(version=1.0), selected | dict(version=2.0)):
+            with self.assertRaises(ValueError): validate_pilot(value, self.manifest, self.labels)
 
     def test_exhausted_fixed_validation_split_is_rejected(self):
         tiny = deepcopy(self.manifest)

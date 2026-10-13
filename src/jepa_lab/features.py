@@ -29,9 +29,10 @@ class FeatureSet:
     selection_sha256: str
     metadata: dict
     artifact_sha256: str
+    selection_kind: str = "pilot"
 
     def summary(self) -> dict:
-        return dict(partition=self.partition, official_split="train", count=len(self.indices),
+        return dict(partition=self.partition, official_split="train", selection_kind=self.selection_kind, count=len(self.indices),
                     feature_dim=self.features.shape[1], manifest_sha256=self.manifest_sha256,
                     selection_sha256=self.selection_sha256, artifact_sha256=self.artifact_sha256,
                     feature_metadata=deepcopy(self.metadata))
@@ -46,6 +47,9 @@ def load_features(path: str | Path, *, manifest: dict, selection: dict, training
     if partition not in ("train", "validation"):
         raise ValueError("Pilot probes accept training and validation artifacts only; test is reserved")
     validate_pilot(selection, manifest, training_labels)
+    kind = selection.get("kind", "pilot")
+    if kind == "confirmation" and partition != "validation":
+        raise ValueError("Confirmation features are validation-only and cannot supply fitted training rows")
     path = Path(path)
     if path.stat().st_size > 64*1024*1024:
         raise ValueError("Bounded pilot artifacts must be at most 64 MiB")
@@ -57,6 +61,7 @@ def load_features(path: str | Path, *, manifest: dict, selection: dict, training
     if (not isinstance(saved, dict) or type(saved.get("format_version")) is not int or saved.get("format_version") != 1 or saved.get("dataset") != "CIFAR-10"
             or saved.get("manifest_sha256") != manifest["manifest_sha256"]
             or saved.get("selection_sha256") != selection["selection_sha256"]
+            or saved.get("selection_kind", "pilot") != kind
             or saved.get("partition") != partition or saved.get("official_split") != "train"
             or saved.get("indices") != selection["partitions"][partition]["indices"]):
         raise ValueError("Artifact identity, exact indices, or namespace differs from the balanced pilot")
@@ -109,7 +114,7 @@ def load_features(path: str | Path, *, manifest: dict, selection: dict, training
         raise ValueError("Unsupported feature representation")
     return FeatureSet(values.detach().clone(), labels.clone(), tuple(indices), partition,
                       manifest["manifest_sha256"], selection["selection_sha256"], deepcopy(metadata),
-                      hashlib.sha256(payload).hexdigest())
+                      hashlib.sha256(payload).hexdigest(), kind)
 
 
 def main():

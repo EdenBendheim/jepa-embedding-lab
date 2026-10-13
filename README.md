@@ -253,6 +253,24 @@ The default grid has eight candidates: learning rates `0.0001, 0.001, 0.01, 0.05
 
 See [the October 7 results and failure analysis](experiments/PILOT-2026-10-07.md). The grid was expanded after an initial validation diagnostic exposed pixel overfitting; this is exploratory model selection with one seed and 50 validation examples. There is no independent confirmation or official test score. The early checkpoint has not demonstrated an advantage over the random baseline.
 
+## Reserve fresh confirmation examples
+
+The selector can preserve the fitted pilot's training examples while excluding
+validation examples from that pilot and additional historical selections:
+
+```sh
+.venv/bin/python -m jepa_lab.selection data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --confirmation-of runs/pilot-selection-20261009.json \
+  --exclude-pilot runs/pilot-selection-20261007.json --validation-per-class 50 \
+  --seed 20261012 --output runs/confirmation-selection-20261012.json
+```
+
+Pass the resulting `--selection` to `embeddings` with `--partition validation`.
+It rejects training/test extraction; the feature loader marks these rows as
+confirmation data, and fitting/selection/persistence runners reject them.
+Version-one pilot files and classifiers remain valid. A no-refit scoring
+workflow for the newly reserved rows is the next implementation step.
+
 ## Persist a fitted linear probe
 
 `jepa_lab.probe_artifacts.save_probe(path, probe, train, validation)` saves a fitted classifier and its training-only normalization atomically. `load_probe(path, train, validation)` restores it using CPU `weights_only=True`, checks the exact source-artifact/manifest/selection identities, tensor dimensions/dtypes/finiteness, positive normalization scales, configuration and runtime, and reproduces its saved train/validation scores. A failed replacement preserves the previous file. Checksums detect inconsistency, not producer authenticity; use locally generated artifacts. Probe files stay in ignored `runs/` or `checkpoints/`. Test evaluation remains reserved. The matched comparison CLI accepts `--probe-dir` to persist selected probes after all six feature artifacts pass verification and fairness checks.

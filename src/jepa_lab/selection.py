@@ -50,6 +50,8 @@ def make_pilot(manifest: dict, labels: list[int], *, train_per_class: int = 10,
 
 
 def validate_pilot(selection: dict, manifest: dict, labels: list[int]) -> dict:
+    if not isinstance(selection, dict) or type(selection.get("version")) is not int:
+        raise ValueError("Selection version must be an integer")
     if isinstance(selection, dict) and selection.get("kind") == "confirmation":
         return validate_confirmation(selection, manifest, labels)
     try:
@@ -100,6 +102,8 @@ def make_confirmation(manifest: dict, labels: list[int], reference: dict, *,
 
 
 def validate_confirmation(selection: dict, manifest: dict, labels: list[int]) -> dict:
+    if not isinstance(selection, dict) or type(selection.get("version")) is not int or selection["version"] != 2:
+        raise ValueError("Confirmation selection requires integer version two")
     try:
         expected = make_confirmation(manifest, labels, selection["reference_selection"],
                                      exclusions=selection["excluded_selections"],
@@ -116,17 +120,28 @@ def main():
     parser.add_argument("root", type=Path)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--train-per-class", type=int, default=10)
+    parser.add_argument("--train-per-class", type=int)
     parser.add_argument("--validation-per-class", type=int, default=5)
     parser.add_argument("--seed", type=int, default=20261007)
+    parser.add_argument("--confirmation-of", type=Path, help="Preserve this fitted pilot's training rows and exclude its validation rows")
+    parser.add_argument("--exclude-pilot", type=Path, action="append", default=[], help="Additional historical validation selection to exclude")
     args = parser.parse_args()
     try:
         manifest = json.loads(args.manifest.read_text())
         train, test = CIFAR10Binary(args.root), CIFAR10Binary(args.root, train=False)
         if manifest != make_manifest(train, test, seed=manifest["seed"]):
             raise ValueError("Manifest does not match current data or the fixed split")
-        selection = make_pilot(manifest, train.labels, train_per_class=args.train_per_class,
-                               validation_per_class=args.validation_per_class, seed=args.seed)
+        if args.confirmation_of:
+            if args.train_per_class is not None:
+                raise ValueError("Confirmation preserves fitted training rows; do not set --train-per-class")
+            selection = make_confirmation(manifest, train.labels, json.loads(args.confirmation_of.read_text()),
+                exclusions=[json.loads(path.read_text()) for path in args.exclude_pilot],
+                validation_per_class=args.validation_per_class, seed=args.seed)
+        else:
+            if args.exclude_pilot:
+                raise ValueError("--exclude-pilot requires --confirmation-of")
+            selection = make_pilot(manifest, train.labels, train_per_class=10 if args.train_per_class is None else args.train_per_class,
+                                  validation_per_class=args.validation_per_class, seed=args.seed)
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.error(str(exc))
     args.output.parent.mkdir(parents=True, exist_ok=True)

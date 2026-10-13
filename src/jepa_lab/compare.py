@@ -34,6 +34,8 @@ def validate_comparison_inputs(sets, candidates):
         if not isinstance(pair, (tuple,list)) or len(pair) != 2 or any(not isinstance(item,FeatureSet) for item in pair):
             raise ValueError("Every representation needs verified train and validation feature sets")
         train, validation = pair
+        if train.selection_kind != "pilot" or validation.selection_kind != "pilot":
+            raise ValueError("Confirmation features must not be used for fitting or hyperparameter selection")
         if (train.partition != "train" or validation.partition != "validation"
                 or set(train.indices).intersection(validation.indices)
                 or train.manifest_sha256 != validation.manifest_sha256
@@ -115,6 +117,8 @@ def compare_repeated_features(sets, candidates, seeds, *, probe_dir=None, ridge_
 def fit_representation(pair, candidates, name, probe_dir=None, ridge_alphas=None):
     """Fit one prevalidated representation and retain predictions for paired auditing."""
     train, validation = pair
+    if train.selection_kind != "pilot" or validation.selection_kind != "pilot":
+        raise ValueError("Confirmation features must not be used for fitting or hyperparameter selection")
     start = perf_counter()
     probe, result = select_probe(train.features, train.labels, validation.features, validation.labels, candidates)
     selected = result["candidates"][result["selected_candidate"]]
