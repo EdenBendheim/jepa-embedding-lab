@@ -275,8 +275,22 @@ selection)` verifies exact source/representation identity and disjoint fresh
 rows, restores the selected classifier against its original artifacts, then
 scores the new rows with its unchanged training-only normalization and weights.
 It supports AdamW and ridge, fits/selects nothing and emits aggregate metrics.
-The no-refit CLI is the next step; official test remains reserved. Once used for
+The no-refit CLI below works; official test remains reserved. Once used for
 new tuning, these examples no longer provide an untuned confirmation check.
+
+```sh
+.venv/bin/python -m jepa_lab.confirmation data/cifar-10-batches-bin PROBE_PATH \
+  --manifest runs/cifar10-manifest.json --reference-selection runs/pilot-selection-20261009.json \
+  --confirmation-selection runs/confirmation-selection-20261012.json \
+  --train-features TRAIN_FEATURES --tuning-features OLD_VALIDATION_FEATURES \
+  --confirmation-features FRESH_VALIDATION_FEATURES --output runs/confirmation-score.json
+```
+
+Use original feature paths and the selected classifier path from the historical
+comparison report. Dataset/selection/features/state are revalidated before
+scoring; invalid inputs leave an existing output report intact. The workflow
+neither samples images nor fits a classifier. Fresh feature extraction is a
+separate, validation-only step.
 
 ## Persist a fitted linear probe
 

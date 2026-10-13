@@ -2,6 +2,12 @@
 
 ## October 12, 2026
 
+- Added the no-refit confirmation CLI with dataset and selection verification,
+  exact original/fresh artifact loading and atomic aggregate reports. A synthetic
+  end-to-end check proves no image sampling/refitting or source mutation and
+  preserves an earlier report when its input protocol is altered. CLI help
+  checked. The October 12 fixed confirmation protocol is declared before scores.
+
 - Added fixed saved-classifier confirmation scoring for AdamW and ridge.
   Original scores/state must reproduce before fresh rows are evaluated; exact
   feature provenance and no overlap with prior tuning/training rows are required.
