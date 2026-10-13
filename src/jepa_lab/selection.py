@@ -2,6 +2,7 @@
 
 import argparse
 from collections import Counter
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -49,6 +50,8 @@ def make_pilot(manifest: dict, labels: list[int], *, train_per_class: int = 10,
 
 
 def validate_pilot(selection: dict, manifest: dict, labels: list[int]) -> dict:
+    if isinstance(selection, dict) and selection.get("kind") == "confirmation":
+        return validate_confirmation(selection, manifest, labels)
     try:
         expected = make_pilot(manifest, labels, train_per_class=selection["per_class"]["train"],
                               validation_per_class=selection["per_class"]["validation"], seed=selection["seed"])
@@ -56,6 +59,55 @@ def validate_pilot(selection: dict, manifest: dict, labels: list[int]) -> dict:
         raise ValueError("Invalid pilot selection schema") from exc
     if selection != expected:
         raise ValueError("Pilot selection differs from the fixed balanced protocol or data identity")
+    return selection
+
+
+def make_confirmation(manifest: dict, labels: list[int], reference: dict, *,
+                      exclusions=(), validation_per_class: int = 50,
+                      seed: int = 20261012) -> dict:
+    """Keep fitted training rows; reserve unseen validation rows, never test."""
+    if (type(validation_per_class) is not int or not 1 <= validation_per_class <= 100
+            or type(seed) is not int or not 0 <= seed < 2**63
+            or not isinstance(exclusions, (tuple, list)) or len(exclusions) > 8):
+        raise ValueError("Confirmation requires 1-100 rows/class, a valid seed, and at most eight exclusions")
+    parents = [reference, *exclusions]
+    for parent in parents:
+        if not isinstance(parent, dict) or parent.get("version") != 1 or "kind" in parent:
+            raise ValueError("Confirmation sources must be original version-one pilot selections")
+        validate_pilot(parent, manifest, labels)
+    hashes = [parent["selection_sha256"] for parent in parents]
+    if len(hashes) != len(set(hashes)):
+        raise ValueError("Confirmation source selections must be distinct")
+    excluded = {index for parent in parents for index in parent["partitions"]["validation"]["indices"]}
+    chosen = []
+    for label in range(10):
+        group = [index for index in manifest["partitions"]["validation"]["indices"]
+                 if labels[index] == label and index not in excluded]
+        if len(group) < validation_per_class:
+            raise ValueError("Not enough unseen validation examples for every class")
+        group.sort(key=lambda index: (hashlib.sha256(
+            f"cifar10-confirmation-v1:{seed}:{index}".encode()).digest(), index))
+        chosen.extend(group[:validation_per_class])
+    result = dict(version=2, kind="confirmation", dataset="CIFAR-10",
+                  manifest_sha256=manifest["manifest_sha256"], seed=seed,
+                  algorithm="cifar10-confirmation-v1 SHA-256 within each fixed validation class, excluding prior pilots",
+                  reference_selection=deepcopy(reference),
+                  excluded_selections=deepcopy(sorted(exclusions, key=lambda item: item["selection_sha256"])),
+                  per_class=dict(train=reference["per_class"]["train"], validation=validation_per_class),
+                  partitions=dict(train=deepcopy(reference["partitions"]["train"]),
+                                  validation=dict(official_split="train", indices=sorted(chosen))))
+    return result | dict(selection_sha256=document_hash(result, "selection_sha256"))
+
+
+def validate_confirmation(selection: dict, manifest: dict, labels: list[int]) -> dict:
+    try:
+        expected = make_confirmation(manifest, labels, selection["reference_selection"],
+                                     exclusions=selection["excluded_selections"],
+                                     validation_per_class=selection["per_class"]["validation"], seed=selection["seed"])
+    except (KeyError, TypeError, AttributeError) as exc:
+        raise ValueError("Invalid confirmation selection schema") from exc
+    if selection != expected:
+        raise ValueError("Confirmation selection differs from its disjoint fixed protocol or data identity")
     return selection
 
 

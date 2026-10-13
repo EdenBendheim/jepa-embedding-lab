@@ -44,6 +44,10 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
+October 12: disjoint balanced confirmation selection is implemented and tested.
+Next integrate validation-only extraction and score already selected classifiers
+without fitting, normalization changes or retuning on the fresh examples.
+
 Both phases of the [October 11 protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md)
 completed. Learned mean_std 28.67% trails matching random 33.83%; the 4x4
 target run reached 27.50%, versus default mean 26.67% and pixels 28.00%.

@@ -1,5 +1,14 @@
 # Development log
 
+## October 12, 2026
+
+- Added reproducible confirmation selection: preserve the fitted pilot's exact
+  training rows, exclude every validation row used by declared earlier pilots,
+  and select balanced fresh rows only inside the fixed validation partition.
+  Embedded source documents are revalidated, including after rehashed edits;
+  nested/duplicate exclusions and insufficient class coverage are rejected.
+  Three synthetic tests passed; no new real-data score has been observed.
+
 ## October 11, 2026
 
 - Added fixed mean/max/mean-plus-population-std pooling to the frozen image API.
