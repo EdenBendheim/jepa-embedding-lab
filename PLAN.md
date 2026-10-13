@@ -40,24 +40,24 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Compare fixed-checkpoint mean/max/mean_std with matching random pooling and shared pixel classifiers.
 - [x] Inspect verified feature geometry and reproduce selected classifiers/paired class errors.
 - [x] Implement resume-bound custom masks and run a declared 4x4-target pilot matched to actual historical image order.
+- [x] Reserve balanced confirmation rows excluding all declared earlier tuning examples.
+- [x] Score frozen selected AdamW/ridge classifiers on fresh examples without refitting or retuning.
 - [ ] Publish configurations, provenance, plots, a results table, and a small embedding explorer.
 
 ## Next session
 
-October 12: disjoint balanced confirmation selection is implemented and tested.
-Next integrate validation-only extraction and score already selected classifiers
-without fitting, normalization changes or retuning on the fresh examples.
-
-Both phases of the [October 11 protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md)
-completed. Learned mean_std 28.67% trails matching random 33.83%; the 4x4
-target run reached 27.50%, versus default mean 26.67% and pixels 28.00%.
-All 40 new selected states/paired errors reproduce; 77 synthetic tests pass.
-Readout dimension and mask-token budgets differ, and validation is reused;
-these pilots do not establish reliable useful-learning gains.
+The [October 12 confirmation](experiments/CONFIRMATION-2026-10-12.md) is complete:
+500 fresh balanced examples, all 246 old tuning rows excluded, 24 original
+classifiers/state/source identities reproduced, no refitting or retuning.
+Mean_std learned/random/pixel AdamW means are 25.67%/32.73%/28.20%; the
+4x4 mean and default mean both average 24.47%. Useful-learning advantage is
+unproven. All 85 synthetic tests pass; a no-extraction cached rerun reproduces
+the byte-identical report, and a corrupted cache preserves the previous output.
 
 Next: select and predeclare a frozen pretrained comparator, choose a bounded
 stronger training budget, and repeat selected mask settings across encoder
-seeds. Use fresh confirmation examples before final protocol selection and
-keep the official test set reserved. Width/input-feature comparisons, plots
+seeds. These confirmation rows are now observed; reserve a different untuned
+subset for any new chosen protocol, and keep the official test set reserved.
+Width/input-feature comparisons, plots
 and an embedding explorer remain pending. Résumé quality claims require
 stronger independent evidence.

@@ -1,0 +1,5202 @@
+{
+  "version": 1,
+  "date": "2026-10-12",
+  "protocol_sha256": "35d72dd90702f8fe0e3e5f5fd3010c35c395185be4398a619cd904d01fc3a024",
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "reference_selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "confirmation_selection_sha256": "decdf27565acb4db350754997cb230b0a1e836219d5895885d370da79ca358cd",
+  "counts": {
+    "fitted_train": 500,
+    "tuning": 200,
+    "confirmation": 500,
+    "excluded_prior_validation": 246
+  },
+  "summary": {
+    "learned_mean": {
+      "feature_dim": 32,
+      "adamw": {
+        "accuracies": [
+          0.24,
+          0.248,
+          0.246
+        ],
+        "mean_accuracy": 0.24466666666666667,
+        "sample_standard_deviation": 0.0041633319989322695,
+        "original_tuning_mean": 0.26666666666666666
+      },
+      "ridge": {
+        "accuracy": 0.212,
+        "original_tuning_accuracy": 0.27
+      }
+    },
+    "learned_mean_std": {
+      "feature_dim": 64,
+      "adamw": {
+        "accuracies": [
+          0.256,
+          0.252,
+          0.262
+        ],
+        "mean_accuracy": 0.25666666666666665,
+        "sample_standard_deviation": 0.005033222956847171,
+        "original_tuning_mean": 0.2866666666666667
+      },
+      "ridge": {
+        "accuracy": 0.272,
+        "original_tuning_accuracy": 0.295
+      }
+    },
+    "learned_mask4x4": {
+      "feature_dim": 32,
+      "adamw": {
+        "accuracies": [
+          0.25,
+          0.254,
+          0.23
+        ],
+        "mean_accuracy": 0.24466666666666667,
+        "sample_standard_deviation": 0.012858201014657268,
+        "original_tuning_mean": 0.275
+      },
+      "ridge": {
+        "accuracy": 0.246,
+        "original_tuning_accuracy": 0.275
+      }
+    },
+    "random_mean": {
+      "feature_dim": 32,
+      "adamw": {
+        "accuracies": [
+          0.25,
+          0.256,
+          0.218
+        ],
+        "mean_accuracy": 0.24133333333333334,
+        "sample_standard_deviation": 0.02042873792805942,
+        "original_tuning_mean": 0.25166666666666665
+      },
+      "ridge": {
+        "accuracy": 0.254,
+        "original_tuning_accuracy": 0.245
+      }
+    },
+    "random_mean_std": {
+      "feature_dim": 64,
+      "adamw": {
+        "accuracies": [
+          0.32,
+          0.334,
+          0.328
+        ],
+        "mean_accuracy": 0.32733333333333337,
+        "sample_standard_deviation": 0.007023769168568499,
+        "original_tuning_mean": 0.3383333333333333
+      },
+      "ridge": {
+        "accuracy": 0.304,
+        "original_tuning_accuracy": 0.3
+      }
+    },
+    "pixels": {
+      "feature_dim": 3072,
+      "adamw": {
+        "accuracies": [
+          0.288,
+          0.266,
+          0.292
+        ],
+        "mean_accuracy": 0.282,
+        "sample_standard_deviation": 0.013999999999999981,
+        "original_tuning_mean": 0.28
+      },
+      "ridge": {
+        "accuracy": 0.306,
+        "original_tuning_accuracy": 0.3
+      }
+    }
+  },
+  "classifiers": [
+    {
+      "arm": "learned_mean",
+      "head": "adamw",
+      "classifier_seed": 29,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.05,
+        "weight_decay": 0.1,
+        "seed": 29
+      },
+      "state_sha256": "bc575efa4e3b784549fc58aa765382ffac0c15dfa522699fcbb1eca37f03bd2d",
+      "probe_sha256": "3e328492acb39e6e4e6ab7a93bf96b3f2dfd4da4a00ca686ecff35f56dfaf941",
+      "original_tuning_accuracy": 0.26,
+      "confirmation": {
+        "count": 500,
+        "correct": 120,
+        "accuracy": 0.24,
+        "cross_entropy": 2.0333473682403564,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 4,
+            "accuracy": 0.08
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 3,
+            "accuracy": 0.06
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          }
+        ],
+        "confusion_matrix": [
+          [
+            17,
+            1,
+            4,
+            2,
+            4,
+            0,
+            1,
+            3,
+            13,
+            5
+          ],
+          [
+            5,
+            7,
+            1,
+            8,
+            4,
+            2,
+            3,
+            7,
+            8,
+            5
+          ],
+          [
+            8,
+            1,
+            4,
+            2,
+            10,
+            4,
+            12,
+            2,
+            2,
+            5
+          ],
+          [
+            1,
+            2,
+            2,
+            11,
+            7,
+            6,
+            10,
+            7,
+            1,
+            3
+          ],
+          [
+            3,
+            1,
+            3,
+            3,
+            14,
+            0,
+            18,
+            3,
+            1,
+            4
+          ],
+          [
+            1,
+            4,
+            2,
+            12,
+            4,
+            3,
+            8,
+            8,
+            1,
+            7
+          ],
+          [
+            2,
+            1,
+            4,
+            2,
+            12,
+            4,
+            19,
+            4,
+            0,
+            2
+          ],
+          [
+            2,
+            2,
+            4,
+            2,
+            4,
+            5,
+            3,
+            15,
+            4,
+            9
+          ],
+          [
+            12,
+            1,
+            2,
+            2,
+            1,
+            0,
+            1,
+            2,
+            20,
+            9
+          ],
+          [
+            7,
+            11,
+            1,
+            6,
+            0,
+            4,
+            2,
+            5,
+            4,
+            10
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "fb4ff34349ba28050f0f5c124be19dfda8d0ef57deb7036a460d25a9b3f9dfec",
+        "tuning": "9623abf0c8feb441b7451387facaafb1a1904645dca7fbfadf45aee2e21a42d4",
+        "confirmation": "f4a7fe9cc57f50be755726e878e6a3bd9a5a44811754d6952f4a1a9500e0ecef"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mean",
+      "head": "ridge",
+      "classifier_seed": null,
+      "selected_config": {
+        "alpha": 0.1
+      },
+      "state_sha256": "74613d04473b128648914f3e1c78ba548fa58e8db72bddda269deb6951109535",
+      "probe_sha256": "fa6b8ff72fdd53b4c05ad602f6cec6d8e3f37c4ca6a44ad2268ba819ec33ab09",
+      "original_tuning_accuracy": 0.27,
+      "confirmation": {
+        "count": 500,
+        "correct": 106,
+        "accuracy": 0.212,
+        "cross_entropy": 2.2546021938323975,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 23,
+            "accuracy": 0.46
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 5,
+            "accuracy": 0.1
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 1,
+            "accuracy": 0.02
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 2,
+            "accuracy": 0.04
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          }
+        ],
+        "confusion_matrix": [
+          [
+            23,
+            1,
+            0,
+            3,
+            5,
+            0,
+            5,
+            0,
+            11,
+            2
+          ],
+          [
+            8,
+            5,
+            0,
+            8,
+            6,
+            2,
+            8,
+            3,
+            5,
+            5
+          ],
+          [
+            13,
+            0,
+            1,
+            1,
+            12,
+            2,
+            13,
+            1,
+            2,
+            5
+          ],
+          [
+            4,
+            5,
+            2,
+            7,
+            9,
+            5,
+            11,
+            1,
+            1,
+            5
+          ],
+          [
+            5,
+            1,
+            0,
+            3,
+            13,
+            0,
+            25,
+            0,
+            1,
+            2
+          ],
+          [
+            5,
+            2,
+            1,
+            10,
+            11,
+            2,
+            10,
+            1,
+            2,
+            6
+          ],
+          [
+            5,
+            1,
+            1,
+            2,
+            14,
+            4,
+            20,
+            1,
+            1,
+            1
+          ],
+          [
+            6,
+            2,
+            1,
+            3,
+            10,
+            4,
+            7,
+            7,
+            3,
+            7
+          ],
+          [
+            18,
+            2,
+            0,
+            1,
+            3,
+            1,
+            3,
+            0,
+            14,
+            8
+          ],
+          [
+            9,
+            7,
+            0,
+            3,
+            2,
+            1,
+            5,
+            1,
+            8,
+            14
+          ]
+        ],
+        "mean_squared_error": 0.08484450727701187
+      },
+      "source_sha256": {
+        "train": "fb4ff34349ba28050f0f5c124be19dfda8d0ef57deb7036a460d25a9b3f9dfec",
+        "tuning": "9623abf0c8feb441b7451387facaafb1a1904645dca7fbfadf45aee2e21a42d4",
+        "confirmation": "f4a7fe9cc57f50be755726e878e6a3bd9a5a44811754d6952f4a1a9500e0ecef"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mean_std",
+      "head": "adamw",
+      "classifier_seed": 29,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.01,
+        "seed": 29
+      },
+      "state_sha256": "e9f33da0bf61eabb64efe70479411066e7b66ee9f27f3570e8e38abe1387e814",
+      "probe_sha256": "5a9dc2f72d43df037076a86ca7e7561262102a7f2d871c7f6a98538e9f6ec83b",
+      "original_tuning_accuracy": 0.285,
+      "confirmation": {
+        "count": 500,
+        "correct": 128,
+        "accuracy": 0.256,
+        "cross_entropy": 2.0535707473754883,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 3,
+            "accuracy": 0.06
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 8,
+            "accuracy": 0.16
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          }
+        ],
+        "confusion_matrix": [
+          [
+            19,
+            4,
+            4,
+            2,
+            1,
+            3,
+            1,
+            2,
+            11,
+            3
+          ],
+          [
+            3,
+            17,
+            2,
+            3,
+            1,
+            4,
+            3,
+            6,
+            7,
+            4
+          ],
+          [
+            6,
+            3,
+            3,
+            1,
+            14,
+            6,
+            12,
+            2,
+            2,
+            1
+          ],
+          [
+            4,
+            1,
+            5,
+            8,
+            6,
+            11,
+            8,
+            6,
+            1,
+            0
+          ],
+          [
+            3,
+            2,
+            1,
+            4,
+            12,
+            3,
+            19,
+            2,
+            3,
+            1
+          ],
+          [
+            5,
+            1,
+            2,
+            12,
+            2,
+            10,
+            6,
+            7,
+            2,
+            3
+          ],
+          [
+            3,
+            0,
+            4,
+            4,
+            13,
+            4,
+            16,
+            4,
+            0,
+            2
+          ],
+          [
+            5,
+            1,
+            2,
+            2,
+            5,
+            6,
+            2,
+            13,
+            2,
+            12
+          ],
+          [
+            14,
+            5,
+            4,
+            1,
+            2,
+            0,
+            0,
+            0,
+            16,
+            8
+          ],
+          [
+            4,
+            10,
+            0,
+            4,
+            1,
+            1,
+            3,
+            5,
+            8,
+            14
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "5ea5f0e9d803a7822c62e70a658a7d5793175f6d12575e1441be0b88afed8163",
+        "tuning": "4f2ba2d3d9246a664b10e9346c873c329815287476234d944f8d753aa7701a91",
+        "confirmation": "422aeb9985b4ed0829c753e211e1de084de92e5d3752fbfd633342220c9f199f"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mean_std",
+      "head": "ridge",
+      "classifier_seed": null,
+      "selected_config": {
+        "alpha": 0.01
+      },
+      "state_sha256": "457df492d84d0325727dee82fdb51eccfc4bfb58d14637f532e7733e96b3c60c",
+      "probe_sha256": "b7d0df1ff7045525d918b1e78d8bc0efa7139dfb8d8f83d2ebe7ac8f1a21391a",
+      "original_tuning_accuracy": 0.295,
+      "confirmation": {
+        "count": 500,
+        "correct": 136,
+        "accuracy": 0.272,
+        "cross_entropy": 2.218376398086548,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 3,
+            "accuracy": 0.06
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 8,
+            "accuracy": 0.16
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          }
+        ],
+        "confusion_matrix": [
+          [
+            19,
+            5,
+            1,
+            1,
+            1,
+            1,
+            3,
+            2,
+            14,
+            3
+          ],
+          [
+            3,
+            17,
+            1,
+            3,
+            2,
+            3,
+            4,
+            3,
+            9,
+            5
+          ],
+          [
+            9,
+            3,
+            3,
+            2,
+            11,
+            2,
+            14,
+            2,
+            3,
+            1
+          ],
+          [
+            4,
+            0,
+            5,
+            10,
+            5,
+            10,
+            7,
+            5,
+            2,
+            2
+          ],
+          [
+            3,
+            3,
+            0,
+            4,
+            13,
+            1,
+            20,
+            1,
+            3,
+            2
+          ],
+          [
+            3,
+            3,
+            1,
+            10,
+            2,
+            8,
+            8,
+            7,
+            5,
+            3
+          ],
+          [
+            6,
+            1,
+            1,
+            3,
+            13,
+            5,
+            17,
+            2,
+            1,
+            1
+          ],
+          [
+            5,
+            2,
+            4,
+            2,
+            5,
+            5,
+            4,
+            10,
+            4,
+            9
+          ],
+          [
+            14,
+            3,
+            2,
+            0,
+            1,
+            0,
+            1,
+            0,
+            20,
+            9
+          ],
+          [
+            4,
+            8,
+            0,
+            1,
+            1,
+            1,
+            5,
+            4,
+            7,
+            19
+          ]
+        ],
+        "mean_squared_error": 0.08439206331968307
+      },
+      "source_sha256": {
+        "train": "5ea5f0e9d803a7822c62e70a658a7d5793175f6d12575e1441be0b88afed8163",
+        "tuning": "4f2ba2d3d9246a664b10e9346c873c329815287476234d944f8d753aa7701a91",
+        "confirmation": "422aeb9985b4ed0829c753e211e1de084de92e5d3752fbfd633342220c9f199f"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "random_mean",
+      "head": "adamw",
+      "classifier_seed": 29,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.1,
+        "seed": 29
+      },
+      "state_sha256": "13e781127cbab83917986e47e6b120cdf5779b36b1d721d4648179849d7e53f7",
+      "probe_sha256": "2d1422ac9dc74ccbe05b0d5807db23c9052a6745bd2ea4f8fd88f20c357f0e2d",
+      "original_tuning_accuracy": 0.255,
+      "confirmation": {
+        "count": 500,
+        "correct": 125,
+        "accuracy": 0.25,
+        "cross_entropy": 2.0177054405212402,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 8,
+            "accuracy": 0.16
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          }
+        ],
+        "confusion_matrix": [
+          [
+            11,
+            1,
+            2,
+            1,
+            6,
+            2,
+            2,
+            1,
+            19,
+            5
+          ],
+          [
+            3,
+            8,
+            1,
+            7,
+            6,
+            1,
+            3,
+            8,
+            7,
+            6
+          ],
+          [
+            7,
+            0,
+            10,
+            2,
+            3,
+            5,
+            12,
+            3,
+            4,
+            4
+          ],
+          [
+            0,
+            5,
+            2,
+            15,
+            8,
+            8,
+            3,
+            6,
+            2,
+            1
+          ],
+          [
+            2,
+            1,
+            4,
+            6,
+            12,
+            2,
+            17,
+            4,
+            1,
+            1
+          ],
+          [
+            2,
+            6,
+            6,
+            6,
+            7,
+            7,
+            5,
+            5,
+            1,
+            5
+          ],
+          [
+            0,
+            1,
+            3,
+            5,
+            12,
+            2,
+            19,
+            4,
+            3,
+            1
+          ],
+          [
+            2,
+            2,
+            9,
+            1,
+            5,
+            7,
+            8,
+            13,
+            1,
+            2
+          ],
+          [
+            15,
+            6,
+            2,
+            0,
+            1,
+            1,
+            2,
+            1,
+            18,
+            4
+          ],
+          [
+            5,
+            6,
+            1,
+            5,
+            1,
+            1,
+            4,
+            7,
+            8,
+            12
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "1ab381bfc818493acba522f58bd75de1e504c412dd7da2e49f57be412ce82210",
+        "tuning": "70f9d4bdbf68aaba1b25968f8483d63e3ff5e1abb32cde81e57e9f154c3307e5",
+        "confirmation": "0a638b764f4b1e10d1036661970d0eebbbd63e6b42b57fa2fbaf44716155025d"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "random_mean",
+      "head": "ridge",
+      "classifier_seed": null,
+      "selected_config": {
+        "alpha": 0.01
+      },
+      "state_sha256": "104fffbd50de15f3a1109c4406a1a347c590ee900e56851693b8fb26e954c5cf",
+      "probe_sha256": "a02f468f743251656012af727850ec0fb7f1cbc9c0a80e4830a6e58f3468df57",
+      "original_tuning_accuracy": 0.245,
+      "confirmation": {
+        "count": 500,
+        "correct": 127,
+        "accuracy": 0.254,
+        "cross_entropy": 2.23954439163208,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 5,
+            "accuracy": 0.1
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 9,
+            "accuracy": 0.18
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 22,
+            "accuracy": 0.44
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 21,
+            "accuracy": 0.42
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          }
+        ],
+        "confusion_matrix": [
+          [
+            16,
+            2,
+            1,
+            2,
+            4,
+            1,
+            3,
+            1,
+            16,
+            4
+          ],
+          [
+            5,
+            5,
+            1,
+            6,
+            6,
+            2,
+            7,
+            7,
+            6,
+            5
+          ],
+          [
+            9,
+            0,
+            9,
+            1,
+            9,
+            2,
+            10,
+            2,
+            4,
+            4
+          ],
+          [
+            1,
+            6,
+            3,
+            11,
+            8,
+            7,
+            6,
+            4,
+            2,
+            2
+          ],
+          [
+            4,
+            1,
+            3,
+            3,
+            13,
+            0,
+            20,
+            3,
+            1,
+            2
+          ],
+          [
+            6,
+            3,
+            5,
+            4,
+            8,
+            7,
+            8,
+            2,
+            3,
+            4
+          ],
+          [
+            1,
+            1,
+            2,
+            5,
+            9,
+            4,
+            22,
+            2,
+            3,
+            1
+          ],
+          [
+            4,
+            3,
+            5,
+            1,
+            7,
+            8,
+            6,
+            12,
+            2,
+            2
+          ],
+          [
+            18,
+            4,
+            1,
+            0,
+            2,
+            0,
+            1,
+            1,
+            21,
+            2
+          ],
+          [
+            7,
+            4,
+            0,
+            3,
+            0,
+            3,
+            4,
+            9,
+            9,
+            11
+          ]
+        ],
+        "mean_squared_error": 0.08453293889760971
+      },
+      "source_sha256": {
+        "train": "1ab381bfc818493acba522f58bd75de1e504c412dd7da2e49f57be412ce82210",
+        "tuning": "70f9d4bdbf68aaba1b25968f8483d63e3ff5e1abb32cde81e57e9f154c3307e5",
+        "confirmation": "0a638b764f4b1e10d1036661970d0eebbbd63e6b42b57fa2fbaf44716155025d"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "random_mean_std",
+      "head": "adamw",
+      "classifier_seed": 29,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.05,
+        "weight_decay": 0.1,
+        "seed": 29
+      },
+      "state_sha256": "cb6b0e23015a486f48cd0a32f57195f5d82c8ae9e86b8326ff514626f5d48812",
+      "probe_sha256": "c74d8a56dd0300776511492a5f7d063792851a824906d39c3303af7cca5a1b35",
+      "original_tuning_accuracy": 0.33,
+      "confirmation": {
+        "count": 500,
+        "correct": 160,
+        "accuracy": 0.32,
+        "cross_entropy": 2.068192958831787,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 21,
+            "accuracy": 0.42
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 22,
+            "accuracy": 0.44
+          }
+        ],
+        "confusion_matrix": [
+          [
+            14,
+            3,
+            6,
+            2,
+            3,
+            1,
+            1,
+            2,
+            15,
+            3
+          ],
+          [
+            3,
+            18,
+            0,
+            3,
+            4,
+            4,
+            1,
+            2,
+            8,
+            7
+          ],
+          [
+            5,
+            3,
+            13,
+            1,
+            11,
+            4,
+            3,
+            3,
+            5,
+            2
+          ],
+          [
+            1,
+            1,
+            2,
+            12,
+            5,
+            18,
+            2,
+            7,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            7,
+            9,
+            10,
+            7,
+            9,
+            5,
+            0,
+            1
+          ],
+          [
+            1,
+            5,
+            3,
+            11,
+            6,
+            12,
+            5,
+            5,
+            1,
+            1
+          ],
+          [
+            2,
+            4,
+            6,
+            6,
+            4,
+            5,
+            20,
+            2,
+            1,
+            0
+          ],
+          [
+            2,
+            2,
+            3,
+            2,
+            5,
+            5,
+            2,
+            18,
+            0,
+            11
+          ],
+          [
+            10,
+            5,
+            5,
+            1,
+            1,
+            1,
+            1,
+            2,
+            21,
+            3
+          ],
+          [
+            3,
+            8,
+            2,
+            3,
+            1,
+            1,
+            1,
+            3,
+            6,
+            22
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "c6d8d46cba004c4d5e310579066d7f25c20d5c894c64857975eb4fa463a50769",
+        "tuning": "5c1780a208c3090807160c442639a8ecd8d6d7c9c08f5eef665e3f84dd45ae9f",
+        "confirmation": "90a22e4d9e32f72e052a5ad9c0de89a7983abddb3f017716cfd9eef7fdaa65e3"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "random_mean_std",
+      "head": "ridge",
+      "classifier_seed": null,
+      "selected_config": {
+        "alpha": 0.01
+      },
+      "state_sha256": "de69c694630b791fd9813765e123be417daafe2730d1d12f121e528a76516bef",
+      "probe_sha256": "d9c5dfcea96b8c248ec5b22902bb599edd781ff91ecaca4f06cbbd8b37b5cd68",
+      "original_tuning_accuracy": 0.3,
+      "confirmation": {
+        "count": 500,
+        "correct": 152,
+        "accuracy": 0.304,
+        "cross_entropy": 2.20495867729187,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 8,
+            "accuracy": 0.16
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 23,
+            "accuracy": 0.46
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          }
+        ],
+        "confusion_matrix": [
+          [
+            15,
+            1,
+            1,
+            2,
+            3,
+            3,
+            5,
+            0,
+            16,
+            4
+          ],
+          [
+            2,
+            19,
+            0,
+            1,
+            3,
+            4,
+            5,
+            3,
+            5,
+            8
+          ],
+          [
+            7,
+            2,
+            8,
+            2,
+            11,
+            5,
+            7,
+            2,
+            4,
+            2
+          ],
+          [
+            1,
+            1,
+            0,
+            13,
+            4,
+            14,
+            8,
+            6,
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            2,
+            4,
+            11,
+            7,
+            19,
+            4,
+            0,
+            0
+          ],
+          [
+            2,
+            2,
+            2,
+            11,
+            7,
+            11,
+            6,
+            3,
+            3,
+            3
+          ],
+          [
+            2,
+            3,
+            3,
+            4,
+            8,
+            4,
+            23,
+            0,
+            2,
+            1
+          ],
+          [
+            1,
+            3,
+            2,
+            2,
+            6,
+            6,
+            5,
+            13,
+            1,
+            11
+          ],
+          [
+            15,
+            4,
+            2,
+            2,
+            1,
+            1,
+            2,
+            1,
+            19,
+            3
+          ],
+          [
+            1,
+            9,
+            0,
+            3,
+            0,
+            1,
+            4,
+            4,
+            8,
+            20
+          ]
+        ],
+        "mean_squared_error": 0.08310511708259583
+      },
+      "source_sha256": {
+        "train": "c6d8d46cba004c4d5e310579066d7f25c20d5c894c64857975eb4fa463a50769",
+        "tuning": "5c1780a208c3090807160c442639a8ecd8d6d7c9c08f5eef665e3f84dd45ae9f",
+        "confirmation": "90a22e4d9e32f72e052a5ad9c0de89a7983abddb3f017716cfd9eef7fdaa65e3"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "pixels",
+      "head": "adamw",
+      "classifier_seed": 29,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.1,
+        "seed": 29
+      },
+      "state_sha256": "dac58642df8018b04b99e790082bf1f9d9e09b464c888ba4a1e14ef81a4b5e67",
+      "probe_sha256": "8c7fccc78a1a238c051e3aac7457a270d3e9c2fc462bf966622c17b10ab1d982",
+      "original_tuning_accuracy": 0.28,
+      "confirmation": {
+        "count": 500,
+        "correct": 144,
+        "accuracy": 0.288,
+        "cross_entropy": 2.194406747817993,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 5,
+            "accuracy": 0.1
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 9,
+            "accuracy": 0.18
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          }
+        ],
+        "confusion_matrix": [
+          [
+            13,
+            3,
+            1,
+            3,
+            2,
+            2,
+            3,
+            0,
+            12,
+            11
+          ],
+          [
+            1,
+            17,
+            1,
+            2,
+            3,
+            1,
+            8,
+            2,
+            6,
+            9
+          ],
+          [
+            11,
+            1,
+            5,
+            5,
+            3,
+            6,
+            12,
+            3,
+            2,
+            2
+          ],
+          [
+            1,
+            4,
+            3,
+            9,
+            5,
+            9,
+            8,
+            3,
+            2,
+            6
+          ],
+          [
+            2,
+            2,
+            4,
+            7,
+            13,
+            4,
+            13,
+            4,
+            0,
+            1
+          ],
+          [
+            3,
+            2,
+            4,
+            9,
+            2,
+            14,
+            7,
+            3,
+            3,
+            3
+          ],
+          [
+            2,
+            0,
+            5,
+            5,
+            9,
+            3,
+            18,
+            3,
+            1,
+            4
+          ],
+          [
+            4,
+            2,
+            3,
+            4,
+            5,
+            4,
+            3,
+            18,
+            4,
+            3
+          ],
+          [
+            11,
+            7,
+            3,
+            3,
+            1,
+            0,
+            1,
+            0,
+            20,
+            4
+          ],
+          [
+            4,
+            8,
+            3,
+            1,
+            3,
+            3,
+            1,
+            1,
+            9,
+            17
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "f5db99da7e6c20ccca17941729d4e3bf04cbada24275a1399e26a9aa746d24ac",
+        "tuning": "6448f8cc2fa9704ef44a0def295e5dc45c23fc239080a51b8334f36aa8d70137",
+        "confirmation": "da2bca5046f54c3dcb9f8f3b96c7138a49d31bf02843754d8bc2966f4834a16b"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "pixels",
+      "head": "ridge",
+      "classifier_seed": null,
+      "selected_config": {
+        "alpha": 10.0
+      },
+      "state_sha256": "c97f71a2fc77eeddc1f8c7c9c8d7f0794fb0311ffabcab4911dbd197acb90947",
+      "probe_sha256": "60b03f07acad277cf4e80735fd1de638e2bb11a1764800a4b07aa50df44330ff",
+      "original_tuning_accuracy": 0.3,
+      "confirmation": {
+        "count": 500,
+        "correct": 153,
+        "accuracy": 0.306,
+        "cross_entropy": 2.2269856929779053,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 1,
+            "accuracy": 0.02
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 21,
+            "accuracy": 0.42
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 22,
+            "accuracy": 0.44
+          }
+        ],
+        "confusion_matrix": [
+          [
+            17,
+            1,
+            0,
+            1,
+            2,
+            2,
+            3,
+            1,
+            13,
+            10
+          ],
+          [
+            5,
+            16,
+            1,
+            2,
+            2,
+            0,
+            8,
+            1,
+            6,
+            9
+          ],
+          [
+            13,
+            1,
+            1,
+            2,
+            5,
+            7,
+            11,
+            3,
+            3,
+            4
+          ],
+          [
+            2,
+            4,
+            1,
+            10,
+            4,
+            11,
+            6,
+            4,
+            0,
+            8
+          ],
+          [
+            3,
+            1,
+            1,
+            5,
+            14,
+            6,
+            13,
+            5,
+            0,
+            2
+          ],
+          [
+            5,
+            1,
+            4,
+            6,
+            2,
+            16,
+            6,
+            2,
+            3,
+            5
+          ],
+          [
+            2,
+            1,
+            2,
+            6,
+            9,
+            1,
+            21,
+            2,
+            1,
+            5
+          ],
+          [
+            7,
+            1,
+            1,
+            2,
+            4,
+            5,
+            3,
+            16,
+            3,
+            8
+          ],
+          [
+            11,
+            8,
+            0,
+            2,
+            1,
+            0,
+            1,
+            0,
+            20,
+            7
+          ],
+          [
+            6,
+            9,
+            0,
+            1,
+            1,
+            1,
+            2,
+            1,
+            7,
+            22
+          ]
+        ],
+        "mean_squared_error": 0.08435121923685074
+      },
+      "source_sha256": {
+        "train": "f5db99da7e6c20ccca17941729d4e3bf04cbada24275a1399e26a9aa746d24ac",
+        "tuning": "6448f8cc2fa9704ef44a0def295e5dc45c23fc239080a51b8334f36aa8d70137",
+        "confirmation": "da2bca5046f54c3dcb9f8f3b96c7138a49d31bf02843754d8bc2966f4834a16b"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mask4x4",
+      "head": "adamw",
+      "classifier_seed": 29,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.05,
+        "weight_decay": 0.01,
+        "seed": 29
+      },
+      "state_sha256": "442d4fda44954fa17f8c2c023fe9e75d8ecc27f45d8f164b022e3bae5c55c0fe",
+      "probe_sha256": "5444991ae6db04a48a1e06e527e0f5fe10dcf2f2957942c56624e2872e1f9ae4",
+      "original_tuning_accuracy": 0.275,
+      "confirmation": {
+        "count": 500,
+        "correct": 125,
+        "accuracy": 0.25,
+        "cross_entropy": 2.067243814468384,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 9,
+            "accuracy": 0.18
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 9,
+            "accuracy": 0.18
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          }
+        ],
+        "confusion_matrix": [
+          [
+            12,
+            2,
+            6,
+            3,
+            3,
+            2,
+            0,
+            0,
+            17,
+            5
+          ],
+          [
+            4,
+            11,
+            2,
+            6,
+            3,
+            6,
+            2,
+            3,
+            7,
+            6
+          ],
+          [
+            7,
+            2,
+            9,
+            2,
+            9,
+            4,
+            8,
+            1,
+            4,
+            4
+          ],
+          [
+            1,
+            4,
+            3,
+            10,
+            6,
+            11,
+            9,
+            5,
+            0,
+            1
+          ],
+          [
+            2,
+            1,
+            4,
+            6,
+            13,
+            5,
+            16,
+            0,
+            2,
+            1
+          ],
+          [
+            3,
+            3,
+            6,
+            5,
+            3,
+            9,
+            7,
+            5,
+            2,
+            7
+          ],
+          [
+            0,
+            0,
+            7,
+            3,
+            9,
+            5,
+            20,
+            1,
+            2,
+            3
+          ],
+          [
+            2,
+            2,
+            6,
+            4,
+            2,
+            7,
+            4,
+            13,
+            3,
+            7
+          ],
+          [
+            16,
+            6,
+            2,
+            1,
+            0,
+            0,
+            1,
+            2,
+            14,
+            8
+          ],
+          [
+            3,
+            11,
+            1,
+            3,
+            0,
+            4,
+            3,
+            5,
+            6,
+            14
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "09fa45c6232910e5abd781e6322123959e13e8bd37454a5ff8dbe1d27367cf16",
+        "tuning": "5ec961610c576e97b91df4842fa79ea2cab68b1cbe55f39aabfd84757b4630ae",
+        "confirmation": "52474c3965dba34f7d67dafc43184c78e1dee444aad4638bbdb14866a597297e"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mask4x4",
+      "head": "ridge",
+      "classifier_seed": null,
+      "selected_config": {
+        "alpha": 0.01
+      },
+      "state_sha256": "34d5dee406e2f3d6cc16accc6ce1bf075501c5fe9419e4253030310a2d70cc80",
+      "probe_sha256": "71ebc9d7c543de4726815a44fcc65bcabc0b8365f773962370bedc1e6a0d75e8",
+      "original_tuning_accuracy": 0.275,
+      "confirmation": {
+        "count": 500,
+        "correct": 123,
+        "accuracy": 0.246,
+        "cross_entropy": 2.2441799640655518,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 9,
+            "accuracy": 0.18
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          }
+        ],
+        "confusion_matrix": [
+          [
+            15,
+            0,
+            1,
+            3,
+            6,
+            1,
+            3,
+            0,
+            16,
+            5
+          ],
+          [
+            5,
+            13,
+            1,
+            4,
+            2,
+            7,
+            4,
+            3,
+            7,
+            4
+          ],
+          [
+            6,
+            0,
+            7,
+            0,
+            10,
+            4,
+            11,
+            1,
+            6,
+            5
+          ],
+          [
+            1,
+            4,
+            2,
+            9,
+            9,
+            10,
+            8,
+            2,
+            2,
+            3
+          ],
+          [
+            3,
+            1,
+            0,
+            4,
+            15,
+            4,
+            21,
+            0,
+            1,
+            1
+          ],
+          [
+            3,
+            3,
+            5,
+            3,
+            10,
+            7,
+            10,
+            2,
+            2,
+            5
+          ],
+          [
+            1,
+            0,
+            3,
+            2,
+            16,
+            5,
+            19,
+            0,
+            2,
+            2
+          ],
+          [
+            1,
+            2,
+            8,
+            2,
+            7,
+            5,
+            6,
+            7,
+            5,
+            7
+          ],
+          [
+            14,
+            5,
+            2,
+            1,
+            1,
+            0,
+            2,
+            1,
+            16,
+            8
+          ],
+          [
+            2,
+            10,
+            0,
+            2,
+            1,
+            3,
+            3,
+            4,
+            10,
+            15
+          ]
+        ],
+        "mean_squared_error": 0.08449357002973557
+      },
+      "source_sha256": {
+        "train": "09fa45c6232910e5abd781e6322123959e13e8bd37454a5ff8dbe1d27367cf16",
+        "tuning": "5ec961610c576e97b91df4842fa79ea2cab68b1cbe55f39aabfd84757b4630ae",
+        "confirmation": "52474c3965dba34f7d67dafc43184c78e1dee444aad4638bbdb14866a597297e"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mean",
+      "head": "adamw",
+      "classifier_seed": 31,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.05,
+        "weight_decay": 0.1,
+        "seed": 31
+      },
+      "state_sha256": "8ab4ce10cdc0c700650e620702cdb889d60222b5ae4bfd807fd2fc11e70bd61f",
+      "probe_sha256": "3792cecd95c6c9f4ec5d494c03f01a83a411b4f183cc0eebf48efbd31cede52e",
+      "original_tuning_accuracy": 0.275,
+      "confirmation": {
+        "count": 500,
+        "correct": 124,
+        "accuracy": 0.248,
+        "cross_entropy": 2.0309295654296875,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 8,
+            "accuracy": 0.16
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 3,
+            "accuracy": 0.06
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          }
+        ],
+        "confusion_matrix": [
+          [
+            16,
+            1,
+            4,
+            3,
+            4,
+            0,
+            2,
+            2,
+            14,
+            4
+          ],
+          [
+            4,
+            8,
+            1,
+            9,
+            4,
+            4,
+            3,
+            5,
+            7,
+            5
+          ],
+          [
+            8,
+            0,
+            3,
+            2,
+            11,
+            4,
+            12,
+            2,
+            3,
+            5
+          ],
+          [
+            1,
+            3,
+            4,
+            10,
+            6,
+            8,
+            9,
+            4,
+            1,
+            4
+          ],
+          [
+            3,
+            1,
+            2,
+            3,
+            15,
+            2,
+            18,
+            2,
+            1,
+            3
+          ],
+          [
+            2,
+            3,
+            2,
+            8,
+            4,
+            7,
+            8,
+            9,
+            1,
+            6
+          ],
+          [
+            2,
+            2,
+            4,
+            3,
+            13,
+            3,
+            18,
+            4,
+            0,
+            1
+          ],
+          [
+            2,
+            2,
+            2,
+            2,
+            6,
+            5,
+            3,
+            15,
+            4,
+            9
+          ],
+          [
+            12,
+            1,
+            2,
+            2,
+            1,
+            0,
+            1,
+            2,
+            20,
+            9
+          ],
+          [
+            5,
+            12,
+            1,
+            6,
+            0,
+            3,
+            2,
+            5,
+            4,
+            12
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "fb4ff34349ba28050f0f5c124be19dfda8d0ef57deb7036a460d25a9b3f9dfec",
+        "tuning": "9623abf0c8feb441b7451387facaafb1a1904645dca7fbfadf45aee2e21a42d4",
+        "confirmation": "f4a7fe9cc57f50be755726e878e6a3bd9a5a44811754d6952f4a1a9500e0ecef"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mean_std",
+      "head": "adamw",
+      "classifier_seed": 31,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.1,
+        "seed": 31
+      },
+      "state_sha256": "9f48793833225444b58050c1196f9e9220c5a423823504cd59cfbd6a8a89d91a",
+      "probe_sha256": "a3bb6c2fbd51e70961cbfa1db70a0bfa5cf9b5924e499cf39f8ab15e731db3dc",
+      "original_tuning_accuracy": 0.295,
+      "confirmation": {
+        "count": 500,
+        "correct": 126,
+        "accuracy": 0.252,
+        "cross_entropy": 2.0318779945373535,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 3,
+            "accuracy": 0.06
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 6,
+            "accuracy": 0.12
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          }
+        ],
+        "confusion_matrix": [
+          [
+            16,
+            5,
+            4,
+            3,
+            0,
+            2,
+            1,
+            2,
+            14,
+            3
+          ],
+          [
+            3,
+            17,
+            2,
+            2,
+            0,
+            5,
+            3,
+            5,
+            7,
+            6
+          ],
+          [
+            7,
+            3,
+            3,
+            2,
+            12,
+            6,
+            11,
+            3,
+            2,
+            1
+          ],
+          [
+            4,
+            1,
+            4,
+            11,
+            6,
+            9,
+            7,
+            6,
+            1,
+            1
+          ],
+          [
+            3,
+            2,
+            1,
+            4,
+            11,
+            3,
+            21,
+            2,
+            2,
+            1
+          ],
+          [
+            3,
+            3,
+            2,
+            16,
+            2,
+            6,
+            6,
+            8,
+            3,
+            1
+          ],
+          [
+            4,
+            0,
+            4,
+            3,
+            13,
+            2,
+            18,
+            4,
+            0,
+            2
+          ],
+          [
+            4,
+            1,
+            1,
+            3,
+            6,
+            5,
+            2,
+            13,
+            2,
+            13
+          ],
+          [
+            13,
+            6,
+            5,
+            1,
+            1,
+            0,
+            0,
+            0,
+            15,
+            9
+          ],
+          [
+            4,
+            10,
+            0,
+            4,
+            1,
+            1,
+            3,
+            4,
+            7,
+            16
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "5ea5f0e9d803a7822c62e70a658a7d5793175f6d12575e1441be0b88afed8163",
+        "tuning": "4f2ba2d3d9246a664b10e9346c873c329815287476234d944f8d753aa7701a91",
+        "confirmation": "422aeb9985b4ed0829c753e211e1de084de92e5d3752fbfd633342220c9f199f"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "random_mean",
+      "head": "adamw",
+      "classifier_seed": 31,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.1,
+        "seed": 31
+      },
+      "state_sha256": "342eae11c285f99552cf819087d33abd95de9e5c56b4e5df348bc1d2f84a9826",
+      "probe_sha256": "963c449456273f4b77f28bcb12c1f245bd3286ddca5e7d8bc8695aaa57047f8f",
+      "original_tuning_accuracy": 0.25,
+      "confirmation": {
+        "count": 500,
+        "correct": 128,
+        "accuracy": 0.256,
+        "cross_entropy": 2.0258212089538574,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 9,
+            "accuracy": 0.18
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 6,
+            "accuracy": 0.12
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 21,
+            "accuracy": 0.42
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          }
+        ],
+        "confusion_matrix": [
+          [
+            13,
+            1,
+            2,
+            1,
+            6,
+            2,
+            1,
+            1,
+            18,
+            5
+          ],
+          [
+            3,
+            9,
+            1,
+            7,
+            5,
+            1,
+            4,
+            7,
+            7,
+            6
+          ],
+          [
+            7,
+            1,
+            10,
+            3,
+            5,
+            4,
+            11,
+            1,
+            4,
+            4
+          ],
+          [
+            0,
+            5,
+            2,
+            16,
+            9,
+            6,
+            3,
+            6,
+            1,
+            2
+          ],
+          [
+            2,
+            1,
+            4,
+            6,
+            12,
+            2,
+            17,
+            4,
+            1,
+            1
+          ],
+          [
+            2,
+            5,
+            7,
+            7,
+            7,
+            6,
+            5,
+            5,
+            2,
+            4
+          ],
+          [
+            1,
+            1,
+            2,
+            7,
+            12,
+            2,
+            18,
+            3,
+            3,
+            1
+          ],
+          [
+            2,
+            2,
+            10,
+            1,
+            5,
+            6,
+            9,
+            12,
+            1,
+            2
+          ],
+          [
+            14,
+            4,
+            2,
+            0,
+            1,
+            1,
+            2,
+            1,
+            21,
+            4
+          ],
+          [
+            6,
+            7,
+            0,
+            5,
+            2,
+            1,
+            4,
+            6,
+            8,
+            11
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "1ab381bfc818493acba522f58bd75de1e504c412dd7da2e49f57be412ce82210",
+        "tuning": "70f9d4bdbf68aaba1b25968f8483d63e3ff5e1abb32cde81e57e9f154c3307e5",
+        "confirmation": "0a638b764f4b1e10d1036661970d0eebbbd63e6b42b57fa2fbaf44716155025d"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "random_mean_std",
+      "head": "adamw",
+      "classifier_seed": 31,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.1,
+        "seed": 31
+      },
+      "state_sha256": "b0e6ed1c8aa44c03ac33f345d286a9d308887916dd06da8971d81f8775a7128a",
+      "probe_sha256": "0ccbc4fa6fcb3e506b6a9c881b18183bd71c3d49e63ad3c36709a3291fb32081",
+      "original_tuning_accuracy": 0.35,
+      "confirmation": {
+        "count": 500,
+        "correct": 167,
+        "accuracy": 0.334,
+        "cross_entropy": 1.9540091753005981,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 21,
+            "accuracy": 0.42
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 22,
+            "accuracy": 0.44
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          }
+        ],
+        "confusion_matrix": [
+          [
+            12,
+            1,
+            6,
+            3,
+            2,
+            3,
+            2,
+            2,
+            17,
+            2
+          ],
+          [
+            4,
+            19,
+            1,
+            3,
+            3,
+            3,
+            1,
+            5,
+            5,
+            6
+          ],
+          [
+            5,
+            4,
+            14,
+            1,
+            11,
+            4,
+            3,
+            1,
+            5,
+            2
+          ],
+          [
+            1,
+            2,
+            2,
+            13,
+            3,
+            17,
+            4,
+            6,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            6,
+            6,
+            11,
+            5,
+            15,
+            5,
+            0,
+            0
+          ],
+          [
+            1,
+            5,
+            4,
+            9,
+            3,
+            16,
+            6,
+            5,
+            0,
+            1
+          ],
+          [
+            2,
+            3,
+            6,
+            6,
+            5,
+            5,
+            21,
+            1,
+            1,
+            0
+          ],
+          [
+            2,
+            3,
+            3,
+            2,
+            4,
+            6,
+            2,
+            19,
+            0,
+            9
+          ],
+          [
+            9,
+            6,
+            4,
+            2,
+            0,
+            1,
+            1,
+            1,
+            22,
+            4
+          ],
+          [
+            2,
+            10,
+            1,
+            3,
+            0,
+            1,
+            1,
+            4,
+            8,
+            20
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "c6d8d46cba004c4d5e310579066d7f25c20d5c894c64857975eb4fa463a50769",
+        "tuning": "5c1780a208c3090807160c442639a8ecd8d6d7c9c08f5eef665e3f84dd45ae9f",
+        "confirmation": "90a22e4d9e32f72e052a5ad9c0de89a7983abddb3f017716cfd9eef7fdaa65e3"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "pixels",
+      "head": "adamw",
+      "classifier_seed": 31,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.1,
+        "seed": 31
+      },
+      "state_sha256": "2109e8a9142b1e11f8d73d7518eeb3d5da143593f39b0663804af9dda589edd2",
+      "probe_sha256": "700e1ba54817cbf2bb48d671de4afea2781918d42e82cb9cd4bff78739d05250",
+      "original_tuning_accuracy": 0.275,
+      "confirmation": {
+        "count": 500,
+        "correct": 133,
+        "accuracy": 0.266,
+        "cross_entropy": 2.210103988647461,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 1,
+            "accuracy": 0.02
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 21,
+            "accuracy": 0.42
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          }
+        ],
+        "confusion_matrix": [
+          [
+            13,
+            3,
+            1,
+            2,
+            1,
+            1,
+            3,
+            0,
+            15,
+            11
+          ],
+          [
+            2,
+            13,
+            1,
+            2,
+            3,
+            1,
+            8,
+            3,
+            9,
+            8
+          ],
+          [
+            10,
+            0,
+            1,
+            5,
+            4,
+            7,
+            10,
+            5,
+            3,
+            5
+          ],
+          [
+            2,
+            5,
+            4,
+            10,
+            5,
+            8,
+            6,
+            3,
+            2,
+            5
+          ],
+          [
+            2,
+            2,
+            3,
+            6,
+            14,
+            6,
+            12,
+            4,
+            0,
+            1
+          ],
+          [
+            3,
+            1,
+            3,
+            9,
+            3,
+            12,
+            8,
+            3,
+            3,
+            5
+          ],
+          [
+            2,
+            1,
+            5,
+            6,
+            7,
+            1,
+            19,
+            2,
+            3,
+            4
+          ],
+          [
+            5,
+            3,
+            4,
+            4,
+            6,
+            4,
+            3,
+            13,
+            5,
+            3
+          ],
+          [
+            10,
+            6,
+            1,
+            2,
+            1,
+            1,
+            1,
+            1,
+            21,
+            6
+          ],
+          [
+            4,
+            10,
+            3,
+            0,
+            4,
+            2,
+            1,
+            1,
+            8,
+            17
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "f5db99da7e6c20ccca17941729d4e3bf04cbada24275a1399e26a9aa746d24ac",
+        "tuning": "6448f8cc2fa9704ef44a0def295e5dc45c23fc239080a51b8334f36aa8d70137",
+        "confirmation": "da2bca5046f54c3dcb9f8f3b96c7138a49d31bf02843754d8bc2966f4834a16b"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mask4x4",
+      "head": "adamw",
+      "classifier_seed": 31,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.01,
+        "seed": 31
+      },
+      "state_sha256": "d5d3066d962d424b481dab3c77dd3c0d671ac5d67cee6bf6417e29a6ece161ad",
+      "probe_sha256": "1720715fdbbf4a7facb8035c2af6a02c67c113ff263454bbd475289de07aa2e2",
+      "original_tuning_accuracy": 0.275,
+      "confirmation": {
+        "count": 500,
+        "correct": 127,
+        "accuracy": 0.254,
+        "cross_entropy": 2.0247020721435547,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 5,
+            "accuracy": 0.1
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 5,
+            "accuracy": 0.1
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          }
+        ],
+        "confusion_matrix": [
+          [
+            17,
+            1,
+            3,
+            3,
+            4,
+            2,
+            2,
+            0,
+            13,
+            5
+          ],
+          [
+            4,
+            13,
+            0,
+            9,
+            3,
+            3,
+            2,
+            5,
+            6,
+            5
+          ],
+          [
+            9,
+            4,
+            5,
+            3,
+            10,
+            3,
+            9,
+            1,
+            1,
+            5
+          ],
+          [
+            1,
+            5,
+            2,
+            11,
+            7,
+            5,
+            9,
+            5,
+            0,
+            5
+          ],
+          [
+            3,
+            2,
+            2,
+            6,
+            12,
+            3,
+            18,
+            1,
+            1,
+            2
+          ],
+          [
+            1,
+            3,
+            6,
+            7,
+            3,
+            5,
+            9,
+            6,
+            3,
+            7
+          ],
+          [
+            1,
+            1,
+            4,
+            3,
+            10,
+            4,
+            19,
+            5,
+            2,
+            1
+          ],
+          [
+            1,
+            1,
+            6,
+            6,
+            5,
+            5,
+            3,
+            11,
+            4,
+            8
+          ],
+          [
+            15,
+            6,
+            1,
+            2,
+            0,
+            1,
+            0,
+            2,
+            15,
+            8
+          ],
+          [
+            2,
+            8,
+            1,
+            4,
+            0,
+            1,
+            2,
+            4,
+            9,
+            19
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "09fa45c6232910e5abd781e6322123959e13e8bd37454a5ff8dbe1d27367cf16",
+        "tuning": "5ec961610c576e97b91df4842fa79ea2cab68b1cbe55f39aabfd84757b4630ae",
+        "confirmation": "52474c3965dba34f7d67dafc43184c78e1dee444aad4638bbdb14866a597297e"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mean",
+      "head": "adamw",
+      "classifier_seed": 37,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.05,
+        "weight_decay": 0.1,
+        "seed": 37
+      },
+      "state_sha256": "3f88caf30acf7816f1c12b3d5b80d066822bc29a8ee593cbb8e85ec23944118c",
+      "probe_sha256": "406769b35a808a4a0a341a50f87f05aefd46f921206a3aacf5ebf2d93d90eee5",
+      "original_tuning_accuracy": 0.265,
+      "confirmation": {
+        "count": 500,
+        "correct": 123,
+        "accuracy": 0.246,
+        "cross_entropy": 2.035187244415283,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 8,
+            "accuracy": 0.16
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 4,
+            "accuracy": 0.08
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 10,
+            "accuracy": 0.2
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 6,
+            "accuracy": 0.12
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          }
+        ],
+        "confusion_matrix": [
+          [
+            17,
+            2,
+            4,
+            2,
+            3,
+            0,
+            2,
+            2,
+            13,
+            5
+          ],
+          [
+            4,
+            8,
+            1,
+            8,
+            4,
+            4,
+            3,
+            6,
+            7,
+            5
+          ],
+          [
+            8,
+            0,
+            4,
+            2,
+            13,
+            4,
+            9,
+            2,
+            2,
+            6
+          ],
+          [
+            1,
+            2,
+            4,
+            10,
+            6,
+            8,
+            9,
+            5,
+            1,
+            4
+          ],
+          [
+            3,
+            2,
+            2,
+            2,
+            15,
+            1,
+            18,
+            3,
+            1,
+            3
+          ],
+          [
+            2,
+            3,
+            2,
+            8,
+            5,
+            6,
+            8,
+            9,
+            1,
+            6
+          ],
+          [
+            2,
+            1,
+            4,
+            3,
+            13,
+            3,
+            18,
+            4,
+            0,
+            2
+          ],
+          [
+            2,
+            2,
+            4,
+            2,
+            4,
+            4,
+            3,
+            15,
+            4,
+            10
+          ],
+          [
+            12,
+            2,
+            1,
+            2,
+            2,
+            0,
+            1,
+            2,
+            19,
+            9
+          ],
+          [
+            6,
+            12,
+            1,
+            5,
+            0,
+            3,
+            2,
+            6,
+            4,
+            11
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "fb4ff34349ba28050f0f5c124be19dfda8d0ef57deb7036a460d25a9b3f9dfec",
+        "tuning": "9623abf0c8feb441b7451387facaafb1a1904645dca7fbfadf45aee2e21a42d4",
+        "confirmation": "f4a7fe9cc57f50be755726e878e6a3bd9a5a44811754d6952f4a1a9500e0ecef"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mean_std",
+      "head": "adamw",
+      "classifier_seed": 37,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.1,
+        "seed": 37
+      },
+      "state_sha256": "0560cbe6bb28f948e45a8020899c48e1d2d4f9fbdf95288849d1932283a9ff4c",
+      "probe_sha256": "c4095d9b496e868547e83a4b583a97fbb2977fd0eccac323dc4548c3febc837b",
+      "original_tuning_accuracy": 0.28,
+      "confirmation": {
+        "count": 500,
+        "correct": 131,
+        "accuracy": 0.262,
+        "cross_entropy": 2.0203168392181396,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 17,
+            "accuracy": 0.34
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 3,
+            "accuracy": 0.06
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 7,
+            "accuracy": 0.14
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          }
+        ],
+        "confusion_matrix": [
+          [
+            17,
+            3,
+            4,
+            2,
+            0,
+            3,
+            2,
+            2,
+            13,
+            4
+          ],
+          [
+            3,
+            15,
+            2,
+            2,
+            0,
+            4,
+            3,
+            7,
+            7,
+            7
+          ],
+          [
+            6,
+            3,
+            3,
+            3,
+            13,
+            6,
+            11,
+            2,
+            2,
+            1
+          ],
+          [
+            4,
+            0,
+            6,
+            11,
+            5,
+            11,
+            7,
+            5,
+            1,
+            0
+          ],
+          [
+            3,
+            2,
+            2,
+            3,
+            13,
+            4,
+            17,
+            2,
+            3,
+            1
+          ],
+          [
+            3,
+            3,
+            3,
+            15,
+            1,
+            7,
+            7,
+            7,
+            2,
+            2
+          ],
+          [
+            4,
+            1,
+            4,
+            4,
+            10,
+            2,
+            19,
+            5,
+            1,
+            0
+          ],
+          [
+            4,
+            1,
+            1,
+            3,
+            4,
+            6,
+            3,
+            13,
+            2,
+            13
+          ],
+          [
+            13,
+            4,
+            5,
+            1,
+            1,
+            0,
+            1,
+            0,
+            15,
+            10
+          ],
+          [
+            4,
+            8,
+            0,
+            3,
+            1,
+            1,
+            2,
+            5,
+            8,
+            18
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "5ea5f0e9d803a7822c62e70a658a7d5793175f6d12575e1441be0b88afed8163",
+        "tuning": "4f2ba2d3d9246a664b10e9346c873c329815287476234d944f8d753aa7701a91",
+        "confirmation": "422aeb9985b4ed0829c753e211e1de084de92e5d3752fbfd633342220c9f199f"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "random_mean",
+      "head": "adamw",
+      "classifier_seed": 37,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.001,
+        "weight_decay": 0.1,
+        "seed": 37
+      },
+      "state_sha256": "5944ada8858be19646c53dae19ad32bd433914566198b5af39e08c49cfcf84f3",
+      "probe_sha256": "68f4e344dcc0ad8145758fb442d42a06bc7bfe5ac7d0957b1efd72c6cc4e1919",
+      "original_tuning_accuracy": 0.25,
+      "confirmation": {
+        "count": 500,
+        "correct": 109,
+        "accuracy": 0.218,
+        "cross_entropy": 2.0657827854156494,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 22,
+            "accuracy": 0.44
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 4,
+            "accuracy": 0.08
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 6,
+            "accuracy": 0.12
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 8,
+            "accuracy": 0.16
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 4,
+            "accuracy": 0.08
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 6,
+            "accuracy": 0.12
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          }
+        ],
+        "confusion_matrix": [
+          [
+            22,
+            2,
+            3,
+            2,
+            4,
+            0,
+            5,
+            0,
+            10,
+            2
+          ],
+          [
+            7,
+            4,
+            0,
+            8,
+            7,
+            3,
+            6,
+            6,
+            5,
+            4
+          ],
+          [
+            12,
+            1,
+            6,
+            0,
+            12,
+            2,
+            12,
+            1,
+            0,
+            4
+          ],
+          [
+            3,
+            4,
+            3,
+            8,
+            9,
+            3,
+            13,
+            1,
+            2,
+            4
+          ],
+          [
+            4,
+            3,
+            0,
+            3,
+            15,
+            0,
+            21,
+            2,
+            1,
+            1
+          ],
+          [
+            5,
+            4,
+            3,
+            2,
+            12,
+            4,
+            8,
+            7,
+            1,
+            4
+          ],
+          [
+            5,
+            0,
+            3,
+            5,
+            13,
+            1,
+            18,
+            2,
+            0,
+            3
+          ],
+          [
+            7,
+            2,
+            10,
+            3,
+            11,
+            2,
+            7,
+            6,
+            0,
+            2
+          ],
+          [
+            21,
+            4,
+            3,
+            0,
+            2,
+            0,
+            1,
+            1,
+            14,
+            4
+          ],
+          [
+            9,
+            11,
+            0,
+            3,
+            2,
+            0,
+            4,
+            4,
+            5,
+            12
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "1ab381bfc818493acba522f58bd75de1e504c412dd7da2e49f57be412ce82210",
+        "tuning": "70f9d4bdbf68aaba1b25968f8483d63e3ff5e1abb32cde81e57e9f154c3307e5",
+        "confirmation": "0a638b764f4b1e10d1036661970d0eebbbd63e6b42b57fa2fbaf44716155025d"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "random_mean_std",
+      "head": "adamw",
+      "classifier_seed": 37,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.05,
+        "weight_decay": 0.1,
+        "seed": 37
+      },
+      "state_sha256": "aeefe7cc2dc3992e6bcf56d14e2cd58a68bb710bcef3a210d875d315d2c9842a",
+      "probe_sha256": "5e0265008a9d2ad6be7bb8e4adb28384ec2115626a2af2b1ded9003c279f43bf",
+      "original_tuning_accuracy": 0.335,
+      "confirmation": {
+        "count": 500,
+        "correct": 164,
+        "accuracy": 0.328,
+        "cross_entropy": 2.008439779281616,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 11,
+            "accuracy": 0.22
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 21,
+            "accuracy": 0.42
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 20,
+            "accuracy": 0.4
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 22,
+            "accuracy": 0.44
+          }
+        ],
+        "confusion_matrix": [
+          [
+            13,
+            1,
+            6,
+            3,
+            2,
+            2,
+            2,
+            2,
+            16,
+            3
+          ],
+          [
+            3,
+            18,
+            0,
+            3,
+            5,
+            4,
+            1,
+            2,
+            6,
+            8
+          ],
+          [
+            7,
+            2,
+            13,
+            1,
+            10,
+            5,
+            3,
+            2,
+            4,
+            3
+          ],
+          [
+            1,
+            2,
+            2,
+            13,
+            4,
+            17,
+            3,
+            6,
+            2,
+            0
+          ],
+          [
+            0,
+            2,
+            8,
+            9,
+            11,
+            5,
+            11,
+            4,
+            0,
+            0
+          ],
+          [
+            1,
+            5,
+            3,
+            12,
+            6,
+            14,
+            5,
+            3,
+            1,
+            0
+          ],
+          [
+            2,
+            2,
+            6,
+            6,
+            4,
+            5,
+            21,
+            3,
+            1,
+            0
+          ],
+          [
+            2,
+            5,
+            3,
+            1,
+            4,
+            5,
+            2,
+            19,
+            0,
+            9
+          ],
+          [
+            10,
+            6,
+            5,
+            1,
+            1,
+            1,
+            1,
+            2,
+            20,
+            3
+          ],
+          [
+            2,
+            8,
+            1,
+            3,
+            0,
+            2,
+            1,
+            3,
+            8,
+            22
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "c6d8d46cba004c4d5e310579066d7f25c20d5c894c64857975eb4fa463a50769",
+        "tuning": "5c1780a208c3090807160c442639a8ecd8d6d7c9c08f5eef665e3f84dd45ae9f",
+        "confirmation": "90a22e4d9e32f72e052a5ad9c0de89a7983abddb3f017716cfd9eef7fdaa65e3"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "pixels",
+      "head": "adamw",
+      "classifier_seed": 37,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.1,
+        "seed": 37
+      },
+      "state_sha256": "7bd935bdb2771a7b05f6b5e441062efe8d8acf270c0cf77033028fba7d5772c3",
+      "probe_sha256": "b49d1c9abc48c99fe0b3158166527051bdfcd1dc9140920c63f4924f7eb3149b",
+      "original_tuning_accuracy": 0.285,
+      "confirmation": {
+        "count": 500,
+        "correct": 146,
+        "accuracy": 0.292,
+        "cross_entropy": 2.197056531906128,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 4,
+            "accuracy": 0.08
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 21,
+            "accuracy": 0.42
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 16,
+            "accuracy": 0.32
+          }
+        ],
+        "confusion_matrix": [
+          [
+            15,
+            4,
+            1,
+            3,
+            1,
+            2,
+            2,
+            0,
+            11,
+            11
+          ],
+          [
+            1,
+            19,
+            2,
+            2,
+            2,
+            1,
+            5,
+            3,
+            6,
+            9
+          ],
+          [
+            10,
+            1,
+            4,
+            5,
+            4,
+            7,
+            11,
+            3,
+            2,
+            3
+          ],
+          [
+            1,
+            4,
+            2,
+            13,
+            6,
+            8,
+            6,
+            4,
+            2,
+            4
+          ],
+          [
+            2,
+            2,
+            3,
+            6,
+            16,
+            3,
+            13,
+            4,
+            0,
+            1
+          ],
+          [
+            4,
+            1,
+            5,
+            10,
+            2,
+            12,
+            6,
+            4,
+            4,
+            2
+          ],
+          [
+            2,
+            1,
+            6,
+            7,
+            10,
+            1,
+            15,
+            1,
+            3,
+            4
+          ],
+          [
+            4,
+            2,
+            3,
+            4,
+            7,
+            5,
+            2,
+            15,
+            4,
+            4
+          ],
+          [
+            12,
+            7,
+            1,
+            2,
+            2,
+            0,
+            1,
+            0,
+            21,
+            4
+          ],
+          [
+            3,
+            10,
+            2,
+            1,
+            2,
+            3,
+            1,
+            1,
+            11,
+            16
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "f5db99da7e6c20ccca17941729d4e3bf04cbada24275a1399e26a9aa746d24ac",
+        "tuning": "6448f8cc2fa9704ef44a0def295e5dc45c23fc239080a51b8334f36aa8d70137",
+        "confirmation": "da2bca5046f54c3dcb9f8f3b96c7138a49d31bf02843754d8bc2966f4834a16b"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    },
+    {
+      "arm": "learned_mask4x4",
+      "head": "adamw",
+      "classifier_seed": 37,
+      "selected_config": {
+        "steps": 200,
+        "learning_rate": 0.01,
+        "weight_decay": 0.1,
+        "seed": 37
+      },
+      "state_sha256": "49f6bcb50ed7ec6d19bef4fcef641bc4edf9340dc4acf7dfe643bdd9afd6085f",
+      "probe_sha256": "717abeb1bc3d82db59b5237e16176ed3c48ef53c9398073a73442052e07fb6f2",
+      "original_tuning_accuracy": 0.275,
+      "confirmation": {
+        "count": 500,
+        "correct": 115,
+        "accuracy": 0.23,
+        "cross_entropy": 2.0351614952087402,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "correct": 15,
+            "accuracy": 0.3
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "correct": 4,
+            "accuracy": 0.08
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "correct": 5,
+            "accuracy": 0.1
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "correct": 9,
+            "accuracy": 0.18
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "correct": 12,
+            "accuracy": 0.24
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "correct": 6,
+            "accuracy": 0.12
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "correct": 18,
+            "accuracy": 0.36
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "correct": 13,
+            "accuracy": 0.26
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "correct": 14,
+            "accuracy": 0.28
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "correct": 19,
+            "accuracy": 0.38
+          }
+        ],
+        "confusion_matrix": [
+          [
+            15,
+            1,
+            4,
+            4,
+            3,
+            2,
+            2,
+            0,
+            14,
+            5
+          ],
+          [
+            4,
+            4,
+            0,
+            7,
+            5,
+            7,
+            2,
+            4,
+            7,
+            10
+          ],
+          [
+            9,
+            2,
+            5,
+            2,
+            11,
+            3,
+            9,
+            2,
+            2,
+            5
+          ],
+          [
+            1,
+            3,
+            2,
+            9,
+            6,
+            7,
+            11,
+            5,
+            0,
+            6
+          ],
+          [
+            2,
+            3,
+            2,
+            6,
+            12,
+            4,
+            17,
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            6,
+            4,
+            2,
+            4,
+            6,
+            9,
+            10,
+            0,
+            7
+          ],
+          [
+            1,
+            1,
+            4,
+            3,
+            11,
+            5,
+            18,
+            4,
+            1,
+            2
+          ],
+          [
+            1,
+            2,
+            6,
+            4,
+            6,
+            5,
+            3,
+            13,
+            3,
+            7
+          ],
+          [
+            17,
+            3,
+            1,
+            1,
+            0,
+            1,
+            0,
+            3,
+            14,
+            10
+          ],
+          [
+            3,
+            7,
+            0,
+            4,
+            0,
+            2,
+            2,
+            5,
+            8,
+            19
+          ]
+        ]
+      },
+      "source_sha256": {
+        "train": "09fa45c6232910e5abd781e6322123959e13e8bd37454a5ff8dbe1d27367cf16",
+        "tuning": "5ec961610c576e97b91df4842fa79ea2cab68b1cbe55f39aabfd84757b4630ae",
+        "confirmation": "52474c3965dba34f7d67dafc43184c78e1dee444aad4638bbdb14866a597297e"
+      },
+      "original_state_and_scores_reproduced": true,
+      "classifier_refitted": false,
+      "normalization_refitted": false
+    }
+  ],
+  "verified_classifiers": 24,
+  "classifier_refitted": false,
+  "normalization_refitted": false,
+  "settings_selected": false,
+  "test_evaluated": false,
+  "limitation": "Fresh examples only relative to declared pilots; one learned encoder seed per mask, shared original validation partition, unequal feature dimensions/token budgets, and descriptive classifier-seed variation. Scores must not be reused to claim untuned confirmation of later model choices."
+}

@@ -2,6 +2,21 @@
 
 ## October 12, 2026
 
+- Executed the committed 24-state confirmation protocol on 500 new balanced
+  validation rows, excluding all 246 previously evaluated rows and preserving
+  the original 500 fitted training rows. Learned mean_std / matching-random /
+  pixels AdamW means: 25.67% / 32.73% / 28.20%; default mean and 4x4 mean both
+  24.47%. All original states/scores reproduce; no normalization, classifier
+  or settings were refitted/selected. A reuse-only retry with image extraction,
+  sampling and fitting disabled produced a byte-identical report. A deliberately
+  corrupted cached feature was rejected while preserving prior output.
+  Published aggregate counts/configuration/provenance only. Full suite: 85 tests.
+  Interview explanation: "I froze the classifiers, kept fresh examples out of
+  tuning, and found that the early model improvements did not hold up against
+  matching baselines. That tells me which claims are supported before I invest
+  in stronger training." One encoder seed per mask and the shared validation
+  partition remain limitations; no official test or paid compute was used.
+
 - Added the no-refit confirmation CLI with dataset and selection verification,
   exact original/fresh artifact loading and atomic aggregate reports. A synthetic
   end-to-end check proves no image sampling/refitting or source mutation and

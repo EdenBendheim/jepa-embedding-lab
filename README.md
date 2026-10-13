@@ -2,20 +2,27 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 11, 2026:** frozen pooling ablations, configurable resumable
-training masks and verified geometry diagnostics work. Mean_std learned /
-matching-random AdamW validation means are 28.67% / 33.83%. A fixed-seed,
-image-order-matched 4x4 target run reached 27.50%, versus default mean 26.67%
-and pixels 28.00%. All 40 newly selected classifier states and paired errors
-reproduce; 77 synthetic tests pass. These reused-validation pilots do not
-establish reliable useful-learning gains. Pretrained comparison, stronger
-training/confirmation and final official test evaluation remain unfinished.
+**Status — October 12, 2026:** fixed-classifier confirmation on 500 fresh
+examples works, with all 24 original states reproduced and no refitting or
+retuning. Learned mean_std / matching random / pixel AdamW means are
+25.67% / 32.73% / 28.20%. The earlier 4x4-mask gain does not persist in mean
+accuracy on this check. All 85 synthetic tests pass; a cached retry reproduces
+the exact report and rejects corrupt features without replacing old output.
+Useful-learning advantage remains unproven. Pretrained comparison, stronger
+training across encoder seeds and final official test evaluation remain unfinished.
+See [fresh confirmation results](experiments/CONFIRMATION-2026-10-12.md),
 See [pooling results](experiments/POOLING-2026-10-11.md),
 [mask results](experiments/MASK-2026-10-11.md), and the earlier
 [encoder-seed](experiments/TRAINING-SEEDS-2026-10-10.md) /
 [checkpoint-age](experiments/PROGRESSION-2026-10-10.md) comparisons.
 
 ## Why this experiment
+
+The [October 12 confirmation protocol](experiments/CONFIRMATION-2026-10-12-PROTOCOL.md)
+was committed before observing its scores. It excludes all 246 unique validation
+rows from the two earlier pilot selections, keeps the fitted training rows and
+24 selected classifiers fixed, and reserves the official test set. Fresh data
+continues to favor the matching random/pixel baselines over the learned features.
 
 The [October 11 pooling/mask protocol](experiments/POOLING-MASK-2026-10-11-PROTOCOL.md)
 was committed before new scores; both fixed-weight pooling and the 223-step
@@ -41,6 +48,7 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
 - Frozen context/target full-image embeddings with mean/max/mean_std pooling, matched random-encoder and raw-pixel baselines, and atomic feature artifacts bound to exact examples, pooling dimensions, data identity and checkpoint bytes.
 - Saved-feature pooling comparisons with shared pixel classifiers, reproduced selected states and paired class errors; descriptive numerical/effective rank and cosine inspection.
 - Configurable target-mask training with resume-bound geometry, patch counts, and legacy default-checkpoint compatibility; a declared real-data mask pilot with verified image-order equality.
+- Disjoint balanced confirmation selection, validation-only extraction and no-refit saved-classifier scoring with preserved original normalization, feature-content checks and explicit retuning boundaries.
 
 ## Run the mask demo
 
