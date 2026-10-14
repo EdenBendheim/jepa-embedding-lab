@@ -1,5 +1,13 @@
 # Development log
 
+## October 14, 2026
+
+- Added bounded confirmation ancestry: later rounds exclude previously scored
+  confirmation rows and every earlier tuning ancestor, preserve the original
+  fitted training rows, and reject corrupted or over-deep ancestry. The existing
+  version-two format and historical pilot identities remain compatible.
+  Focused confirmation checks passed.
+
 ## October 13, 2026
 
 - Executed the committed frozen pretrained protocol on the exact existing

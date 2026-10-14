@@ -354,6 +354,11 @@ Each arm directory must contain verified `checkpoint-train.pt` and `checkpoint-v
 
 ## Frozen pretrained transfer reference
 
+Confirmation exclusions can also include an earlier confirmation selection.
+Its observed rows and all earlier tuning ancestors are excluded, so a second
+confirmation round cannot quietly reuse the first round's examples. Ancestry
+is bounded to three earlier rounds; original fitting rows remain fixed.
+
 Install the optional `.[pretrained]` extra (torchvision 0.23.0). The extractor
 requires the local official `resnet18-f37072fd.pth` weight file, verifies its
 exact SHA-256, loads with `weights_only=True`, freezes the encoder and removes

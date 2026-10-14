@@ -42,13 +42,31 @@ class ConfirmationSelectionTests(unittest.TestCase):
             edited["selection_sha256"] = document_hash(edited, "selection_sha256")
             with self.assertRaises(ValueError): validate_pilot(edited, self.manifest, self.labels)
         for changes in (dict(seed=True), dict(validation_per_class=0), dict(validation_per_class=101),
-                        dict(exclusions=(self.reference,)), dict(exclusions=(selected,)),
+                        dict(exclusions=(self.reference,)), dict(exclusions=({},)),
                         dict(exclusions=(self.older,) * 9)):
             with self.subTest(changes=list(changes)), self.assertRaises(ValueError): self.build(**changes)
         bad = deepcopy(self.older); bad["seed"] += 1
         with self.assertRaises(ValueError): self.build(exclusions=(bad,))
         for value in (self.reference | dict(version=True), self.reference | dict(version=1.0), selected | dict(version=2.0)):
             with self.assertRaises(ValueError): validate_pilot(value, self.manifest, self.labels)
+
+    def test_later_round_excludes_confirmed_rows_and_all_earlier_tuning_ancestry(self):
+        first = self.build()
+        second = self.build(exclusions=(first,), seed=20261014)
+        observed = {i for parent in (self.reference, self.older, first)
+                    for i in parent['partitions']['validation']['indices']}
+        self.assertFalse(observed & set(second['partitions']['validation']['indices']))
+        self.assertEqual(second, validate_pilot(second, self.manifest, self.labels))
+        self.assertEqual(second, self.build(exclusions=(first,), seed=20261014))
+        bad = deepcopy(first)
+        bad['reference_selection']['seed'] += 1
+        bad['selection_sha256'] = document_hash(bad, 'selection_sha256')
+        with self.assertRaises(ValueError): self.build(exclusions=(bad,))
+        current = first
+        for seed in (1, 2, 3):
+            current = self.build(exclusions=(current,), seed=seed)
+        with self.assertRaisesRegex(ValueError, 'ancestry'):
+            self.build(exclusions=(current,), seed=4)
 
     def test_exhausted_fixed_validation_split_is_rejected(self):
         tiny = deepcopy(self.manifest)

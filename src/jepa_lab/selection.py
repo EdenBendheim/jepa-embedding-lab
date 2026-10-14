@@ -64,23 +64,41 @@ def validate_pilot(selection: dict, manifest: dict, labels: list[int]) -> dict:
     return selection
 
 
+def excluded_validation_indices(selection: dict, *, _depth: int = 0) -> set[int]:
+    """Collect observed rows across a bounded chain of earlier confirmations."""
+    if _depth > 3:
+        raise ValueError("Confirmation ancestry is limited to three earlier rounds")
+    rows = set(selection["partitions"]["validation"]["indices"])
+    if selection.get("kind") == "confirmation":
+        for parent in [selection["reference_selection"], *selection["excluded_selections"]]:
+            rows.update(excluded_validation_indices(parent, _depth=_depth+1))
+    return rows
+
+
 def make_confirmation(manifest: dict, labels: list[int], reference: dict, *,
                       exclusions=(), validation_per_class: int = 50,
-                      seed: int = 20261012) -> dict:
+                      seed: int = 20261012, _depth: int = 0) -> dict:
     """Keep fitted training rows; reserve unseen validation rows, never test."""
     if (type(validation_per_class) is not int or not 1 <= validation_per_class <= 100
             or type(seed) is not int or not 0 <= seed < 2**63
             or not isinstance(exclusions, (tuple, list)) or len(exclusions) > 8):
         raise ValueError("Confirmation requires 1-100 rows/class, a valid seed, and at most eight exclusions")
+    if _depth > 3:
+        raise ValueError("Confirmation ancestry is limited to three earlier rounds")
+    if not isinstance(reference, dict) or reference.get("version") != 1 or "kind" in reference:
+        raise ValueError("Confirmation reference must be its original version-one fitting pilot")
     parents = [reference, *exclusions]
     for parent in parents:
-        if not isinstance(parent, dict) or parent.get("version") != 1 or "kind" in parent:
-            raise ValueError("Confirmation sources must be original version-one pilot selections")
-        validate_pilot(parent, manifest, labels)
+        if not isinstance(parent, dict):
+            raise ValueError("Confirmation sources must be verified selections")
+        if parent.get("kind") == "confirmation":
+            validate_confirmation(parent, manifest, labels, _depth=_depth+1)
+        else:
+            validate_pilot(parent, manifest, labels)
     hashes = [parent["selection_sha256"] for parent in parents]
     if len(hashes) != len(set(hashes)):
         raise ValueError("Confirmation source selections must be distinct")
-    excluded = {index for parent in parents for index in parent["partitions"]["validation"]["indices"]}
+    excluded = set().union(*(excluded_validation_indices(parent, _depth=_depth) for parent in parents))
     chosen = []
     for label in range(10):
         group = [index for index in manifest["partitions"]["validation"]["indices"]
@@ -101,13 +119,13 @@ def make_confirmation(manifest: dict, labels: list[int], reference: dict, *,
     return result | dict(selection_sha256=document_hash(result, "selection_sha256"))
 
 
-def validate_confirmation(selection: dict, manifest: dict, labels: list[int]) -> dict:
+def validate_confirmation(selection: dict, manifest: dict, labels: list[int], *, _depth: int = 0) -> dict:
     if not isinstance(selection, dict) or type(selection.get("version")) is not int or selection["version"] != 2:
         raise ValueError("Confirmation selection requires integer version two")
     try:
         expected = make_confirmation(manifest, labels, selection["reference_selection"],
                                      exclusions=selection["excluded_selections"],
-                                     validation_per_class=selection["per_class"]["validation"], seed=selection["seed"])
+                                     validation_per_class=selection["per_class"]["validation"], seed=selection["seed"], _depth=_depth)
     except (KeyError, TypeError, AttributeError) as exc:
         raise ValueError("Invalid confirmation selection schema") from exc
     if selection != expected:

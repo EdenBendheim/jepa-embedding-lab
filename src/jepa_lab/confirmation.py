@@ -12,7 +12,7 @@ from .compare import write_report
 from .features import FeatureSet, _sha, load_features
 from .probe_artifacts import load_probe, probe_context
 from .probes import validate_probe_data
-from .selection import document_hash, validate_pilot, validate_confirmation
+from .selection import document_hash, excluded_validation_indices, validate_pilot, validate_confirmation
 
 
 def score_confirmation(probe_path: str | Path, train: FeatureSet, validation: FeatureSet,
@@ -27,8 +27,8 @@ def score_confirmation(probe_path: str | Path, train: FeatureSet, validation: Fe
         raise ValueError("Confirmation selection must retain its complete protocol fingerprint")
     try:
         reference = selection["reference_selection"]
-        excluded = {index for parent in [reference, *selection["excluded_selections"]]
-                    for index in parent["partitions"]["validation"]["indices"]}
+        excluded = set().union(*(excluded_validation_indices(parent)
+                    for parent in [reference, *selection["excluded_selections"]]))
         if (reference["selection_sha256"] != context["selection_sha256"]
                 or reference["partitions"]["train"]["indices"] != list(train.indices)
                 or reference["partitions"]["validation"]["indices"] != list(validation.indices)
