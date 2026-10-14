@@ -425,3 +425,14 @@ completed journals, saved states, paired errors and aggregates without training,
 image reads, extraction or refitting. Failed checks preserve the prior summary.
 The protocol fixes all budgets/seeds and exact source identities; local
 checkpoints/features/probes/journals remain ignored.
+
+## Inspect training dynamics
+
+Install `.[plots]`, then run `PYTHONPATH=src .venv/bin/python
+experiments/plot_budget_20261014.py` with the local ignored journals present.
+Their exact bytes and complete budget/order must match the published source
+hashes before rendering. The [fixed-window plot](experiments/budget-2026-10-14-dynamics.svg)
+and [aggregate points](experiments/budget-2026-10-14-dynamics.json) contain no
+per-image records. Ribbons are the range across three seeds, not confidence
+intervals. Latent loss and token spread are diagnostics; they do not establish
+useful embeddings or rule out pooled-feature collapse.

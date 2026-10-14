@@ -57,5 +57,5 @@ work; images, weights and per-image records remain ignored.
 Next: predeclare a controlled model/input change (width and position/input choices
 remain planned), hold the training/evaluation budget fixed, and reserve a new
 untuned subset before confirmation. All prior confirmation rows are now observed.
-Retain the official test set. Add training-dynamics plots and an embedding explorer;
+Retain the official test set. Training-dynamics plots and verified aggregate points now work; an embedding explorer remains planned;
 quality claims still require independent evidence.

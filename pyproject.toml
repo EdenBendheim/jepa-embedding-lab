@@ -12,6 +12,7 @@ dependencies = []
 [project.optional-dependencies]
 training = ["torch==2.8.0", "numpy>=1.26,<3"]
 pretrained = ["torch==2.8.0", "torchvision==0.23.0", "numpy>=1.26,<3"]
+plots = ["matplotlib>=3.9,<4"]
 
 [project.scripts]
 jepa-masks = "jepa_lab.demo:main"

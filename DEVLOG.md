@@ -2,6 +2,14 @@
 
 ## October 14, 2026
 
+- Added complete-journal fixed-window diagnostics and an optional Matplotlib
+  renderer bound to exact published journal bytes/recipes. Two synthetic tests
+  cover partial-tail windows, unchanged inputs, missing steps, changed sample
+  order, non-finite/negative values and invalid bounds. Generated and visually
+  inspected the six-run plot/aggregate points. Ribbons are seed ranges, not
+  confidence intervals. Changing loss/token spread does not establish useful
+  embeddings or exclude pooled-feature collapse. Matplotlib 3.11.2 used locally.
+
 - Completed six 2,223-step runs with matched image order, compared the same
   500/200 pilot and scored 72 fixed selected states on 500 new confirmation
   examples excluding 746 observed rows. Fresh learned 2x2 / 4x4 / random / pixel
