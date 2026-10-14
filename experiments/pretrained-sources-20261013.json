@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "manifest_path": "runs/cifar10-manifest.json",
+  "selection_path": "runs/pilot-selection-20261009.json",
+  "feature_dir": "runs/pilot-features-20261009",
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "sources": [
+    {
+      "path": "runs/cifar10-manifest.json",
+      "sha256": "97f4201d5d57ee4fcf58e98e291ad18a54a03f3995571213907e2e8b619893cc"
+    },
+    {
+      "path": "runs/pilot-selection-20261009.json",
+      "sha256": "a1e87b95e7fee9137c1568d26cd85d7845022b1a77524fd86aa49f68365265bf"
+    },
+    {
+      "path": "runs/pilot-features-20261009/checkpoint-train.pt",
+      "sha256": "fb4ff34349ba28050f0f5c124be19dfda8d0ef57deb7036a460d25a9b3f9dfec"
+    },
+    {
+      "path": "runs/pilot-features-20261009/checkpoint-validation.pt",
+      "sha256": "9623abf0c8feb441b7451387facaafb1a1904645dca7fbfadf45aee2e21a42d4"
+    },
+    {
+      "path": "runs/pilot-features-20261009/random-train.pt",
+      "sha256": "1ab381bfc818493acba522f58bd75de1e504c412dd7da2e49f57be412ce82210"
+    },
+    {
+      "path": "runs/pilot-features-20261009/random-validation.pt",
+      "sha256": "70f9d4bdbf68aaba1b25968f8483d63e3ff5e1abb32cde81e57e9f154c3307e5"
+    },
+    {
+      "path": "runs/pilot-features-20261009/pixels-train.pt",
+      "sha256": "f5db99da7e6c20ccca17941729d4e3bf04cbada24275a1399e26a9aa746d24ac"
+    },
+    {
+      "path": "runs/pilot-features-20261009/pixels-validation.pt",
+      "sha256": "6448f8cc2fa9704ef44a0def295e5dc45c23fc239080a51b8334f36aa8d70137"
+    }
+  ],
+  "weights_path": "checkpoints/resnet18-f37072fd.pth",
+  "weights_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+  "seeds": [
+    29,
+    31,
+    37
+  ],
+  "steps": 200,
+  "learning_rates": [
+    0.0001,
+    0.001,
+    0.01,
+    0.05
+  ],
+  "weight_decays": [
+    0.01,
+    0.1
+  ],
+  "ridge_alphas": [
+    0.01,
+    0.1,
+    1,
+    10
+  ]
+}

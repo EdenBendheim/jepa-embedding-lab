@@ -411,3 +411,10 @@ This only reads existing feature artifacts and uses the shared eight-setting,
 inputs pass verification before fitting; failures preserve an earlier report.
 Saved probe recheck already supports the pretrained artifacts through the
 standard feature verifier. Real transfer scores have not yet been measured.
+
+Run the [committed pretrained protocol](experiments/PRETRAINED-2026-10-13-PROTOCOL.md)
+with `PYTHONPATH=src .venv/bin/python experiments/run_pretrained_20261013.py`.
+A retry with `--reuse-only` validates sources and all selected classifier states
+without extracting images or refitting. It reproduces paired errors and seed
+aggregates; losing candidate states were not saved and are not re-evaluated.
+Changed caches or source bytes fail while retaining an earlier summary.

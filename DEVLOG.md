@@ -2,6 +2,13 @@
 
 ## October 13, 2026
 
+- Added no-refit transfer audit and the committed experiment driver. Selected
+  states, reported candidate grids/rules, paired errors and seed aggregates
+  must reproduce before summaries are written. Synthetic audit/cache checks
+  passed, including reuse with fitting/extraction disabled and a corrupt cache
+  preserving earlier output. Historical input bytes are pinned prospectively.
+  The driver’s CLI help works; real-data execution follows this commit.
+
 - Added the saved-feature transfer CLI with fixed-data verification, atomic
   reports and bounded classifier grids. Its synthetic end-to-end check passes:
   no raw-image reads, unchanged source bytes, all four arms fitted, and corrupt
