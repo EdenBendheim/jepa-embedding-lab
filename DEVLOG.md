@@ -2,6 +2,11 @@
 
 ## October 13, 2026
 
+- Bound pretrained feature artifacts to exact named weights, torchvision runtime,
+  full transform metadata, 512-D output and extraction bounds. Seven feature
+  tests pass, including existing pixel/confirmation paths and rejection of
+  altered pretrained provenance, dimensions and mutable metadata copies.
+
 - Added offline loading of the exact named ResNet-18 weights, frozen 512-D
   extraction, finite-state checks, per-submodule mode restoration and caller RNG
   isolation. Eight focused tests pass; one synthetic-image smoke using the

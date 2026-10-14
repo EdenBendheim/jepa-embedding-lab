@@ -17,6 +17,7 @@ from .embeddings import rgb_config
 from .model import ModelConfig
 from .pooling import pooling_dimension, pooling_mode
 from .selection import validate_pilot
+from .pretrained import pretrained_metadata
 
 
 @dataclass(frozen=True)
@@ -86,13 +87,15 @@ def load_features(path: str | Path, *, manifest: dict, selection: dict, training
             or type(runtime.get("cpu_threads")) is not int or runtime["cpu_threads"] < 1):
         raise ValueError("Artifact extraction settings or PyTorch runtime are incompatible")
     metadata = saved.get("feature_metadata")
-    if not isinstance(metadata, dict) or metadata.get("normalization") != "x / 127.5 - 1":
-        raise ValueError("Feature metadata must record the fixed input normalization")
+    if not isinstance(metadata, dict):
+        raise ValueError("Feature metadata must record its fixed input normalization")
     try:
         json.dumps(metadata, allow_nan=False)
     except (ValueError, TypeError) as exc:
         raise ValueError("Feature metadata must be finite JSON-compatible provenance") from exc
     representation = metadata.get("representation")
+    if representation != "pretrained" and metadata.get("normalization") != "x / 127.5 - 1":
+        raise ValueError("Feature metadata must record the fixed input normalization")
     if representation == "pixels":
         if (metadata.get("pooling") != "flatten NCHW RGB values" or values.shape[1] != 3072
                 or (values.abs() > 1).any()):
@@ -112,6 +115,9 @@ def load_features(path: str | Path, *, manifest: dict, selection: dict, training
                 raise ValueError("Checkpoint feature metadata lacks valid weight/training provenance")
         elif type(metadata.get("seed")) is not int or not 0 <= metadata["seed"] < 2**63:
             raise ValueError("Random-encoder features require a valid initialization seed")
+    elif representation == "pretrained":
+        if metadata != pretrained_metadata() or values.shape[1] != 512 or settings["batch_size"] > 16:
+            raise ValueError("Pretrained feature weights, transform, runtime, dimension or batch bound differ")
     else:
         raise ValueError("Unsupported feature representation")
     return FeatureSet(values.detach().clone(), labels.clone(), tuple(indices), partition,

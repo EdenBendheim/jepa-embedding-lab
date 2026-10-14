@@ -372,3 +372,8 @@ and loads on CPU with `weights_only=True`, removes the classification head
 and freezes the encoder. `pretrained_embeddings` restores mixed submodule
 modes and leaves buffers, gradients and caller RNG unchanged. Supply weights
 locally; these APIs make no network requests. Dataset extraction remains next.
+
+The feature verifier accepts the explicit pretrained recipe separately from
+the existing JEPA/pixel normalization. It checks complete weight/transform
+identity and 512-D rows without downloading weights; legacy artifacts remain
+valid. Pretrained fitting/extraction integration is still in progress.
