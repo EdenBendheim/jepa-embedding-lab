@@ -2,6 +2,12 @@
 
 ## October 14, 2026
 
+- Committed the prospective longer-budget protocol and driver: six 2,223-step
+  runs, two masks across three encoder seeds, unchanged optimization recipe,
+  matched actual image order, and 500 new confirmation rows excluding all 746
+  previously observed rows. Synthetic repeated-mask/cache/preflight checks
+  passed. New real-data training and scores follow this declaration.
+
 - Added bounded multi-chunk training budgets with complete-journal/image-order
   verification, partial recovery and a no-training cache mode. Three synthetic
   checks reproduce a continuous trajectory, reject changed recipes/budgets or

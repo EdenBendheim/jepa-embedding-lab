@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "date": "2026-10-14",
+  "manifest_path": "runs/cifar10-manifest.json",
+  "selection_path": "runs/pilot-selection-20261009.json",
+  "previous_confirmation_path": "runs/confirmation-20261012/selection.json",
+  "sources": [
+    {
+      "path": "runs/cifar10-manifest.json",
+      "sha256": "97f4201d5d57ee4fcf58e98e291ad18a54a03f3995571213907e2e8b619893cc"
+    },
+    {
+      "path": "runs/pilot-selection-20261009.json",
+      "sha256": "a1e87b95e7fee9137c1568d26cd85d7845022b1a77524fd86aa49f68365265bf"
+    },
+    {
+      "path": "runs/confirmation-20261012/selection.json",
+      "sha256": "d015120243f01968b5744a6c223dcb89c081de2d158ebad4e51bb0eba57f4af9"
+    },
+    {
+      "path": "runs/pilot-selection-20261007.json",
+      "sha256": "7b45d136122157325921a30e63febad313acf728e02dc1db79a90a6d395e58d2"
+    }
+  ],
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "confirmation_selection_sha256": "bb8c66ecf64a2e0c7a5832d0dc37430a1806f0085acf337e76378fd90ed3c1f0",
+  "confirmation_seed": 20261014,
+  "confirmation_per_class": 50,
+  "total_steps": 2223,
+  "chunk_steps": 1000,
+  "checkpoint_every": 50,
+  "batch_size": 4,
+  "learning_rate": 0.001,
+  "momentum": 0.99,
+  "training_seeds": [
+    20261003,
+    20261010,
+    20261011
+  ],
+  "random_seeds": [
+    29,
+    31,
+    37
+  ],
+  "target_sizes": [
+    2,
+    4
+  ],
+  "context_fraction": 0.75,
+  "config": {
+    "rows": 8,
+    "cols": 8,
+    "patch_dim": 48,
+    "embedding_dim": 32,
+    "heads": 4,
+    "encoder_depth": 2,
+    "predictor_depth": 1
+  },
+  "classifier_seeds": [
+    29,
+    31,
+    37
+  ],
+  "probe_steps": 200,
+  "learning_rates": [
+    0.0001,
+    0.001,
+    0.01,
+    0.05
+  ],
+  "weight_decays": [
+    0.01,
+    0.1
+  ],
+  "ridge_alphas": [
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "pooling": "mean",
+  "encoder": "context",
+  "test_evaluated": false
+}
