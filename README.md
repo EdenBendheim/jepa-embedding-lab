@@ -354,3 +354,11 @@ The saved-feature CLI leaves source artifacts untouched and does not sample imag
 ```
 
 Each arm directory must contain verified `checkpoint-train.pt` and `checkpoint-validation.pt`; the shared directory supplies `random-*.pt` and `pixels-*.pt`. Use the existing embedding extractor to prepare missing features with the same selection. The [October 10 protocol](experiments/PILOT-2026-10-10-PROTOCOL.md) fixes the age comparison and two additional encoder-training seeds before the new runs.
+
+## Planned pretrained reference
+
+The [October 13 protocol](experiments/PRETRAINED-2026-10-13-PROTOCOL.md)
+fixes a frozen ImageNet ResNet-18 comparator, deterministic preprocessing and
+matched downstream probe budgets before new results. It is a transfer reference
+with different data, architecture, resolution and feature width; implementation
+and results are still pending.

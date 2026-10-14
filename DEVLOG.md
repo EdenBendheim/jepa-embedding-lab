@@ -1,5 +1,12 @@
 # Development log
 
+## October 13, 2026
+
+- Declared the frozen ImageNet ResNet-18 transfer baseline before extraction or
+  scores. Fixed the already-observed 500/200 pilot, shared probe grid/seeds,
+  artifact verification and explicit architecture/pretraining confounds.
+  Protocol inspected against official torchvision 0.23 documentation.
+
 ## October 12, 2026
 
 - Executed the committed 24-state confirmation protocol on 500 new balanced
