@@ -366,3 +366,9 @@ and results are still pending.
 `pretrained.pretrained_input` implements the fixed tensor transform and strict
 CPU/RGB/batch checks. Install `.[pretrained]` for torchvision 0.23.0; no weights
 are downloaded by preprocessing. Frozen encoder/extraction is still pending.
+
+`load_pretrained(path)` verifies the exact official ResNet-18 weight SHA-256
+and loads on CPU with `weights_only=True`, removes the classification head
+and freezes the encoder. `pretrained_embeddings` restores mixed submodule
+modes and leaves buffers, gradients and caller RNG unchanged. Supply weights
+locally; these APIs make no network requests. Dataset extraction remains next.

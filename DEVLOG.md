@@ -2,6 +2,11 @@
 
 ## October 13, 2026
 
+- Added offline loading of the exact named ResNet-18 weights, frozen 512-D
+  extraction, finite-state checks, per-submodule mode restoration and caller RNG
+  isolation. Eight focused tests pass; one synthetic-image smoke using the
+  official local weight file produced finite 1x512 output. No CIFAR scores yet.
+
 - Added optional pinned torchvision preprocessing: deterministic 32x32 uint8
   RGB to the named ImageNet 256-resize/224-crop recipe. Four synthetic tests
   pass for channel scaling, batch isolation, input bounds and unchanged inputs/RNG.
