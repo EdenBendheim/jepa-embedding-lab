@@ -134,5 +134,47 @@ class PublicTrainingTests(unittest.TestCase):
         self.assertEqual([], Fixture.accessed)
 
 
+    def test_interrupted_run_recovers_durable_journal_and_exact_trajectory(self):
+        from jepa_lab.model import JEPA
+        whole, split = self.root/'whole.pt', self.root/'partial.pt'
+        expected = self.run_training(steps=4, checkpoint=whole)
+        forward, calls = JEPA.forward, []
+        def interrupted(model, *args, **kwargs):
+            calls.append(1)
+            if len(calls) == 3: raise RuntimeError('simulated interruption')
+            return forward(model, *args, **kwargs)
+        with patch.object(JEPA, 'forward', interrupted), self.assertRaisesRegex(RuntimeError, 'interruption'):
+            self.run_training(steps=4, checkpoint=split, checkpoint_every=2)
+        partial = torch.load(split, weights_only=True)
+        self.assertEqual(2, partial['step'])
+        self.assertEqual(expected['history'][:2], partial['training_history'])
+        self.run_training(steps=2, resume=split, checkpoint=split, checkpoint_every=1)
+        self.assert_state_equal(torch.load(whole, weights_only=True), torch.load(split, weights_only=True))
+
+    def test_legacy_checkpoint_records_missing_prefix_without_inventing_history(self):
+        path = self.root/'legacy.pt'
+        self.run_training(checkpoint=path)
+        state = torch.load(path, weights_only=True)
+        state.pop('training_history'); state.pop('history_start_step')
+        torch.save(state, path)
+        resumed = self.run_training(resume=path, checkpoint=path, checkpoint_every=1)
+        final = torch.load(path, weights_only=True)
+        self.assertEqual(2, final['history_start_step'])
+        self.assertEqual(resumed['history'], final['training_history'])
+
+    def test_bad_journal_or_interval_fails_before_sampling_or_replacing_checkpoint(self):
+        path = self.root/'journal.pt'; self.run_training(checkpoint=path)
+        good = torch.load(path, weights_only=True)
+        for changes in (dict(history_start_step=True), dict(training_history=[]),
+                        dict(training_history=[good['training_history'][1]]*2)):
+            torch.save(good|changes, path); before=path.read_bytes(); Fixture.accessed.clear()
+            with self.assertRaisesRegex(ValueError, 'journal'): self.run_training(resume=path, checkpoint=path)
+            self.assertEqual([], Fixture.accessed); self.assertEqual(before, path.read_bytes())
+        for settings in (dict(checkpoint_every=2), dict(checkpoint_every=True), dict(checkpoint_every=1001)):
+            Fixture.accessed.clear()
+            with self.assertRaisesRegex(ValueError, 'interval'): self.run_training(**settings)
+            self.assertEqual([], Fixture.accessed)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -110,6 +110,12 @@ export PYTHONPATH=src
 
 `--steps` is the number of **additional** optimizer steps, capped at 1,000 per invocation with batch size 1–32. Defaults are batch four, learning rate 0.001, EMA momentum 0.99, the manifest seed, and one CPU thread. This is a bounded local trainer, with no download, API request, paid compute, or automatic prolonged run. Reports record the start/completed step counts, exact sampled training indices, loss, gradient norm, and embedding variance/covariance for that invocation.
 
+Use `--checkpoint-every 50` with `--checkpoint` to atomically save model,
+optimizer, RNG and accumulated training diagnostics every 50 global steps.
+An interrupted run resumes from the last durable step. The interval does not
+alter the optimization recipe. Old checkpoints explicitly retain a missing
+history prefix; no earlier diagnostics are invented.
+
 Checkpoint version one binds state to the verified manifest fingerprint, model configuration, seed, batch size, learning rate, momentum, PyTorch version, and CPU thread count. Resume rejects mismatches before sampling. Model, optimizer, sample RNG, and PyTorch RNG are restored; mask seeds advance from the saved global step. Tests require a resumed run to match uninterrupted diagnostics, weights, optimizer, and RNG state in the same environment. This does not guarantee identical results across platforms or library versions; incompatible recorded runtimes are rejected.
 
 Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen features, classifier/encoder-seed checks and declared pooling/mask pilots now work. Fresh confirmation and frozen pretrained comparison are now measured below; stronger JEPA training remains pending.

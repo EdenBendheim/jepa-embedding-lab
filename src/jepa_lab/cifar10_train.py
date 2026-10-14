@@ -19,6 +19,27 @@ from .train import embedding_stats
 DEFAULT_MASK = dict(target_rows=2, target_cols=2, context_fraction=0.75)
 
 
+def checkpoint_history(saved: dict) -> tuple[int, list]:
+    """Validate a durable journal; legacy checkpoints explicitly lack a prefix."""
+    if 'training_history' not in saved and 'history_start_step' not in saved:
+        return saved['step'], []
+    start, history = saved.get('history_start_step'), saved.get('training_history')
+    if (type(start) is not int or not 0 <= start <= saved['step'] or not isinstance(history, list)
+            or len(history) != saved['step']-start):
+        raise ValueError('Checkpoint training journal has an invalid range')
+    for step, row in enumerate(history, start+1):
+        if (not isinstance(row, dict) or type(row.get('step')) is not int or row['step'] != step
+                or not isinstance(row.get('train_indices'), list)
+                or len(row['train_indices']) != saved['settings']['batch_size']
+                or any(type(i) is not int for i in row['train_indices'])):
+            raise ValueError('Checkpoint training journal has invalid step/sample records')
+        try:
+            json.dumps(row, allow_nan=False)
+        except (ValueError, TypeError) as exc:
+            raise ValueError('Checkpoint training journal must contain finite diagnostics') from exc
+    return start, history
+
+
 def atomic_checkpoint(path: Path, state: dict):
     path.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
@@ -35,11 +56,14 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
                   batch_size: int = 4, learning_rate: float = 1e-3, momentum: float = 0.99,
                   seed: int | None = None, config: ModelConfig | None = None,
                   target_rows: int = 2, target_cols: int = 2, context_fraction: float = 0.75,
-                  checkpoint: str | Path | None = None, resume: str | Path | None = None) -> dict:
+                  checkpoint: str | Path | None = None, resume: str | Path | None = None,
+                  checkpoint_every: int = 0) -> dict:
     if type(steps) is not int or not 1 <= steps <= 1000 or type(batch_size) is not int or not 1 <= batch_size <= 32:
         raise ValueError("Local runs allow 1-1000 additional steps and a batch size of 1-32")
     if not math.isfinite(learning_rate) or learning_rate <= 0 or not math.isfinite(momentum) or not 0 <= momentum <= 1:
         raise ValueError("Learning rate must be finite and positive; momentum must be in [0, 1]")
+    if type(checkpoint_every) is not int or not 0 <= checkpoint_every <= 1000 or (checkpoint_every and checkpoint is None):
+        raise ValueError('Checkpoint interval must be 0-1000 and requires a checkpoint destination')
     config = config if config is not None else ModelConfig(patch_dim=48)
     if (config.rows, config.cols, config.patch_dim) != (8, 8, 48):
         raise ValueError("CIFAR-10 protocol requires an 8x8 grid of 4x4 RGB patches (patch_dim=48)")
@@ -62,12 +86,14 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
     identity = dict(format_version=1, dataset="CIFAR-10", manifest_sha256=manifest["manifest_sha256"],
                     config=asdict(config), settings=settings, runtime=runtime)
     saved = None
+    history_start, durable_history = 0, []
     if resume:
         saved = torch.load(resume, map_location="cpu", weights_only=True)
         if not isinstance(saved, dict) or any(saved.get(key) != value for key, value in identity.items()):
             raise ValueError("Checkpoint manifest, model, settings, or runtime does not match this run")
         if type(saved.get("step")) is not int or saved["step"] < 1:
             raise ValueError("Checkpoint must contain a positive completed step count")
+        history_start, durable_history = checkpoint_history(saved)
     generator = random.Random(seed)
     torch.manual_seed(seed)
     model = JEPA(config).train()
@@ -84,6 +110,11 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
             raise ValueError("Checkpoint training state is incomplete or invalid") from exc
     indices = manifest["partitions"]["train"]["indices"]
     history = []
+    def save_progress(completed):
+        atomic_checkpoint(Path(checkpoint), identity | dict(step=completed, model=model.state_dict(),
+                          optimizer=optimizer.state_dict(), sample_rng=generator.getstate(),
+                          torch_rng=torch.get_rng_state(), history_start_step=history_start,
+                          training_history=durable_history+history))
     for step in range(start, start+steps):
         chosen = generator.sample(indices, batch_size)
         # Labels define the fixed split and future probes, never the JEPA objective.
@@ -104,10 +135,11 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
         history.append(dict(step=step+1, train_indices=chosen, loss=float(loss.detach()),
                             gradient_norm=float(norm), prediction=embedding_stats(predictions),
                             target=embedding_stats(targets)))
+        if checkpoint_every and (step+1) % checkpoint_every == 0:
+            save_progress(step+1)
     if checkpoint:
-        atomic_checkpoint(Path(checkpoint), identity | dict(step=start+steps, model=model.state_dict(),
-                          optimizer=optimizer.state_dict(), sample_rng=generator.getstate(),
-                          torch_rng=torch.get_rng_state()))
+        if not checkpoint_every or (start+steps) % checkpoint_every:
+            save_progress(start+steps)
     return identity | dict(start_step=start, completed_steps=start+steps, additional_steps=steps, history=history,
                            mask_geometry=dict(**mask_settings, context_patches=len(initial_mask.context),
                                               target_patches=len(initial_mask.target), unused_patches=len(initial_mask.unused)),
@@ -129,6 +161,8 @@ def main():
     parser.add_argument("--seed", type=int, help="Defaults to the fixed manifest seed")
     parser.add_argument("--checkpoint", type=Path, help="Save training state atomically beneath ignored checkpoints/")
     parser.add_argument("--resume", type=Path, help="Restore a matching checkpoint; never unpickle untrusted files")
+    parser.add_argument('--checkpoint-every', type=int, default=0,
+                        help='Atomically save state and accumulated diagnostics every N global steps (0: end only)')
     parser.add_argument("--output", type=Path, help="Write this invocation's diagnostics beneath ignored runs/")
     args = parser.parse_args()
     torch.set_num_threads(1)
@@ -136,7 +170,7 @@ def main():
         report = train_cifar10(args.root, args.manifest, steps=args.steps, batch_size=args.batch_size,
                               learning_rate=args.learning_rate, momentum=args.momentum, seed=args.seed,
                               target_rows=args.target_rows, target_cols=args.target_cols, context_fraction=args.context_fraction,
-                              checkpoint=args.checkpoint, resume=args.resume)
+                              checkpoint=args.checkpoint, resume=args.resume, checkpoint_every=args.checkpoint_every)
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.error(str(exc))
     if args.output:

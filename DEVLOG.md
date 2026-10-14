@@ -2,6 +2,12 @@
 
 ## October 14, 2026
 
+- Added periodic atomic checkpoints with an accumulated diagnostic journal.
+  Simulated interruption and resume reproduce uninterrupted weights, optimizer,
+  RNG and full history exactly. Malformed journals/intervals fail before image
+  sampling; legacy checkpoints preserve the explicit missing prefix. Eight
+  focused public-training tests passed.
+
 - Added bounded confirmation ancestry: later rounds exclude previously scored
   confirmation rows and every earlier tuning ancestor, preserve the original
   fitted training rows, and reject corrupted or over-deep ancestry. The existing
