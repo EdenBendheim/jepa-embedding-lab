@@ -2,6 +2,11 @@
 
 ## October 13, 2026
 
+- Added optional pinned torchvision preprocessing: deterministic 32x32 uint8
+  RGB to the named ImageNet 256-resize/224-crop recipe. Four synthetic tests
+  pass for channel scaling, batch isolation, input bounds and unchanged inputs/RNG.
+  CI installs the CPU torchvision build; no weights are downloaded in tests.
+
 - Declared the frozen ImageNet ResNet-18 transfer baseline before extraction or
   scores. Fixed the already-observed 500/200 pilot, shared probe grid/seeds,
   artifact verification and explicit architecture/pretraining confounds.

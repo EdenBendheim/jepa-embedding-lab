@@ -362,3 +362,7 @@ fixes a frozen ImageNet ResNet-18 comparator, deterministic preprocessing and
 matched downstream probe budgets before new results. It is a transfer reference
 with different data, architecture, resolution and feature width; implementation
 and results are still pending.
+
+`pretrained.pretrained_input` implements the fixed tensor transform and strict
+CPU/RGB/batch checks. Install `.[pretrained]` for torchvision 0.23.0; no weights
+are downloaded by preprocessing. Frozen encoder/extraction is still pending.
