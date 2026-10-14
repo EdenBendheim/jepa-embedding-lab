@@ -2,6 +2,12 @@
 
 ## October 13, 2026
 
+- Added four-arm transfer comparison with exact ordered examples, identical probe
+  budgets/seeds, ridge fitted once per arm, saved-state reproduction and paired
+  errors. Two synthetic tests pass; they verify eight fits for two seeds and
+  rejection of altered sources/confirmation rows before fitting. Architecture,
+  supervision, resolution and width differences are explicitly reported.
+
 - Added bounded offline selected-example extraction and its CLI. Three synthetic
   checks verify exact indices/labels, train-file namespace only, rejected test
   access/bad manifests/bounds before sampling, and prior output surviving failure.

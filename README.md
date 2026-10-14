@@ -390,3 +390,9 @@ per batch / 1,000 per partition; existing official test remains reserved):
 
 Repeat with `--partition validation`. Exact data, selection and weight identity
 are checked before sampling/output replacement. No download or probe fit occurs.
+
+`transfer_compare.compare_transfer` fits the same declared classifier grid
+and seeds to checkpoint, matching random, pixel and pretrained features. It
+rechecks mutable tensors before fitting, preserves caller RNG, persists selected
+AdamW/ridge states and reports dimensions and transfer-pretraining confounds.
+Only pilot train/validation rows are accepted. The saved-feature CLI is next.
