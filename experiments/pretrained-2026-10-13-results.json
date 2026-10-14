@@ -1,0 +1,306 @@
+{
+  "protocol_sha256": "e8b3bcd9e10a19dbef6473a44807af97c9fac07473a7b08eb4622aa29a3a941e",
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "counts": {
+    "train": 500,
+    "validation": 200
+  },
+  "seeds": [
+    29,
+    31,
+    37
+  ],
+  "candidate_grid": [
+    {
+      "steps": 200,
+      "learning_rate": 0.0001,
+      "weight_decay": 0.01,
+      "seed": 29
+    },
+    {
+      "steps": 200,
+      "learning_rate": 0.0001,
+      "weight_decay": 0.1,
+      "seed": 29
+    },
+    {
+      "steps": 200,
+      "learning_rate": 0.001,
+      "weight_decay": 0.01,
+      "seed": 29
+    },
+    {
+      "steps": 200,
+      "learning_rate": 0.001,
+      "weight_decay": 0.1,
+      "seed": 29
+    },
+    {
+      "steps": 200,
+      "learning_rate": 0.01,
+      "weight_decay": 0.01,
+      "seed": 29
+    },
+    {
+      "steps": 200,
+      "learning_rate": 0.01,
+      "weight_decay": 0.1,
+      "seed": 29
+    },
+    {
+      "steps": 200,
+      "learning_rate": 0.05,
+      "weight_decay": 0.01,
+      "seed": 29
+    },
+    {
+      "steps": 200,
+      "learning_rate": 0.05,
+      "weight_decay": 0.1,
+      "seed": 29
+    }
+  ],
+  "ridge_alpha_grid": [
+    0.01,
+    0.1,
+    1,
+    10
+  ],
+  "summary": {
+    "checkpoint": {
+      "validation_accuracies": [
+        0.26,
+        0.275,
+        0.265
+      ],
+      "mean_accuracy": 0.26666666666666666,
+      "sample_standard_deviation": 0.00763762615825974,
+      "feature_dim": 32
+    },
+    "random": {
+      "validation_accuracies": [
+        0.255,
+        0.25,
+        0.25
+      ],
+      "mean_accuracy": 0.25166666666666665,
+      "sample_standard_deviation": 0.0028867513459481316,
+      "feature_dim": 32
+    },
+    "pixels": {
+      "validation_accuracies": [
+        0.28,
+        0.275,
+        0.285
+      ],
+      "mean_accuracy": 0.28,
+      "sample_standard_deviation": 0.004999999999999977,
+      "feature_dim": 3072
+    },
+    "pretrained": {
+      "validation_accuracies": [
+        0.73,
+        0.715,
+        0.73
+      ],
+      "mean_accuracy": 0.725,
+      "sample_standard_deviation": 0.008660254037844393,
+      "feature_dim": 512
+    }
+  },
+  "ridge_accuracy": {
+    "checkpoint": 0.27,
+    "random": 0.245,
+    "pixels": 0.3,
+    "pretrained": 0.755
+  },
+  "verified_classifiers": 16,
+  "paired_errors_reproduced": true,
+  "test_evaluated": false,
+  "sources": {
+    "checkpoint": {
+      "train": {
+        "artifact_sha256": "fb4ff34349ba28050f0f5c124be19dfda8d0ef57deb7036a460d25a9b3f9dfec",
+        "feature_metadata": {
+          "representation": "checkpoint",
+          "pooling": "mean of all 64 patch tokens",
+          "normalization": "x / 127.5 - 1",
+          "checkpoint_sha256": "9943decda69020dc6e96174f5d5c6587390d207f000cbe6ca1255da731097b9e",
+          "completed_steps": 223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1
+          },
+          "training_settings": {
+            "seed": 20261003,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          },
+          "encoder": "context"
+        }
+      },
+      "validation": {
+        "artifact_sha256": "9623abf0c8feb441b7451387facaafb1a1904645dca7fbfadf45aee2e21a42d4",
+        "feature_metadata": {
+          "representation": "checkpoint",
+          "pooling": "mean of all 64 patch tokens",
+          "normalization": "x / 127.5 - 1",
+          "checkpoint_sha256": "9943decda69020dc6e96174f5d5c6587390d207f000cbe6ca1255da731097b9e",
+          "completed_steps": 223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1
+          },
+          "training_settings": {
+            "seed": 20261003,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          },
+          "encoder": "context"
+        }
+      }
+    },
+    "random": {
+      "train": {
+        "artifact_sha256": "1ab381bfc818493acba522f58bd75de1e504c412dd7da2e49f57be412ce82210",
+        "feature_metadata": {
+          "representation": "random",
+          "pooling": "mean of all 64 patch tokens",
+          "normalization": "x / 127.5 - 1",
+          "encoder": "context",
+          "seed": 29,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1
+          }
+        }
+      },
+      "validation": {
+        "artifact_sha256": "70f9d4bdbf68aaba1b25968f8483d63e3ff5e1abb32cde81e57e9f154c3307e5",
+        "feature_metadata": {
+          "representation": "random",
+          "pooling": "mean of all 64 patch tokens",
+          "normalization": "x / 127.5 - 1",
+          "encoder": "context",
+          "seed": 29,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1
+          }
+        }
+      }
+    },
+    "pixels": {
+      "train": {
+        "artifact_sha256": "f5db99da7e6c20ccca17941729d4e3bf04cbada24275a1399e26a9aa746d24ac",
+        "feature_metadata": {
+          "representation": "pixels",
+          "pooling": "flatten NCHW RGB values",
+          "normalization": "x / 127.5 - 1"
+        }
+      },
+      "validation": {
+        "artifact_sha256": "6448f8cc2fa9704ef44a0def295e5dc45c23fc239080a51b8334f36aa8d70137",
+        "feature_metadata": {
+          "representation": "pixels",
+          "pooling": "flatten NCHW RGB values",
+          "normalization": "x / 127.5 - 1"
+        }
+      }
+    },
+    "pretrained": {
+      "train": {
+        "artifact_sha256": "44535e58f08d966e90a992c1a3852333039a7500c680834207be8d0eef2f6a65",
+        "feature_metadata": {
+          "representation": "pretrained",
+          "architecture": "torchvision ResNet-18",
+          "weights": "IMAGENET1K_V1",
+          "weights_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+          "weights_url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
+          "pretraining": "supervised ImageNet-1K",
+          "feature_dim": 512,
+          "pooling": "frozen global-average pool before classification head",
+          "normalization": "ImageNet1K tensor recipe",
+          "transform": {
+            "name": "torchvision_resnet18_imagenet1k_v1_tensor_256_224",
+            "input": "uint8 NCHW RGB 32x32",
+            "resize_short_edge": 256,
+            "crop_size": 224,
+            "interpolation": "bilinear",
+            "antialias": true,
+            "scale": "x / 255",
+            "mean": [
+              0.485,
+              0.456,
+              0.406
+            ],
+            "std": [
+              0.229,
+              0.224,
+              0.225
+            ]
+          },
+          "torchvision": "0.23.0"
+        }
+      },
+      "validation": {
+        "artifact_sha256": "42b816db6bfcd77cc870569ec9bbcbf1b44be3db60b79e061d2fb15ee92edf08",
+        "feature_metadata": {
+          "representation": "pretrained",
+          "architecture": "torchvision ResNet-18",
+          "weights": "IMAGENET1K_V1",
+          "weights_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+          "weights_url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
+          "pretraining": "supervised ImageNet-1K",
+          "feature_dim": 512,
+          "pooling": "frozen global-average pool before classification head",
+          "normalization": "ImageNet1K tensor recipe",
+          "transform": {
+            "name": "torchvision_resnet18_imagenet1k_v1_tensor_256_224",
+            "input": "uint8 NCHW RGB 32x32",
+            "resize_short_edge": 256,
+            "crop_size": 224,
+            "interpolation": "bilinear",
+            "antialias": true,
+            "scale": "x / 255",
+            "mean": [
+              0.485,
+              0.456,
+              0.406
+            ],
+            "std": [
+              0.229,
+              0.224,
+              0.225
+            ]
+          },
+          "torchvision": "0.23.0"
+        }
+      }
+    }
+  },
+  "limitation": "Exploratory validation-selected transfer comparison, not official test accuracy or independent confirmation. ImageNet supervision, architecture, parameter count, input resolution and feature width differ; a score gap cannot isolate the learning objective."
+}

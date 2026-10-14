@@ -20,7 +20,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Implement EMA updates and checkpoint/config persistence.
 - [x] Verify gradient boundaries, mask gather shapes, and EMA behavior.
 - [x] Run a small smoke experiment; log embedding variance and training loss.
-- [ ] Establish a frozen pretrained baseline appropriate to the selected modality.
+- [x] Establish a frozen pretrained baseline appropriate to the selected modality.
 
 ## Custom embeddings and useful comparisons
 
@@ -46,18 +46,17 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-The [October 12 confirmation](experiments/CONFIRMATION-2026-10-12.md) is complete:
-500 fresh balanced examples, all 246 old tuning rows excluded, 24 original
-classifiers/state/source identities reproduced, no refitting or retuning.
-Mean_std learned/random/pixel AdamW means are 25.67%/32.73%/28.20%; the
-4x4 mean and default mean both average 24.47%. Useful-learning advantage is
-unproven. All 85 synthetic tests pass; a no-extraction cached rerun reproduces
-the byte-identical report, and a corrupted cache preserves the previous output.
+The [October 13 pretrained comparison](experiments/PRETRAINED-2026-10-13.md)
+is complete on the reused 500/200 pilot: 104 synthetic tests, 16 selected
+classifier states and paired errors reproduced, cache-only retry verified.
+Pretrained AdamW mean/ridge: 72.50%/75.50%, versus JEPA 26.67%/27.00% and
+pixels 28.00%/30.00%. External supervised pretraining, architecture, resolution
+and feature dimensions differ. This is a transfer reference, not a controlled
+learning-objective test. JEPA useful-learning advantage remains unproven.
 
-Next: select and predeclare a frozen pretrained comparator, choose a bounded
-stronger training budget, and repeat selected mask settings across encoder
-seeds. These confirmation rows are now observed; reserve a different untuned
-subset for any new chosen protocol, and keep the official test set reserved.
-Width/input-feature comparisons, plots
-and an embedding explorer remain pending. Résumé quality claims require
-stronger independent evidence.
+Next: choose and predeclare a bounded stronger JEPA training budget, then repeat
+selected mask settings across encoder seeds. The earlier 500 fresh October 12
+confirmation examples and all old tuning rows are now observed; reserve a
+different untuned subset for new confirmation. Keep the official test set
+reserved. Width/input-feature comparisons, plots and an embedding explorer
+remain pending. Résumé quality claims require stronger independent evidence.

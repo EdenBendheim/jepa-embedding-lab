@@ -2,6 +2,20 @@
 
 ## October 13, 2026
 
+- Executed the committed frozen pretrained protocol on the exact existing
+  500/200 pilot. JEPA/random/pixel/pretrained AdamW means: 26.67%/25.17%/28.00%/
+  72.50%; ridge: 27.00%/24.50%/30.00%/75.50%. Reproduced all 16 selected
+  classifiers and paired errors. A cache-only retry with extraction/refitting/
+  sampling disabled produced byte-identical output; corrupt-cache copy failed
+  without replacing its summary. Full local suite: 104 tests. Published
+  aggregate metrics/provenance only; no images/weights/features/probes.
+  One initial manual cache check omitted the required one-thread setting and
+  was rejected; the correct runtime succeeded. No official test or paid compute.
+  Interview explanation: “I added a pretrained transfer reference, matched the
+  downstream budgets and reproduced every selected state. The quality gap gives
+  me a measurable target for improving JEPA, without claiming an objective-only
+  comparison or an embedding advantage.”
+
 - Added no-refit transfer audit and the committed experiment driver. Selected
   states, reported candidate grids/rules, paired errors and seed aggregates
   must reproduce before summaries are written. Synthetic audit/cache checks

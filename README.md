@@ -2,19 +2,16 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 12, 2026:** fixed-classifier confirmation on 500 fresh
-examples works, with all 24 original states reproduced and no refitting or
-retuning. Learned mean_std / matching random / pixel AdamW means are
-25.67% / 32.73% / 28.20%. The earlier 4x4-mask gain does not persist in mean
-accuracy on this check. All 85 synthetic tests pass; a cached retry reproduces
-the exact report and rejects corrupt features without replacing old output.
-Useful-learning advantage remains unproven. Pretrained comparison, stronger
-training across encoder seeds and final official test evaluation remain unfinished.
-See [fresh confirmation results](experiments/CONFIRMATION-2026-10-12.md),
-See [pooling results](experiments/POOLING-2026-10-11.md),
-[mask results](experiments/MASK-2026-10-11.md), and the earlier
-[encoder-seed](experiments/TRAINING-SEEDS-2026-10-10.md) /
-[checkpoint-age](experiments/PROGRESSION-2026-10-10.md) comparisons.
+**Status — October 13, 2026:** frozen ImageNet ResNet-18 extraction, matched
+downstream probes and saved-state auditing work. On the reused 500/200 pilot,
+AdamW means are JEPA 26.67%, matching random 25.17%, pixels 28.00%, pretrained
+72.50%; pretrained ridge is 75.50%. All 16 selected states/paired errors
+reproduce, and all 104 synthetic tests pass. Different pretraining, architecture,
+input resolution and feature width make this a transfer reference, not an
+objective-controlled comparison. Learned JEPA advantage remains unproven;
+stronger training and final official test evaluation are unfinished.
+See [pretrained reference results](experiments/PRETRAINED-2026-10-13.md) and
+[earlier fresh confirmation](experiments/CONFIRMATION-2026-10-12.md).
 
 ## Why this experiment
 
@@ -115,7 +112,7 @@ export PYTHONPATH=src
 
 Checkpoint version one binds state to the verified manifest fingerprint, model configuration, seed, batch size, learning rate, momentum, PyTorch version, and CPU thread count. Resume rejects mismatches before sampling. Model, optimizer, sample RNG, and PyTorch RNG are restored; mask seeds advance from the saved global step. Tests require a resumed run to match uninterrupted diagnostics, weights, optimizer, and RNG state in the same environment. This does not guarantee identical results across platforms or library versions; incompatible recorded runtimes are rejected.
 
-Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen features, classifier/encoder-seed checks and declared pooling/mask pilots now work. Stronger training, pretrained comparison and fresh confirmation remain pending.
+Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen features, classifier/encoder-seed checks and declared pooling/mask pilots now work. Fresh confirmation and frozen pretrained comparison are now measured below; stronger JEPA training remains pending.
 
 ## Extract frozen image features and baseline features
 
@@ -323,7 +320,7 @@ Replace `STATE_HASH` with the actual report path. The command verifies current d
 
 `fit_ridge(features, labels, RidgeConfig(alpha))` fits ten one-hot targets using training-only normalization and a closed-form float64 ridge solve. The objective is mean squared error plus `alpha * ||W||²`; the intercept is unpenalized. It uses a smaller row-space dual solve for high-dimensional pixel features and a column-space primal solve for narrow embeddings. Returned frozen coefficients are float32 and use the same bounded inputs/score contract as AdamW probes.
 
-`select_ridge(train, train_labels, validation, validation_labels, alphas)` selects up to eight distinct positive penalties on validation accuracy, then MSE, then declared order. It never fits statistics/coefficients on validation. Scores are linear least-squares outputs, not calibrated probabilities. Saved-probe persistence also supports ridge state. This provides a regularized alternative for the overfitting pixel baseline; an actual matched comparison is still needed.
+`select_ridge(train, train_labels, validation, validation_labels, alphas)` selects up to eight distinct positive penalties on validation accuracy, then MSE, then declared order. It never fits statistics/coefficients on validation. Scores are linear least-squares outputs, not calibrated probabilities. Saved-probe persistence also supports ridge state. Matched ridge results are reported in the pilot, confirmation and pretrained experiments.
 
 ## Repeat probe initialization and compare a ridge baseline
 
@@ -355,31 +352,18 @@ The saved-feature CLI leaves source artifacts untouched and does not sample imag
 
 Each arm directory must contain verified `checkpoint-train.pt` and `checkpoint-validation.pt`; the shared directory supplies `random-*.pt` and `pixels-*.pt`. Use the existing embedding extractor to prepare missing features with the same selection. The [October 10 protocol](experiments/PILOT-2026-10-10-PROTOCOL.md) fixes the age comparison and two additional encoder-training seeds before the new runs.
 
-## Planned pretrained reference
+## Frozen pretrained transfer reference
 
-The [October 13 protocol](experiments/PRETRAINED-2026-10-13-PROTOCOL.md)
-fixes a frozen ImageNet ResNet-18 comparator, deterministic preprocessing and
-matched downstream probe budgets before new results. It is a transfer reference
-with different data, architecture, resolution and feature width; implementation
-and results are still pending.
+Install the optional `.[pretrained]` extra (torchvision 0.23.0). The extractor
+requires the local official `resnet18-f37072fd.pth` weight file, verifies its
+exact SHA-256, loads with `weights_only=True`, freezes the encoder and removes
+the classification head. It never downloads weights inside extraction.
 
-`pretrained.pretrained_input` implements the fixed tensor transform and strict
-CPU/RGB/batch checks. Install `.[pretrained]` for torchvision 0.23.0; no weights
-are downloaded by preprocessing. Frozen encoder/extraction is still pending.
-
-`load_pretrained(path)` verifies the exact official ResNet-18 weight SHA-256
-and loads on CPU with `weights_only=True`, removes the classification head
-and freezes the encoder. `pretrained_embeddings` restores mixed submodule
-modes and leaves buffers, gradients and caller RNG unchanged. Supply weights
-locally; these APIs make no network requests. Dataset extraction remains next.
-
-The feature verifier accepts the explicit pretrained recipe separately from
-the existing JEPA/pixel normalization. It checks complete weight/transform
-identity and 512-D rows without downloading weights; legacy artifacts remain
-valid. Pretrained fitting/extraction integration is still in progress.
-
-Extract the exact selected pretrained rows (one CPU thread, at most 16 images
-per batch / 1,000 per partition; existing official test remains reserved):
+The named weight recipe uses deterministic tensor resize to 256, center crop
+224 and ImageNet channel normalization on CPU uint8 RGB inputs. Frozen global
+average pooling produces 512 features. Modes, buffers, gradients and caller
+RNG remain unchanged. The artifact verifier binds weights, transform, runtime,
+feature dimensions and exact selected examples.
 
 ```sh
 .venv/bin/python -m jepa_lab.pretrained_extract data/cifar-10-batches-bin \
@@ -388,16 +372,9 @@ per batch / 1,000 per partition; existing official test remains reserved):
   --output runs/pretrained/pretrained-train.pt
 ```
 
-Repeat with `--partition validation`. Exact data, selection and weight identity
-are checked before sampling/output replacement. No download or probe fit occurs.
-
-`transfer_compare.compare_transfer` fits the same declared classifier grid
-and seeds to checkpoint, matching random, pixel and pretrained features. It
-rechecks mutable tensors before fitting, preserves caller RNG, persists selected
-AdamW/ridge states and reports dimensions and transfer-pretraining confounds.
-Only pilot train/validation rows are accepted. The saved-feature CLI is next.
-
-Compare the four verified frozen arms with the same downstream budget:
+Repeat for validation. This is bounded to 16 images per batch and 1,000 per
+partition, uses no official test images, and fits no classifier. To compare
+existing features with identical downstream grids/seeds:
 
 ```sh
 .venv/bin/python -m jepa_lab.transfer_compare data/cifar-10-batches-bin \
@@ -406,15 +383,14 @@ Compare the four verified frozen arms with the same downstream budget:
   --probe-dir runs/transfer-probes --output runs/transfer-comparison.json
 ```
 
-This only reads existing feature artifacts and uses the shared eight-setting,
-200-step AdamW grid / three seeds and four ridge penalties by default. All
-inputs pass verification before fitting; failures preserve an earlier report.
-Saved probe recheck already supports the pretrained artifacts through the
-standard feature verifier. Real transfer scores have not yet been measured.
+The [October 13 protocol](experiments/PRETRAINED-2026-10-13-PROTOCOL.md) fixes
+the historical sources, eight-setting/200-step AdamW grid, seeds 29/31/37 and
+ridge penalties. Execute it with `PYTHONPATH=src .venv/bin/python
+experiments/run_pretrained_20261013.py`; `--reuse-only` reproduces saved states,
+paired errors and aggregates without extracting or refitting. Losing candidate
+states were not saved. Failed verification preserves an earlier summary.
 
-Run the [committed pretrained protocol](experiments/PRETRAINED-2026-10-13-PROTOCOL.md)
-with `PYTHONPATH=src .venv/bin/python experiments/run_pretrained_20261013.py`.
-A retry with `--reuse-only` validates sources and all selected classifier states
-without extracting images or refitting. It reproduces paired errors and seed
-aggregates; losing candidate states were not saved and are not re-evaluated.
-Changed caches or source bytes fail while retaining an earlier summary.
+[Results](experiments/PRETRAINED-2026-10-13.md) use already-observed validation
+rows. ImageNet supervision, model size, 224-pixel input and 512-D features
+differ from the compact JEPA. Scores are not test accuracy or proof of useful
+JEPA representations. All images, weights, features and probes remain ignored.
