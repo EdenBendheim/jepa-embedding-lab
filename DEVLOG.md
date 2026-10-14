@@ -2,6 +2,11 @@
 
 ## October 13, 2026
 
+- Added bounded offline selected-example extraction and its CLI. Three synthetic
+  checks verify exact indices/labels, train-file namespace only, rejected test
+  access/bad manifests/bounds before sampling, and prior output surviving failure.
+  CLI help works. No raw images, weights or features are committed.
+
 - Bound pretrained feature artifacts to exact named weights, torchvision runtime,
   full transform metadata, 512-D output and extraction bounds. Seven feature
   tests pass, including existing pixel/confirmation paths and rejection of

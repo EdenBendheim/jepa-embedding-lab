@@ -377,3 +377,16 @@ The feature verifier accepts the explicit pretrained recipe separately from
 the existing JEPA/pixel normalization. It checks complete weight/transform
 identity and 512-D rows without downloading weights; legacy artifacts remain
 valid. Pretrained fitting/extraction integration is still in progress.
+
+Extract the exact selected pretrained rows (one CPU thread, at most 16 images
+per batch / 1,000 per partition; existing official test remains reserved):
+
+```sh
+.venv/bin/python -m jepa_lab.pretrained_extract data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --selection runs/pilot-selection-20261009.json \
+  --weights checkpoints/resnet18-f37072fd.pth --partition train \
+  --output runs/pretrained/pretrained-train.pt
+```
+
+Repeat with `--partition validation`. Exact data, selection and weight identity
+are checked before sampling/output replacement. No download or probe fit occurs.
