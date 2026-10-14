@@ -1,18 +1,23 @@
 """Matched downstream probes for JEPA controls and a frozen transfer reference."""
 
 from dataclasses import asdict, replace
+import argparse
 import hashlib
+import json
 from pathlib import Path
 from statistics import mean, stdev
 
 import torch
 
 from .compare import REPRESENTATIONS, fit_representation, validate_comparison_inputs, validate_probe_seeds
+from .compare import write_report
+from .cifar10 import CIFAR10Binary, make_manifest
 from .diagnostics import paired_diagnostics
-from .features import FeatureSet
+from .features import FeatureSet, load_features
 from .pretrained import pretrained_metadata
-from .probes import validate_probe_data
+from .probes import ProbeConfig, validate_candidates, validate_probe_data
 from .ridge import validate_ridge_candidates
+from .selection import validate_pilot
 
 ARMS = (*REPRESENTATIONS,"pretrained")
 LIMITATION = ("Exploratory validation-selected transfer comparison, not official test accuracy or "
@@ -76,3 +81,57 @@ def compare_transfer(sets,candidates,seeds,*,probe_dir=None,ridge_alphas=None):
             for name in ARMS} if ridge_alphas is not None else None,
         runtime=dict(torch=str(torch.__version__),cpu_threads=torch.get_num_threads()),
         test_evaluated=False,limitation=LIMITATION)
+
+
+def load_transfer_sets(root,manifest_path,selection_path,feature_dir,pretrained_dir):
+    """Read all eight artifacts before any fitting; do not sample raw images."""
+    train,test=CIFAR10Binary(root),CIFAR10Binary(root,train=False)
+    manifest=json.loads(Path(manifest_path).read_text())
+    if manifest!=make_manifest(train,test,seed=manifest["seed"]):
+        raise ValueError("Dataset differs from the fixed manifest")
+    selection=validate_pilot(json.loads(Path(selection_path).read_text()),manifest,train.labels)
+    if selection.get("kind","pilot")!="pilot":
+        raise ValueError("Transfer tuning cannot use confirmation examples")
+    sets={}
+    for name in ARMS:
+        directory=Path(pretrained_dir if name=="pretrained" else feature_dir)
+        sets[name]=tuple(load_features(directory/f"{name}-{partition}.pt",manifest=manifest,
+            selection=selection,training_labels=train.labels,partition=partition)
+            for partition in ("train","validation"))
+    return sets
+
+
+def run_transfer(root,manifest_path,selection_path,feature_dir,pretrained_dir,*,
+                 candidates,seeds,probe_dir=None,ridge_alphas=None):
+    validate_candidates(candidates);validate_probe_seeds(seeds)
+    if ridge_alphas is not None:validate_ridge_candidates(ridge_alphas)
+    sets=load_transfer_sets(root,manifest_path,selection_path,feature_dir,pretrained_dir)
+    return compare_transfer(sets,candidates,seeds,probe_dir=probe_dir,ridge_alphas=ridge_alphas)
+
+
+def main():
+    parser=argparse.ArgumentParser(description="Compare verified saved JEPA controls and a frozen transfer reference")
+    parser.add_argument("root",type=Path)
+    parser.add_argument("--manifest",type=Path,required=True)
+    parser.add_argument("--selection",type=Path,required=True)
+    parser.add_argument("--feature-dir",type=Path,required=True)
+    parser.add_argument("--pretrained-dir",type=Path,required=True)
+    parser.add_argument("--probe-dir",type=Path,required=True)
+    parser.add_argument("--probe-seeds",type=int,nargs="+",default=[29,31,37])
+    parser.add_argument("--steps",type=int,default=200)
+    parser.add_argument("--learning-rates",type=float,nargs="+",default=[.0001,.001,.01,.05])
+    parser.add_argument("--weight-decays",type=float,nargs="+",default=[.01,.1])
+    parser.add_argument("--ridge-alphas",type=float,nargs="+",default=[.01,.1,1,10])
+    parser.add_argument("--output",type=Path,required=True)
+    args=parser.parse_args();torch.set_num_threads(1)
+    try:
+        candidates=tuple(ProbeConfig(args.steps,lr,wd) for lr in args.learning_rates for wd in args.weight_decays)
+        report=run_transfer(args.root,args.manifest,args.selection,args.feature_dir,args.pretrained_dir,
+            candidates=candidates,seeds=args.probe_seeds,probe_dir=args.probe_dir,ridge_alphas=args.ridge_alphas)
+        write_report(args.output,report)
+    except (ValueError,OSError,KeyError,TypeError,RuntimeError) as exc:
+        parser.error(str(exc))
+    print(json.dumps(report,indent=2))
+
+
+if __name__=="__main__":main()

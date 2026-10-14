@@ -2,6 +2,12 @@
 
 ## October 13, 2026
 
+- Added the saved-feature transfer CLI with fixed-data verification, atomic
+  reports and bounded classifier grids. Its synthetic end-to-end check passes:
+  no raw-image reads, unchanged source bytes, all four arms fitted, and corrupt
+  held-out labels rejected before fitting or replacing an earlier report.
+  CLI help works.
+
 - Added four-arm transfer comparison with exact ordered examples, identical probe
   budgets/seeds, ridge fitted once per arm, saved-state reproduction and paired
   errors. Two synthetic tests pass; they verify eight fits for two seeds and

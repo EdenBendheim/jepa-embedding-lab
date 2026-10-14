@@ -396,3 +396,18 @@ and seeds to checkpoint, matching random, pixel and pretrained features. It
 rechecks mutable tensors before fitting, preserves caller RNG, persists selected
 AdamW/ridge states and reports dimensions and transfer-pretraining confounds.
 Only pilot train/validation rows are accepted. The saved-feature CLI is next.
+
+Compare the four verified frozen arms with the same downstream budget:
+
+```sh
+.venv/bin/python -m jepa_lab.transfer_compare data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --selection runs/pilot-selection-20261009.json \
+  --feature-dir runs/pilot-features-20261009 --pretrained-dir runs/pretrained \
+  --probe-dir runs/transfer-probes --output runs/transfer-comparison.json
+```
+
+This only reads existing feature artifacts and uses the shared eight-setting,
+200-step AdamW grid / three seeds and four ridge penalties by default. All
+inputs pass verification before fitting; failures preserve an earlier report.
+Saved probe recheck already supports the pretrained artifacts through the
+standard feature verifier. Real transfer scores have not yet been measured.
