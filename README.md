@@ -2,16 +2,14 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 13, 2026:** frozen ImageNet ResNet-18 extraction, matched
-downstream probes and saved-state auditing work. On the reused 500/200 pilot,
-AdamW means are JEPA 26.67%, matching random 25.17%, pixels 28.00%, pretrained
-72.50%; pretrained ridge is 75.50%. All 16 selected states/paired errors
-reproduce, and all 104 synthetic tests pass. Different pretraining, architecture,
-input resolution and feature width make this a transfer reference, not an
-objective-controlled comparison. Learned JEPA advantage remains unproven;
-stronger training and final official test evaluation are unfinished.
-See [pretrained reference results](experiments/PRETRAINED-2026-10-13.md) and
-[earlier fresh confirmation](experiments/CONFIRMATION-2026-10-12.md).
+**Status — October 14, 2026:** six longer 2,223-step training runs and matched
+mask comparisons work, with periodic recovery, complete journals and new
+confirmation rows excluding all 746 observed examples. All 72 selected
+classifiers reproduce. Fresh AdamW means: 2x2 JEPA 24.24%, 4x4 JEPA 23.11%,
+matching random 24.11%, pixels 25.73%; pixel ridge is 30.20%. A useful learned
+advantage remains unproven. Official test evaluation and controlled model/input
+improvements are unfinished. See [longer-budget results](experiments/BUDGET-2026-10-14.md)
+and [the separate pretrained reference](experiments/PRETRAINED-2026-10-13.md).
 
 ## Why this experiment
 
@@ -257,7 +255,7 @@ The loader uses `weights_only=True` on bounded local files and verifies exact se
 
 `fit_probe(train_features, train_labels, ProbeConfig(...))` fits a ten-class, full-batch AdamW linear classifier on detached CPU feature copies. It learns population mean/std from training rows only; dimensions with std below `1e-6` use scale one. Weight decay applies to classifier weights, not its bias. Source encoder features and caller RNG remain unchanged. Runs allow 1–1,000 steps on at most 1,000x4,096 features.
 
-`select_probe(train_features, train_labels, validation_features, validation_labels, candidates)` considers up to eight distinct learning-rate/weight-decay settings with the same seed and step budget. Selection uses highest validation accuracy, then lowest cross-entropy, then declared order. Reports include counts, per-class outcomes, a confusion matrix, and normalization/optimizer rules. No test input enters fitting or selection. Same-environment reproducibility is tested; the classifier/encoder-seed pilots below report descriptive variation. Independent confirmation and test uncertainty remain unmeasured.
+`select_probe(train_features, train_labels, validation_features, validation_labels, candidates)` considers up to eight distinct learning-rate/weight-decay settings with the same seed and step budget. Selection uses highest validation accuracy, then lowest cross-entropy, then declared order. Reports include counts, per-class outcomes, a confusion matrix, and normalization/optimizer rules. No test input enters fitting or selection. Same-environment reproducibility is tested; the classifier/encoder-seed pilots below report descriptive variation. This probe alone measures tuning performance; the separate confirmation experiments assess fixed classifiers on fresh rows. Official test uncertainty remains unmeasured.
 
 ## Run a matched pilot comparison
 
@@ -416,3 +414,14 @@ states were not saved. Failed verification preserves an earlier summary.
 rows. ImageNet supervision, model size, 224-pixel input and 512-D features
 differ from the compact JEPA. Scores are not test accuracy or proof of useful
 JEPA representations. All images, weights, features and probes remain ignored.
+
+## Longer mask training and fresh confirmation
+
+Execute `PYTHONPATH=src .venv/bin/python experiments/run_budget_20261014.py`
+for the declared six local training runs. Add `--evaluate` to extract matched
+features, select classifiers on the original tuning rows, lock all selected
+states, then score fresh confirmation. `--evaluate --reuse-only` verifies
+completed journals, saved states, paired errors and aggregates without training,
+image reads, extraction or refitting. Failed checks preserve the prior summary.
+The protocol fixes all budgets/seeds and exact source identities; local
+checkpoints/features/probes/journals remain ignored.

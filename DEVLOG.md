@@ -2,6 +2,15 @@
 
 ## October 14, 2026
 
+- Completed six 2,223-step runs with matched image order, compared the same
+  500/200 pilot and scored 72 fixed selected states on 500 new confirmation
+  examples excluding 746 observed rows. Fresh learned 2x2 / 4x4 / random / pixel
+  AdamW means: 24.24% / 23.11% / 24.11% / 25.73%; pixel ridge 30.20%. All states,
+  old scores, selection rules and paired errors reproduce. Real cache-only retry
+  disabled training, sampling, extraction and fitting. 114 tests passed. No
+  learned advantage, official test or paid compute is claimed. Published metrics
+  and provenance only; actual journals/weights/features/classifiers remain local.
+
 - Committed the prospective longer-budget protocol and driver: six 2,223-step
   runs, two masks across three encoder seeds, unchanged optimization recipe,
   matched actual image order, and 500 new confirmation rows excluding all 746

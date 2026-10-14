@@ -37,10 +37,12 @@ class BudgetDriverTests(unittest.TestCase):
             confirmation_selection_sha256=fresh['selection_sha256'],confirmation_seed=20261014,confirmation_per_class=1,
             total_steps=3,chunk_steps=2,checkpoint_every=1,batch_size=2,learning_rate=.001,momentum=.99,
             training_seeds=[29],random_seeds=[31],target_sizes=[2,4],context_fraction=.75,
-            config=asdict(ModelConfig(patch_dim=48,embedding_dim=16,encoder_depth=1)))
+            config=asdict(ModelConfig(patch_dim=48,embedding_dim=16,encoder_depth=1)),
+            classifier_seeds=[29],probe_steps=3,learning_rates=[.001],weight_decays=[.01],
+            ridge_alphas=[.1],pooling='mean',encoder='context')
         protocol=self.root/'protocol.json';protocol.write_text(json.dumps(declared))
         self.driver.PROTOCOL=protocol;self.driver.PROTOCOL_SHA=hashlib.sha256(protocol.read_bytes()).hexdigest();self.driver.ROOT=self.root
-        for target in (self.driver,'jepa_lab.training_budget','jepa_lab.cifar10_train'):
+        for target in (self.driver,'jepa_lab.training_budget','jepa_lab.cifar10_train','jepa_lab.embeddings'):
             p=patch.object(target,'CIFAR10Binary',Fixture) if not isinstance(target,str) else patch(target+'.CIFAR10Binary',Fixture)
             p.start();self.addCleanup(p.stop)
         self.directory=self.root/'run'
@@ -56,3 +58,20 @@ class BudgetDriverTests(unittest.TestCase):
         state=torch.load(checkpoint,weights_only=True);state['training_history'][0]['train_indices'].reverse();torch.save(state,checkpoint)
         with patch.object(self.driver,'run_training_budget',side_effect=AssertionError('started before preflight')):
             with self.assertRaisesRegex(ValueError,'image order'):self.driver.training(self.directory)
+
+    def test_evaluation_locks_all_classifiers_and_cache_retry_never_extracts_or_refits(self):
+        self.driver.training(self.directory)
+        expected=self.driver.evaluation(self.directory)
+        self.assertEqual(12,expected['verified_classifiers'])
+        self.assertEqual(20,expected['counts']['excluded_observed_validation'])
+        previous=(self.directory/'summary.json').read_bytes()
+        before={p:p.read_bytes() for p in self.directory.rglob('*') if p.is_file()}
+        with patch.object(self.driver,'extract_cifar10',side_effect=AssertionError('extraction')), \
+                patch.object(self.driver,'compare_repeated_features',side_effect=AssertionError('refit')), \
+                patch.object(Fixture,'__getitem__',side_effect=AssertionError('image reads')):
+            self.assertEqual(expected,self.driver.evaluation(self.directory,reuse_only=True))
+        self.assertEqual(before,{p:p.read_bytes() for p in before})
+        path=self.directory/'features/mask4-seed29/checkpoint-fresh.pt'
+        saved=torch.load(path,weights_only=True);saved['features'][0,0]+=1;torch.save(saved,path)
+        with self.assertRaises(ValueError):self.driver.evaluation(self.directory,reuse_only=True)
+        self.assertEqual(previous,(self.directory/'summary.json').read_bytes())

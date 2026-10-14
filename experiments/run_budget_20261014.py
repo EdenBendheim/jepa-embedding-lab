@@ -1,6 +1,7 @@
 """Run the declared longer-training mask experiment; local artifacts only."""
 import argparse
 from dataclasses import asdict
+from statistics import mean,stdev
 import hashlib
 import json
 from pathlib import Path
@@ -8,9 +9,14 @@ from pathlib import Path
 import torch
 
 from jepa_lab.cifar10 import CIFAR10Binary, make_manifest
-from jepa_lab.compare import write_report
+from jepa_lab.compare import compare_repeated_features,write_report
+from jepa_lab.confirmation import score_confirmation
+from jepa_lab.embeddings import extract_cifar10
+from jepa_lab.features import load_features
+from jepa_lab.probe_audit import audit_repeated_report
+from jepa_lab.probes import ProbeConfig
 from jepa_lab.model import ModelConfig
-from jepa_lab.selection import make_confirmation, validate_pilot
+from jepa_lab.selection import excluded_validation_indices,make_confirmation, validate_pilot
 from jepa_lab.training_budget import run_training_budget, verify_budget_state
 
 ROOT=Path('data/cifar-10-batches-bin')
@@ -84,10 +90,120 @@ def training(directory=Path('runs/budget-20261014'),*,reuse_only=False):
     return reports
 
 
+
+def feature_source(directory,name,representation,partition,declared,manifest,selection,labels,checkpoint,random_seed,reuse_only):
+    fresh=selection.get('kind')=='confirmation'
+    path=Path(directory)/'features'/name/f'{representation}-{"fresh" if fresh else partition}.pt'
+    selection_path=Path(directory)/'confirmation-selection.json' if fresh else Path(declared['selection_path'])
+    if not path.exists():
+        if reuse_only:raise ValueError('A cached feature arm is missing')
+        extract_cifar10(ROOT,declared['manifest_path'],representation=representation,partition=partition,
+            selection_path=selection_path,checkpoint=checkpoint if representation=='checkpoint' else None,
+            config=ModelConfig(**declared['config']) if representation=='random' else None,
+            seed=random_seed,pooling=declared['pooling'],encoder=declared['encoder'],output=path)
+    item=load_features(path,manifest=manifest,selection=selection,training_labels=labels,partition=partition)
+    if representation=='checkpoint' and item.metadata['checkpoint_sha256']!=hashlib.sha256(Path(checkpoint).read_bytes()).hexdigest():
+        raise ValueError('Cached learned features refer to a different checkpoint')
+    if representation=='random' and (item.metadata['seed']!=random_seed or item.metadata['config']!=declared['config']):
+        raise ValueError('Cached random encoder differs from the declared paired seed/config')
+    return item
+
+
+def evaluation(directory=Path('runs/budget-20261014'),*,reuse_only=False):
+    directory=Path(directory)
+    declared,manifest,reference,fresh,labels=inputs(directory)
+    completed=training(directory,reuse_only=True)
+    candidates=tuple(ProbeConfig(declared['probe_steps'],lr,wd,declared['classifier_seeds'][0])
+        for lr in declared['learning_rates'] for wd in declared['weight_decays'])
+    reports={};sources={};verified=0;lock=[]
+    # Finish all selection and reproduce old scores before reading any fresh pixels.
+    for size in declared['target_sizes']:
+        for seed,random_seed in zip(declared['training_seeds'],declared['random_seeds'],strict=True):
+            name=f'mask{size}-seed{seed}';checkpoint=checkpoint_path(directory,size,seed)
+            sets={rep:tuple(feature_source(directory,name,rep,part,declared,manifest,reference,labels,
+                checkpoint,random_seed,reuse_only) for part in ('train','validation')) for rep in ('checkpoint','random','pixels')}
+            path=directory/'comparisons'/f'{name}.json'
+            if not path.exists():
+                if reuse_only:raise ValueError('Cached comparison missing')
+                report=compare_repeated_features(sets,candidates,declared['classifier_seeds'],
+                    ridge_alphas=declared['ridge_alphas'],probe_dir=directory/'probes'/name)
+                write_report(path,report)
+            report=json.loads(path.read_text())
+            verified+=audit_repeated_report(report,sets,candidates,declared['classifier_seeds'],ridge_alphas=declared['ridge_alphas'])['verified_classifiers']
+            for classifier_seed,run in zip(declared['classifier_seeds'],report['runs'],strict=True):
+                for rep,row in run['representations'].items():
+                    for head,selected in [('adamw',row)]+([('ridge',row['ridge'])] if 'ridge' in row else []):
+                        lock.append(dict(name=name,representation=rep,head=head,classifier_seed=classifier_seed if head=='adamw' else None,
+                            state_sha256=selected['selected_probe_artifact']['state_sha256'],
+                            artifact_sha256=selected['selected_probe_artifact']['artifact_sha256'],selected_config=selected['selected_config']))
+            reports[name]=report;sources[name]=sets
+    lock_path=directory/'selection-lock.json'
+    if lock_path.exists() and json.loads(lock_path.read_text())!=lock:raise ValueError('Selected classifier lock changed')
+    if not lock_path.exists():
+        if reuse_only:raise ValueError('Selected classifier lock is missing')
+        write_report(lock_path,lock)
+    records=[];rows=[]
+    for size in declared['target_sizes']:
+        for seed,random_seed in zip(declared['training_seeds'],declared['random_seeds'],strict=True):
+            name=f'mask{size}-seed{seed}';checkpoint=checkpoint_path(directory,size,seed);sets=sources[name]
+            current={rep:feature_source(directory,name,rep,'validation',declared,manifest,fresh,labels,
+                checkpoint,random_seed,reuse_only) for rep in sets}
+            scores={rep:dict(tuning=[],confirmation=[]) for rep in sets}
+            for classifier_seed,run in zip(declared['classifier_seeds'],reports[name]['runs'],strict=True):
+                for rep,row in run['representations'].items():
+                    for head,selected in [('adamw',row)]+([('ridge',row['ridge'])] if 'ridge' in row else []):
+                        result=score_confirmation(selected['selected_probe_artifact']['path'],*sets[rep],current[rep],fresh)
+                        if head=='adamw':
+                            scores[rep]['tuning'].append(selected['validation']['accuracy'])
+                            scores[rep]['confirmation'].append(result['confirmation']['accuracy'])
+                        else:
+                            scores[rep]['ridge_tuning']=selected['validation']['accuracy']
+                            scores[rep]['ridge_confirmation']=result['confirmation']['accuracy']
+                        rows.append(dict(name=name,representation=rep,head=head,classifier_seed=classifier_seed if head=='adamw' else None,
+                            selected_config=selected['selected_config'],state_sha256=selected['selected_probe_artifact']['state_sha256'],
+                            original_tuning_accuracy=selected['validation']['accuracy'],confirmation=result['confirmation'],
+                            original_scores_reproduced=True,classifier_refitted=False,normalization_refitted=False))
+            records.append(dict(mask_size=size,training_seed=seed,random_encoder_seed=random_seed,scores=scores,
+                training={k:v for k,v in completed[name].items() if k not in ('history','limitation')},
+                training_report_sha256=hashlib.sha256((directory/'training'/f'{name}.json').read_bytes()).hexdigest()))
+    for records_for_seed in ([r for r in records if r['training_seed']==seed] for seed in declared['training_seeds']):
+        if any(r['scores']['random']!=records_for_seed[0]['scores']['random'] for r in records_for_seed):
+            raise ValueError('Matched random-baseline scores differ between masks')
+    if any(r['scores']['pixels']!=records[0]['scores']['pixels'] for r in records):
+        raise ValueError('Shared pixel-baseline scores differ between model runs')
+    aggregates={}
+    groups={f'mask{size}':(size,'checkpoint') for size in declared['target_sizes']}
+    groups|={'random':(declared['target_sizes'][0],'random'),'pixels':(declared['target_sizes'][0],'pixels')}
+    for group,(size,rep) in groups.items():
+        chosen=[r for r in records if r['mask_size']==size]
+        if rep=='pixels':chosen=chosen[:1]  # Shared pixels are one baseline, not independent encoder runs.
+        aggregate={}
+        for partition in ('tuning','confirmation'):
+            means=[mean(r['scores'][rep][partition]) for r in chosen]
+            ridge=[r['scores'][rep]['ridge_'+partition] for r in chosen]
+            aggregate[partition]=dict(encoder_means=means,mean_accuracy=mean(means),
+                encoder_mean_sample_sd=stdev(means) if len(means)>1 else 0.,ridge_accuracies=ridge,ridge_mean_accuracy=mean(ridge))
+        aggregates[group]=aggregate
+    output=dict(version=1,date='2026-10-14',protocol_sha256=PROTOCOL_SHA,manifest_sha256=manifest['manifest_sha256'],
+        tuning_selection_sha256=reference['selection_sha256'],confirmation_selection_sha256=fresh['selection_sha256'],
+        counts=dict(train=len(reference['partitions']['train']['indices']),tuning=len(reference['partitions']['validation']['indices']),
+            confirmation=len(fresh['partitions']['validation']['indices']),excluded_observed_validation=
+            len(set().union(*(excluded_validation_indices(p) for p in [reference,*fresh['excluded_selections']])))),
+        summary=aggregates,records=records,classifiers=rows,verified_classifiers=verified,
+        actual_image_order_matched=True,classifier_refitted_on_confirmation=False,normalization_refitted_on_confirmation=False,
+        test_evaluated=False,limitation='Small fixed-data pilot; encoder-seed SD is descriptive, classifiers share data, mask token/compute budgets differ. No official test result or selected mask winner.')
+    write_report(directory/'summary.json',output)
+    return output
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--directory',type=Path,default=Path('runs/budget-20261014'))
-    p.add_argument('--reuse-only',action='store_true');args=p.parse_args();torch.set_num_threads(1)
-    try:training(args.directory,reuse_only=args.reuse_only)
+    p.add_argument('--reuse-only',action='store_true');p.add_argument('--evaluate',action='store_true');args=p.parse_args();torch.set_num_threads(1)
+    try:
+        if args.evaluate:
+            result=evaluation(args.directory,reuse_only=args.reuse_only)
+            print(json.dumps(dict(summary=result['summary'],verified_classifiers=result['verified_classifiers']),indent=2))
+        else:training(args.directory,reuse_only=args.reuse_only)
     except (ValueError,OSError,KeyError,TypeError,RuntimeError) as exc:p.error(str(exc))
 
 if __name__=='__main__':main()

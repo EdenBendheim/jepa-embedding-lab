@@ -46,17 +46,16 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-The [October 13 pretrained comparison](experiments/PRETRAINED-2026-10-13.md)
-is complete on the reused 500/200 pilot: 104 synthetic tests, 16 selected
-classifier states and paired errors reproduced, cache-only retry verified.
-Pretrained AdamW mean/ridge: 72.50%/75.50%, versus JEPA 26.67%/27.00% and
-pixels 28.00%/30.00%. External supervised pretraining, architecture, resolution
-and feature dimensions differ. This is a transfer reference, not a controlled
-learning-objective test. JEPA useful-learning advantage remains unproven.
+The [October 14 longer-budget experiment](experiments/BUDGET-2026-10-14.md) is
+complete: two target masks, three encoder seeds each, 2,223 steps, matched image
+order, 72 reproduced selected states and 500 new confirmation examples excluding
+746 observed rows. Fresh AdamW: 2x2 learned 24.24%, 4x4 learned 23.11%, matching
+random 24.11%, pixels 25.73%; pixel ridge 30.20%. Longer training alone did not
+establish an advantage. Periodic recovery and complete-journal/cache verification
+work; images, weights and per-image records remain ignored.
 
-Next: choose and predeclare a bounded stronger JEPA training budget, then repeat
-selected mask settings across encoder seeds. The earlier 500 fresh October 12
-confirmation examples and all old tuning rows are now observed; reserve a
-different untuned subset for new confirmation. Keep the official test set
-reserved. Width/input-feature comparisons, plots and an embedding explorer
-remain pending. Résumé quality claims require stronger independent evidence.
+Next: predeclare a controlled model/input change (width and position/input choices
+remain planned), hold the training/evaluation budget fixed, and reserve a new
+untuned subset before confirmation. All prior confirmation rows are now observed.
+Retain the official test set. Add training-dynamics plots and an embedding explorer;
+quality claims still require independent evidence.
