@@ -120,6 +120,17 @@ Checkpoint version one binds state to the verified manifest fingerprint, model c
 
 Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen features, classifier/encoder-seed checks and declared pooling/mask pilots now work. Fresh confirmation and frozen pretrained comparison are now measured below; stronger JEPA training remains pending.
 
+## Finish a declared local training budget
+
+`python -m jepa_lab.training_budget ROOT --manifest MANIFEST --checkpoint
+checkpoints/budget.pt --total-steps 2223 --output runs/budget.json` runs bounded
+chunks of at most 1,000 steps, with periodic recovery checkpoints. Retries reuse
+completed steps, verify the complete journal and deterministic image order, and
+reject changed recipes or a checkpoint beyond the target. `--reuse-only`
+requires a completed cache and never trains. Total budget is capped at 10,000
+steps; the CLI uses one CPU thread. Width/depth options support later controlled
+architecture comparisons. No API or cloud compute is used.
+
 ## Extract frozen image features and baseline features
 
 The real-data trainer also accepts `--target-rows`, `--target-cols` and

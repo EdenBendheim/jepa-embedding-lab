@@ -2,6 +2,11 @@
 
 ## October 14, 2026
 
+- Added bounded multi-chunk training budgets with complete-journal/image-order
+  verification, partial recovery and a no-training cache mode. Three synthetic
+  checks reproduce a continuous trajectory, reject changed recipes/budgets or
+  altered sampling order, and reject incomplete/legacy caches. CLI help works.
+
 - Added periodic atomic checkpoints with an accumulated diagnostic journal.
   Simulated interruption and resume reproduce uninterrupted weights, optimizer,
   RNG and full history exactly. Malformed journals/intervals fail before image
