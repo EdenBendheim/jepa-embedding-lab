@@ -2,6 +2,12 @@
 
 ## October 15, 2026
 
+- Added tuning-only neighbor-count selection and atomic source-bound saved
+  indices. Five neighbor checks passed, including exact restore without fitting,
+  changed sources/state and confirmation-as-tuning rejection. Saved vectors,
+  labels and normalization remain local model artifacts; public outputs contain
+  aggregate scores/provenance only.
+
 - Added a bounded frozen cosine kNN classifier with training-only normalization,
   deterministic row/vote ties, zero-vector behavior and unchanged inputs/RNG.
   Three synthetic checks passed. This tests embedding neighborhoods without an
