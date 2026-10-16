@@ -2,6 +2,11 @@
 
 ## October 15, 2026
 
+- Added no-refit neighbor confirmation using shared source/ancestry checks with
+  linear probes. Synthetic checks preserve saved index/statistics/source bytes
+  and RNG, reject altered/overlapping fresh rows before loading state, and verify
+  unchanged normalization/count choice. Existing confirmation checks still pass.
+
 - Added controlled-width fitting and saved-state auditing with exact
   initialization-matched random encoders and shared pixel classifiers. Two
   synthetic checks verify shared fit counts, reproduced selected states/paired

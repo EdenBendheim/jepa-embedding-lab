@@ -15,9 +15,9 @@ from .probes import validate_probe_data
 from .selection import document_hash, excluded_validation_indices, validate_pilot, validate_confirmation
 
 
-def score_confirmation(probe_path: str | Path, train: FeatureSet, validation: FeatureSet,
-                       confirmation: FeatureSet, selection: dict) -> dict:
-    """Reproduce the selected state on its old sources before scoring new rows."""
+def verify_confirmation_sources(train: FeatureSet, validation: FeatureSet,
+                                confirmation: FeatureSet, selection: dict):
+    """Verify frozen sources/disjoint rows without loading or fitting a classifier."""
     context = probe_context(train, validation)
     if not isinstance(confirmation, FeatureSet) or confirmation.selection_kind != "confirmation":
         raise ValueError("Score a verified confirmation feature set")
@@ -51,6 +51,13 @@ def score_confirmation(probe_path: str | Path, train: FeatureSet, validation: Fe
         if (source.features_sha256 != hashlib.sha256(source.features.contiguous().numpy().tobytes()).hexdigest()
                 or source.labels_sha256 != hashlib.sha256(source.labels.contiguous().numpy().tobytes()).hexdigest()):
             raise ValueError("Verified feature rows or labels changed after loading")
+    return context, excluded
+
+
+def score_confirmation(probe_path: str | Path, train: FeatureSet, validation: FeatureSet,
+                       confirmation: FeatureSet, selection: dict) -> dict:
+    """Reproduce the selected state on its old sources before scoring new rows."""
+    context, excluded = verify_confirmation_sources(train, validation, confirmation, selection)
     probe, original = load_probe(probe_path, train, validation)
     scores = probe.score(confirmation.features, confirmation.labels)
     return dict(version=1, task="Frozen selected-classifier confirmation on reserved validation examples",

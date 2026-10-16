@@ -460,3 +460,9 @@ on resume. Local RGB training limits width to 8–128, heads to eight, encoder
 blocks to four and predictor blocks to two. `model_size.model_size(config)`
 reports exact parameter groups and a persistent FP32 state-memory estimate
 that excludes activations and allocation overhead. Equal steps are not equal compute.
+
+`neighbor_confirmation.score_neighbor_confirmation(path, train, tuning, fresh,
+selection)` restores the already-selected index and verifies disjoint reserved
+rows using the same source/ancestry checks as linear probes. It never changes
+normalization, neighbor count or fitting vectors. These are validation
+confirmation scores; the official test partition remains reserved.
