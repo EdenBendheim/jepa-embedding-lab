@@ -2,6 +2,11 @@
 
 ## October 15, 2026
 
+- Added saved-feature neighbor selection/restore CLI with fixed split/source
+  verification, explicit no-retuning restore mode and protected earlier states.
+  End-to-end synthetic check passed: no raw-image reads, unchanged restore,
+  corrupted held-out features rejected and prior outputs preserved. Help works.
+
 - Added tuning-only neighbor-count selection and atomic source-bound saved
   indices. Five neighbor checks passed, including exact restore without fitting,
   changed sources/state and confirmation-as-tuning rejection. Saved vectors,

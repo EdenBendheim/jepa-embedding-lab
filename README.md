@@ -445,3 +445,11 @@ and uniform cosine-neighbor votes. Equal similarities retain fitting-row order;
 vote ties choose the smallest class ID. Zero vectors remain zero. Bounded to
 1,000 rows / 4,096 dimensions and 100 neighbors. No classifier optimization or
 encoder gradients are involved. Neighborhood quality still needs evaluation.
+
+`python -m jepa_lab.neighbor_cli ROOT --manifest MANIFEST --selection PILOT
+--train-features TRAIN --validation-features TUNING --k 1 5 15
+--save-index runs/neighbors.pt --output runs/neighbors.json` selects on tuning
+accuracy, breaking ties by declared order. Use `--restore-index` instead of
+`--save-index`/`--k` to reproduce a fixed index without fitting or raw-image reads.
+Earlier index files are protected from replacement. Neighbor vectors and labels
+are local artifacts and must remain beneath ignored paths.
