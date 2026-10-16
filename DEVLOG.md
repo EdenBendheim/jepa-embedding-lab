@@ -2,6 +2,13 @@
 
 ## October 15, 2026
 
+- Declared the fixed 32/64/96-width experiment before new training/scores:
+  three seeds each, 2,223 steps, same mask/optimization/image order, exact
+  initialization-matched random controls, shared probe grids and kNN counts.
+  Reserved 500 fresh rows excluding all 1,246 observed rows. Added a recoverable
+  driver and capacity accounting; synthetic width-order/cache check passed.
+  The three already-complete width-32 runs are reused at their exact budget.
+
 - Added shared width/head/encoder-depth/predictor-depth options to both public
   training CLIs. A real synthetic-fixture CLI run at width 64 / eight heads
   resumes exactly like four continuous steps and rejects a changed width before

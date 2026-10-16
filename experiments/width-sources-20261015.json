@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "date": "2026-10-15",
+  "manifest_path": "runs/cifar10-manifest.json",
+  "selection_path": "runs/pilot-selection-20261009.json",
+  "previous_confirmation_path": "runs/budget-20261014/confirmation-selection.json",
+  "sources": [
+    {
+      "path": "runs/cifar10-manifest.json",
+      "sha256": "97f4201d5d57ee4fcf58e98e291ad18a54a03f3995571213907e2e8b619893cc"
+    },
+    {
+      "path": "runs/pilot-selection-20261009.json",
+      "sha256": "a1e87b95e7fee9137c1568d26cd85d7845022b1a77524fd86aa49f68365265bf"
+    },
+    {
+      "path": "runs/budget-20261014/confirmation-selection.json",
+      "sha256": "758e0a7deebc9a61de87806e6a84817a377dbb9fe5fd6ff94a39601b8c62da8b"
+    },
+    {
+      "path": "runs/budget-20261014/checkpoints/mask2-seed20261003.pt",
+      "sha256": "232cb16c4edf3add076e2f22593614c528a265d0aaaf3e1fc57e622161ec2841"
+    },
+    {
+      "path": "runs/budget-20261014/checkpoints/mask2-seed20261010.pt",
+      "sha256": "9cd6a2a76f38e5150d250fa2a0fe41bdc05e8aeef905c03db1a73503cb409ce7"
+    },
+    {
+      "path": "runs/budget-20261014/checkpoints/mask2-seed20261011.pt",
+      "sha256": "23efb2a214d0534e6d5ee89460603c33866231ce944623254c1ac8a65fdb8dfb"
+    }
+  ],
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "confirmation_selection_sha256": "dd3e48708a0d0df78b0751a7d81283b1dd809f1cf1bf045e77185deec8df842f",
+  "confirmation_seed": 20261015,
+  "confirmation_per_class": 50,
+  "widths": [
+    32,
+    64,
+    96
+  ],
+  "training_seeds": [
+    20261003,
+    20261010,
+    20261011
+  ],
+  "total_steps": 2223,
+  "chunk_steps": 1000,
+  "checkpoint_every": 50,
+  "batch_size": 4,
+  "learning_rate": 0.001,
+  "momentum": 0.99,
+  "heads": 4,
+  "encoder_depth": 2,
+  "predictor_depth": 1,
+  "target_rows": 2,
+  "target_cols": 2,
+  "context_fraction": 0.75,
+  "classifier_seeds": [
+    29,
+    31,
+    37
+  ],
+  "probe_steps": 200,
+  "learning_rates": [
+    0.0001,
+    0.001,
+    0.01,
+    0.05
+  ],
+  "weight_decays": [
+    0.01,
+    0.1
+  ],
+  "ridge_alphas": [
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "neighbor_counts": [
+    1,
+    5,
+    15
+  ],
+  "pooling": "mean",
+  "encoder": "context",
+  "random_baseline": "exact model initialization seed per learned run",
+  "test_evaluated": false,
+  "reused_checkpoints": {
+    "20261003": "runs/budget-20261014/checkpoints/mask2-seed20261003.pt",
+    "20261010": "runs/budget-20261014/checkpoints/mask2-seed20261010.pt",
+    "20261011": "runs/budget-20261014/checkpoints/mask2-seed20261011.pt"
+  }
+}
