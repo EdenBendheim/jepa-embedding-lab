@@ -1,5 +1,12 @@
 # Development log
 
+## October 15, 2026
+
+- Added a bounded frozen cosine kNN classifier with training-only normalization,
+  deterministic row/vote ties, zero-vector behavior and unchanged inputs/RNG.
+  Three synthetic checks passed. This tests embedding neighborhoods without an
+  optimized linear head; it is not yet evidence of improved representations.
+
 ## October 14, 2026
 
 - Added complete-journal fixed-window diagnostics and an optional Matplotlib

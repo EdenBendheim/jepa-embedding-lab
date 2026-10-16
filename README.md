@@ -436,3 +436,12 @@ and [aggregate points](experiments/budget-2026-10-14-dynamics.json) contain no
 per-image records. Ribbons are the range across three seeds, not confidence
 intervals. Latent loss and token spread are diagnostics; they do not establish
 useful embeddings or rule out pooled-feature collapse.
+
+## Frozen cosine-neighbor baseline
+
+`neighbors.fit_neighbors(features, labels, NeighborConfig(k))` stores a detached
+training-only standardized, L2-normalized index. Queries use the same statistics
+and uniform cosine-neighbor votes. Equal similarities retain fitting-row order;
+vote ties choose the smallest class ID. Zero vectors remain zero. Bounded to
+1,000 rows / 4,096 dimensions and 100 neighbors. No classifier optimization or
+encoder gradients are involved. Neighborhood quality still needs evaluation.
