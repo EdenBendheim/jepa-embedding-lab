@@ -2,6 +2,11 @@
 
 ## October 15, 2026
 
+- Added shared width/head/encoder-depth/predictor-depth options to both public
+  training CLIs. A real synthetic-fixture CLI run at width 64 / eight heads
+  resumes exactly like four continuous steps and rejects a changed width before
+  image sampling or checkpoint replacement. Historical default config unchanged.
+
 - Added exact context/EMA-target/predictor parameter accounting and a labeled
   persistent FP32 memory lower estimate. Local RGB training is bounded before
   model allocation (width <=128, <=8 heads, encoder <=4 and predictor <=2 blocks);

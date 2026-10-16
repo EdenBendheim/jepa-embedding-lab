@@ -453,3 +453,10 @@ accuracy, breaking ties by declared order. Use `--restore-index` instead of
 `--save-index`/`--k` to reproduce a fixed index without fitting or raw-image reads.
 Earlier index files are protected from replacement. Neighbor vectors and labels
 are local artifacts and must remain beneath ignored paths.
+
+Both `cifar10_train` and `training_budget` accept `--embedding-dim`, `--heads`,
+`--encoder-depth` and `--predictor-depth`. The recorded architecture must match
+on resume. Local RGB training limits width to 8–128, heads to eight, encoder
+blocks to four and predictor blocks to two. `model_size.model_size(config)`
+reports exact parameter groups and a persistent FP32 state-memory estimate
+that excludes activations and allocation overhead. Equal steps are not equal compute.

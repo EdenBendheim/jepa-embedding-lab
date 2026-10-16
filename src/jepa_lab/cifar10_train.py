@@ -15,6 +15,7 @@ from .cifar10 import CIFAR10Binary, make_manifest, patchify_rgb
 from .masking import block_mask
 from .model import JEPA, ModelConfig
 from .model_size import validate_local_config
+from .model_cli import add_model_options,config_from_args
 from .train import embedding_stats
 
 DEFAULT_MASK = dict(target_rows=2, target_cols=2, context_fraction=0.75)
@@ -165,10 +166,11 @@ def main():
     parser.add_argument('--checkpoint-every', type=int, default=0,
                         help='Atomically save state and accumulated diagnostics every N global steps (0: end only)')
     parser.add_argument("--output", type=Path, help="Write this invocation's diagnostics beneath ignored runs/")
+    add_model_options(parser)
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
-        report = train_cifar10(args.root, args.manifest, steps=args.steps, batch_size=args.batch_size,
+        report = train_cifar10(args.root, args.manifest, config=config_from_args(args), steps=args.steps, batch_size=args.batch_size,
                               learning_rate=args.learning_rate, momentum=args.momentum, seed=args.seed,
                               target_rows=args.target_rows, target_cols=args.target_cols, context_fraction=args.context_fraction,
                               checkpoint=args.checkpoint, resume=args.resume, checkpoint_every=args.checkpoint_every)

@@ -14,6 +14,7 @@ from .cifar10_train import DEFAULT_MASK, checkpoint_history, train_cifar10
 from .compare import write_report
 from .model import ModelConfig
 from .model_size import validate_local_config
+from .model_cli import add_model_options,config_from_args
 
 
 def verify_budget_state(path, identity, indices, total_steps):
@@ -85,8 +86,7 @@ def main():
     parser.add_argument('--checkpoint-every', type=int, default=50)
     parser.add_argument('--seed', type=int); parser.add_argument('--batch-size', type=int, default=4)
     parser.add_argument('--target-rows', type=int, default=2); parser.add_argument('--target-cols', type=int, default=2)
-    parser.add_argument('--embedding-dim', type=int, default=32)
-    parser.add_argument('--encoder-depth', type=int, default=2)
+    add_model_options(parser)
     parser.add_argument('--reuse-only', action='store_true')
     parser.add_argument('--output', type=Path)
     args=parser.parse_args(); torch.set_num_threads(1)
@@ -94,7 +94,7 @@ def main():
         result=run_training_budget(args.root, args.manifest, args.checkpoint, total_steps=args.total_steps,
             chunk_steps=args.chunk_steps, checkpoint_every=args.checkpoint_every, seed=args.seed,
             batch_size=args.batch_size, target_rows=args.target_rows, target_cols=args.target_cols,
-            config=ModelConfig(patch_dim=48, embedding_dim=args.embedding_dim, encoder_depth=args.encoder_depth),
+            config=config_from_args(args),
             reuse_only=args.reuse_only)
         if args.output: write_report(args.output, result)
     except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc: parser.error(str(exc))
