@@ -14,6 +14,7 @@ import torch
 from .cifar10 import CIFAR10Binary, make_manifest, patchify_rgb
 from .masking import block_mask
 from .model import JEPA, ModelConfig
+from .model_size import validate_local_config
 from .train import embedding_stats
 
 DEFAULT_MASK = dict(target_rows=2, target_cols=2, context_fraction=0.75)
@@ -64,7 +65,7 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
         raise ValueError("Learning rate must be finite and positive; momentum must be in [0, 1]")
     if type(checkpoint_every) is not int or not 0 <= checkpoint_every <= 1000 or (checkpoint_every and checkpoint is None):
         raise ValueError('Checkpoint interval must be 0-1000 and requires a checkpoint destination')
-    config = config if config is not None else ModelConfig(patch_dim=48)
+    config = validate_local_config(config if config is not None else ModelConfig(patch_dim=48))
     if (config.rows, config.cols, config.patch_dim) != (8, 8, 48):
         raise ValueError("CIFAR-10 protocol requires an 8x8 grid of 4x4 RGB patches (patch_dim=48)")
     initial_mask = block_mask(8, 8, target_rows=target_rows, target_cols=target_cols,

@@ -20,7 +20,7 @@ class ModelConfig:
     predictor_depth: int = 1
 
     def __post_init__(self):
-        if any(not isinstance(v, int) or v < 1 for v in vars(self).values()):
+        if any(type(v) is not int or v < 1 for v in vars(self).values()):
             raise ValueError("Model dimensions must be positive integers")
         if self.embedding_dim % self.heads:
             raise ValueError("embedding_dim must be divisible by heads")

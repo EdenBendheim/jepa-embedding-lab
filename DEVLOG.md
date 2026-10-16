@@ -2,6 +2,12 @@
 
 ## October 15, 2026
 
+- Added exact context/EMA-target/predictor parameter accounting and a labeled
+  persistent FP32 memory lower estimate. Local RGB training is bounded before
+  model allocation (width <=128, <=8 heads, encoder <=4 and predictor <=2 blocks);
+  Boolean dimensions are rejected. Model/capacity tests passed, with RNG
+  preservation and exact counts across widths 32/64/96. No compute equality claimed.
+
 - Added saved-feature neighbor selection/restore CLI with fixed split/source
   verification, explicit no-retuning restore mode and protected earlier states.
   End-to-end synthetic check passed: no raw-image reads, unchanged restore,

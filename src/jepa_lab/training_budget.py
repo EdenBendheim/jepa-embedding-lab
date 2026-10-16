@@ -13,6 +13,7 @@ from .cifar10 import CIFAR10Binary, make_manifest
 from .cifar10_train import DEFAULT_MASK, checkpoint_history, train_cifar10
 from .compare import write_report
 from .model import ModelConfig
+from .model_size import validate_local_config
 
 
 def verify_budget_state(path, identity, indices, total_steps):
@@ -44,7 +45,7 @@ def run_training_budget(root, manifest_path, checkpoint, *, total_steps=2223, ch
     train, test = CIFAR10Binary(root), CIFAR10Binary(root, train=False)
     if manifest != make_manifest(train, test, seed=manifest['seed']):
         raise ValueError('Budget manifest differs from the fixed dataset')
-    config = config or ModelConfig(patch_dim=48)
+    config = validate_local_config(config or ModelConfig(patch_dim=48))
     seed = manifest['seed'] if seed is None else seed
     settings = dict(seed=seed, batch_size=batch_size, learning_rate=learning_rate, momentum=momentum)
     mask = dict(target_rows=target_rows, target_cols=target_cols, context_fraction=float(context_fraction))
