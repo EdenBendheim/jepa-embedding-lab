@@ -2,6 +2,12 @@
 
 ## October 15, 2026
 
+- Added controlled-width fitting and saved-state auditing with exact
+  initialization-matched random encoders and shared pixel classifiers. Two
+  synthetic checks verify shared fit counts, reproduced selected states/paired
+  errors and rejection of changed budgets, architecture, seeds, pixels or rows.
+  This verifies comparison mechanics, not an observed quality improvement.
+
 - Declared the fixed 32/64/96-width experiment before new training/scores:
   three seeds each, 2,223 steps, same mask/optimization/image order, exact
   initialization-matched random controls, shared probe grids and kNN counts.
