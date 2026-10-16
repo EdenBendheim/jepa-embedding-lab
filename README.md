@@ -2,14 +2,14 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 14, 2026:** six longer 2,223-step training runs and matched
-mask comparisons work, with periodic recovery, complete journals and new
-confirmation rows excluding all 746 observed examples. All 72 selected
-classifiers reproduce. Fresh AdamW means: 2x2 JEPA 24.24%, 4x4 JEPA 23.11%,
-matching random 24.11%, pixels 25.73%; pixel ridge is 30.20%. A useful learned
-advantage remains unproven. Official test evaluation and controlled model/input
-improvements are unfinished. See [longer-budget results](experiments/BUDGET-2026-10-14.md)
-and [the separate pretrained reference](experiments/PRETRAINED-2026-10-13.md).
+**Status — October 15, 2026:** controlled 32/64/96-width training, exact
+initialization-matched random controls and frozen cosine-neighbor evaluation
+work. Nine fixed-budget model runs, 84 linear-state artifacts and 19 neighbor
+indices reproduce. Fresh learned AdamW means are 28.16% / 27.80% / 25.47%:
+wider did not consistently help. The 32-D AdamW head beats its random/pixel
+controls on this subset, while ridge/kNN still favor pixels. A general learned
+advantage remains unproven; official test evaluation and the embedding explorer
+are unfinished. See [controlled-width results](experiments/WIDTH-2026-10-15.md).
 
 ## Why this experiment
 
@@ -116,7 +116,7 @@ history prefix; no earlier diagnostics are invented.
 
 Checkpoint version one binds state to the verified manifest fingerprint, model configuration, seed, batch size, learning rate, momentum, PyTorch version, and CPU thread count. Resume rejects mismatches before sampling. Model, optimizer, sample RNG, and PyTorch RNG are restored; mask seeds advance from the saved global step. Tests require a resumed run to match uninterrupted diagnostics, weights, optimizer, and RNG state in the same environment. This does not guarantee identical results across platforms or library versions; incompatible recorded runtimes are rejected.
 
-Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Saving occurs at the end of a successful invocation, so an interrupted invocation can lose its unsaved steps. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen features, classifier/encoder-seed checks and declared pooling/mask pilots now work. Fresh confirmation and frozen pretrained comparison are now measured below; stronger JEPA training remains pending.
+Checkpoints load with `weights_only=True` on CPU and are written via temporary file plus atomic replacement. A failed save leaves the previous checkpoint intact. Without a periodic interval, saving occurs at the end of a successful invocation; an interruption loses only steps after the last durable save. Data/weights/run metrics remain ignored. The 20+3-step real-image pilot had finite losses/gradients but is too small to establish useful representations. Frozen features, classifier/encoder-seed checks and declared pooling/mask pilots now work. Fresh confirmation and frozen pretrained comparison are now measured below; the completed longer-training and width pilots are reported below.
 
 ## Finish a declared local training budget
 
@@ -466,3 +466,18 @@ selection)` restores the already-selected index and verifies disjoint reserved
 rows using the same source/ancestry checks as linear probes. It never changes
 normalization, neighbor count or fitting vectors. These are validation
 confirmation scores; the official test partition remains reserved.
+
+## Controlled width and neighborhood experiment
+
+Run `PYTHONPATH=src .venv/bin/python experiments/run_width_20261015.py` for
+the committed fixed-budget width runs. Existing verified width-32 checkpoints
+are reused; six wider models train from scratch. Add `--evaluate` for shared
+pixel probes, exact-initialization random controls, neighbor-count selection
+and frozen confirmation. `--evaluate --reuse-only` forbids missing-state fitting
+or extraction and rechecks saved states, reported neighbor candidates and
+aggregate scores. Failed checks preserve the previous summary.
+
+The [protocol](experiments/WIDTH-2026-10-15-PROTOCOL.md) fixes exact source hashes,
+rows, budgets and candidate grids before scores. Only aggregate outputs are
+public; raw data, training journals, feature arrays, neighbor vectors and
+classifier/model artifacts remain ignored. Width changes compute and capacity.

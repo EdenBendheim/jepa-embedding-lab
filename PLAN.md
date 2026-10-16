@@ -29,8 +29,10 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Verify feature artifacts against selected examples/labels, numerical integrity, architecture, and weight/runtime provenance before evaluation.
 - [x] Add a shared class-balanced pilot manifest and exact-subset feature extraction without test selection.
 - [x] Persist features/labels with exact partition indices, manifest/checkpoint identity, and configuration.
-- [ ] Compare two or three embedding widths and position/input-feature choices.
-- [ ] Hold the data split, downstream task, training budget, and evaluation code fixed.
+- [x] Compare three embedding widths at the same update/data/evaluation budget.
+- [ ] Compare position/input-feature choices at a fixed width.
+- [x] Hold the data split, downstream task, update budget, and evaluation code fixed.
+- [x] Add frozen cosine-neighbor selection, saved indices and untuned confirmation.
 - [x] Persist selected probe weights/normalization with source identity and reproduced scores.
 - [x] Add a matched regularized ridge head and a larger predeclared pilot.
 - [x] Fit bounded linear probes with training-only normalization and validation-only hyperparameter selection.
@@ -46,16 +48,18 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-The [October 14 longer-budget experiment](experiments/BUDGET-2026-10-14.md) is
-complete: two target masks, three encoder seeds each, 2,223 steps, matched image
-order, 72 reproduced selected states and 500 new confirmation examples excluding
-746 observed rows. Fresh AdamW: 2x2 learned 24.24%, 4x4 learned 23.11%, matching
-random 24.11%, pixels 25.73%; pixel ridge 30.20%. Longer training alone did not
-establish an advantage. Periodic recovery and complete-journal/cache verification
-work; images, weights and per-image records remain ignored.
+The [October 15 controlled-width experiment](experiments/WIDTH-2026-10-15.md)
+is complete: 32/64/96 widths, three seeds each, 2,223 steps, same actual image
+order and exact-initialization random controls. Reproduced 84 linear-state
+artifacts and 19 neighbor indices; scored 500 new confirmation rows excluding
+1,246 declared earlier rows. Fresh learned AdamW means: 28.16%/27.80%/25.47%.
+The 32-D AdamW head beats its random/pixel controls here, while ridge/kNN still
+favor pixels. Wider did not consistently help; no general advantage or best
+width is established. Resource bounds, exact parameter accounting and custom
+architecture CLIs work. All weights/features/indices/journals remain local.
 
-Next: predeclare a controlled model/input change (width and position/input choices
-remain planned), hold the training/evaluation budget fixed, and reserve a new
-untuned subset before confirmation. All prior confirmation rows are now observed.
-Retain the official test set. Training-dynamics plots and verified aggregate points now work; an embedding explorer remains planned;
-quality claims still require independent evidence.
+Next: predeclare one position/input-feature change at a fixed width, keep the
+training/evaluation recipe fixed, and reserve different untuned rows before
+confirmation. The current ancestry depth is bounded; retain the history of all
+scored selections when designing later reservations. Official test, embedding
+explorer and further quality evidence remain unfinished.

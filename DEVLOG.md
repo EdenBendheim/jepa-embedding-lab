@@ -2,6 +2,24 @@
 
 ## October 15, 2026
 
+- Final local checks: 130 tests passed, followed by two updated width-workflow
+  tests after adding no-refit replay of every neighbor candidate. Mask demo and
+  three-step synthetic smoke passed. The cached real summary remains byte
+  identical with all training/extraction/fitting/raw-image access disabled.
+  Interview explanation: “I controlled initialization and data while changing
+  model width, then checked both optimized heads and frozen neighborhoods on new
+  examples. Wider was not consistently better, so I kept the mixed result.”
+
+- Executed the committed width protocol: three widths x three seeds at 2,223
+  steps, reusing the three verified width-32 models and training six wider ones.
+  Exact image order matches. Reproduced 84 linear artifacts (76 unique states)
+  and 19 neighbor indices; scored 500 fresh rows excluding 1,246 declared earlier
+  rows. Learned AdamW means 28.16%/27.80%/25.47%; wider did not consistently help.
+  The 32-D AdamW head exceeds random/pixels here; ridge/kNN still favor pixels.
+  Published aggregate-only results and source-pinned workflow. Real cache-only
+  retry with training, image reads, extraction and fitting disabled is byte
+  identical. No general learned advantage, width winner or official test claim.
+
 - Added no-refit neighbor confirmation using shared source/ancestry checks with
   linear probes. Synthetic checks preserve saved index/statistics/source bytes
   and RNG, reject altered/overlapping fresh rows before loading state, and verify
