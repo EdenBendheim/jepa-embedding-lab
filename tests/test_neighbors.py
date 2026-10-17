@@ -35,3 +35,19 @@ class NeighborTests(unittest.TestCase):
         index=fit_neighbors(x,y)
         for query in (torch.ones(2,9),x*float('inf')):
             with self.assertRaises(ValueError):index.predict(query)
+
+    def test_inspection_returns_ranked_positions_scores_without_aliasing_or_rng(self):
+        x=torch.eye(10);y=torch.arange(10);index=fit_neighbors(x,y,NeighborConfig(3))
+        query=x.repeat(7,1)[:65];rng=torch.get_rng_state().clone()
+        positions,scores=index.nearest(query)
+        self.assertEqual((65,3),tuple(positions.shape))
+        self.assertEqual(list(range(10))*6+list(range(5)),positions[:,0].tolist())
+        expected=torch.nn.functional.normalize((query-index.mean)/index.scale,dim=1)@index.vectors.T
+        self.assertTrue(torch.equal(scores,expected.gather(1,positions)))
+        self.assertTrue((scores[:,1:]<=scores[:,:-1]).all())
+        self.assertTrue(torch.equal(rng,torch.get_rng_state()))
+        with torch.inference_mode():scores.zero_();positions.zero_()
+        self.assertEqual(list(range(10)),index.nearest(x)[0][:,0].tolist())
+        zero=fit_neighbors(torch.zeros(10,3),y,NeighborConfig(3))
+        ids,values=zero.nearest(torch.zeros(2,3))
+        self.assertEqual([[0,1,2]]*2,ids.tolist());self.assertEqual([[0.,0.,0.]]*2,values.tolist())

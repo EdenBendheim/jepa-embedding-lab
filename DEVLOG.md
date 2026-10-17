@@ -1,5 +1,12 @@
 # Development log
 
+## October 16, 2026
+
+- Exposed ranked frozen-neighbor positions and cosine similarities, sharing the
+  existing classifier normalization/tie rules. Four neighbor tests verify exact
+  retrieval across a batch boundary, zero/tied vectors, unchanged sources/RNG
+  and unchanged classification behavior.
+
 ## October 15, 2026
 
 - Final local checks: 130 tests passed, followed by two updated width-workflow

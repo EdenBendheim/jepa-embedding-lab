@@ -25,18 +25,28 @@ class NeighborIndex:
     config:NeighborConfig
 
     @torch.inference_mode()
-    def predict(self,features):
+    def nearest(self,features):
+        """Return fitting-row positions and cosine similarities, in stable rank order.
+
+        Queries never change training normalization. Zero vectors have zero
+        similarity, so ties resolve to fitting-row order.
+        """
         _values(features,self.vectors.shape[1])
         normalized=F.normalize((features.detach()-self.mean)/self.scale,dim=1,eps=1e-12)
         if not torch.isfinite(normalized).all():raise ValueError('Query normalization is non-finite')
-        output=[]
+        positions=[];scores=[]
         for start in range(0,len(normalized),64):
             similarity=normalized[start:start+64]@self.vectors.T
             # Stable ties use fitting-row order; vote ties use the smallest class ID.
             nearest=similarity.argsort(dim=1,descending=True,stable=True)[:,:self.config.k]
-            votes=F.one_hot(self.labels[nearest],num_classes=10).sum(1)
-            output.append(votes.argmax(1))
-        return torch.cat(output)
+            positions.append(nearest);scores.append(similarity.gather(1,nearest))
+        return torch.cat(positions),torch.cat(scores)
+
+    @torch.inference_mode()
+    def predict(self,features):
+        nearest,_=self.nearest(features)
+        votes=F.one_hot(self.labels[nearest],num_classes=10).sum(1)
+        return votes.argmax(1)
 
     def score(self,features,labels):
         _labels(labels,len(features));predictions=self.predict(features)
