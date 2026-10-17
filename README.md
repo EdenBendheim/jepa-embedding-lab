@@ -494,3 +494,10 @@ up to 100 already observed tuning rows (`--query-index ID ...`, default first 20
 It exports no images or feature vectors and refuses confirmation selections.
 Inspection is descriptive, not fresh evaluation; the official test stays reserved.
 Keep reports under ignored `runs/`.
+
+Render a report as an offline interactive viewer:
+`python -m jepa_lab.explorer_html runs/neighborhoods.json --output runs/neighborhoods.html`.
+Open the HTML locally, choose a validation row and inspect its ranked training
+neighbors, labels, cosine scores and source fingerprints. It needs no server,
+network access or extra packages. It deliberately contains no image thumbnails.
+Treat labels as a diagnostic aid, not proof of representation quality.

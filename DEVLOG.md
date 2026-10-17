@@ -2,6 +2,14 @@
 
 ## October 16, 2026
 
+- Added an offline HTML explorer with query selection, ranked neighbor table,
+  limitations and expandable provenance. Strict report checks, inert escaped
+  JSON, text-only DOM insertion and a hashed-script CSP prevent report content
+  from becoming executable markup. Two renderer tests cover malformed rows,
+  injection text, CSP integrity and preservation of earlier output on failure.
+  Opened the synthetic report in Safari: populated controls/table and visual
+  layout verified with the offline CSP active.
+
 - Added a source-verified neighborhood report/CLI that restores saved indices
   without refitting and maps neighbors to official fitting-row identities. Two
   synthetic workflow tests cover rank/order, fingerprints, mutation rejection,
