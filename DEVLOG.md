@@ -2,6 +2,11 @@
 
 ## October 16, 2026
 
+- Added a source-verified neighborhood report/CLI that restores saved indices
+  without refitting and maps neighbors to official fitting-row identities. Two
+  synthetic workflow tests cover rank/order, fingerprints, mutation rejection,
+  confirmation refusal and operation with raw-image reads disabled.
+
 - Exposed ranked frozen-neighbor positions and cosine similarities, sharing the
   existing classifier normalization/tie rules. Four neighbor tests verify exact
   retrieval across a batch boundary, zero/tied vectors, unchanged sources/RNG

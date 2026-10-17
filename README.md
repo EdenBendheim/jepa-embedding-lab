@@ -481,3 +481,16 @@ The [protocol](experiments/WIDTH-2026-10-15-PROTOCOL.md) fixes exact source hash
 rows, budgets and candidate grids before scores. Only aggregate outputs are
 public; raw data, training journals, feature arrays, neighbor vectors and
 classifier/model artifacts remain ignored. Width changes compute and capacity.
+
+### Inspect frozen neighborhoods locally
+
+`python -m jepa_lab.explorer ROOT --manifest MANIFEST.json --selection PILOT.json
+--train-features TRAIN.pt --validation-features VALIDATION.pt --index INDEX.pt
+--output runs/neighborhoods.json` (write as one shell command).
+
+This restores an existing source-bound kNN index without fitting or choosing k.
+It reports official row IDs, labels, ranked cosines and source fingerprints for
+up to 100 already observed tuning rows (`--query-index ID ...`, default first 20).
+It exports no images or feature vectors and refuses confirmation selections.
+Inspection is descriptive, not fresh evaluation; the official test stays reserved.
+Keep reports under ignored `runs/`.
