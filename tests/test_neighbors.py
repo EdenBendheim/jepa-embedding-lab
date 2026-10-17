@@ -43,7 +43,9 @@ class NeighborTests(unittest.TestCase):
         self.assertEqual((65,3),tuple(positions.shape))
         self.assertEqual(list(range(10))*6+list(range(5)),positions[:,0].tolist())
         expected=torch.nn.functional.normalize((query-index.mean)/index.scale,dim=1)@index.vectors.T
-        self.assertTrue(torch.equal(scores,expected.gather(1,positions)))
+        # CPU BLAS kernels may round differently for 64+1 versus 65 rows.
+        # Check numerical agreement; exact row identity and tie order are separate.
+        torch.testing.assert_close(scores,expected.gather(1,positions),rtol=1e-6,atol=1e-7)
         self.assertTrue((scores[:,1:]<=scores[:,:-1]).all())
         self.assertTrue(torch.equal(rng,torch.get_rng_state()))
         with torch.inference_mode():scores.zero_();positions.zero_()

@@ -2,6 +2,12 @@
 
 ## October 16, 2026
 
+- Linux CI exposed a too-strict bitwise comparison between 64+1-row and
+  65-row matrix products in the new retrieval test. Replaced only that score
+  assertion with float32 rtol=1e-6/atol=1e-7; exact row-identity, stable ties,
+  source immutability and RNG checks remain. This required a fifth repair
+  commit beyond the drawn four; it changes no model/index artifacts.
+
 - Added matched neighborhood comparisons with common-depth overlap and exact
   shared/distinct row IDs, plus representation switching in the offline viewer.
   Split/query/label mismatches and edited comparison metrics are rejected.
