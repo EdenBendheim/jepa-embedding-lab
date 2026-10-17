@@ -2,6 +2,22 @@
 
 ## October 16, 2026
 
+- Added matched neighborhood comparisons with common-depth overlap and exact
+  shared/distinct row IDs, plus representation switching in the offline viewer.
+  Split/query/label mismatches and edited comparison metrics are rejected.
+  Two synthetic comparison tests passed. Restored real learned/random/pixel
+  indices on 20 observed tuning rows: top-one overlaps 25% / 15% / 15%.
+  No fitting, retuning, new confirmation exposure or official-test evaluation.
+  Safari representation and query changes update tables and comparison text.
+  All real reports remain ignored/local; this makes no new accuracy claim.
+  Final local checks: all 137 tests passed, six explorer tests passed again
+  after the final renderer change, mask demo and three-step synthetic training
+  smoke passed. Git diff whitespace check passed.
+  Interview explanation: “I made a source-verified viewer to inspect what learned
+  embeddings retrieve and where they differ from random features and pixels,
+  while keeping the evaluation split and fitted neighbor indices fixed.”
+
+
 - Added an offline HTML explorer with query selection, ranked neighbor table,
   limitations and expandable provenance. Strict report checks, inert escaped
   JSON, text-only DOM insertion and a hashed-script CSP prevent report content

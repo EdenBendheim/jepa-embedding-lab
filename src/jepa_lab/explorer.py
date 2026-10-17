@@ -1,4 +1,4 @@
-"""Inspect saved frozen neighborhoods; no fitting, image export, or test access."""
+"""Inspect saved frozen neighborhoods; no fitting, image export, or test evaluation."""
 import argparse
 import json
 from pathlib import Path

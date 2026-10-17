@@ -44,7 +44,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Implement resume-bound custom masks and run a declared 4x4-target pilot matched to actual historical image order.
 - [x] Reserve balanced confirmation rows excluding all declared earlier tuning examples.
 - [x] Score frozen selected AdamW/ridge classifiers on fresh examples without refitting or retuning.
-- [ ] Publish configurations, provenance, plots, a results table, and a small embedding explorer.
+- [x] Publish configurations, provenance, plots, a results table, and a small row-and-label embedding explorer.
 
 ## Next session
 
@@ -61,5 +61,11 @@ architecture CLIs work. All weights/features/indices/journals remain local.
 Next: predeclare one position/input-feature change at a fixed width, keep the
 training/evaluation recipe fixed, and reserve different untuned rows before
 confirmation. The current ancestry depth is bounded; retain the history of all
-scored selections when designing later reservations. Official test, embedding
-explorer and further quality evidence remain unfinished.
+scored selections when designing later reservations. Official test and further quality evidence remain unfinished.
+
+October 16: the offline neighborhood explorer now restores exact saved indices,
+shows official row IDs/classes/ranks/cosines and compares learned/random/pixel
+neighborhood overlap on the same observed tuning examples. No thumbnails or
+feature vectors are embedded. A 20-row real-artifact replay and Safari query/arm
+controls were verified; it is diagnostic, not fresh evaluation. A later optional
+local-only image view could aid inspection without publishing dataset images.

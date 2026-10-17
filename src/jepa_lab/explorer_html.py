@@ -7,19 +7,27 @@ import math
 from pathlib import Path
 
 SCRIPT = '''const data=JSON.parse(document.getElementById("report").textContent);
+const comparing=data.task==="Frozen neighborhood comparison";
+const arms=comparing?data.representations:{representation:data};
+const arm=document.getElementById("arm");
 const select=document.getElementById("query");
 const table=document.getElementById("neighbors");
 function cell(row,value){const td=document.createElement("td");td.textContent=value;row.append(td);}
-function show(){const q=data.queries[Number(select.value)];table.replaceChildren();
+function show(){const source=arms[arm.value];const q=source.queries[Number(select.value)];table.replaceChildren();
  document.getElementById("query-label").textContent="Validation row "+q.index+" · "+q.class_name;
  for(const n of q.neighbors){const tr=document.createElement("tr");
-  for(const value of [n.rank,n.index,n.class_name,n.cosine.toFixed(6)])cell(tr,value);table.append(tr);}}
-for(const [i,q] of data.queries.entries()){const option=document.createElement("option");
+  for(const value of [n.rank,n.index,n.class_name,n.cosine.toFixed(6)])cell(tr,value);table.append(tr);}
+ document.getElementById("provenance").textContent=JSON.stringify({training:source.training,validation:source.validation,saved_index:source.saved_index},null,2);
+ const comparison=document.getElementById("comparison");comparison.replaceChildren();
+ for(const pair of comparing?data.pairs:[]){const row=pair.queries[Number(select.value)];const p=document.createElement("p");
+  p.textContent=pair.left+" vs "+pair.right+": "+row.shared_count+"/"+data.depth+" shared neighbors for this query (mean overlap "+(pair.mean_overlap_fraction*100).toFixed(1)+"%). Left only: "+(row.left_only.join(", ")||"none")+". Right only: "+(row.right_only.join(", ")||"none")+".";comparison.append(p);}}
+for(const name of Object.keys(arms)){const option=document.createElement("option");option.value=name;option.textContent=name;arm.append(option);}
+for(const [i,q] of Object.values(arms)[0].queries.entries()){const option=document.createElement("option");
  option.value=i;option.textContent=q.index+" · "+q.class_name;select.append(option);}
-select.addEventListener("change",show);
+select.addEventListener("change",show);arm.addEventListener("change",show);
 document.getElementById("limitations").textContent=data.limitation;
-document.getElementById("provenance").textContent=JSON.stringify({training:data.training,validation:data.validation,saved_index:data.saved_index},null,2);
 show();'''
+
 
 
 def validate_report(report):
@@ -59,7 +67,11 @@ def _identity(row):
 
 
 def render_html(report):
-    validate_report(report)
+    if isinstance(report,dict) and report.get('task')=='Frozen neighborhood comparison':
+        from .explorer_compare import compare_explorations
+        expected=compare_explorations(report.get('representations'),depth=report.get('depth'))
+        if report!=expected:raise ValueError('Comparison metrics or identity differ from source reports')
+    else:validate_report(report)
     # JSON is inert data; escaping '<' prevents closing the script element.
     payload=json.dumps(report,allow_nan=False).replace('&','\\u0026').replace('<','\\u003c').replace('>','\\u003e')
     digest=base64.b64encode(hashlib.sha256(SCRIPT.encode()).digest()).decode()
@@ -70,8 +82,10 @@ def render_html(report):
 <style>body{max-width:960px;margin:40px auto;padding:0 24px;font:17px system-ui;color:#18202d;background:#fafbfd}h1{font-size:30px}select{font:inherit;padding:8px}table{width:100%;border-collapse:collapse;background:white}th,td{text-align:left;padding:12px;border-bottom:1px solid #d5dae1}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}p{line-height:1.6}.note{border-left:4px solid #4f6597;padding-left:16px;color:#3b4659}</style>
 <h1>JEPA neighborhood explorer</h1>
 <p>Inspect training neighbors of already observed validation examples. This view shows row identities and labels; raw images and feature vectors stay local and are not embedded.</p>
+<label for="arm">Representation </label><select id="arm"></select>
 <label for="query">Validation example </label><select id="query"></select>
 <h2 id="query-label"></h2><table><thead><tr><th>Rank</th><th>Training row</th><th>Class</th><th>Cosine</th></tr></thead><tbody id="neighbors"></tbody></table>
+<section id="comparison" aria-label="Neighborhood comparisons"></section>
 <p class="note" id="limitations"></p><details><summary>Source fingerprints and configuration</summary><pre id="provenance"></pre></details>
 <noscript>Enable JavaScript to select queries. The companion JSON contains the same results.</noscript>
 <script id="report" type="application/json">'''+payload+'''</script><script>'''+SCRIPT+'''</script></html>'''

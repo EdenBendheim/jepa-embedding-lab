@@ -2,14 +2,15 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 15, 2026:** controlled 32/64/96-width training, exact
+**Status — October 16, 2026:** controlled 32/64/96-width training, exact
 initialization-matched random controls and frozen cosine-neighbor evaluation
 work. Nine fixed-budget model runs, 84 linear-state artifacts and 19 neighbor
 indices reproduce. Fresh learned AdamW means are 28.16% / 27.80% / 25.47%:
 wider did not consistently help. The 32-D AdamW head beats its random/pixel
 controls on this subset, while ridge/kNN still favor pixels. A general learned
-advantage remains unproven; official test evaluation and the embedding explorer
-are unfinished. See [controlled-width results](experiments/WIDTH-2026-10-15.md).
+advantage remains unproven; official test evaluation is unfinished. An offline
+row-and-label embedding explorer now inspects saved neighborhoods and compares
+learned/random/pixel retrieval on already observed tuning rows. See [controlled-width results](experiments/WIDTH-2026-10-15.md).
 
 ## Why this experiment
 
@@ -501,3 +502,32 @@ Open the HTML locally, choose a validation row and inspect its ranked training
 neighbors, labels, cosine scores and source fingerprints. It needs no server,
 network access or extra packages. It deliberately contains no image thumbnails.
 Treat labels as a diagnostic aid, not proof of representation quality.
+
+Compare two to four representations on the same ordered queries:
+
+```sh
+python -m jepa_lab.explorer_compare data/cifar-10-batches-bin \
+  --manifest runs/cifar10-manifest.json --selection runs/pilot-selection-20261009.json \
+  --arm learned LEARNED_TRAIN.pt LEARNED_VALIDATION.pt LEARNED_INDEX.pt \
+  --arm random RANDOM_TRAIN.pt RANDOM_VALIDATION.pt RANDOM_INDEX.pt \
+  --arm pixels PIXELS_TRAIN.pt PIXELS_VALIDATION.pt PIXELS_INDEX.pt \
+  --output runs/explorer/comparison.json --html runs/explorer/comparison.html
+```
+
+Replace the uppercase artifact placeholders with existing verified files. The
+viewer switches representations and queries; comparison shows shared and distinct
+training neighbors. All arms must match split identity, row order and labels.
+Overlap uses a common depth (default the smallest saved k; override with
+`--depth K` within that bound), while each table retains its own saved k.
+Neither overlap nor cosine magnitude across representations establishes quality.
+No classifier is fitted or retuned. Renderer recomputes comparison metrics before
+writing HTML and rejects inconsistent reports.
+
+October 16 local check: restored the October 15 width-32/seed-20261003 learned,
+exact-initialization random and pixel indices on the first 20 already observed
+tuning rows. Their common depth was one. Learned/random top-one overlap was
+25%; learned/pixel and random/pixel were each 15%. These are descriptive counts
+on a small ordered subset, not accuracy or independent evidence of improvement.
+The report and HTML remain ignored under `runs/explorer-20261016/`; no images,
+features or weights are published. Position/input-feature experiments and
+reserved official-test evaluation remain future work.
