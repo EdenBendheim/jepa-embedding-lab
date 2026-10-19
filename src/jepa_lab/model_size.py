@@ -1,7 +1,7 @@
 """Count model capacity and bound the public-data local training architecture."""
 from dataclasses import asdict
 import torch
-from .model import JEPA,ModelConfig
+from .model import JEPA,ModelConfig, config_dict
 
 
 def validate_local_config(config):
@@ -21,7 +21,11 @@ def model_size(config):
         groups[group]['parameters']+=p.numel()
         if p.requires_grad:groups[group]['trainable_parameters']+=p.numel()
     total=sum(g['parameters'] for g in groups.values());trainable=sum(g['trainable_parameters'] for g in groups.values())
-    return dict(config=asdict(config),groups=groups,parameters=total,trainable_parameters=trainable,
+    buffers=sum(b.numel() for b in model.buffers())
+    result=dict(config=config_dict(config),groups=groups,parameters=total,trainable_parameters=trainable,
         frozen_parameters=total-trainable,fp32_parameter_bytes=4*total,
-        estimated_fp32_parameters_gradients_adam_moments_bytes=4*(total+3*trainable),
+        estimated_fp32_parameters_gradients_adam_moments_bytes=4*(total+buffers+3*trainable),
         limitation='Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.')
+
+    if buffers:result.update(buffer_elements=buffers,fp32_buffer_bytes=4*buffers)
+    return result

@@ -9,7 +9,7 @@ import torch
 
 from jepa_lab.cifar10 import make_manifest, patchify_rgb
 from jepa_lab.embeddings import extract_cifar10, image_embeddings, pixel_features, random_encoder
-from jepa_lab.model import JEPA, ModelConfig
+from jepa_lab.model import JEPA, ModelConfig,config_dict
 
 
 class Fixture:
@@ -45,7 +45,7 @@ class EmbeddingTests(unittest.TestCase):
         self.checkpoint = self.root/"encoder.pt"
         self.state = dict(format_version=1, dataset="CIFAR-10", manifest_sha256=self.manifest["manifest_sha256"],
                           runtime=dict(torch=str(torch.__version__), cpu_threads=1), step=3,
-                          config=asdict(self.config), model=self.model.state_dict(), settings=dict(seed=29))
+                          config=config_dict(self.config), model=self.model.state_dict(), settings=dict(seed=29))
         torch.save(self.state, self.checkpoint)
         self.patcher = patch("jepa_lab.embeddings.CIFAR10Binary", Fixture)
         self.patcher.start()

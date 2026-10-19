@@ -1,12 +1,14 @@
 """Compact JEPA model for the patch/mask contract; not an I-JEPA reproduction."""
 
 from copy import deepcopy
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 import math
 
 import torch
 from torch import nn
 from torch.nn import functional as F
+
+from .positions import sincos_2d
 
 
 @dataclass(frozen=True)
@@ -18,12 +20,31 @@ class ModelConfig:
     heads: int = 4
     encoder_depth: int = 2
     predictor_depth: int = 1
+    position_encoding: str = "learned"
 
     def __post_init__(self):
-        if any(type(v) is not int or v < 1 for v in vars(self).values()):
+        if any(type(v) is not int or v < 1 for name,v in vars(self).items() if name != "position_encoding"):
             raise ValueError("Model dimensions must be positive integers")
         if self.embedding_dim % self.heads:
             raise ValueError("embedding_dim must be divisible by heads")
+        if self.position_encoding not in ("learned", "sincos2d"):
+            raise ValueError("Position encoding must be learned or sincos2d")
+        if self.position_encoding == "sincos2d" and self.embedding_dim % 4:
+            raise ValueError("sincos2d embedding width must be divisible by four")
+
+
+def config_dict(config: ModelConfig) -> dict:
+    """Keep historical default identities; record alternatives explicitly."""
+    result=asdict(config)
+    if result['position_encoding']=='learned':result.pop('position_encoding')
+    return result
+
+
+def fixed_positions(module, name, config):
+    if config.position_encoding=='sincos2d':
+        # Learned initializers still ran: other weights/RNG match between arms.
+        delattr(module,name)
+        module.register_buffer(name,sincos_2d(config.rows,config.cols,config.embedding_dim))
 
 
 def transformer(config: ModelConfig, depth: int) -> nn.Module:
@@ -62,6 +83,7 @@ class PatchEncoder(nn.Module):
         self.projection = nn.Linear(config.patch_dim, config.embedding_dim)
         self.positions = nn.Parameter(torch.empty(config.rows * config.cols, config.embedding_dim))
         nn.init.trunc_normal_(self.positions, std=0.02)
+        fixed_positions(self,"positions",config)
         self.blocks = transformer(config, config.encoder_depth)
 
     def forward(self, patches: torch.Tensor, indices: torch.Tensor) -> torch.Tensor:
@@ -80,6 +102,7 @@ class JEPA(nn.Module):
         self.predictor_positions = nn.Parameter(torch.empty(config.rows * config.cols, config.embedding_dim))
         self.mask_token = nn.Parameter(torch.empty(1, 1, config.embedding_dim))
         nn.init.trunc_normal_(self.predictor_positions, std=0.02)
+        fixed_positions(self,"predictor_positions",config)
         nn.init.trunc_normal_(self.mask_token, std=0.02)
         self.predictor = transformer(config, config.predictor_depth)
         self.output = nn.Linear(config.embedding_dim, config.embedding_dim)

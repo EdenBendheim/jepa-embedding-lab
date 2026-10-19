@@ -539,3 +539,13 @@ sin/cos encoding with separate row/column channels and frequencies
 `10000**(-j/(width/4))`. It consumes no RNG and returns independent float32
 tensors. Width must be divisible by four. This is an experimental alternative,
 not an asserted reproduction of another model's positional recipe.
+
+`ModelConfig(position_encoding="sincos2d")` uses fixed buffers in context,
+EMA target and predictor. The default remains learned positions, serialized
+with the historical default keys by `model.config_dict`. The alternative is
+recorded explicitly in training checkpoints and feature provenance; resume
+rejects a changed mode. Both branches consume the same positional initializer
+RNG draws before fixed values replace parameters, preserving all other initial
+weights for matched seeds. Fixed buffers reduce trainable capacity; model-size
+reports count their persistent memory separately. Equal steps still do not mean
+equal parameter counts or compute.

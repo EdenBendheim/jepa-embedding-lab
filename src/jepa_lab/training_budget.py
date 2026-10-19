@@ -12,7 +12,7 @@ import torch
 from .cifar10 import CIFAR10Binary, make_manifest
 from .cifar10_train import DEFAULT_MASK, checkpoint_history, train_cifar10
 from .compare import write_report
-from .model import ModelConfig
+from .model import ModelConfig, config_dict
 from .model_size import validate_local_config
 from .model_cli import add_model_options,config_from_args
 
@@ -52,7 +52,7 @@ def run_training_budget(root, manifest_path, checkpoint, *, total_steps=2223, ch
     mask = dict(target_rows=target_rows, target_cols=target_cols, context_fraction=float(context_fraction))
     if mask != DEFAULT_MASK: settings['mask'] = mask
     identity = dict(format_version=1, dataset='CIFAR-10', manifest_sha256=manifest['manifest_sha256'],
-                    config=asdict(config), settings=settings,
+                    config=config_dict(config), settings=settings,
                     runtime=dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()))
     path = Path(checkpoint)
     indices = manifest['partitions']['train']['indices']

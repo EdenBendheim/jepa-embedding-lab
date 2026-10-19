@@ -9,7 +9,7 @@ from pathlib import Path
 import torch
 
 from .masking import block_mask
-from .model import JEPA, ModelConfig
+from .model import JEPA, ModelConfig, config_dict
 
 
 def synthetic_batch(config: ModelConfig, batch_size: int, generator: torch.Generator) -> torch.Tensor:
@@ -85,11 +85,11 @@ def train_smoke(*, steps: int = 10, batch_size: int = 4, seed: int = 29,
     if checkpoint:
         path = Path(checkpoint)
         path.parent.mkdir(parents=True, exist_ok=True)
-        torch.save(dict(format_version=1, config=asdict(config), model=model.state_dict(),
+        torch.save(dict(format_version=1, config=config_dict(config), model=model.state_dict(),
                         optimizer=optimizer.state_dict(), step=start+steps, seed=seed,
                         batch_size=batch_size, learning_rate=learning_rate, momentum=momentum,
                         data_rng=generator.get_state(), torch_rng=torch.get_rng_state()), path)
-    return dict(dataset="synthetic spatial patterns", config=asdict(config), seed=seed,
+    return dict(dataset="synthetic spatial patterns", config=config_dict(config), seed=seed,
                 start_step=start, completed_step=start+steps, history=history,
                 limitation="Smoke check only; no public-dataset or downstream-quality evaluation")
 

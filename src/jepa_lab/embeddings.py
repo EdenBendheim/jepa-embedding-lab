@@ -11,7 +11,7 @@ import torch
 
 from .cifar10 import CIFAR10Binary, make_manifest, patchify_rgb
 from .cifar10_train import atomic_checkpoint
-from .model import JEPA, ModelConfig
+from .model import JEPA, ModelConfig, config_dict
 from .masking import block_mask
 from .pooling import POOLING, pool_tokens, pooling_dimension
 from .selection import validate_pilot
@@ -92,7 +92,7 @@ def load_encoder(checkpoint: str | Path, manifest_sha256: str) -> tuple[JEPA, di
     except (KeyError, TypeError, ValueError, RuntimeError) as exc:
         raise ValueError("Checkpoint encoder configuration or weights are invalid") from exc
     metadata = dict(checkpoint_sha256=hashlib.sha256(payload).hexdigest(),
-                    completed_steps=saved["step"], config=asdict(config), training_settings=settings)
+                    completed_steps=saved["step"], config=config_dict(config), training_settings=settings)
     return model, metadata
 
 
@@ -134,7 +134,7 @@ def extract_cifar10(root: str | Path, manifest_path: str | Path, *, partition: s
     elif representation == "random":
         config = config if config is not None else ModelConfig(patch_dim=48)
         model = random_encoder(config, seed)
-        metadata |= dict(encoder=encoder, seed=seed, config=asdict(config))
+        metadata |= dict(encoder=encoder, seed=seed, config=config_dict(config))
     selected = manifest["partitions"][partition]
     indices = selection["partitions"][partition]["indices"] if selection else selected["indices"][:limit]
     dataset = train if selected["official_split"] == "train" else test

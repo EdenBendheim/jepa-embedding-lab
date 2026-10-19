@@ -9,7 +9,7 @@ from unittest.mock import patch
 import torch
 
 from jepa_lab.cifar10 import make_manifest
-from jepa_lab.model import ModelConfig
+from jepa_lab.model import ModelConfig,config_dict
 from jepa_lab.selection import make_confirmation,make_pilot
 from test_cifar10_train import Fixture
 from dataclasses import asdict
@@ -37,7 +37,7 @@ class BudgetDriverTests(unittest.TestCase):
             confirmation_selection_sha256=fresh['selection_sha256'],confirmation_seed=20261014,confirmation_per_class=1,
             total_steps=3,chunk_steps=2,checkpoint_every=1,batch_size=2,learning_rate=.001,momentum=.99,
             training_seeds=[29],random_seeds=[31],target_sizes=[2,4],context_fraction=.75,
-            config=asdict(ModelConfig(patch_dim=48,embedding_dim=16,encoder_depth=1)),
+            config=config_dict(ModelConfig(patch_dim=48,embedding_dim=16,encoder_depth=1)),
             classifier_seeds=[29],probe_steps=3,learning_rates=[.001],weight_decays=[.01],
             ridge_alphas=[.1],pooling='mean',encoder='context')
         protocol=self.root/'protocol.json';protocol.write_text(json.dumps(declared))

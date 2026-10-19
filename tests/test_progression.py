@@ -11,7 +11,7 @@ import torch
 from jepa_lab.progression import compare_progression, run_progression, validate_progression
 from jepa_lab.cifar10 import make_manifest
 from jepa_lab.embeddings import extract_cifar10, random_encoder
-from jepa_lab.model import ModelConfig
+from jepa_lab.model import ModelConfig,config_dict
 from jepa_lab.selection import make_pilot
 from jepa_lab.probes import ProbeConfig, select_probe
 from jepa_lab.ridge import select_ridge
@@ -104,7 +104,7 @@ class ProgressionContractTests(unittest.TestCase):
                 for name, step in (("early", 3), ("later", 6)):
                     checkpoint = root/f"{name}.pt"
                     torch.save(dict(format_version=1, dataset="CIFAR-10", manifest_sha256=manifest["manifest_sha256"],
-                        config=asdict(config), runtime=dict(torch=str(torch.__version__), cpu_threads=1), step=step,
+                        config=config_dict(config), runtime=dict(torch=str(torch.__version__), cpu_threads=1), step=step,
                         model=random_encoder(config, step).state_dict(), settings=dict(seed=29)), checkpoint)
                     for partition in ("train", "validation"):
                         extract_cifar10(root, m, selection_path=s, checkpoint=checkpoint, partition=partition,

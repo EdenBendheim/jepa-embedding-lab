@@ -12,7 +12,7 @@ from jepa_lab.cifar10 import make_manifest
 from jepa_lab.compare import compare_features, compare_repeated_features, run_comparison, write_report
 from jepa_lab.embeddings import random_encoder
 from jepa_lab.features import FeatureSet
-from jepa_lab.model import ModelConfig
+from jepa_lab.model import ModelConfig,config_dict
 from jepa_lab.probes import ProbeConfig
 from jepa_lab.probes import select_probe
 from jepa_lab.probe_artifacts import load_probe
@@ -22,7 +22,7 @@ from test_embeddings import Fixture
 
 def sets():
     labels = torch.arange(10)
-    config = asdict(ModelConfig(patch_dim=48,embedding_dim=16,encoder_depth=1))
+    config = config_dict(ModelConfig(patch_dim=48,embedding_dim=16,encoder_depth=1))
     result = {}
     for name in ("checkpoint","random","pixels"):
         values = torch.zeros(10,3072 if name == "pixels" else 16)
@@ -136,7 +136,7 @@ class ComparisonTests(unittest.TestCase):
             config = ModelConfig(patch_dim=48,embedding_dim=16,encoder_depth=1)
             checkpoint = root/"encoder.pt"
             torch.save(dict(format_version=1,dataset="CIFAR-10",manifest_sha256=manifest["manifest_sha256"],
-                runtime=dict(torch=str(torch.__version__),cpu_threads=1),step=3,config=asdict(config),
+                runtime=dict(torch=str(torch.__version__),cpu_threads=1),step=3,config=config_dict(config),
                 model=random_encoder(config,29).state_dict(),settings=dict(seed=29)),checkpoint)
             Fixture.accessed.clear()
             with patch("jepa_lab.compare.CIFAR10Binary",Fixture),patch("jepa_lab.embeddings.CIFAR10Binary",Fixture):

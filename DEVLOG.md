@@ -2,6 +2,15 @@
 
 ## October 18, 2026
 
+- Integrated optional fixed spatial buffers into context/target/predictor while
+  preserving default initialization, RNG draws and historical serialized keys.
+  Canonical model-config serialization is shared by training and extraction;
+  synthetic artifact fixtures use that wire contract. Two model tests verify
+  matched non-position weights, no hidden-pixel gradients, fixed/EMA buffers,
+  exact resume and mode-change rejection. Default/capacity checks also pass.
+  All nine historical width-training caches reproduced with image sampling
+  disabled, preserving their old config/capacity/journal identities.
+
 - Added a deterministic row/column sinusoidal encoding with a documented
   formula and bounded dimensions. Two tests verify origin/axis/frequency
   ordering, independent tensors, finite float32 output and unchanged RNG.

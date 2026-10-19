@@ -12,7 +12,7 @@ import torch
 
 from jepa_lab.cifar10 import make_manifest
 from jepa_lab.embeddings import extract_cifar10,random_encoder
-from jepa_lab.model import ModelConfig
+from jepa_lab.model import ModelConfig,config_dict
 from jepa_lab.pretrained import pretrained_metadata
 from jepa_lab.pretrained_extract import extract_pretrained
 from jepa_lab.probes import ProbeConfig
@@ -37,7 +37,7 @@ class TransferWorkflowTests(unittest.TestCase):
         config=ModelConfig(patch_dim=48,embedding_dim=16,encoder_depth=1)
         checkpoint=self.root/"encoder.pt"
         torch.save(dict(format_version=1,dataset="CIFAR-10",manifest_sha256=self.manifest["manifest_sha256"],
-            runtime=dict(torch=str(torch.__version__),cpu_threads=1),step=3,config=asdict(config),
+            runtime=dict(torch=str(torch.__version__),cpu_threads=1),step=3,config=config_dict(config),
             model=random_encoder(config,29).state_dict(),settings=dict(seed=29)),checkpoint)
         with patch("jepa_lab.embeddings.CIFAR10Binary",Fixture), \
                 patch("jepa_lab.pretrained_extract.CIFAR10Binary",Fixture), \

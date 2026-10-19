@@ -9,7 +9,7 @@ import torch
 
 from jepa_lab.cifar10 import make_manifest
 from jepa_lab.embeddings import extract_cifar10, random_encoder
-from jepa_lab.model import ModelConfig
+from jepa_lab.model import ModelConfig,config_dict
 from jepa_lab.pooling_compare import run_pooling
 from jepa_lab.probes import ProbeConfig
 from jepa_lab.selection import make_pilot
@@ -29,7 +29,7 @@ class PoolingWorkflowTests(unittest.TestCase):
             m.write_text(json.dumps(manifest)); s.write_text(json.dumps(selection))
             config = ModelConfig(patch_dim=48, embedding_dim=16, encoder_depth=1)
             torch.save(dict(format_version=1, dataset="CIFAR-10", manifest_sha256=manifest["manifest_sha256"],
-                runtime=dict(torch=str(torch.__version__), cpu_threads=1), step=3, config=asdict(config),
+                runtime=dict(torch=str(torch.__version__), cpu_threads=1), step=3, config=config_dict(config),
                 model=random_encoder(config, 29).state_dict(), settings=dict(seed=29)), checkpoint)
             directories = {mode: root/mode for mode in ("mean", "max", "mean_std")}
             with patch("jepa_lab.embeddings.CIFAR10Binary", Fixture):

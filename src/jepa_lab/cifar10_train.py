@@ -13,7 +13,7 @@ import torch
 
 from .cifar10 import CIFAR10Binary, make_manifest, patchify_rgb
 from .masking import block_mask
-from .model import JEPA, ModelConfig
+from .model import JEPA, ModelConfig, config_dict
 from .model_size import validate_local_config
 from .model_cli import add_model_options,config_from_args
 from .train import embedding_stats
@@ -86,7 +86,7 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
         settings["mask"] = mask_settings
     runtime = dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads())
     identity = dict(format_version=1, dataset="CIFAR-10", manifest_sha256=manifest["manifest_sha256"],
-                    config=asdict(config), settings=settings, runtime=runtime)
+                    config=config_dict(config), settings=settings, runtime=runtime)
     saved = None
     history_start, durable_history = 0, []
     if resume:

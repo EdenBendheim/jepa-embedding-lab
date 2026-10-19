@@ -17,7 +17,7 @@ from jepa_lab.neighbor_confirmation import score_neighbor_confirmation
 from jepa_lab.neighbors import NeighborConfig
 from jepa_lab.probes import ProbeConfig
 from jepa_lab.width_compare import compare_widths,audit_widths
-from jepa_lab.model import ModelConfig
+from jepa_lab.model import ModelConfig,config_dict
 from jepa_lab.model_size import model_size
 from jepa_lab.selection import excluded_validation_indices,make_confirmation,validate_pilot
 from jepa_lab.training_budget import run_training_budget,verify_budget_state
@@ -60,7 +60,7 @@ def training(directory=Path('runs/width-20261015'),*,reuse_only=False):
         for seed in d['training_seeds']:
             path=checkpoint_path(directory,d,width,seed)
             if path.exists():
-                identity=dict(format_version=1,dataset='CIFAR-10',manifest_sha256=manifest['manifest_sha256'],config=asdict(config(d,width)),
+                identity=dict(format_version=1,dataset='CIFAR-10',manifest_sha256=manifest['manifest_sha256'],config=config_dict(config(d,width)),
                     settings=dict(seed=seed,batch_size=d['batch_size'],learning_rate=d['learning_rate'],momentum=d['momentum']),
                     runtime=dict(torch=str(torch.__version__),cpu_threads=torch.get_num_threads()))
                 verify_budget_state(path,identity,manifest['partitions']['train']['indices'],d['total_steps'])
@@ -104,7 +104,7 @@ def feature(directory,d,manifest,selection,labels,width,seed,rep,partition,reuse
             pooling=d['pooling'],encoder=d['encoder'],output=path)
     value=load_features(path,manifest=manifest,selection=selection,training_labels=labels,partition=partition)
     if rep!='pixels':
-        if value.metadata['config']!=asdict(config(d,width)) or value.metadata['encoder']!=d['encoder']:
+        if value.metadata['config']!=config_dict(config(d,width)) or value.metadata['encoder']!=d['encoder']:
             raise ValueError('Cached width config/encoder differs')
         if rep=='random' and value.metadata['seed']!=seed:raise ValueError('Random initialization control differs')
         if rep=='checkpoint' and value.metadata['checkpoint_sha256']!=hashlib.sha256(checkpoint_path(directory,d,width,seed).read_bytes()).hexdigest():
