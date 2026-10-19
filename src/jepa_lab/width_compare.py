@@ -47,8 +47,8 @@ def summarize(runs,arms):
     return result
 
 
-def compare_widths(arms,candidates,seeds,*,probe_dir,ridge_alphas):
-    reference=validate_widths(arms,candidates);validate_probe_seeds(seeds);validate_ridge_candidates(ridge_alphas)
+def compare_arms(arms,candidates,seeds,*,probe_dir,ridge_alphas,validator,axis,limitation):
+    reference=validator(arms,candidates);validate_probe_seeds(seeds);validate_ridge_candidates(ridge_alphas)
     first=next(iter(arms));runs=[]
     for index,seed in enumerate(seeds):
         configs=tuple(replace(c,seed=seed) for c in candidates);directory=Path(probe_dir)/f'seed{seed}'
@@ -63,17 +63,17 @@ def compare_widths(arms,candidates,seeds,*,probe_dir,ridge_alphas):
             for name,pred in dict(random=predictions[width]['random'][head],pixels=pixel_predictions[head]).items()}
             for width in arms} for head in pixel_predictions}
         runs.append(dict(seed=seed,candidate_grid=[asdict(c) for c in configs],arms=reports,pixels=pixels,paired_validation=paired))
-    return dict(version=1,widths=list(arms),seeds=list(seeds),manifest_sha256=reference[0].manifest_sha256,
+    return dict(version=1,**{axis:list(arms)},seeds=list(seeds),manifest_sha256=reference[0].manifest_sha256,
         selection_sha256=reference[0].selection_sha256,counts=dict(train=len(reference[0].labels),tuning=len(reference[1].labels)),
         ridge_alphas=list(ridge_alphas),runs=runs,summary=summarize(runs,arms),
         runtime=dict(torch=str(torch.__version__),cpu_threads=torch.get_num_threads()),test_evaluated=False,
-        limitation='Width changes capacity, feature dimensions and compute. Shared pixel heads are fitted once per classifier seed; initializations match within each width.')
+        limitation=limitation)
 
 
-def audit_widths(report,arms,candidates,seeds,*,ridge_alphas):
-    reference=validate_widths(arms,candidates);first=next(iter(arms));validate_probe_seeds(seeds)
+def audit_arms(report,arms,candidates,seeds,*,ridge_alphas,validator,axis):
+    reference=validator(arms,candidates);first=next(iter(arms));validate_probe_seeds(seeds)
     ridge_configs=[asdict(c) for c in validate_ridge_candidates(ridge_alphas)]
-    if (report['version']!=1 or report['widths']!=list(arms) or report['seeds']!=list(seeds)
+    if (report['version']!=1 or report[axis]!=list(arms) or report['seeds']!=list(seeds)
             or report['manifest_sha256']!=reference[0].manifest_sha256 or report['selection_sha256']!=reference[0].selection_sha256
             or report['counts']!=dict(train=len(reference[0].labels),tuning=len(reference[1].labels))
             or report['runtime']!=dict(torch=str(torch.__version__),cpu_threads=torch.get_num_threads())
@@ -97,3 +97,15 @@ def audit_widths(report,arms,candidates,seeds,*,ridge_alphas):
         if expected!=run['paired_validation']:raise ValueError('Width paired errors do not reproduce')
     if report['summary']!=summarize(report['runs'],arms):raise ValueError('Width aggregates differ')
     return dict(verified_classifiers=verified,no_refitting=True,test_evaluated=False)
+
+
+WIDTH_LIMITATION='Width changes capacity, feature dimensions and compute. Shared pixel heads are fitted once per classifier seed; initializations match within each width.'
+
+
+def compare_widths(arms,candidates,seeds,*,probe_dir,ridge_alphas):
+    return compare_arms(arms,candidates,seeds,probe_dir=probe_dir,ridge_alphas=ridge_alphas,
+        validator=validate_widths,axis='widths',limitation=WIDTH_LIMITATION)
+
+
+def audit_widths(report,arms,candidates,seeds,*,ridge_alphas):
+    return audit_arms(report,arms,candidates,seeds,ridge_alphas=ridge_alphas,validator=validate_widths,axis='widths')

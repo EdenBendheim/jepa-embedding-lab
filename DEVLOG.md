@@ -2,6 +2,12 @@
 
 ## October 18, 2026
 
+- Added fixed-architecture position comparisons and saved-state auditing,
+  sharing the existing width comparison fitter without changing its schema.
+  Two synthetic tests verify shared pixel fits, exact state/paired/aggregate
+  replay and pre-fit refusal of changed width/depth/budget/seed/examples.
+  Fixed buffers change capacity; this is not yet a measured quality result.
+
 - Exposed position choice through both public-data training entry points and
   random-feature extraction. Two additional CLI tests verify continuous/resumed
   equality, changed-mode rejection before sampling/checkpoint replacement,

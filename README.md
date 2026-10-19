@@ -554,3 +554,11 @@ Public-data training and budget CLIs accept `--position-encoding learned|sincos2
 Random feature extraction accepts the same explicit choice. Checkpoint extraction
 uses the saved mode and refuses an override. A changed mode cannot resume an
 existing training run. Existing commands keep their learned-position default.
+
+`position_compare.compare_positions` compares learned/fixed position arms at
+identical width/depth, update/mask/pooling settings, examples, classifier grids
+and seeds, with each arm's exact-initialization random encoder. Pixel classifiers
+are shared. It persists selected heads and `audit_positions` reproduces saved
+states, paired errors and aggregate scores without refitting. The shared fitting
+implementation preserves the historical width-report schema. These checks do not
+establish matched image order; experiment drivers must verify training journals.
