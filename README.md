@@ -531,3 +531,11 @@ on a small ordered subset, not accuracy or independent evidence of improvement.
 The report and HTML remain ignored under `runs/explorer-20261016/`; no images,
 features or weights are published. Position/input-feature experiments and
 reserved official-test evaluation remain future work.
+
+### Fixed spatial-position foundation
+
+`positions.sincos_2d(rows, cols, width)` defines a deterministic row-major
+sin/cos encoding with separate row/column channels and frequencies
+`10000**(-j/(width/4))`. It consumes no RNG and returns independent float32
+tensors. Width must be divisible by four. This is an experimental alternative,
+not an asserted reproduction of another model's positional recipe.

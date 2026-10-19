@@ -1,5 +1,12 @@
 # Development log
 
+## October 18, 2026
+
+- Added a deterministic row/column sinusoidal encoding with a documented
+  formula and bounded dimensions. Two tests verify origin/axis/frequency
+  ordering, independent tensors, finite float32 output and unchanged RNG.
+  This foundation alone changes no existing model or quality result.
+
 ## October 16, 2026
 
 - Linux CI exposed a too-strict bitwise comparison between 64+1-row and
