@@ -139,7 +139,7 @@ def neighbor_record(path,pair,candidates,reuse_only):
     return row
 
 
-def evaluation(directory=Path('runs/position-20261015'),*,reuse_only=False):
+def evaluation(directory=Path('runs/position-20261018'),*,reuse_only=False):
     directory=Path(directory);d,manifest,ref,fresh,labels=inputs(directory)
     completed=training(directory,reuse_only=True)
     candidates=tuple(ProbeConfig(d['probe_steps'],lr,wd,d['classifier_seeds'][0]) for lr in d['learning_rates'] for wd in d['weight_decays'])

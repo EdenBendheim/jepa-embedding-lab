@@ -2,6 +2,28 @@
 
 ## October 18, 2026
 
+- Executed the declared position comparison: three new fixed-position runs at
+  2,223 updates, shared actual image order with three reused learned-position
+  models, exact-initialization random controls and 500 fresh confirmation rows
+  excluding 1,746 observed rows. Trained fixed/learned-position/random-fixed
+  AdamW means 29.04%/27.47%/28.93%. Broad learned advantage remains unproven;
+  pixels still lead kNN. Reproduced 60 linear artifacts (52 unique) and 13
+  neighbor indices, including candidate scores and paired fresh errors.
+- Real cache-only replay with training/extraction/fitting/raw images disabled
+  is byte-identical. Its first default-path attempt exposed an evaluation path
+  pointing at the previous date; corrected it and added a default-path workflow
+  check. No model/selection/metric changed. Full local suite 149 passed before
+  that correction; all three driver checks passed afterward. Mask/demo smoke
+  checks passed. Public result JSON is aggregate-only; real artifacts stay local.
+- Current reservation ancestry now covers 2,246 observed rows and refuses
+  another nested round. Next work needs a flattened, source-verified exposure
+  ledger; do not omit earlier observations to get around the bound.
+- Interview explanation: “I controlled initialization, sampled data and training
+  budget while changing positional encoding, then replayed saved classifiers
+  on new rows. The fixed-position model improved one comparison, but its random
+  control stayed close, so I kept the limitation in the results.”
+
+
 - Completed position evaluation with shared baselines, saved-state/candidate
   audits, a pre-confirmation classifier lock and paired fresh errors. Synthetic
   end-to-end check verifies lock-before-extraction, cache replay with all

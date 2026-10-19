@@ -30,7 +30,8 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Add a shared class-balanced pilot manifest and exact-subset feature extraction without test selection.
 - [x] Persist features/labels with exact partition indices, manifest/checkpoint identity, and configuration.
 - [x] Compare three embedding widths at the same update/data/evaluation budget.
-- [ ] Compare position/input-feature choices at a fixed width.
+- [x] Compare learned versus fixed spatial positions at width 32 under matched initialization, budgets and fresh rows.
+- [ ] Predeclare and compare a position-scale/input-feature alternative with retained exposure history.
 - [x] Hold the data split, downstream task, update budget, and evaluation code fixed.
 - [x] Add frozen cosine-neighbor selection, saved indices and untuned confirmation.
 - [x] Persist selected probe weights/normalization with source identity and reproduced scores.
@@ -48,24 +49,20 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-The [October 15 controlled-width experiment](experiments/WIDTH-2026-10-15.md)
-is complete: 32/64/96 widths, three seeds each, 2,223 steps, same actual image
-order and exact-initialization random controls. Reproduced 84 linear-state
-artifacts and 19 neighbor indices; scored 500 new confirmation rows excluding
-1,246 declared earlier rows. Fresh learned AdamW means: 28.16%/27.80%/25.47%.
-The 32-D AdamW head beats its random/pixel controls here, while ridge/kNN still
-favor pixels. Wider did not consistently help; no general advantage or best
-width is established. Resource bounds, exact parameter accounting and custom
-architecture CLIs work. All weights/features/indices/journals remain local.
+The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
+complete: three new fixed-position runs and three historical learned-position
+runs, 2,223 updates each with matched non-position initialization and actual
+image order. On 500 fresh rows, trained fixed AdamW 29.04% versus learned-position
+27.47%, but fixed random 28.93%. A general trained-feature advantage remains
+unproven; pixel kNN is still higher. Reproduced 60 linear artifacts and 13 indices,
+plus paired fresh recoveries/regressions, with no-refit cache replay.
 
-Next: predeclare one position/input-feature change at a fixed width, keep the
-training/evaluation recipe fixed, and reserve different untuned rows before
-confirmation. The current ancestry depth is bounded; retain the history of all
-scored selections when designing later reservations. Official test and further quality evidence remain unfinished.
-
-October 16: the offline neighborhood explorer now restores exact saved indices,
-shows official row IDs/classes/ranks/cosines and compares learned/random/pixel
-neighborhood overlap on the same observed tuning examples. No thumbnails or
-feature vectors are embedded. A 20-row real-artifact replay and Safari query/arm
-controls were verified; it is diagnostic, not fresh evaluation. A later optional
-local-only image view could aid inspection without publishing dataset images.
+Before another confirmation round, implement a source-verified flattened
+exposure ledger: the current bounded nested representation rejects another
+round. Retain all 2,246 now-observed validation rows rather than dropping a
+parent to bypass the guard. Then predeclare a position-scale/input-feature
+contrast at fixed width with a fresh reservation. Do not tune on these newly
+observed scores or report absolute changes from older row sets as improvement.
+Keep the official test reserved. The row/label neighborhood explorer already
+works; a local-only thumbnail view remains optional. No raw dataset images,
+features, model weights or row-level journals belong in public commits.

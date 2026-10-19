@@ -2,15 +2,15 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 16, 2026:** controlled 32/64/96-width training, exact
-initialization-matched random controls and frozen cosine-neighbor evaluation
-work. Nine fixed-budget model runs, 84 linear-state artifacts and 19 neighbor
-indices reproduce. Fresh learned AdamW means are 28.16% / 27.80% / 25.47%:
-wider did not consistently help. The 32-D AdamW head beats its random/pixel
-controls on this subset, while ridge/kNN still favor pixels. A general learned
-advantage remains unproven; official test evaluation is unfinished. An offline
-row-and-label embedding explorer now inspects saved neighborhoods and compares
-learned/random/pixel retrieval on already observed tuning rows. See [controlled-width results](experiments/WIDTH-2026-10-15.md).
+**Status — October 18, 2026:** fixed spatial positions, matched initialization,
+checkpoint-compatible training and frozen paired confirmation work. Three new
+fixed-position models completed 2,223 updates each. Fresh AdamW: trained fixed
+29.04%, trained learned positions 27.47%, matching fixed random control 28.93%.
+The position contrast helps on this subset; a learned-representation advantage
+remains unproven. Reproduced 60 linear artifacts and 13 neighbor indices, with
+cache-only replay. See [position results](experiments/POSITION-2026-10-18.md).
+Official test evaluation remains reserved; further confirmation needs an exposure
+ledger that retains all earlier observed rows.
 
 ## Why this experiment
 
@@ -586,3 +586,11 @@ confirmation. It also reports paired trained-encoder recoveries/regressions for
 each matched encoder/classifier seed. `--evaluate --reuse-only` reproduces the
 complete report with training, image reads, extraction and fitting disabled.
 Changed caches fail before replacing an earlier summary.
+
+
+[October 18 results](experiments/POSITION-2026-10-18.md): fixed positions improved
+the predeclared trained-encoder contrast by 1.58 points under AdamW, but the
+matching random fixed-position control was only 0.11 points behind. Pixel kNN
+remained higher. Cache replay reproduced 60 linear artifacts (52 unique) and
+13 indices without fitting or image reads. These are descriptive fresh-validation
+results, not official test evidence or a general JEPA advantage.

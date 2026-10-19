@@ -55,3 +55,13 @@ class PositionDriverTests(unittest.TestCase):
         saved['features'][0,0]+=.1;torch.save(saved,path)
         with self.assertRaises(ValueError):self.position.evaluation(self.directory,reuse_only=True)
         self.assertEqual(previous,(self.directory/'summary.json').read_bytes())
+
+    def test_default_training_and_evaluation_share_the_same_cache(self):
+        from contextlib import chdir
+        with chdir(self.root):
+            self.position.training()
+            expected=self.position.evaluation()
+            with patch.object(self.position,'extract_cifar10',side_effect=AssertionError('extraction')), \
+                    patch.object(self.position,'compare_positions',side_effect=AssertionError('fitting')), \
+                    patch('jepa_lab.training_budget.train_cifar10',side_effect=AssertionError('training')):
+                self.assertEqual(expected,self.position.evaluation(reuse_only=True))
