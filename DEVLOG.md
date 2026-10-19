@@ -2,6 +2,11 @@
 
 ## October 18, 2026
 
+- Exposed position choice through both public-data training entry points and
+  random-feature extraction. Two additional CLI tests verify continuous/resumed
+  equality, changed-mode rejection before sampling/checkpoint replacement,
+  extraction metadata and refusal to override a recorded checkpoint choice.
+
 - Integrated optional fixed spatial buffers into context/target/predictor while
   preserving default initialization, RNG draws and historical serialized keys.
   Canonical model-config serialization is shared by training and extraction;

@@ -549,3 +549,8 @@ RNG draws before fixed values replace parameters, preserving all other initial
 weights for matched seeds. Fixed buffers reduce trainable capacity; model-size
 reports count their persistent memory separately. Equal steps still do not mean
 equal parameter counts or compute.
+
+Public-data training and budget CLIs accept `--position-encoding learned|sincos2d`.
+Random feature extraction accepts the same explicit choice. Checkpoint extraction
+uses the saved mode and refuses an override. A changed mode cannot resume an
+existing training run. Existing commands keep their learned-position default.

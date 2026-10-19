@@ -175,12 +175,16 @@ def main():
     parser.add_argument("--selection", type=Path, help="Shared balanced pilot manifest; extracts its full selected partition")
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--output", type=Path, required=True, help="Local feature artifact; use ignored runs/ and .pt")
+    parser.add_argument("--position-encoding",choices=("learned","sincos2d"),help="Random encoder only; checkpoint mode reads its recorded choice")
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
+        if args.position_encoding is not None and args.representation != "random":
+            raise ValueError("Only random extraction accepts a position option; checkpoint choice is recorded")
+        config = ModelConfig(patch_dim=48,position_encoding=args.position_encoding or "learned") if args.representation=="random" else None
         report = extract_cifar10(args.root, args.manifest, partition=args.partition, representation=args.representation,
                                 checkpoint=args.checkpoint, encoder=args.encoder, pooling=args.pooling, seed=args.seed, limit=args.limit,
-                                batch_size=args.batch_size, selection_path=args.selection, output=args.output)
+                                batch_size=args.batch_size, selection_path=args.selection, output=args.output, config=config)
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.error(str(exc))
     print(json.dumps(report, indent=2))
