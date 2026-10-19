@@ -562,3 +562,12 @@ are shared. It persists selected heads and `audit_positions` reproduces saved
 states, paired errors and aggregate scores without refitting. The shared fitting
 implementation preserves the historical width-report schema. These checks do not
 establish matched image order; experiment drivers must verify training journals.
+
+`confirmation_compare.compare_confirmed_probes` restores two selected classifiers
+against their original sources and compares predictions on identical verified
+fresh rows. It reports paired recoveries/regressions/class changes without
+refitting, changing normalization or retuning. CLI: `python -m
+jepa_lab.confirmation_compare ROOT --manifest MANIFEST --reference-selection PILOT
+--confirmation-selection FRESH_SELECTION --baseline TRAIN TUNING FRESH PROBE
+--candidate TRAIN TUNING FRESH PROBE --output runs/paired-fresh.json`. This is
+paired descriptive confirmation, not a new training-seed uncertainty estimate.

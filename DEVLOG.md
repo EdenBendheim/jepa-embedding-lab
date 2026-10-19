@@ -2,6 +2,11 @@
 
 ## October 18, 2026
 
+- Added paired frozen-head confirmation and a saved-feature CLI. Two synthetic
+  tests verify known recoveries/regressions, unchanged states/source bytes/RNG,
+  no image reads or fitting, and rejection of changed/reordered fresh sources
+  before restoring a classifier. This measures paired errors, not seed uncertainty.
+
 - Added fixed-architecture position comparisons and saved-state auditing,
   sharing the existing width comparison fitter without changing its schema.
   Two synthetic tests verify shared pixel fits, exact state/paired/aggregate
