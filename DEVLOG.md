@@ -2,6 +2,12 @@
 
 ## October 18, 2026
 
+- Completed position evaluation with shared baselines, saved-state/candidate
+  audits, a pre-confirmation classifier lock and paired fresh errors. Synthetic
+  end-to-end check verifies lock-before-extraction, cache replay with all
+  fitting/training/image access disabled, and corrupt-cache output preservation.
+  No real scores were inspected before this workflow was committed.
+
 - Prospectively declared the width-32 learned-versus-fixed position experiment:
   three seeds, 2,223 steps, exact non-position initialization/image order, shared
   old tuning recipe and 500 fresh rows excluding 1,746 observed examples.

@@ -578,3 +578,11 @@ confirmation exclusions before any fixed-position scores. Training:
 `PYTHONPATH=src .venv/bin/python experiments/run_position_20261018.py`.
 It reuses three pinned learned-position checkpoints, trains three fixed-position
 runs and verifies actual image order. `--reuse-only` cannot train missing states.
+
+Add `--evaluate` to the position driver to verify/extract features, fit shared
+pixel and matched learned/random heads on original tuning rows, save/audit and
+lock every selected classifier/index, then extract fresh features for frozen
+confirmation. It also reports paired trained-encoder recoveries/regressions for
+each matched encoder/classifier seed. `--evaluate --reuse-only` reproduces the
+complete report with training, image reads, extraction and fitting disabled.
+Changed caches fail before replacing an earlier summary.
