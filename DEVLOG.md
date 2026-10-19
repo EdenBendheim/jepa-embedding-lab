@@ -2,6 +2,12 @@
 
 ## October 18, 2026
 
+- Prospectively declared the width-32 learned-versus-fixed position experiment:
+  three seeds, 2,223 steps, exact non-position initialization/image order, shared
+  old tuning recipe and 500 fresh rows excluding 1,746 observed examples.
+  Added pinned training/cache driver; synthetic cache/order/tamper check passed.
+  This declaration precedes new training and scoring; no result is claimed here.
+
 - Added paired frozen-head confirmation and a saved-feature CLI. Two synthetic
   tests verify known recoveries/regressions, unchanged states/source bytes/RNG,
   no image reads or fitting, and rejection of changed/reordered fresh sources

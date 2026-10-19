@@ -571,3 +571,10 @@ jepa_lab.confirmation_compare ROOT --manifest MANIFEST --reference-selection PIL
 --confirmation-selection FRESH_SELECTION --baseline TRAIN TUNING FRESH PROBE
 --candidate TRAIN TUNING FRESH PROBE --output runs/paired-fresh.json`. This is
 paired descriptive confirmation, not a new training-seed uncertainty estimate.
+
+The [October 18 prospective position protocol](experiments/POSITION-2026-10-18-PROTOCOL.md)
+fixes width, seeds, budgets, old tuning rows, matched initial weights and new
+confirmation exclusions before any fixed-position scores. Training:
+`PYTHONPATH=src .venv/bin/python experiments/run_position_20261018.py`.
+It reuses three pinned learned-position checkpoints, trains three fixed-position
+runs and verifies actual image order. `--reuse-only` cannot train missing states.
