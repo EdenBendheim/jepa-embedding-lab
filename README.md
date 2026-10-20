@@ -37,8 +37,16 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
   each source against its original selection protocol and derives the observed
   row union; `exposure_summary` reports remaining per-class capacity without rows.
   This currently imports historical selections; ledger-backed future reservation
-  and a file-bound command are next. Supplied history must be complete: content
+  is next. Supplied history must be complete: content
   hashes cannot detect an experiment the caller leaves out.
+
+Build local pinned history with `python -m jepa_lab.exposure ROOT --manifest
+MANIFEST --source SELECTION_JSON FILE_SHA256 --output runs/exposure.json` (one
+line; repeat `--source` for more files). Inspect/replay it using `--bundle
+runs/exposure.json` instead of `--source`/`--output`. Original files must remain
+available with exactly the pinned bytes. The bundle stores local source paths;
+keep it under ignored `runs/`. Stdout contains aggregate capacity only. Invalid
+sources cannot replace previous output or overwrite their own evidence.
 
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.

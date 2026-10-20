@@ -2,6 +2,12 @@
 
 ## October 19, 2026
 
+- Added a source-file-pinned build/recheck CLI, atomic bundle writes, read-only
+  inspection and aggregate per-class capacity. Four exposure tests pass,
+  including changed-byte/missing-file refusal, dataset identity, protected source
+  paths and preservation of previous output. Bundles retain local evidence paths
+  under ignored runs; no original selection is rewritten.
+
 - Added flat validation exposure ledgers that replay original pilot/confirmation
   protocols, retain ancestor sources once, and derive the union from their exact
   selected rows. Two synthetic checks passed for deduplication, source/RNG

@@ -5,7 +5,12 @@ whether the caller disclosed every experiment. Keep the complete local history.
 """
 
 from copy import deepcopy
+import argparse
+import hashlib
+import json
+from pathlib import Path
 
+from .cifar10 import CIFAR10Binary, make_manifest
 from .selection import document_hash, validate_pilot
 
 MAX_SOURCES = 128
@@ -128,3 +133,83 @@ def exposure_summary(ledger, manifest, labels):
                 remaining_per_class={str(c): sum(labels[i] == c for i in available) for c in range(10)},
                 test_selected=False,
                 limitation='Covers declared source selections only; fingerprints do not prove complete disclosure or producer authenticity')
+
+
+def make_exposure_bundle(manifest, labels, sources):
+    """Pin original local file bytes as well as replaying their selection content."""
+    if not isinstance(sources, (list, tuple)) or not 1 <= len(sources) <= MAX_SOURCES:
+        raise ValueError('Provide 1-128 source file/hash pairs')
+    evidence, selections, seen = [], [], set()
+    for filename, expected in sources:
+        path = Path(filename).resolve()
+        if (not isinstance(expected, str) or len(expected) != 64
+                or any(c not in '0123456789abcdef' for c in expected) or str(path) in seen):
+            raise ValueError('Source paths must be distinct and each needs a lowercase SHA-256 pin')
+        seen.add(str(path))
+        payload = path.read_bytes()
+        if hashlib.sha256(payload).hexdigest() != expected:
+            raise ValueError('Exposure source file bytes differ from their pin')
+        selected = json.loads(payload)
+        validate_pilot(selected, manifest, labels)
+        selections.append(selected)
+        evidence.append(dict(path=str(path), file_sha256=expected,
+                             selection_sha256=selected['selection_sha256']))
+    ledger = make_exposure_ledger(manifest, labels, selections)
+    result = dict(version=1, kind='validation_exposure_bundle', ledger=ledger,
+                  source_files=sorted(evidence, key=lambda row: row['path']))
+    return result | dict(bundle_sha256=document_hash(result, 'bundle_sha256'))
+
+
+def load_exposure_bundle(path, manifest, labels):
+    """Re-read pinned original files before trusting a cached exposure ledger."""
+    try:
+        bundle = json.loads(Path(path).read_text())
+        if (not isinstance(bundle, dict) or type(bundle.get('version')) is not int
+                or bundle['version'] != 1 or bundle.get('kind') != 'validation_exposure_bundle'
+                or bundle.get('bundle_sha256') != document_hash(bundle, 'bundle_sha256')):
+            raise ValueError('Invalid exposure bundle fingerprint')
+        expected = make_exposure_bundle(manifest, labels,
+            [(row['path'], row['file_sha256']) for row in bundle['source_files']])
+        if bundle != expected:
+            raise ValueError('Exposure bundle differs from its pinned source evidence')
+    except (KeyError, TypeError, AttributeError) as exc:
+        raise ValueError('Invalid exposure bundle schema') from exc
+    return bundle
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Build or recheck validation exposure history; never select or score test')
+    parser.add_argument('root', type=Path)
+    parser.add_argument('--manifest', type=Path, required=True)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--source', nargs=2, action='append', metavar=('FILE', 'SHA256'))
+    group.add_argument('--bundle', type=Path)
+    parser.add_argument('--output', type=Path)
+    args = parser.parse_args()
+    try:
+        manifest = json.loads(args.manifest.read_text())
+        train, test = CIFAR10Binary(args.root), CIFAR10Binary(args.root, train=False)
+        if manifest != make_manifest(train, test, seed=manifest['seed']):
+            raise ValueError('Manifest differs from the current dataset and split')
+        if args.source:
+            if args.output is None:
+                raise ValueError('Building exposure history requires --output')
+            bundle = make_exposure_bundle(manifest, train.labels, args.source)
+        else:
+            if args.output is not None:
+                raise ValueError('Bundle inspection is read-only; omit --output')
+            bundle = load_exposure_bundle(args.bundle, manifest, train.labels)
+        summary = exposure_summary(bundle['ledger'], manifest, train.labels)
+        summary['source_file_count'] = len(bundle['source_files'])
+        if args.output:
+            if args.output.resolve() in {args.manifest.resolve(), *(Path(row['path']) for row in bundle['source_files'])}:
+                raise ValueError('Exposure output must not overwrite its manifest or original sources')
+            from .compare import write_report
+            write_report(args.output, bundle)
+    except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
+        parser.error(str(exc))
+    print(json.dumps(summary, indent=2))
+
+
+if __name__ == '__main__':
+    main()
