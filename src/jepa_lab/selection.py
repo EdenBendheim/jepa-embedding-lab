@@ -150,6 +150,8 @@ def main():
     parser.add_argument("--seed", type=int, default=20261007)
     parser.add_argument("--confirmation-of", type=Path, help="Preserve this fitted pilot's training rows and exclude its validation rows")
     parser.add_argument("--exclude-pilot", type=Path, action="append", default=[], help="Additional historical validation selection to exclude")
+    parser.add_argument('--exposure-bundle', type=Path, help='Recheck original pinned source files and reserve against their flat ledger')
+    parser.add_argument('--expected-ledger-sha256', help='Require the predeclared ledger fingerprint with --exposure-bundle')
     args = parser.parse_args()
     try:
         manifest = json.loads(args.manifest.read_text())
@@ -159,18 +161,37 @@ def main():
         if args.confirmation_of:
             if args.train_per_class is not None:
                 raise ValueError("Confirmation preserves fitted training rows; do not set --train-per-class")
-            selection = make_confirmation(manifest, train.labels, json.loads(args.confirmation_of.read_text()),
-                exclusions=[json.loads(path.read_text()) for path in args.exclude_pilot],
-                validation_per_class=args.validation_per_class, seed=args.seed)
+            reference = json.loads(args.confirmation_of.read_text())
+            if args.exposure_bundle:
+                if args.exclude_pilot or not args.expected_ledger_sha256:
+                    raise ValueError('Exposure bundle requires --expected-ledger-sha256 and cannot mix --exclude-pilot')
+                from .exposure import load_exposure_bundle, make_ledger_confirmation
+                bundle = load_exposure_bundle(args.exposure_bundle, manifest, train.labels)
+                ledger = bundle['ledger']
+                if ledger['ledger_sha256'] != args.expected_ledger_sha256:
+                    raise ValueError('Exposure ledger differs from its predeclared fingerprint')
+                selection = make_ledger_confirmation(manifest, train.labels, reference, ledger,
+                    validation_per_class=args.validation_per_class, seed=args.seed)
+            else:
+                if args.expected_ledger_sha256:
+                    raise ValueError('--expected-ledger-sha256 requires --exposure-bundle')
+                selection = make_confirmation(manifest, train.labels, reference,
+                    exclusions=[json.loads(path.read_text()) for path in args.exclude_pilot],
+                    validation_per_class=args.validation_per_class, seed=args.seed)
         else:
-            if args.exclude_pilot:
-                raise ValueError("--exclude-pilot requires --confirmation-of")
+            if args.exclude_pilot or args.exposure_bundle or args.expected_ledger_sha256:
+                raise ValueError('Exclusions/exposure history require --confirmation-of')
             selection = make_pilot(manifest, train.labels, train_per_class=10 if args.train_per_class is None else args.train_per_class,
                                   validation_per_class=args.validation_per_class, seed=args.seed)
+        inputs = [args.manifest, args.confirmation_of, args.exposure_bundle, *args.exclude_pilot]
+        if args.exposure_bundle:
+            inputs.extend(Path(row['path']) for row in bundle['source_files'])
+        if args.output.resolve() in {p.resolve() for p in inputs if p is not None}:
+            raise ValueError('Selection output must not overwrite its source evidence')
+        from .compare import write_report
+        write_report(args.output, selection)
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.error(str(exc))
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(selection, indent=2)+"\n")
     print(json.dumps(dict(selection_sha256=selection["selection_sha256"],
         class_counts={name:dict(Counter(train.labels[i] for i in part["indices"]))
                       for name,part in selection["partitions"].items()}), indent=2))

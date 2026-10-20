@@ -56,7 +56,18 @@ reservation recipe. Historical version-one/two documents keep their old hashes
 and depth guard. Six synthetic later rounds retain all earlier rows and exact
 fitting examples; malformed source dependencies fail closed. The ledger is
 bounded to 128 unique sources, and exhausted per-class validation capacity is
-an error. Scoring/selector CLI integration is the next step.
+an error.
+
+Reserve later rows using `python -m jepa_lab.selection ROOT --manifest MANIFEST
+--confirmation-of ORIGINAL_PILOT --exposure-bundle runs/exposure.json
+--expected-ledger-sha256 PREDECLARED_HASH --validation-per-class 50 --seed SEED
+--output runs/later-confirmation.json` (one line). The bundle's original files
+are rechecked before selection; changed pins fail without replacing old output.
+Do not mix `--exclude-pilot` with ledger mode. Version-three feature extraction
+remains validation-only and cannot feed probe selection. Existing saved-classifier
+and paired/kNN confirmation APIs accept it and keep normalization/head state
+frozen. Self-contained selection replay checks declared evidence; use the pinned
+bundle when rechecking original source file bytes is also required.
 
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.

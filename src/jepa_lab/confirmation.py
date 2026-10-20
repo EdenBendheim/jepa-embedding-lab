@@ -22,13 +22,20 @@ def verify_confirmation_sources(train: FeatureSet, validation: FeatureSet,
     if not isinstance(confirmation, FeatureSet) or confirmation.selection_kind != "confirmation":
         raise ValueError("Score a verified confirmation feature set")
     if (not isinstance(selection, dict) or type(selection.get("version")) is not int
-            or selection["version"] != 2 or selection.get("kind") != "confirmation"
+            or selection["version"] not in (2, 3) or selection.get("kind") != "confirmation"
             or selection.get("selection_sha256") != document_hash(selection, "selection_sha256")):
         raise ValueError("Confirmation selection must retain its complete protocol fingerprint")
     try:
         reference = selection["reference_selection"]
-        excluded = set().union(*(excluded_validation_indices(parent)
-                    for parent in [reference, *selection["excluded_selections"]]))
+        if selection['version'] == 3:
+            ledger = selection['exposure_ledger']
+            if (ledger.get('ledger_sha256') != document_hash(ledger, 'ledger_sha256')
+                    or ledger.get('manifest_sha256') != context['manifest_sha256']):
+                raise ValueError('Confirmation exposure ledger fingerprint differs')
+            excluded = set(ledger['observed_validation_indices']) | excluded_validation_indices(reference)
+        else:
+            excluded = set().union(*(excluded_validation_indices(parent)
+                        for parent in [reference, *selection["excluded_selections"]]))
         if (reference["selection_sha256"] != context["selection_sha256"]
                 or reference["partitions"]["train"]["indices"] != list(train.indices)
                 or reference["partitions"]["validation"]["indices"] != list(validation.indices)

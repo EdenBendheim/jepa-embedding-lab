@@ -2,6 +2,12 @@
 
 ## October 19, 2026
 
+- Integrated pinned-ledger reservation with the existing selector, feature
+  loader and frozen scoring pipeline. Two workflow checks passed: pinned-source
+  and expected-ledger failures, protected input files, atomic disk-error rollback,
+  no-image selection, no fresh-row fitting, and unchanged AdamW/ridge states/RNG
+  through source-verified scoring. No new real model/feature scores were measured.
+
 - Added version-three balanced reservations over the flat ledger. Observed later
   selections retain source roots/hash and replay without recursively embedding
   history. Six sequential synthetic rounds preserve all ancestor rows, fitting
