@@ -31,6 +31,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Persist features/labels with exact partition indices, manifest/checkpoint identity, and configuration.
 - [x] Compare three embedding widths at the same update/data/evaluation budget.
 - [x] Compare learned versus fixed spatial positions at width 32 under matched initialization, budgets and fresh rows.
+- [x] Replay and retain observed selections in a source-file-pinned flat exposure ledger.
 - [ ] Predeclare and compare a position-scale/input-feature alternative with retained exposure history.
 - [x] Hold the data split, downstream task, update budget, and evaluation code fixed.
 - [x] Add frozen cosine-neighbor selection, saved indices and untuned confirmation.
@@ -57,12 +58,16 @@ image order. On 500 fresh rows, trained fixed AdamW 29.04% versus learned-positi
 unproven; pixel kNN is still higher. Reproduced 60 linear artifacts and 13 indices,
 plus paired fresh recoveries/regressions, with no-refit cache replay.
 
-Before another confirmation round, implement a source-verified flattened
-exposure ledger: the current bounded nested representation rejects another
-round. Retain all 2,246 now-observed validation rows rather than dropping a
-parent to bypass the guard. Then predeclare a position-scale/input-feature
-contrast at fixed width with a fresh reservation. Do not tune on these newly
-observed scores or report absolute changes from older row sets as improvement.
-Keep the official test reserved. The row/label neighborhood explorer already
-works; a local-only thumbnail view remains optional. No raw dataset images,
-features, model weights or row-level journals belong in public commits.
+The [October 19 exposure audit](experiments/EXPOSURE-2026-10-19.md) resolves
+the historical depth blocker. Six pinned source files retain all 2,246 declared
+observed rows, with 2,754 remaining. Source replay, append-only evidence extension,
+version-three selection, validation-only features and no-refit scoring work. The
+500-row reservation smoke is unscored; a future experiment must predeclare its
+contrast and use complete then-current history. Fingerprints cannot detect
+omitted experiments, so keep original files and register all new observations.
+
+Next, predeclare a position-scale/input-feature contrast at fixed width with a
+fresh reservation and matched baselines. Do not tune on already observed scores
+or compare absolute metrics across different row sets as improvement. Keep the
+official test reserved. No raw images, features, weights or row-level evidence
+belong in public commits; a local-only thumbnail view remains optional.

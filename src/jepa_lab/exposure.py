@@ -267,6 +267,26 @@ def load_exposure_bundle(path, manifest, labels):
     return bundle
 
 
+def extend_exposure_bundle(path, manifest, labels, new_sources, *, expected_ledger_sha256):
+    """Add observations while retaining and rechecking every original file pin."""
+    previous = load_exposure_bundle(path, manifest, labels)
+    if previous['ledger']['ledger_sha256'] != expected_ledger_sha256:
+        raise ValueError('Previous exposure ledger differs from its predeclared fingerprint')
+    added = make_exposure_bundle(manifest, labels, new_sources)
+    evidence = {row['path']: row['file_sha256'] for row in previous['source_files']}
+    for row in added['source_files']:
+        if row['path'] in evidence and evidence[row['path']] != row['file_sha256']:
+            raise ValueError('Original exposure evidence cannot be replaced')
+        evidence[row['path']] = row['file_sha256']
+    updated = make_exposure_bundle(manifest, labels, list(evidence.items()))
+    old_ids = {row['selection']['selection_sha256'] for row in previous['ledger']['sources']}
+    new_ids = {row['selection']['selection_sha256'] for row in updated['ledger']['sources']}
+    if (not old_ids <= new_ids or not set(previous['ledger']['observed_validation_indices'])
+            <= set(updated['ledger']['observed_validation_indices'])):
+        raise ValueError('Exposure extension cannot drop earlier sources or observed rows')
+    return updated
+
+
 def main():
     parser = argparse.ArgumentParser(description='Build or recheck validation exposure history; never select or score test')
     parser.add_argument('root', type=Path)
@@ -274,6 +294,8 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--source', nargs=2, action='append', metavar=('FILE', 'SHA256'))
     group.add_argument('--bundle', type=Path)
+    parser.add_argument('--extend-bundle', type=Path, help='Retain this bundle and add --source evidence into a new output')
+    parser.add_argument('--expected-ledger-sha256', help='Required fingerprint of --extend-bundle')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     try:
@@ -284,15 +306,26 @@ def main():
         if args.source:
             if args.output is None:
                 raise ValueError('Building exposure history requires --output')
-            bundle = make_exposure_bundle(manifest, train.labels, args.source)
+            if args.extend_bundle:
+                if not args.expected_ledger_sha256:
+                    raise ValueError('Extending history requires --expected-ledger-sha256')
+                bundle = extend_exposure_bundle(args.extend_bundle, manifest, train.labels, args.source,
+                                                expected_ledger_sha256=args.expected_ledger_sha256)
+            else:
+                if args.expected_ledger_sha256:
+                    raise ValueError('--expected-ledger-sha256 requires --extend-bundle')
+                bundle = make_exposure_bundle(manifest, train.labels, args.source)
         else:
-            if args.output is not None:
+            if args.output is not None or args.extend_bundle or args.expected_ledger_sha256:
                 raise ValueError('Bundle inspection is read-only; omit --output')
             bundle = load_exposure_bundle(args.bundle, manifest, train.labels)
         summary = exposure_summary(bundle['ledger'], manifest, train.labels)
         summary['source_file_count'] = len(bundle['source_files'])
         if args.output:
-            if args.output.resolve() in {args.manifest.resolve(), *(Path(row['path']) for row in bundle['source_files'])}:
+            protected = {args.manifest.resolve(), *(Path(row['path']) for row in bundle['source_files'])}
+            if args.extend_bundle:
+                protected.add(args.extend_bundle.resolve())
+            if args.output.resolve() in protected:
                 raise ValueError('Exposure output must not overwrite its manifest or original sources')
             from .compare import write_report
             write_report(args.output, bundle)

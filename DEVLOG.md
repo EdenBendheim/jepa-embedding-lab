@@ -2,6 +2,26 @@
 
 ## October 19, 2026
 
+- Final local verification: all 160 tests passed (including ten exposure tests),
+  the seeded mask demo and three-step synthetic training smoke passed, and the
+  real source-bound CLI recheck reproduced the 2,246/2,754 observed/remaining
+  counts. Official test remained reserved; no new representation accuracy claim.
+
+- Added pinned-bundle extension retaining every original file/hash and source
+  union, with idempotent duplicate registration and protected prior snapshots.
+  Ten exposure checks cover this and the earlier source/reservation/workflow
+  behavior. A first temporary-path assertion needed canonical path comparison
+  on macOS; production evidence already used resolved paths.
+- Replayed six real source selections: 1,746 observed rows through October 15,
+  2,246 through October 18, and 2,754 remaining (275–277/class). An independent
+  source traversal matches the flat union. The old collector's depth refusal
+  was reproduced without weakening its guard. A 500-row reservation smoke
+  excludes all history and remains unscored; no image sampling or classifier
+  fitting occurred. Published aggregate hashes/counts only; bundles stay local.
+- Interview explanation: “I retained the evidence of every recorded validation
+  selection and replayed it before reserving new rows, so later experiments
+  cannot silently forget earlier observations.” Model quality is unchanged.
+
 - Integrated pinned-ledger reservation with the existing selector, feature
   loader and frozen scoring pipeline. Two workflow checks passed: pinned-source
   and expected-ledger failures, protected input files, atomic disk-error rollback,

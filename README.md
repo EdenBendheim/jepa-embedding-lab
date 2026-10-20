@@ -2,15 +2,14 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 18, 2026:** fixed spatial positions, matched initialization,
-checkpoint-compatible training and frozen paired confirmation work. Three new
-fixed-position models completed 2,223 updates each. Fresh AdamW: trained fixed
-29.04%, trained learned positions 27.47%, matching fixed random control 28.93%.
-The position contrast helps on this subset; a learned-representation advantage
-remains unproven. Reproduced 60 linear artifacts and 13 neighbor indices, with
-cache-only replay. See [position results](experiments/POSITION-2026-10-18.md).
-Official test evaluation remains reserved; further confirmation needs an exposure
-ledger that retains all earlier observed rows.
+**Status — October 19, 2026:** source-replayed flat exposure history now supports
+later confirmation rounds without dropping earlier observations. Six pinned
+selection files account for 2,246 observed validation rows; 2,754 remain. No new
+model scores today. The latest position experiment still shows trained fixed
+29.04%, trained learned positions 27.47%, matching fixed random 28.93% under
+AdamW. A general learned-feature advantage remains unproven; official test stays
+reserved. See [exposure audit](experiments/EXPOSURE-2026-10-19.md) and
+[position results](experiments/POSITION-2026-10-18.md).
 
 ## Why this experiment
 
@@ -32,13 +31,29 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
 
 ## Working now
 
-- Source-replayed validation exposure ledgers deduplicate nested pilot/confirmation
-  history into a flat dependency graph. `exposure.make_exposure_ledger` verifies
-  each source against its original selection protocol and derives the observed
-  row union; `exposure_summary` reports remaining per-class capacity without rows.
-  `exposure.make_ledger_confirmation` reserves version-three confirmation rows
-  against the complete replayed union. Supplied history must be complete: content
-  hashes cannot detect an experiment the caller leaves out.
+- Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
+- Seeded rectangular target blocks with context sampled outside the target.
+- Separate context, target, and unused indices: the context encoder must never receive target pixels.
+- Reproducible CLI mask inspection and tests covering partition integrity, preserved pixels, invalid shapes, and random-seed isolation.
+- Context/target Transformer encoders and a masked-target predictor with learned patch positions. Context gathers visible raw patches before encoding; target encoding is frozen and uses no gradients.
+- EMA target updates, training loss plus embedding standard-deviation/covariance diagnostics, and CPU checkpoint resume including optimizer and random-generator state.
+- Official CIFAR-10 binary ingestion without pickle, a fixed RGB patch adapter, dataset fingerprints, and disjoint stratified train/validation indices while retaining the official test partition.
+- A bounded RGB training smoke command that validates its manifest, samples training images only, and records loss/variance diagnostics without claiming downstream accuracy.
+- A resumable public-data CPU trainer with atomic checkpoints, matching manifest/model/settings/runtime checks, optimizer and sampling/PyTorch RNG restoration, and split-versus-continuous reproducibility checks.
+- Frozen context/target full-image embeddings with mean/max/mean_std pooling, matched random-encoder and raw-pixel baselines, and atomic feature artifacts bound to exact examples, pooling dimensions, data identity and checkpoint bytes.
+- Saved-feature pooling comparisons with shared pixel classifiers, reproduced selected states and paired class errors; descriptive numerical/effective rank and cosine inspection.
+- Configurable target-mask training with resume-bound geometry, patch counts, and legacy default-checkpoint compatibility; a declared real-data mask pilot with verified image-order equality.
+- Disjoint balanced confirmation selection, validation-only extraction and no-refit saved-classifier scoring with preserved original normalization, feature-content checks and explicit retuning boundaries.
+
+## Track validation exposure
+
+Source-replayed validation exposure ledgers deduplicate nested pilot/confirmation
+history into a flat dependency graph. `exposure.make_exposure_ledger` verifies
+each source against its original selection protocol and derives the observed
+row union; `exposure_summary` reports remaining per-class capacity without rows.
+`exposure.make_ledger_confirmation` reserves version-three confirmation rows
+against the complete replayed union. Supplied history must be complete: content
+hashes cannot detect an experiment the caller leaves out.
 
 Build local pinned history with `python -m jepa_lab.exposure ROOT --manifest
 MANIFEST --source SELECTION_JSON FILE_SHA256 --output runs/exposure.json` (one
@@ -69,19 +84,19 @@ and paired/kNN confirmation APIs accept it and keep normalization/head state
 frozen. Self-contained selection replay checks declared evidence; use the pinned
 bundle when rechecking original source file bytes is also required.
 
-- Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
-- Seeded rectangular target blocks with context sampled outside the target.
-- Separate context, target, and unused indices: the context encoder must never receive target pixels.
-- Reproducible CLI mask inspection and tests covering partition integrity, preserved pixels, invalid shapes, and random-seed isolation.
-- Context/target Transformer encoders and a masked-target predictor with learned patch positions. Context gathers visible raw patches before encoding; target encoding is frozen and uses no gradients.
-- EMA target updates, training loss plus embedding standard-deviation/covariance diagnostics, and CPU checkpoint resume including optimizer and random-generator state.
-- Official CIFAR-10 binary ingestion without pickle, a fixed RGB patch adapter, dataset fingerprints, and disjoint stratified train/validation indices while retaining the official test partition.
-- A bounded RGB training smoke command that validates its manifest, samples training images only, and records loss/variance diagnostics without claiming downstream accuracy.
-- A resumable public-data CPU trainer with atomic checkpoints, matching manifest/model/settings/runtime checks, optimizer and sampling/PyTorch RNG restoration, and split-versus-continuous reproducibility checks.
-- Frozen context/target full-image embeddings with mean/max/mean_std pooling, matched random-encoder and raw-pixel baselines, and atomic feature artifacts bound to exact examples, pooling dimensions, data identity and checkpoint bytes.
-- Saved-feature pooling comparisons with shared pixel classifiers, reproduced selected states and paired class errors; descriptive numerical/effective rank and cosine inspection.
-- Configurable target-mask training with resume-bound geometry, patch counts, and legacy default-checkpoint compatibility; a declared real-data mask pilot with verified image-order equality.
-- Disjoint balanced confirmation selection, validation-only extraction and no-refit saved-classifier scoring with preserved original normalization, feature-content checks and explicit retuning boundaries.
+Extend history with `python -m jepa_lab.exposure ROOT --manifest MANIFEST
+--source NEW_SELECTION FILE_SHA256 --extend-bundle runs/exposure.json
+--expected-ledger-sha256 PREVIOUS_HASH --output runs/exposure-next.json` (one
+line). Every original source file is retained and rechecked. Previous bundles
+cannot be overwritten; keep the prior snapshot. Re-registering identical source
+bytes is idempotent. Treat an unscored reservation as reserved, not observed;
+register it after it has actually been used for evaluation or tuning.
+
+[October 19 audit](experiments/EXPOSURE-2026-10-19.md): six pinned original source
+files account for 2,246 observed validation rows, leaving 2,754 (275–277 per
+class). Flat replay agrees with the independent historical union. A 500-row
+reservation check excludes them all and remains unscored. This repairs the
+history-management blocker without changing model results or official test use.
 
 ## Run the mask demo
 

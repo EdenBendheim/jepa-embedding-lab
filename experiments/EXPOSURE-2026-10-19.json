@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-19",
+  "task": "Replay and extend observed validation history",
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "prior_observed_validation_count": 1746,
+  "ledger_sha256": "123747dab852fe7b3dbcca30a1b28082b0186e96eeaadb5f89841e914abdd87d",
+  "source_count": 6,
+  "observed_validation_count": 2246,
+  "remaining_validation_count": 2754,
+  "remaining_per_class": {
+    "0": 276,
+    "1": 275,
+    "2": 276,
+    "3": 275,
+    "4": 277,
+    "5": 275,
+    "6": 275,
+    "7": 275,
+    "8": 275,
+    "9": 275
+  },
+  "test_selected": false,
+  "limitation": "Covers declared source selections only; fingerprints do not prove complete disclosure or producer authenticity",
+  "source_files": [
+    {
+      "path": "runs/budget-20261014/confirmation-selection.json",
+      "file_sha256": "758e0a7deebc9a61de87806e6a84817a377dbb9fe5fd6ff94a39601b8c62da8b",
+      "selection_sha256": "bb8c66ecf64a2e0c7a5832d0dc37430a1806f0085acf337e76378fd90ed3c1f0"
+    },
+    {
+      "path": "runs/confirmation-20261012/selection.json",
+      "file_sha256": "d015120243f01968b5744a6c223dcb89c081de2d158ebad4e51bb0eba57f4af9",
+      "selection_sha256": "decdf27565acb4db350754997cb230b0a1e836219d5895885d370da79ca358cd"
+    },
+    {
+      "path": "runs/pilot-selection-20261007.json",
+      "file_sha256": "7b45d136122157325921a30e63febad313acf728e02dc1db79a90a6d395e58d2",
+      "selection_sha256": "cddc893ced41a1a7421977f78f929eec98e04f0bfa0ce39e29da5cf4902ab85b"
+    },
+    {
+      "path": "runs/pilot-selection-20261009.json",
+      "file_sha256": "a1e87b95e7fee9137c1568d26cd85d7845022b1a77524fd86aa49f68365265bf",
+      "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78"
+    },
+    {
+      "path": "runs/position-20261018/confirmation-selection.json",
+      "file_sha256": "683e38050995d3128b6bea68a72ffaab663516d8137550c5d41abe1ca80c76a8",
+      "selection_sha256": "dae8b93be16dd715569d0df47f590a875e3ba66bc0681c9c80cda5848054954a"
+    },
+    {
+      "path": "runs/width-20261015/confirmation-selection.json",
+      "file_sha256": "dbfd75b64b21b9d0ba9bd05cda67c577a61233dfa3a67cf21984be6d76752f46",
+      "selection_sha256": "dd3e48708a0d0df78b0751a7d81283b1dd809f1cf1bf045e77185deec8df842f"
+    }
+  ],
+  "all_prior_source_files_retained": true,
+  "historical_collector_depth_guard_reproduced": true,
+  "raw_images_sampled": false,
+  "classifiers_fitted": false,
+  "new_model_scores_measured": false,
+  "reservation_check": {
+    "selection_sha256": "a89a88162421638681ecf1c435a1f902720ecad019b024f784fc67818441dda2",
+    "count": 500,
+    "seed": 20261020,
+    "scored": false
+  },
+  "quality_limitation": "No new representation result; prior learned-feature advantage remains unproven. Official test remains reserved."
+}
