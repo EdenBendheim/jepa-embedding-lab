@@ -54,12 +54,27 @@ def make_exposure_ledger(manifest, labels, selections):
             return key
         wire = deepcopy(selected)
         parents = []
-        if selected.get('kind') == 'confirmation':
+        ledger_roots = None
+        if selected.get('version') == 3 and selected.get('kind') == 'confirmation':
+            reference = add(selected['reference_selection'])
+            old = selected['exposure_ledger']
+            for node in old['sources']:
+                old_key = node['selection']['selection_sha256']
+                if old_key in records and records[old_key] != node:
+                    raise ValueError('Exposure source identity has conflicting evidence')
+                records[old_key] = deepcopy(node)
+            ledger_roots = deepcopy(old['roots'])
+            parents = [reference, *(p for p in ledger_roots if p != reference)]
+            wire.pop('reference_selection')
+            wire.pop('exposure_ledger')
+        elif selected.get('kind') == 'confirmation':
             parents = [add(selected['reference_selection'])]
             parents.extend(add(parent) for parent in selected['excluded_selections'])
             wire.pop('reference_selection')
             wire.pop('excluded_selections')
         records[key] = dict(selection=wire, parents=parents)
+        if ledger_roots is not None:
+            records[key]['ledger_roots'] = ledger_roots
         if len(records) > MAX_SOURCES:
             raise ValueError('Exposure ledger exceeds 128 unique sources')
         return key
@@ -82,7 +97,8 @@ def validate_exposure_ledger(ledger, manifest, labels):
             raise ValueError('Invalid exposure ledger identity or source bound')
         records = {}
         for node in ledger['sources']:
-            if (not isinstance(node, dict) or set(node) != {'selection', 'parents'}
+            if (not isinstance(node, dict) or set(node) not in (
+                    {'selection', 'parents'}, {'selection', 'parents', 'ledger_roots'})
                     or not isinstance(node['selection'], dict) or not isinstance(node['parents'], list)
                     or any(not isinstance(key, str) for key in node['parents'])):
                 raise ValueError('Invalid exposure source record')
@@ -102,14 +118,34 @@ def validate_exposure_ledger(ledger, manifest, labels):
                 if any(parent not in restored for parent in node['parents']):
                     continue
                 selected = deepcopy(node['selection'])
-                if selected.get('kind') == 'confirmation':
+                if type(selected.get('version')) is not int:
+                    raise ValueError('Exposure selection versions must be integers')
+                if selected.get('version') == 3 and selected.get('kind') == 'confirmation':
+                    roots = node.get('ledger_roots')
+                    if (not isinstance(roots, list) or not roots or not node['parents']
+                            or any(not isinstance(p, str) for p in roots)):
+                        raise ValueError('Ledger confirmation requires its original ledger roots')
+                    ref = restored[node['parents'][0]]
+                    if node['parents'] != [node['parents'][0], *(p for p in sorted(set(roots)) if p != node['parents'][0])]:
+                        raise ValueError('Ledger confirmation dependencies differ from its evidence')
+                    old = _assemble(records, roots, manifest['manifest_sha256'])
+                    selected['reference_selection'] = deepcopy(ref)
+                    selected['exposure_ledger'] = old
+                    expected = _reserve_from_ledger(manifest, labels, ref, old,
+                        validation_per_class=selected['per_class']['validation'], seed=selected['seed'])
+                    if selected != expected:
+                        raise ValueError('Ledger confirmation source differs from its replayed reservation')
+                elif selected.get('kind') == 'confirmation':
                     if not node['parents']:
                         raise ValueError('Confirmation source is missing its reference')
                     selected['reference_selection'] = deepcopy(restored[node['parents'][0]])
                     selected['excluded_selections'] = [deepcopy(restored[p]) for p in node['parents'][1:]]
                 elif node['parents']:
                     raise ValueError('Pilot source cannot have confirmation parents')
-                validate_pilot(selected, manifest, labels)
+                if selected.get('version') != 3:
+                    if 'ledger_roots' in node:
+                        raise ValueError('Only ledger confirmations may retain ledger roots')
+                    validate_pilot(selected, manifest, labels)
                 restored[key] = selected
                 pending.remove(key)
                 progress = True
@@ -133,6 +169,60 @@ def exposure_summary(ledger, manifest, labels):
                 remaining_per_class={str(c): sum(labels[i] == c for i in available) for c in range(10)},
                 test_selected=False,
                 limitation='Covers declared source selections only; fingerprints do not prove complete disclosure or producer authenticity')
+
+
+def _reserve_from_ledger(manifest, labels, reference, ledger, *, validation_per_class, seed):
+    """Construct canonical v3 using already replayed sources (internal only)."""
+    if (type(validation_per_class) is not int or not 1 <= validation_per_class <= 100
+            or type(seed) is not int or not 0 <= seed < 2**63):
+        raise ValueError('Ledger confirmation requires 1-100 rows/class and a valid seed')
+    if (type(reference.get('version')) is not int or reference['version'] != 1
+            or 'kind' in reference):
+        raise ValueError('Ledger confirmation requires its original fitting pilot')
+    ref_id = reference['selection_sha256']
+    nodes = {n['selection']['selection_sha256']: n for n in ledger['sources']}
+    if ref_id not in nodes or nodes[ref_id] != dict(selection=reference, parents=[]):
+        raise ValueError('Exposure ledger must retain the exact original fitting pilot')
+    used = set(ledger['observed_validation_indices'])
+    chosen = []
+    for label in range(10):
+        group = [i for i in manifest['partitions']['validation']['indices']
+                 if labels[i] == label and i not in used]
+        if len(group) < validation_per_class:
+            raise ValueError('Not enough unseen validation examples for every class')
+        group.sort(key=lambda i: (hashlib.sha256(f'cifar10-confirmation-v1:{seed}:{i}'.encode()).digest(), i))
+        chosen.extend(group[:validation_per_class])
+    result = dict(version=3, kind='confirmation', dataset='CIFAR-10',
+        manifest_sha256=manifest['manifest_sha256'], seed=seed,
+        algorithm='cifar10-confirmation-ledger-v1 SHA-256 within each fixed validation class, excluding source-replayed history',
+        reference_selection=deepcopy(reference), exposure_ledger=deepcopy(ledger),
+        per_class=dict(train=reference['per_class']['train'], validation=validation_per_class),
+        partitions=dict(train=deepcopy(reference['partitions']['train']),
+                        validation=dict(official_split='train', indices=sorted(chosen))))
+    return result | dict(selection_sha256=document_hash(result, 'selection_sha256'))
+
+
+def make_ledger_confirmation(manifest, labels, reference, ledger, *, validation_per_class=50, seed=20261019):
+    """Reserve another balanced round without embedding a deeper ancestry tree."""
+    validate_pilot(reference, manifest, labels)
+    validate_exposure_ledger(ledger, manifest, labels)
+    return _reserve_from_ledger(manifest, labels, reference, ledger,
+                               validation_per_class=validation_per_class, seed=seed)
+
+
+def validate_ledger_confirmation(selection, manifest, labels):
+    try:
+        if (not isinstance(selection, dict) or type(selection.get('version')) is not int
+                or selection['version'] != 3 or selection.get('kind') != 'confirmation'):
+            raise ValueError('Ledger confirmation requires integer version three')
+        expected = make_ledger_confirmation(manifest, labels, selection['reference_selection'],
+            selection['exposure_ledger'], validation_per_class=selection['per_class']['validation'],
+            seed=selection['seed'])
+        if selection != expected:
+            raise ValueError('Ledger confirmation differs from its source-replayed protocol')
+    except (KeyError, TypeError, AttributeError) as exc:
+        raise ValueError('Invalid ledger confirmation schema') from exc
+    return selection
 
 
 def make_exposure_bundle(manifest, labels, sources):

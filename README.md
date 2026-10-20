@@ -36,8 +36,8 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
   history into a flat dependency graph. `exposure.make_exposure_ledger` verifies
   each source against its original selection protocol and derives the observed
   row union; `exposure_summary` reports remaining per-class capacity without rows.
-  This currently imports historical selections; ledger-backed future reservation
-  is next. Supplied history must be complete: content
+  `exposure.make_ledger_confirmation` reserves version-three confirmation rows
+  against the complete replayed union. Supplied history must be complete: content
   hashes cannot detect an experiment the caller leaves out.
 
 Build local pinned history with `python -m jepa_lab.exposure ROOT --manifest
@@ -47,6 +47,16 @@ runs/exposure.json` instead of `--source`/`--output`. Original files must remain
 available with exactly the pinned bytes. The bundle stores local source paths;
 keep it under ignored `runs/`. Stdout contains aggregate capacity only. Invalid
 sources cannot replace previous output or overwrite their own evidence.
+
+Version-three selections embed a flat ledger plus the original fitting pilot.
+Register a later observed selection with `make_exposure_ledger`; its original
+ledger roots and source fingerprint are retained, without copying a deeper tree.
+Validation replays each dependency in topological order, including the original
+reservation recipe. Historical version-one/two documents keep their old hashes
+and depth guard. Six synthetic later rounds retain all earlier rows and exact
+fitting examples; malformed source dependencies fail closed. The ledger is
+bounded to 128 unique sources, and exhausted per-class validation capacity is
+an error. Scoring/selector CLI integration is the next step.
 
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.

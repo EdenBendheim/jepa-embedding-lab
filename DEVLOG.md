@@ -2,6 +2,12 @@
 
 ## October 19, 2026
 
+- Added version-three balanced reservations over the flat ledger. Observed later
+  selections retain source roots/hash and replay without recursively embedding
+  history. Six sequential synthetic rounds preserve all ancestor rows, fitting
+  rows and disjointness beyond the old depth bound; forged sources/roots/rows and
+  legacy nesting are rejected. Historical v1/v2 fingerprints remain unchanged.
+
 - Added a source-file-pinned build/recheck CLI, atomic bundle writes, read-only
   inspection and aggregate per-class capacity. Four exposure tests pass,
   including changed-byte/missing-file refusal, dataset identity, protected source

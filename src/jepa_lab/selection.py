@@ -69,7 +69,9 @@ def excluded_validation_indices(selection: dict, *, _depth: int = 0) -> set[int]
     if _depth > 3:
         raise ValueError("Confirmation ancestry is limited to three earlier rounds")
     rows = set(selection["partitions"]["validation"]["indices"])
-    if selection.get("kind") == "confirmation":
+    if selection.get('version') == 3 and selection.get('kind') == 'confirmation':
+        rows.update(selection['exposure_ledger']['observed_validation_indices'])
+    elif selection.get("kind") == "confirmation":
         for parent in [selection["reference_selection"], *selection["excluded_selections"]]:
             rows.update(excluded_validation_indices(parent, _depth=_depth+1))
     return rows
@@ -91,6 +93,8 @@ def make_confirmation(manifest: dict, labels: list[int], reference: dict, *,
     for parent in parents:
         if not isinstance(parent, dict):
             raise ValueError("Confirmation sources must be verified selections")
+        if parent.get('version') == 3:
+            raise ValueError('Use a flattened exposure ledger for later confirmation sources')
         if parent.get("kind") == "confirmation":
             validate_confirmation(parent, manifest, labels, _depth=_depth+1)
         else:
@@ -120,6 +124,9 @@ def make_confirmation(manifest: dict, labels: list[int], reference: dict, *,
 
 
 def validate_confirmation(selection: dict, manifest: dict, labels: list[int], *, _depth: int = 0) -> dict:
+    if isinstance(selection, dict) and type(selection.get('version')) is int and selection['version'] == 3:
+        from .exposure import validate_ledger_confirmation
+        return validate_ledger_confirmation(selection, manifest, labels)
     if not isinstance(selection, dict) or type(selection.get("version")) is not int or selection["version"] != 2:
         raise ValueError("Confirmation selection requires integer version two")
     try:
