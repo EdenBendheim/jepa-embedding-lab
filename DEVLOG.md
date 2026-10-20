@@ -1,5 +1,13 @@
 # Development log
 
+## October 19, 2026
+
+- Added flat validation exposure ledgers that replay original pilot/confirmation
+  protocols, retain ancestor sources once, and derive the union from their exact
+  selected rows. Two synthetic checks passed for deduplication, source/RNG
+  preservation, aggregate capacity, and rehashed tampering/missing/cyclic sources.
+  No images, fitting or new quality result. Later reservations and CLI are next.
+
 ## October 18, 2026
 
 - Executed the declared position comparison: three new fixed-position runs at

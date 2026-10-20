@@ -32,6 +32,14 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
 
 ## Working now
 
+- Source-replayed validation exposure ledgers deduplicate nested pilot/confirmation
+  history into a flat dependency graph. `exposure.make_exposure_ledger` verifies
+  each source against its original selection protocol and derives the observed
+  row union; `exposure_summary` reports remaining per-class capacity without rows.
+  This currently imports historical selections; ledger-backed future reservation
+  and a file-bound command are next. Supplied history must be complete: content
+  hashes cannot detect an experiment the caller leaves out.
+
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.
 - Separate context, target, and unused indices: the context encoder must never receive target pixels.
