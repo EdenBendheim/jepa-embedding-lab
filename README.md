@@ -586,6 +586,13 @@ reserved official-test evaluation remain future work.
 
 ### Fixed spatial-position foundation
 
+`ModelConfig(position_scale=...)` multiplies positional signals in the context,
+EMA target and predictor at use time. It accepts finite nonnegative values;
+zero removes the positional signal. The default `1.0` preserves historical
+math and serialized identities. Scaling does not change initialized weights,
+RNG consumption or parameter count. This enables an amplitude ablation; it
+does not establish a better representation.
+
 `positions.sincos_2d(rows, cols, width)` defines a deterministic row-major
 sin/cos encoding with separate row/column channels and frequencies
 `10000**(-j/(width/4))`. It consumes no RNG and returns independent float32

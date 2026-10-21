@@ -1,5 +1,15 @@
 # Development log
 
+## October 20, 2026
+
+- Added a nonnegative positional-signal scale shared by the encoder, teacher
+  and predictor. Scaling occurs at use time, keeping initialized weights and
+  RNG identical across scale arms. Default math and serialized historical
+  configuration identities are preserved. Zero is an explicit no-position
+  ablation. Focused synthetic checks cover both position modes, exact encoder
+  math, hidden-pixel/teacher gradient boundaries, and invalid scales. No new
+  real-image model scores are claimed.
+
 ## October 19, 2026
 
 - Final local verification: all 160 tests passed (including ten exposure tests),

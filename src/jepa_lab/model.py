@@ -21,10 +21,16 @@ class ModelConfig:
     encoder_depth: int = 2
     predictor_depth: int = 1
     position_encoding: str = "learned"
+    position_scale: float = 1.0
 
     def __post_init__(self):
-        if any(type(v) is not int or v < 1 for name,v in vars(self).items() if name != "position_encoding"):
+        if any(type(v) is not int or v < 1 for name,v in vars(self).items()
+               if name not in ("position_encoding", "position_scale")):
             raise ValueError("Model dimensions must be positive integers")
+        if (type(self.position_scale) not in (int, float)
+                or not math.isfinite(self.position_scale) or self.position_scale < 0):
+            raise ValueError("Position scale must be a finite nonnegative number")
+        object.__setattr__(self, "position_scale", float(self.position_scale))
         if self.embedding_dim % self.heads:
             raise ValueError("embedding_dim must be divisible by heads")
         if self.position_encoding not in ("learned", "sincos2d"):
@@ -37,7 +43,14 @@ def config_dict(config: ModelConfig) -> dict:
     """Keep historical default identities; record alternatives explicitly."""
     result=asdict(config)
     if result['position_encoding']=='learned':result.pop('position_encoding')
+    if result['position_scale']==1.0:result.pop('position_scale')
     return result
+
+
+def scaled_positions(positions, indices, scale):
+    """Scale at use time; preserve initialization and historical default math."""
+    values = positions[indices]
+    return values if scale == 1.0 else values * scale
 
 
 def fixed_positions(module, name, config):
@@ -89,7 +102,8 @@ class PatchEncoder(nn.Module):
     def forward(self, patches: torch.Tensor, indices: torch.Tensor) -> torch.Tensor:
         # Gather raw visible patches BEFORE encoding: hidden pixels never reach context attention.
         visible = gather(patches, indices)
-        return self.blocks(self.projection(visible) + self.positions[indices])
+        return self.blocks(self.projection(visible) + scaled_positions(
+            self.positions, indices, self.config.position_scale))
 
 
 class JEPA(nn.Module):
@@ -125,8 +139,10 @@ class JEPA(nn.Module):
         if (context.unsqueeze(2) == target.unsqueeze(1)).any():
             raise ValueError("Context and target indices must be disjoint")
         encoded = self.context_encoder(patches, context)
-        visible = self.predictor_projection(encoded) + self.predictor_positions[context]
-        tokens = self.mask_token.expand(patches.shape[0], target.shape[1], -1) + self.predictor_positions[target]
+        visible = self.predictor_projection(encoded) + scaled_positions(
+            self.predictor_positions, context, config.position_scale)
+        tokens = self.mask_token.expand(patches.shape[0], target.shape[1], -1) + scaled_positions(
+            self.predictor_positions, target, config.position_scale)
         predictions = self.output(self.predictor(torch.cat((visible, tokens), dim=1))[:, -target.shape[1]:])
         with torch.no_grad():
             full = torch.arange(patches.shape[1], device=patches.device).expand(patches.shape[0], -1)
