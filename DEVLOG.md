@@ -2,6 +2,12 @@
 
 ## October 20, 2026
 
+- Added positional-amplitude comparison/audit APIs with shared pixel heads,
+  matched random controls and fixed non-scale configuration. Synthetic checks
+  reproduce 15 saved classifier states without refitting, preserve sources/RNG,
+  and refuse confounded mode/depth/budget/seed/row/pixel/checkpoint changes before
+  fitting. This is comparison infrastructure, not a measured accuracy result.
+
 - Wired positional scale into training/budget CLIs and random feature
   extraction. Checkpoint extraction retains the recorded scale. Synthetic CLI
   checks compare continuous and resumed full states, reject a changed scale

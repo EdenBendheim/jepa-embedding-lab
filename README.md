@@ -593,6 +593,13 @@ math and serialized identities. Scaling does not change initialized weights,
 RNG consumption or parameter count. This enables an amplitude ablation; it
 does not establish a better representation.
 
+`scale_compare.compare_scales` accepts two or three increasing arms named
+`scale0.02`, `scale1.0`, etc. It requires equal non-scale architecture, training
+settings, steps, examples and matching random seeds, with shared pixel artifacts.
+Saved AdamW/ridge heads are checked by `audit_scales` without refitting.
+Changing position mode and amplitude together is refused as a confounded
+comparison. Metadata checks do not replace actual training-journal checks.
+
 `positions.sincos_2d(rows, cols, width)` defines a deterministic row-major
 sin/cos encoding with separate row/column channels and frequencies
 `10000**(-j/(width/4))`. It consumes no RNG and returns independent float32
