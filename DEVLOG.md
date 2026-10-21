@@ -2,6 +2,11 @@
 
 ## October 20, 2026
 
+- Wired positional scale into training/budget CLIs and random feature
+  extraction. Checkpoint extraction retains the recorded scale. Synthetic CLI
+  checks compare continuous and resumed full states, reject a changed scale
+  before image sampling/output replacement, and preserve feature provenance.
+
 - Added a nonnegative positional-signal scale shared by the encoder, teacher
   and predictor. Scaling occurs at use time, keeping initialized weights and
   RNG identical across scale arms. Default math and serialized historical

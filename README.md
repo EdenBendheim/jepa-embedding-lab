@@ -610,6 +610,13 @@ reports count their persistent memory separately. Equal steps still do not mean
 equal parameter counts or compute.
 
 Public-data training and budget CLIs accept `--position-encoding learned|sincos2d`.
+Both also accept `--position-scale FLOAT` (default 1). Nondefault scales are
+bound to checkpoint identity and must match on resume. Random feature extraction
+accepts `--position-scale` to match its trained control; checkpoint extraction
+reads the saved scale and rejects a command-line override, including an explicit
+default. Example: add `--position-encoding sincos2d --position-scale 0.02` to
+training and matching random extraction. This command is an execution option,
+not evidence that 0.02 performs better.
 Random feature extraction accepts the same explicit choice. Checkpoint extraction
 uses the saved mode and refuses an override. A changed mode cannot resume an
 existing training run. Existing commands keep their learned-position default.

@@ -176,12 +176,14 @@ def main():
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--output", type=Path, required=True, help="Local feature artifact; use ignored runs/ and .pt")
     parser.add_argument("--position-encoding",choices=("learned","sincos2d"),help="Random encoder only; checkpoint mode reads its recorded choice")
+    parser.add_argument('--position-scale',type=float,help='Random encoder only; checkpoint scale comes from saved configuration')
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
-        if args.position_encoding is not None and args.representation != "random":
+        if (args.position_encoding is not None or args.position_scale is not None) and args.representation != "random":
             raise ValueError("Only random extraction accepts a position option; checkpoint choice is recorded")
-        config = ModelConfig(patch_dim=48,position_encoding=args.position_encoding or "learned") if args.representation=="random" else None
+        config = ModelConfig(patch_dim=48,position_encoding=args.position_encoding or "learned",
+                             position_scale=1.0 if args.position_scale is None else args.position_scale) if args.representation=="random" else None
         report = extract_cifar10(args.root, args.manifest, partition=args.partition, representation=args.representation,
                                 checkpoint=args.checkpoint, encoder=args.encoder, pooling=args.pooling, seed=args.seed, limit=args.limit,
                                 batch_size=args.batch_size, selection_path=args.selection, output=args.output, config=config)
