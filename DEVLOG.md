@@ -2,6 +2,22 @@
 
 ## October 20, 2026
 
+- Final verification: all 167 local tests passed; the seeded mask demo and
+  three-step scaled synthetic training smoke passed with finite loss. Real
+  preparation replay retained the pinned reservation and equal parameter counts.
+  No real-image training or fresh-row classification scores were produced.
+
+- Predeclared fixed-position .02 versus 1.0 at equal width/capacity, retained
+  original source/code/checkpoint pins and added a no-image reservation preflight.
+  The real check recreated the same 500 unscored rows while retaining all 2,246
+  observed rows; both arms have 29,472 trainable parameters. The synthetic
+  preflight check verifies idempotence, protected evidence and stale-source /
+  conflicting-output failure preservation. Real scaled training/evaluation
+  remain pending; no new accuracy result or official test use.
+- Interview explanation: “I separated positional amplitude from encoding type,
+  preserved exact initialization and reproducible resume, and required matched
+  baselines and fresh held-out rows before judging whether the change helps.”
+
 - Added positional-amplitude comparison/audit APIs with shared pixel heads,
   matched random controls and fixed non-scale configuration. Synthetic checks
   reproduce 15 saved classifier states without refitting, preserve sources/RNG,

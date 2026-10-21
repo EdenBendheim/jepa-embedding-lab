@@ -2,10 +2,12 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 19, 2026:** source-replayed flat exposure history now supports
-later confirmation rounds without dropping earlier observations. Six pinned
-selection files account for 2,246 observed validation rows; 2,754 remain. No new
-model scores today. The latest position experiment still shows trained fixed
+**Status — October 20, 2026:** positional-signal scaling, resume-bound CLI options
+and matched saved-feature scale comparisons now work. The next amplitude
+experiment is [predeclared](experiments/SCALE-2026-10-20-PROTOCOL.md), with a
+source-verified 500-row unscored reservation excluding 2,246 earlier observations.
+Both scale arms retain 29,472 trainable parameters. No new real-image training
+or model scores today. The latest position experiment still shows trained fixed
 29.04%, trained learned positions 27.47%, matching fixed random 28.93% under
 AdamW. A general learned-feature advantage remains unproven; official test stays
 reserved. See [exposure audit](experiments/EXPOSURE-2026-10-19.md) and
@@ -599,6 +601,14 @@ settings, steps, examples and matching random seeds, with shared pixel artifacts
 Saved AdamW/ridge heads are checked by `audit_scales` without refitting.
 Changing position mode and amplitude together is refused as a confounded
 comparison. Metadata checks do not replace actual training-journal checks.
+
+The [October 20 protocol](experiments/SCALE-2026-10-20-PROTOCOL.md) declares
+fixed-position multipliers .02 versus 1.0, matched seeds/budgets and frozen
+confirmation. Run `PYTHONPATH=src .venv/bin/python
+experiments/prepare_scale_20261020.py` on one line to recheck pinned sources and
+recreate its unscored reservation. It reuses the October 19 unscored check;
+no additional validation rows have been scored or registered as observed.
+Real scaled training and the complete frozen evaluation driver remain pending.
 
 `positions.sincos_2d(rows, cols, width)` defines a deterministic row-major
 sin/cos encoding with separate row/column channels and frequencies

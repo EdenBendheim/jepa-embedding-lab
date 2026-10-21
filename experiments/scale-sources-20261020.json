@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "date": "2026-10-20",
+  "manifest_path": "runs/cifar10-manifest.json",
+  "selection_path": "runs/pilot-selection-20261009.json",
+  "exposure_bundle_path": "runs/exposure-20261019/through-oct18.json",
+  "sources": [
+    {
+      "path": "runs/cifar10-manifest.json",
+      "sha256": "97f4201d5d57ee4fcf58e98e291ad18a54a03f3995571213907e2e8b619893cc"
+    },
+    {
+      "path": "runs/pilot-selection-20261009.json",
+      "sha256": "a1e87b95e7fee9137c1568d26cd85d7845022b1a77524fd86aa49f68365265bf"
+    },
+    {
+      "path": "runs/exposure-20261019/through-oct18.json",
+      "sha256": "3734692e741b13dadfaaef0dc20522218bcc07a4d590f29e7aa9db2dd68449ad"
+    },
+    {
+      "path": "runs/exposure-20261019/unscored-reservation-check.json",
+      "sha256": "7b9cf8c91d1c87f18be37bdfa29ebbed14cc07cf511e8c939f14fd957279b7c0"
+    },
+    {
+      "path": "src/jepa_lab/model.py",
+      "sha256": "f4f8aaa83f44a81844be2a22eaf0a3cbc16935baa41a6f3e08036e63a8b226ad"
+    },
+    {
+      "path": "src/jepa_lab/model_cli.py",
+      "sha256": "c1222944643ac311c6da0980a1cd056a713b52938da582bb9d5a9a8706f2fdc7"
+    },
+    {
+      "path": "src/jepa_lab/embeddings.py",
+      "sha256": "2d539615cf40845d5fe5c4aa843f7106a1fd8c68302f36882503f3aea86def8c"
+    },
+    {
+      "path": "src/jepa_lab/scale_compare.py",
+      "sha256": "51773efc80589cd70b5f0eb82a5cc0b5ae2f6428f74e8ae1ff676cfd6cc033dd"
+    },
+    {
+      "path": "src/jepa_lab/width_compare.py",
+      "sha256": "de6de05f49fa0962748a454c4fbada52a75eceab8106412b9a854e5f103fb4ac"
+    },
+    {
+      "path": "src/jepa_lab/exposure.py",
+      "sha256": "8e1454795a39e9e2845893e1658af2e3f67488a91148d1a8ea14dc5b32eb46a6"
+    },
+    {
+      "path": "src/jepa_lab/selection.py",
+      "sha256": "0f8dcbdb1a069881d5a08667e638adb789213e0f1bfdb49d021e481073c96eb9"
+    },
+    {
+      "path": "src/jepa_lab/cifar10_train.py",
+      "sha256": "1b127bffa370097723f69e6e5abf602e6a0c1208267e3daf72708691cd701a89"
+    },
+    {
+      "path": "runs/position-20261018/checkpoints/positionsincos2d-seed20261003.pt",
+      "sha256": "b88481328e6484c76d2588405b90170c7874b9509b71641b46d74b8d07f7b005"
+    },
+    {
+      "path": "runs/position-20261018/checkpoints/positionsincos2d-seed20261010.pt",
+      "sha256": "aca797f03e5159fc497430e5affe78a3a0cbe23e2d238dccbcabb010c3bb744e"
+    },
+    {
+      "path": "runs/position-20261018/checkpoints/positionsincos2d-seed20261011.pt",
+      "sha256": "13a794a7aab8c5745f94891870c4322e6e74b480d37bd4032a1a912de4ab5741"
+    }
+  ],
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "ledger_sha256": "123747dab852fe7b3dbcca30a1b28082b0186e96eeaadb5f89841e914abdd87d",
+  "confirmation_selection_sha256": "a89a88162421638681ecf1c435a1f902720ecad019b024f784fc67818441dda2",
+  "confirmation_seed": 20261020,
+  "confirmation_per_class": 50,
+  "position_encoding": "sincos2d",
+  "position_scales": [
+    0.02,
+    1.0
+  ],
+  "embedding_dim": 32,
+  "heads": 4,
+  "encoder_depth": 2,
+  "predictor_depth": 1,
+  "training_seeds": [
+    20261003,
+    20261010,
+    20261011
+  ],
+  "reused_scale_one_checkpoints": {
+    "20261003": "runs/position-20261018/checkpoints/positionsincos2d-seed20261003.pt",
+    "20261010": "runs/position-20261018/checkpoints/positionsincos2d-seed20261010.pt",
+    "20261011": "runs/position-20261018/checkpoints/positionsincos2d-seed20261011.pt"
+  },
+  "total_steps": 2223,
+  "batch_size": 4,
+  "learning_rate": 0.001,
+  "momentum": 0.99,
+  "mask": {
+    "target_rows": 2,
+    "target_cols": 2,
+    "context_fraction": 0.75
+  },
+  "pooling": "mean",
+  "encoder": "context",
+  "classifier_seeds": [
+    29,
+    31,
+    37
+  ],
+  "probe_steps": 200,
+  "learning_rates": [
+    0.0001,
+    0.001,
+    0.01,
+    0.05
+  ],
+  "weight_decays": [
+    0.01,
+    0.1
+  ],
+  "ridge_alphas": [
+    0.01,
+    0.1,
+    1.0,
+    10.0
+  ],
+  "neighbor_counts": [
+    1,
+    5,
+    15
+  ],
+  "primary_comparison": "Trained fixed-position scale 0.02 minus 1.0 AdamW accuracy on the same fresh rows; report matched random and pixel controls, ridge/kNN and paired errors",
+  "status": "predeclared; reservation only; no new real-image training or scoring",
+  "test_evaluated": false
+}

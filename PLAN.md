@@ -32,7 +32,9 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Compare three embedding widths at the same update/data/evaluation budget.
 - [x] Compare learned versus fixed spatial positions at width 32 under matched initialization, budgets and fresh rows.
 - [x] Replay and retain observed selections in a source-file-pinned flat exposure ledger.
-- [ ] Predeclare and compare a position-scale/input-feature alternative with retained exposure history.
+- [x] Add resume-bound positional amplitude and matched scale-comparison APIs.
+- [x] Predeclare a fixed-position amplitude contrast with retained exposure history.
+- [ ] Train and evaluate that contrast with matched journals and frozen fresh-row scoring.
 - [x] Hold the data split, downstream task, update budget, and evaluation code fixed.
 - [x] Add frozen cosine-neighbor selection, saved indices and untuned confirmation.
 - [x] Persist selected probe weights/normalization with source identity and reproduced scores.
@@ -66,8 +68,13 @@ version-three selection, validation-only features and no-refit scoring work. The
 contrast and use complete then-current history. Fingerprints cannot detect
 omitted experiments, so keep original files and register all new observations.
 
-Next, predeclare a position-scale/input-feature contrast at fixed width with a
-fresh reservation and matched baselines. Do not tune on already observed scores
+The [October 20 amplitude protocol](experiments/SCALE-2026-10-20-PROTOCOL.md)
+now declares .02 versus 1.0 at fixed width/parameter count. Source replay
+recreates the same 500-row unscored reservation from October 19; the observed
+union remains 2,246. Scaling, command-line resume binding and saved-feature
+comparison/audit APIs work. Next, build the scale-specific training/evaluation
+driver, train the .02 arm and verify actual image order against the pinned
+scale-one runs, then lock heads before scoring. Do not tune on already observed scores
 or compare absolute metrics across different row sets as improvement. Keep the
 official test reserved. No raw images, features, weights or row-level evidence
 belong in public commits; a local-only thumbnail view remains optional.
