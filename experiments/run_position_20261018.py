@@ -114,29 +114,7 @@ def feature(directory,d,manifest,selection,labels,position,seed,rep,partition,re
     return value
 
 
-def neighbor_record(path,pair,candidates,reuse_only):
-    index_path=path.with_suffix('.pt')
-    if not path.exists():
-        if reuse_only:raise ValueError('Selected neighbor report missing')
-        index,selected=select_neighbors(*pair,candidates)
-        if index_path.exists():
-            restored,artifact=load_neighbors(index_path,*pair)
-            if restored.config!=index.config or not torch.equal(restored.vectors,index.vectors):raise ValueError('Partial neighbor state differs')
-        else:artifact=save_neighbors(index_path,index,*pair)
-        write_report(path,dict(selection=selected,index=artifact,path=str(index_path)))
-    row=json.loads(path.read_text());index,artifact=load_neighbors(row['path'],*pair)
-    options=row['selection']['candidates'];chosen=row['selection']['selected_candidate']
-    if ([r['config'] for r in options]!=[asdict(c) for c in candidates]
-            or type(chosen) is not int or not 0<=chosen<len(options)
-            or chosen!=min(range(len(options)),key=lambda i:(-options[i]['validation']['accuracy'],i))
-            or row['index']!=artifact or options[chosen]['config']!=artifact['config']
-            or options[chosen]['validation']!=artifact['scores']['validation']):
-        raise ValueError('Selected neighbor grid/state/result differs')
-    for option,config in zip(options,candidates,strict=True):
-        candidate=replace(index,config=config)
-        if option['validation']!=candidate.score(pair[1].features,pair[1].labels):
-            raise ValueError('Reported neighbor candidate scores do not reproduce')
-    return row
+from jepa_lab.neighbor_workflow import neighbor_record
 
 
 def evaluation(directory=Path('runs/position-20261018'),*,reuse_only=False):

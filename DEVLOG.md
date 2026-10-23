@@ -2,6 +2,12 @@
 
 ## October 22, 2026
 
+- Extracted the complete neighbor selection-cache workflow for reuse in scale
+  evaluation and the existing position driver. It now checks the selection
+  context/rule, every candidate score, adjacent artifact path and every partial
+  state tensor. Two focused tests and all three position-driver regressions
+  pass; cache replay cannot retune or silently substitute an alias index.
+
 - Added a source-pinned amplitude training driver with bounded checkpointed
   chunks, exact .02/1.0 capacity and actual image-order checks, and refusal to
   overwrite historical evidence. Two synthetic workflow tests pass: completed
