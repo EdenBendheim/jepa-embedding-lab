@@ -34,7 +34,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Replay and retain observed selections in a source-file-pinned flat exposure ledger.
 - [x] Add resume-bound positional amplitude and matched scale-comparison APIs.
 - [x] Predeclare a fixed-position amplitude contrast with retained exposure history.
-- [ ] Train and evaluate that contrast with matched journals and frozen fresh-row scoring.
+- [x] Train and evaluate that contrast with matched journals and frozen fresh-row scoring.
 - [x] Hold the data split, downstream task, update budget, and evaluation code fixed.
 - [x] Add frozen cosine-neighbor selection, saved indices and untuned confirmation.
 - [x] Persist selected probe weights/normalization with source identity and reproduced scores.
@@ -69,13 +69,17 @@ contrast and use complete then-current history. Fingerprints cannot detect
 omitted experiments, so keep original files and register all new observations.
 
 The [October 20 amplitude protocol](experiments/SCALE-2026-10-20-PROTOCOL.md)
-now declares .02 versus 1.0 at fixed width/parameter count. Source replay
-recreates the same 500-row unscored reservation from October 19; the observed
-union remains 2,246. Scaling, command-line resume binding and saved-feature
-comparison/audit APIs work. The scale-specific training/evaluation
-driver now verifies actual image order, locks selected heads and records
-conservative exposure before fresh access. Synthetic replay and interruption
-checks pass. Real frozen evaluation and aggregate publication are next. Do not tune on already observed scores
-or compare absolute metrics across different row sets as improvement. Keep the
-official test reserved. No raw images, features, weights or row-level evidence
-belong in public commits; a local-only thumbnail view remains optional.
+was executed [October 22](experiments/SCALE-2026-10-22.md): three new .02 runs
+versus pinned 1.0 controls, equal capacity and exact actual image order. Fresh
+AdamW means are 25.53% / 26.51%, a negative −0.98-point primary contrast.
+Random controls remain close; useful learned embeddings are not established.
+The driver locks and audits all states, records conservative exposure before
+fresh access, and supports no-fit/no-image cache replay.
+
+Next, inspect training-only pooled-feature/teacher stability before declaring
+another controlled intervention. Do not tune on the latest confirmation scores.
+For any future reservation, retain `runs/scale-20261020/observed-exposure.json`:
+all 2,746 observed rows are retained, with 2,254 still unused. The original
+unscored reservation is now observed. Fingerprints cannot detect omitted
+experiments; retain all original evidence. Keep the official test reserved.
+No raw images, features, weights or row-level evidence belong in public commits.

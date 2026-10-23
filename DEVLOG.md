@@ -2,6 +2,26 @@
 
 ## October 22, 2026
 
+- Executed frozen amplitude evaluation on the predeclared 500 new rows,
+  excluding all 2,246 earlier observations. Trained .02 / 1.0 AdamW means:
+  25.53% / 26.51% (primary −0.98 points); matched random: 25.38% / 26.60%.
+  Ridge favors 1.0; .02 improves kNN against 1.0 but remains below pixels.
+  No broad trained-feature advantage or winning amplitude is established.
+- Audited 60 linear artifacts (52 unique states), 13 neighbor indices and all
+  candidate results. Real replay with training, raw-image reads, extraction,
+  linear fitting and neighbor tuning disabled reproduced a byte-identical
+  summary. All 175 local tests, mask demo, three-step synthetic training smoke
+  and whitespace checks passed. CI is checked separately after the push.
+- Published aggregate metrics, paired class errors, recipe/checkpoint/order
+  hashes and training windows. Raw images, row selections, training journals,
+  feature/weight/index artifacts and source bundles remain ignored. The new
+  source-pinned ledger conservatively retains 2,746 observed validation rows
+  and 2,254 remaining; original history files are unchanged, test is reserved.
+- Interview explanation: “I isolated positional amplitude at equal capacity
+  and matched image order, locked classifiers before fresh evaluation, and
+  reproduced the result without fitting. The primary metric got worse and
+  random controls stayed close, so I reported the negative result.”
+
 - Completed all three predeclared .02 training runs at 2,223 updates, with
   one CPU thread and no paid compute. Replayed the pinned scale-one runs:
   each paired journal has exactly the same actual image order, 8,892 draws

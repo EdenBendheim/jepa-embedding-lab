@@ -2,16 +2,14 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 20, 2026:** positional-signal scaling, resume-bound CLI options
-and matched saved-feature scale comparisons now work. The next amplitude
-experiment is [predeclared](experiments/SCALE-2026-10-20-PROTOCOL.md), with a
-source-verified 500-row unscored reservation excluding 2,246 earlier observations.
-Both scale arms retain 29,472 trainable parameters. No new real-image training
-or model scores today. The latest position experiment still shows trained fixed
-29.04%, trained learned positions 27.47%, matching fixed random 28.93% under
-AdamW. A general learned-feature advantage remains unproven; official test stays
-reserved. See [exposure audit](experiments/EXPOSURE-2026-10-19.md) and
-[position results](experiments/POSITION-2026-10-18.md).
+**Status — October 22, 2026:** the [predeclared amplitude comparison](experiments/SCALE-2026-10-22.md)
+is complete. Three new .02 runs and pinned 1.0 controls share actual image order
+and 29,472 trainable parameters. On 500 fresh validation rows, trained .02 / 1.0
+AdamW accuracy is **25.53% / 26.51%** (−0.98 points). Matching random controls
+score 25.38% / 26.60%; a broad learned-feature advantage remains unproven.
+Frozen heads, full candidate audits and conservative exposure receipts now
+replay the evaluation. The ledger retains 2,746 observed rows; official test
+stays reserved. These are descriptive validation results, not test accuracy.
 
 ## Why this experiment
 
@@ -607,8 +605,9 @@ fixed-position multipliers .02 versus 1.0, matched seeds/budgets and frozen
 confirmation. Run `PYTHONPATH=src .venv/bin/python
 experiments/prepare_scale_20261020.py` on one line to recheck pinned sources and
 recreate its unscored reservation. It reuses the October 19 unscored check;
-no additional validation rows have been scored or registered as observed.
-Real scaled training and the complete frozen evaluation driver remain pending.
+the reservation was initially unscored. [October 22 execution](experiments/SCALE-2026-10-22.md)
+completed training and frozen evaluation, so these rows are now observed. Use
+the extended local exposure bundle for any later reservation.
 
 `positions.sincos_2d(rows, cols, width)` defines a deterministic row-major
 sin/cos encoding with separate row/column channels and frequencies
@@ -698,3 +697,8 @@ replays the completed journals without image reads or training and exports
 three new 2,223-update .02 runs and three pinned scale-one controls, with equal
 29,472 trainable parameters and matched actual image order. Token spread and
 loss are diagnostics only; downstream quality requires frozen evaluation.
+
+[October 22 amplitude results](experiments/SCALE-2026-10-22.md) report the
+negative primary contrast and all random/pixel, ridge and neighbor controls.
+The .02 signal did not improve AdamW; the real no-fit replay and check outcomes
+are recorded in the development log.
