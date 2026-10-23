@@ -1,5 +1,14 @@
 # Development log
 
+## October 22, 2026
+
+- Added a source-pinned amplitude training driver with bounded checkpointed
+  chunks, exact .02/1.0 capacity and actual image-order checks, and refusal to
+  overwrite historical evidence. Two synthetic workflow tests pass: completed
+  caches replay without training/images; altered journals, source bytes, missing
+  reuse caches and unsafe output locations fail before starting new training.
+  Real scaled training and downstream evaluation remain pending.
+
 ## October 20, 2026
 
 - Final verification: all 167 local tests passed; the seeded mask demo and

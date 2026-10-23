@@ -677,3 +677,12 @@ matching random fixed-position control was only 0.11 points behind. Pixel kNN
 remained higher. Cache replay reproduced 60 linear artifacts (52 unique) and
 13 indices without fitting or image reads. These are descriptive fresh-validation
 results, not official test evidence or a general JEPA advantage.
+
+## Execute the declared amplitude training
+
+`PYTHONPATH=src .venv/bin/python -m jepa_lab.scale_run` verifies the October 20
+source pins and reservation, trains the .02 arm in bounded local chunks, and
+reuses the pinned scale-one checkpoints. Each seed must have identical actual
+image-order journals and equal trainable capacity across scales. `--reuse-only`
+requires completed caches and performs no training. This command currently
+checks training, not downstream representation quality.
