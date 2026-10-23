@@ -2,6 +2,14 @@
 
 ## October 22, 2026
 
+- Completed all three predeclared .02 training runs at 2,223 updates, with
+  one CPU thread and no paid compute. Replayed the pinned scale-one runs:
+  each paired journal has exactly the same actual image order, 8,892 draws
+  and 8,061–8,112 unique training images. Both arms have 29,472 trainable
+  parameters. Added an aggregate-only no-image/no-training audit command;
+  its synthetic test passed. Published checkpoint/order hashes and 100-step
+  diagnostic windows. Finite losses/gradients are not evidence of quality.
+
 - Added frozen scale evaluation: shared pixel heads, exact-initialization random
   controls, full saved-candidate/state audits, locked selections, paired
   small-minus-one comparisons and source-replayed exposure extension. Before

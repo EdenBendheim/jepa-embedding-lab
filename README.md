@@ -690,3 +690,11 @@ without refitting. `--evaluate --reuse-only` requires all caches and replays
 without image reads, extraction, training or fitting. An interrupted evaluation
 retains `observed-exposure.json` and `observation-receipt.json`; use that complete
 source-pinned history when reserving later rows. Keep these files local.
+
+`python -m jepa_lab.scale_audit --output runs/scale-training-audit.json`
+replays the completed journals without image reads or training and exports
+100-step aggregate diagnostic windows, checkpoint/order hashes and capacity.
+[October 22 training audit](experiments/scale-2026-10-22-training.json) records
+three new 2,223-update .02 runs and three pinned scale-one controls, with equal
+29,472 trainable parameters and matched actual image order. Token spread and
+loss are diagnostics only; downstream quality requires frozen evaluation.

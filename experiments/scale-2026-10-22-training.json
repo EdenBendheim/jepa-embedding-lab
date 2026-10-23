@@ -1,0 +1,2054 @@
+{
+  "version": 1,
+  "protocol_sha256": "26c3f7facd70e1b2593ecd500345798d5583f33a31a93ab3d413d5da56146a1d",
+  "training": {
+    "scale0.02-seed20261003": {
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d",
+        "position_scale": 0.02
+      },
+      "settings": {
+        "seed": 20261003,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "checkpoint_sha256": "d3f23396cb0ed61e0e9dcf943e32b199009d790fe92269bc4a66790b7b559051",
+      "train_image_order_sha256": "0e5114fff2e4ff0b6a7096c7f41f3b34ce2df8cca6b0a03ccc4424af36ddf260",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d",
+          "position_scale": 0.02
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "diagnostics": {
+        "completed_steps": 2223,
+        "window": 100,
+        "sample_draws": 8892,
+        "unique_training_images": 8072,
+        "windows": [
+          {
+            "first_step": 1,
+            "last_step": 100,
+            "count": 100,
+            "loss_mean": 0.20461864195764065,
+            "loss_min": 0.06409170478582382,
+            "loss_max": 0.535054087638855,
+            "gradient_norm_mean": 0.5623238541185855,
+            "target_token_std_mean": 0.5950627171993256,
+            "prediction_token_std_mean": 0.2671365332603455,
+            "target_covariance_rms_mean": 0.3066054519638419
+          },
+          {
+            "first_step": 101,
+            "last_step": 200,
+            "count": 100,
+            "loss_mean": 0.10845908399671317,
+            "loss_min": 0.024287141859531403,
+            "loss_max": 0.24469305574893951,
+            "gradient_norm_mean": 0.47109212636947634,
+            "target_token_std_mean": 0.5494463413953781,
+            "prediction_token_std_mean": 0.35784511748701336,
+            "target_covariance_rms_mean": 0.2988756898418069
+          },
+          {
+            "first_step": 201,
+            "last_step": 300,
+            "count": 100,
+            "loss_mean": 0.09744099143892526,
+            "loss_min": 0.01890612579882145,
+            "loss_max": 0.2239142805337906,
+            "gradient_norm_mean": 0.43222297325730324,
+            "target_token_std_mean": 0.5521537800133228,
+            "prediction_token_std_mean": 0.3716924537718296,
+            "target_covariance_rms_mean": 0.2973607702553272
+          },
+          {
+            "first_step": 301,
+            "last_step": 400,
+            "count": 100,
+            "loss_mean": 0.09322797242552042,
+            "loss_min": 0.01630949229001999,
+            "loss_max": 0.2424064725637436,
+            "gradient_norm_mean": 0.4755960233509541,
+            "target_token_std_mean": 0.6309919375181198,
+            "prediction_token_std_mean": 0.49605280853807926,
+            "target_covariance_rms_mean": 0.3862177150696516
+          },
+          {
+            "first_step": 401,
+            "last_step": 500,
+            "count": 100,
+            "loss_mean": 0.0920207486115396,
+            "loss_min": 0.024210164323449135,
+            "loss_max": 0.23764996230602264,
+            "gradient_norm_mean": 0.4517338638007641,
+            "target_token_std_mean": 0.5823648333549499,
+            "prediction_token_std_mean": 0.44298060052096844,
+            "target_covariance_rms_mean": 0.33334645884111525
+          },
+          {
+            "first_step": 501,
+            "last_step": 600,
+            "count": 100,
+            "loss_mean": 0.08747009385377169,
+            "loss_min": 0.01889709010720253,
+            "loss_max": 0.23374614119529724,
+            "gradient_norm_mean": 0.44133955776691436,
+            "target_token_std_mean": 0.6268252846598625,
+            "prediction_token_std_mean": 0.4976922731101513,
+            "target_covariance_rms_mean": 0.37674641713500023
+          },
+          {
+            "first_step": 601,
+            "last_step": 700,
+            "count": 100,
+            "loss_mean": 0.09914796374738216,
+            "loss_min": 0.017084859311580658,
+            "loss_max": 0.2766135632991791,
+            "gradient_norm_mean": 0.46385251253843307,
+            "target_token_std_mean": 0.6108013740181923,
+            "prediction_token_std_mean": 0.4706199063360691,
+            "target_covariance_rms_mean": 0.36701585981994866
+          },
+          {
+            "first_step": 701,
+            "last_step": 800,
+            "count": 100,
+            "loss_mean": 0.10435163920745254,
+            "loss_min": 0.023009421303868294,
+            "loss_max": 0.2393157184123993,
+            "gradient_norm_mean": 0.433922363370657,
+            "target_token_std_mean": 0.6293534857034683,
+            "prediction_token_std_mean": 0.4952155263721943,
+            "target_covariance_rms_mean": 0.3743531281873584
+          },
+          {
+            "first_step": 801,
+            "last_step": 900,
+            "count": 100,
+            "loss_mean": 0.10716123489663004,
+            "loss_min": 0.017933815717697144,
+            "loss_max": 0.25425422191619873,
+            "gradient_norm_mean": 0.4846750812232494,
+            "target_token_std_mean": 0.6674715869128705,
+            "prediction_token_std_mean": 0.5274359004944563,
+            "target_covariance_rms_mean": 0.4116716341301799
+          },
+          {
+            "first_step": 901,
+            "last_step": 1000,
+            "count": 100,
+            "loss_mean": 0.09199853632599116,
+            "loss_min": 0.023646671324968338,
+            "loss_max": 0.30317044258117676,
+            "gradient_norm_mean": 0.45311379998922346,
+            "target_token_std_mean": 0.678921970129013,
+            "prediction_token_std_mean": 0.5789103427529335,
+            "target_covariance_rms_mean": 0.43888235472142695
+          },
+          {
+            "first_step": 1001,
+            "last_step": 1100,
+            "count": 100,
+            "loss_mean": 0.10541504912078381,
+            "loss_min": 0.0343521386384964,
+            "loss_max": 0.24631330370903015,
+            "gradient_norm_mean": 0.5178608749806881,
+            "target_token_std_mean": 0.67659737855196,
+            "prediction_token_std_mean": 0.5362411588430405,
+            "target_covariance_rms_mean": 0.42066983684897424
+          },
+          {
+            "first_step": 1101,
+            "last_step": 1200,
+            "count": 100,
+            "loss_mean": 0.10423584297299385,
+            "loss_min": 0.021974926814436913,
+            "loss_max": 0.21972039341926575,
+            "gradient_norm_mean": 0.43387247145175933,
+            "target_token_std_mean": 0.6847473835945129,
+            "prediction_token_std_mean": 0.5504399064183235,
+            "target_covariance_rms_mean": 0.43091762736439704
+          },
+          {
+            "first_step": 1201,
+            "last_step": 1300,
+            "count": 100,
+            "loss_mean": 0.10605723394080996,
+            "loss_min": 0.01577576994895935,
+            "loss_max": 0.22294430434703827,
+            "gradient_norm_mean": 0.6366143564879895,
+            "target_token_std_mean": 0.6751389333605766,
+            "prediction_token_std_mean": 0.5392465189099311,
+            "target_covariance_rms_mean": 0.41021556304767726
+          },
+          {
+            "first_step": 1301,
+            "last_step": 1400,
+            "count": 100,
+            "loss_mean": 0.11234944503754378,
+            "loss_min": 0.01799073815345764,
+            "loss_max": 0.26051121950149536,
+            "gradient_norm_mean": 0.6188966825604438,
+            "target_token_std_mean": 0.6796627449989319,
+            "prediction_token_std_mean": 0.5438872268795967,
+            "target_covariance_rms_mean": 0.4153623394668102
+          },
+          {
+            "first_step": 1401,
+            "last_step": 1500,
+            "count": 100,
+            "loss_mean": 0.11033814730122686,
+            "loss_min": 0.028620334342122078,
+            "loss_max": 0.29917487502098083,
+            "gradient_norm_mean": 0.4889496670663357,
+            "target_token_std_mean": 0.6859830024838448,
+            "prediction_token_std_mean": 0.547050092369318,
+            "target_covariance_rms_mean": 0.4253159102797508
+          },
+          {
+            "first_step": 1501,
+            "last_step": 1600,
+            "count": 100,
+            "loss_mean": 0.12182933855801821,
+            "loss_min": 0.021931715309619904,
+            "loss_max": 0.27733010053634644,
+            "gradient_norm_mean": 0.8449437373876572,
+            "target_token_std_mean": 0.687074537575245,
+            "prediction_token_std_mean": 0.534792904406786,
+            "target_covariance_rms_mean": 0.4306657971441746
+          },
+          {
+            "first_step": 1601,
+            "last_step": 1700,
+            "count": 100,
+            "loss_mean": 0.11831116151064634,
+            "loss_min": 0.025902055203914642,
+            "loss_max": 0.3357778489589691,
+            "gradient_norm_mean": 1.006750710606575,
+            "target_token_std_mean": 0.7067128640413284,
+            "prediction_token_std_mean": 0.5804294009506702,
+            "target_covariance_rms_mean": 0.4456583049148321
+          },
+          {
+            "first_step": 1701,
+            "last_step": 1800,
+            "count": 100,
+            "loss_mean": 0.1324597105383873,
+            "loss_min": 0.027849160134792328,
+            "loss_max": 0.36253678798675537,
+            "gradient_norm_mean": 0.8623391917347908,
+            "target_token_std_mean": 0.6866160184144974,
+            "prediction_token_std_mean": 0.5123937827348709,
+            "target_covariance_rms_mean": 0.4260955901816487
+          },
+          {
+            "first_step": 1801,
+            "last_step": 1900,
+            "count": 100,
+            "loss_mean": 0.13769352938979865,
+            "loss_min": 0.02917502447962761,
+            "loss_max": 0.3622112274169922,
+            "gradient_norm_mean": 0.9786777694523334,
+            "target_token_std_mean": 0.6718640106916428,
+            "prediction_token_std_mean": 0.49910477429628375,
+            "target_covariance_rms_mean": 0.40227608047425745
+          },
+          {
+            "first_step": 1901,
+            "last_step": 2000,
+            "count": 100,
+            "loss_mean": 0.1323905512690544,
+            "loss_min": 0.030565641820430756,
+            "loss_max": 0.33036696910858154,
+            "gradient_norm_mean": 0.9392963366210461,
+            "target_token_std_mean": 0.6723576331138611,
+            "prediction_token_std_mean": 0.5107756355404853,
+            "target_covariance_rms_mean": 0.422159840092063
+          },
+          {
+            "first_step": 2001,
+            "last_step": 2100,
+            "count": 100,
+            "loss_mean": 0.14408866330981254,
+            "loss_min": 0.030324876308441162,
+            "loss_max": 0.3350858688354492,
+            "gradient_norm_mean": 1.1338463747501373,
+            "target_token_std_mean": 0.6963524532318115,
+            "prediction_token_std_mean": 0.5146520395576953,
+            "target_covariance_rms_mean": 0.4528350380808115
+          },
+          {
+            "first_step": 2101,
+            "last_step": 2200,
+            "count": 100,
+            "loss_mean": 0.1330849807150662,
+            "loss_min": 0.02140510082244873,
+            "loss_max": 0.3624914288520813,
+            "gradient_norm_mean": 1.3615526260435582,
+            "target_token_std_mean": 0.6957732966542244,
+            "prediction_token_std_mean": 0.5236898465454578,
+            "target_covariance_rms_mean": 0.4383904241025448
+          },
+          {
+            "first_step": 2201,
+            "last_step": 2223,
+            "count": 23,
+            "loss_mean": 0.1169524108586104,
+            "loss_min": 0.02003036066889763,
+            "loss_max": 0.28411218523979187,
+            "gradient_norm_mean": 1.375658015842023,
+            "target_token_std_mean": 0.7118917237157407,
+            "prediction_token_std_mean": 0.6002362150212993,
+            "target_covariance_rms_mean": 0.45560025650521985
+          }
+        ],
+        "limitation": "Token spread and prediction loss are execution diagnostics, not downstream quality or proof against pooled-feature collapse"
+      }
+    },
+    "scale0.02-seed20261010": {
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d",
+        "position_scale": 0.02
+      },
+      "settings": {
+        "seed": 20261010,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "checkpoint_sha256": "54dc94f75e6e49f8dff5302e116f21f635d4d191f36c63280122038aec2efc47",
+      "train_image_order_sha256": "604a65150857095c653556bfb85a76c4913cde644b3c36bde1997576103bea96",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d",
+          "position_scale": 0.02
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "diagnostics": {
+        "completed_steps": 2223,
+        "window": 100,
+        "sample_draws": 8892,
+        "unique_training_images": 8061,
+        "windows": [
+          {
+            "first_step": 1,
+            "last_step": 100,
+            "count": 100,
+            "loss_mean": 0.19572100967168807,
+            "loss_min": 0.09219208359718323,
+            "loss_max": 0.49197083711624146,
+            "gradient_norm_mean": 0.5180910348892211,
+            "target_token_std_mean": 0.6440255108475685,
+            "prediction_token_std_mean": 0.30982829675078394,
+            "target_covariance_rms_mean": 0.29299111641943454
+          },
+          {
+            "first_step": 101,
+            "last_step": 200,
+            "count": 100,
+            "loss_mean": 0.12904186472296714,
+            "loss_min": 0.06978721916675568,
+            "loss_max": 0.2451316863298416,
+            "gradient_norm_mean": 0.5607645672559738,
+            "target_token_std_mean": 0.6397988471388817,
+            "prediction_token_std_mean": 0.4132163003087044,
+            "target_covariance_rms_mean": 0.31505847968161105
+          },
+          {
+            "first_step": 201,
+            "last_step": 300,
+            "count": 100,
+            "loss_mean": 0.12250546213239431,
+            "loss_min": 0.03532762452960014,
+            "loss_max": 0.21575847268104553,
+            "gradient_norm_mean": 0.5780852574110031,
+            "target_token_std_mean": 0.681308254301548,
+            "prediction_token_std_mean": 0.5013147123157978,
+            "target_covariance_rms_mean": 0.3697041061520576
+          },
+          {
+            "first_step": 301,
+            "last_step": 400,
+            "count": 100,
+            "loss_mean": 0.11567649107426405,
+            "loss_min": 0.051312826573848724,
+            "loss_max": 0.19455605745315552,
+            "gradient_norm_mean": 0.6068002474308014,
+            "target_token_std_mean": 0.6911292338371277,
+            "prediction_token_std_mean": 0.5290096998214722,
+            "target_covariance_rms_mean": 0.3834690125286579
+          },
+          {
+            "first_step": 401,
+            "last_step": 500,
+            "count": 100,
+            "loss_mean": 0.1042635953053832,
+            "loss_min": 0.035627275705337524,
+            "loss_max": 0.21585780382156372,
+            "gradient_norm_mean": 0.5715009438991546,
+            "target_token_std_mean": 0.6973307129740715,
+            "prediction_token_std_mean": 0.5447916769981385,
+            "target_covariance_rms_mean": 0.40850260861217974
+          },
+          {
+            "first_step": 501,
+            "last_step": 600,
+            "count": 100,
+            "loss_mean": 0.10105229541659355,
+            "loss_min": 0.025814685970544815,
+            "loss_max": 0.2036954164505005,
+            "gradient_norm_mean": 0.5506917959451676,
+            "target_token_std_mean": 0.6921723014116288,
+            "prediction_token_std_mean": 0.5560921263694764,
+            "target_covariance_rms_mean": 0.4069469466805458
+          },
+          {
+            "first_step": 601,
+            "last_step": 700,
+            "count": 100,
+            "loss_mean": 0.11103477161377669,
+            "loss_min": 0.03084445744752884,
+            "loss_max": 0.2534044086933136,
+            "gradient_norm_mean": 0.5490494550764561,
+            "target_token_std_mean": 0.7120501035451889,
+            "prediction_token_std_mean": 0.5648074269294738,
+            "target_covariance_rms_mean": 0.42969566598534586
+          },
+          {
+            "first_step": 701,
+            "last_step": 800,
+            "count": 100,
+            "loss_mean": 0.10460831757634878,
+            "loss_min": 0.028711572289466858,
+            "loss_max": 0.25568604469299316,
+            "gradient_norm_mean": 0.5214507260918617,
+            "target_token_std_mean": 0.7029859837889672,
+            "prediction_token_std_mean": 0.5609315741062164,
+            "target_covariance_rms_mean": 0.43581791609525683
+          },
+          {
+            "first_step": 801,
+            "last_step": 900,
+            "count": 100,
+            "loss_mean": 0.10739460274577141,
+            "loss_min": 0.026045501232147217,
+            "loss_max": 0.23983821272850037,
+            "gradient_norm_mean": 0.5528239832818508,
+            "target_token_std_mean": 0.7215934333205223,
+            "prediction_token_std_mean": 0.5738875304162502,
+            "target_covariance_rms_mean": 0.4529892699420452
+          },
+          {
+            "first_step": 901,
+            "last_step": 1000,
+            "count": 100,
+            "loss_mean": 0.12349540665745735,
+            "loss_min": 0.04483497142791748,
+            "loss_max": 0.22771790623664856,
+            "gradient_norm_mean": 0.5685903733968735,
+            "target_token_std_mean": 0.7329098364710808,
+            "prediction_token_std_mean": 0.5639319559931755,
+            "target_covariance_rms_mean": 0.4519629390537739
+          },
+          {
+            "first_step": 1001,
+            "last_step": 1100,
+            "count": 100,
+            "loss_mean": 0.11608058083802461,
+            "loss_min": 0.0410769060254097,
+            "loss_max": 0.25441163778305054,
+            "gradient_norm_mean": 0.5015157179534435,
+            "target_token_std_mean": 0.7217478108406067,
+            "prediction_token_std_mean": 0.5521688477694988,
+            "target_covariance_rms_mean": 0.46713101491332054
+          },
+          {
+            "first_step": 1101,
+            "last_step": 1200,
+            "count": 100,
+            "loss_mean": 0.12017097517848015,
+            "loss_min": 0.03632521629333496,
+            "loss_max": 0.29217058420181274,
+            "gradient_norm_mean": 0.5052125498652458,
+            "target_token_std_mean": 0.6726112765073776,
+            "prediction_token_std_mean": 0.5125409592688084,
+            "target_covariance_rms_mean": 0.39489098861813543
+          },
+          {
+            "first_step": 1201,
+            "last_step": 1300,
+            "count": 100,
+            "loss_mean": 0.11697940543293953,
+            "loss_min": 0.03879690170288086,
+            "loss_max": 0.3463294506072998,
+            "gradient_norm_mean": 0.4675448928773403,
+            "target_token_std_mean": 0.7011393326520919,
+            "prediction_token_std_mean": 0.5418350291252136,
+            "target_covariance_rms_mean": 0.4395852741599083
+          },
+          {
+            "first_step": 1301,
+            "last_step": 1400,
+            "count": 100,
+            "loss_mean": 0.1194984957575798,
+            "loss_min": 0.033165715634822845,
+            "loss_max": 0.2364843487739563,
+            "gradient_norm_mean": 0.4465913160145283,
+            "target_token_std_mean": 0.715461251437664,
+            "prediction_token_std_mean": 0.5454137620329856,
+            "target_covariance_rms_mean": 0.4427181266248226
+          },
+          {
+            "first_step": 1401,
+            "last_step": 1500,
+            "count": 100,
+            "loss_mean": 0.12698269627988337,
+            "loss_min": 0.037966128438711166,
+            "loss_max": 0.2658963203430176,
+            "gradient_norm_mean": 0.47314139842987063,
+            "target_token_std_mean": 0.7305065804719925,
+            "prediction_token_std_mean": 0.5709699705243111,
+            "target_covariance_rms_mean": 0.45929616019129754
+          },
+          {
+            "first_step": 1501,
+            "last_step": 1600,
+            "count": 100,
+            "loss_mean": 0.10977063786238432,
+            "loss_min": 0.02457587793469429,
+            "loss_max": 0.21610209345817566,
+            "gradient_norm_mean": 0.4213819813728332,
+            "target_token_std_mean": 0.6957164949178696,
+            "prediction_token_std_mean": 0.5552385996282101,
+            "target_covariance_rms_mean": 0.425894076526165
+          },
+          {
+            "first_step": 1601,
+            "last_step": 1700,
+            "count": 100,
+            "loss_mean": 0.11921091228723527,
+            "loss_min": 0.04191404581069946,
+            "loss_max": 0.2803172767162323,
+            "gradient_norm_mean": 0.4384282559156418,
+            "target_token_std_mean": 0.7157290190458298,
+            "prediction_token_std_mean": 0.5579292571544647,
+            "target_covariance_rms_mean": 0.4342205011099577
+          },
+          {
+            "first_step": 1701,
+            "last_step": 1800,
+            "count": 100,
+            "loss_mean": 0.12243628839030862,
+            "loss_min": 0.030841270461678505,
+            "loss_max": 0.35268306732177734,
+            "gradient_norm_mean": 0.5737041793763638,
+            "target_token_std_mean": 0.6817118993401527,
+            "prediction_token_std_mean": 0.5306368899345398,
+            "target_covariance_rms_mean": 0.41030627235770223
+          },
+          {
+            "first_step": 1801,
+            "last_step": 1900,
+            "count": 100,
+            "loss_mean": 0.1311862764507532,
+            "loss_min": 0.03584959730505943,
+            "loss_max": 0.3043002486228943,
+            "gradient_norm_mean": 0.5240771800279618,
+            "target_token_std_mean": 0.7092090976238251,
+            "prediction_token_std_mean": 0.5270641796290875,
+            "target_covariance_rms_mean": 0.42943785816431046
+          },
+          {
+            "first_step": 1901,
+            "last_step": 2000,
+            "count": 100,
+            "loss_mean": 0.13269806064665318,
+            "loss_min": 0.04674343764781952,
+            "loss_max": 0.28768816590309143,
+            "gradient_norm_mean": 0.504979162812233,
+            "target_token_std_mean": 0.6926813626289368,
+            "prediction_token_std_mean": 0.5028516775369645,
+            "target_covariance_rms_mean": 0.40383839651942255
+          },
+          {
+            "first_step": 2001,
+            "last_step": 2100,
+            "count": 100,
+            "loss_mean": 0.13056428758427502,
+            "loss_min": 0.02285194955766201,
+            "loss_max": 0.2770444452762604,
+            "gradient_norm_mean": 0.4772558815777302,
+            "target_token_std_mean": 0.697454796731472,
+            "prediction_token_std_mean": 0.5154440270364284,
+            "target_covariance_rms_mean": 0.41649869464337824
+          },
+          {
+            "first_step": 2101,
+            "last_step": 2200,
+            "count": 100,
+            "loss_mean": 0.13200865041464568,
+            "loss_min": 0.043896373361349106,
+            "loss_max": 0.28455281257629395,
+            "gradient_norm_mean": 0.5254186365008354,
+            "target_token_std_mean": 0.7058266866207122,
+            "prediction_token_std_mean": 0.5116935428977013,
+            "target_covariance_rms_mean": 0.42109463438391687
+          },
+          {
+            "first_step": 2201,
+            "last_step": 2223,
+            "count": 23,
+            "loss_mean": 0.14016806139894153,
+            "loss_min": 0.05929231271147728,
+            "loss_max": 0.3166388273239136,
+            "gradient_norm_mean": 0.7707131608672764,
+            "target_token_std_mean": 0.7463126078895901,
+            "prediction_token_std_mean": 0.5527763366699219,
+            "target_covariance_rms_mean": 0.4746591338644857
+          }
+        ],
+        "limitation": "Token spread and prediction loss are execution diagnostics, not downstream quality or proof against pooled-feature collapse"
+      }
+    },
+    "scale0.02-seed20261011": {
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d",
+        "position_scale": 0.02
+      },
+      "settings": {
+        "seed": 20261011,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "checkpoint_sha256": "de64892b775b91ff970e18e34a7308fb11271a1c96afb65eded35ffaadc43c19",
+      "train_image_order_sha256": "edc4376d80aee3acd086bcbeccda29f3dbe1de4785b6fef31336e25b014e4bc4",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d",
+          "position_scale": 0.02
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "diagnostics": {
+        "completed_steps": 2223,
+        "window": 100,
+        "sample_draws": 8892,
+        "unique_training_images": 8112,
+        "windows": [
+          {
+            "first_step": 1,
+            "last_step": 100,
+            "count": 100,
+            "loss_mean": 0.16673935424536468,
+            "loss_min": 0.05239636078476906,
+            "loss_max": 0.5493612289428711,
+            "gradient_norm_mean": 0.6143858796358108,
+            "target_token_std_mean": 0.62991016715765,
+            "prediction_token_std_mean": 0.3691784356534481,
+            "target_covariance_rms_mean": 0.33286275044083596
+          },
+          {
+            "first_step": 101,
+            "last_step": 200,
+            "count": 100,
+            "loss_mean": 0.11199891153723002,
+            "loss_min": 0.0304725281894207,
+            "loss_max": 0.28072887659072876,
+            "gradient_norm_mean": 0.5686703532934189,
+            "target_token_std_mean": 0.6633290019631386,
+            "prediction_token_std_mean": 0.4888200652599335,
+            "target_covariance_rms_mean": 0.40821174927055837
+          },
+          {
+            "first_step": 201,
+            "last_step": 300,
+            "count": 100,
+            "loss_mean": 0.10737602334469556,
+            "loss_min": 0.029959697276353836,
+            "loss_max": 0.21180328726768494,
+            "gradient_norm_mean": 0.5124993515014649,
+            "target_token_std_mean": 0.6685899120569229,
+            "prediction_token_std_mean": 0.5196557742357254,
+            "target_covariance_rms_mean": 0.4093005812168121
+          },
+          {
+            "first_step": 301,
+            "last_step": 400,
+            "count": 100,
+            "loss_mean": 0.09909391976892948,
+            "loss_min": 0.02592884562909603,
+            "loss_max": 0.25467783212661743,
+            "gradient_norm_mean": 0.5426040950417519,
+            "target_token_std_mean": 0.6969720429182052,
+            "prediction_token_std_mean": 0.5774811354279518,
+            "target_covariance_rms_mean": 0.46175457097589967
+          },
+          {
+            "first_step": 401,
+            "last_step": 500,
+            "count": 100,
+            "loss_mean": 0.09832447614520788,
+            "loss_min": 0.01852801814675331,
+            "loss_max": 0.22405144572257996,
+            "gradient_norm_mean": 0.543016467988491,
+            "target_token_std_mean": 0.6947768938541412,
+            "prediction_token_std_mean": 0.5760792236030102,
+            "target_covariance_rms_mean": 0.452703104019165
+          },
+          {
+            "first_step": 501,
+            "last_step": 600,
+            "count": 100,
+            "loss_mean": 0.09168631928041578,
+            "loss_min": 0.0194722767919302,
+            "loss_max": 0.2166014015674591,
+            "gradient_norm_mean": 0.5182597230374814,
+            "target_token_std_mean": 0.7052082031965256,
+            "prediction_token_std_mean": 0.59517045378685,
+            "target_covariance_rms_mean": 0.4673121275007725
+          },
+          {
+            "first_step": 601,
+            "last_step": 700,
+            "count": 100,
+            "loss_mean": 0.09451561847701669,
+            "loss_min": 0.017365433275699615,
+            "loss_max": 0.2678299844264984,
+            "gradient_norm_mean": 0.4824352112412453,
+            "target_token_std_mean": 0.7256742146611214,
+            "prediction_token_std_mean": 0.6175707806646824,
+            "target_covariance_rms_mean": 0.481326145529747
+          },
+          {
+            "first_step": 701,
+            "last_step": 800,
+            "count": 100,
+            "loss_mean": 0.1047171032242477,
+            "loss_min": 0.01755334623157978,
+            "loss_max": 0.24338413774967194,
+            "gradient_norm_mean": 0.5008185240626335,
+            "target_token_std_mean": 0.7129698571562767,
+            "prediction_token_std_mean": 0.5814642217755318,
+            "target_covariance_rms_mean": 0.4664533431828022
+          },
+          {
+            "first_step": 801,
+            "last_step": 900,
+            "count": 100,
+            "loss_mean": 0.09010218625888228,
+            "loss_min": 0.01676942966878414,
+            "loss_max": 0.23335793614387512,
+            "gradient_norm_mean": 0.44501308232545855,
+            "target_token_std_mean": 0.7168266475200653,
+            "prediction_token_std_mean": 0.6043039038777351,
+            "target_covariance_rms_mean": 0.4766125920414925
+          },
+          {
+            "first_step": 901,
+            "last_step": 1000,
+            "count": 100,
+            "loss_mean": 0.10658083081245423,
+            "loss_min": 0.026327554136514664,
+            "loss_max": 0.27396440505981445,
+            "gradient_norm_mean": 0.48094784215092656,
+            "target_token_std_mean": 0.7286692759394646,
+            "prediction_token_std_mean": 0.5960444754362106,
+            "target_covariance_rms_mean": 0.4804134391248226
+          },
+          {
+            "first_step": 1001,
+            "last_step": 1100,
+            "count": 100,
+            "loss_mean": 0.1009748089313507,
+            "loss_min": 0.020675871521234512,
+            "loss_max": 0.2965658903121948,
+            "gradient_norm_mean": 0.5069188363850117,
+            "target_token_std_mean": 0.7140423014760018,
+            "prediction_token_std_mean": 0.6020333480834961,
+            "target_covariance_rms_mean": 0.4567427110671997
+          },
+          {
+            "first_step": 1101,
+            "last_step": 1200,
+            "count": 100,
+            "loss_mean": 0.11513550322502851,
+            "loss_min": 0.032420385628938675,
+            "loss_max": 0.26003509759902954,
+            "gradient_norm_mean": 0.5817053140699864,
+            "target_token_std_mean": 0.7220366838574409,
+            "prediction_token_std_mean": 0.5756525406241417,
+            "target_covariance_rms_mean": 0.47803363151848316
+          },
+          {
+            "first_step": 1201,
+            "last_step": 1300,
+            "count": 100,
+            "loss_mean": 0.11984046479687095,
+            "loss_min": 0.028003541752696037,
+            "loss_max": 0.27347010374069214,
+            "gradient_norm_mean": 0.7124792593717575,
+            "target_token_std_mean": 0.7340838271379471,
+            "prediction_token_std_mean": 0.5894733160734177,
+            "target_covariance_rms_mean": 0.4953159263730049
+          },
+          {
+            "first_step": 1301,
+            "last_step": 1400,
+            "count": 100,
+            "loss_mean": 0.12811528082937002,
+            "loss_min": 0.02918984368443489,
+            "loss_max": 0.31921666860580444,
+            "gradient_norm_mean": 0.6835384559631348,
+            "target_token_std_mean": 0.7265903110802173,
+            "prediction_token_std_mean": 0.5753107991814613,
+            "target_covariance_rms_mean": 0.4739708879776299
+          },
+          {
+            "first_step": 1401,
+            "last_step": 1500,
+            "count": 100,
+            "loss_mean": 0.12296705573797226,
+            "loss_min": 0.023128867149353027,
+            "loss_max": 0.3118019104003906,
+            "gradient_norm_mean": 0.6347083811461925,
+            "target_token_std_mean": 0.7308292599022388,
+            "prediction_token_std_mean": 0.5745646791160106,
+            "target_covariance_rms_mean": 0.4784342265501618
+          },
+          {
+            "first_step": 1501,
+            "last_step": 1600,
+            "count": 100,
+            "loss_mean": 0.1287137844413519,
+            "loss_min": 0.03170524537563324,
+            "loss_max": 0.3262843191623688,
+            "gradient_norm_mean": 0.9807971028983593,
+            "target_token_std_mean": 0.7511021333932877,
+            "prediction_token_std_mean": 0.5805888816714286,
+            "target_covariance_rms_mean": 0.49486983597278594
+          },
+          {
+            "first_step": 1601,
+            "last_step": 1700,
+            "count": 100,
+            "loss_mean": 0.14142602996900677,
+            "loss_min": 0.025369105860590935,
+            "loss_max": 0.31446123123168945,
+            "gradient_norm_mean": 1.1335142016410829,
+            "target_token_std_mean": 0.7357368582487106,
+            "prediction_token_std_mean": 0.545695420652628,
+            "target_covariance_rms_mean": 0.4690529322624207
+          },
+          {
+            "first_step": 1701,
+            "last_step": 1800,
+            "count": 100,
+            "loss_mean": 0.13258939281105994,
+            "loss_min": 0.015732455998659134,
+            "loss_max": 0.4548523426055908,
+            "gradient_norm_mean": 1.1785800942778588,
+            "target_token_std_mean": 0.7446948572993278,
+            "prediction_token_std_mean": 0.5764404085278511,
+            "target_covariance_rms_mean": 0.48331449314951896
+          },
+          {
+            "first_step": 1801,
+            "last_step": 1900,
+            "count": 100,
+            "loss_mean": 0.14694527990184725,
+            "loss_min": 0.014969940297305584,
+            "loss_max": 0.3646644353866577,
+            "gradient_norm_mean": 0.7352111341059208,
+            "target_token_std_mean": 0.7407639986276626,
+            "prediction_token_std_mean": 0.5521577572822571,
+            "target_covariance_rms_mean": 0.48275263115763667
+          },
+          {
+            "first_step": 1901,
+            "last_step": 2000,
+            "count": 100,
+            "loss_mean": 0.1344187065400183,
+            "loss_min": 0.017215361818671227,
+            "loss_max": 0.35635191202163696,
+            "gradient_norm_mean": 0.7243561072647572,
+            "target_token_std_mean": 0.7512984818220139,
+            "prediction_token_std_mean": 0.5786547017097473,
+            "target_covariance_rms_mean": 0.4774602983891964
+          },
+          {
+            "first_step": 2001,
+            "last_step": 2100,
+            "count": 100,
+            "loss_mean": 0.13523333236575127,
+            "loss_min": 0.015636786818504333,
+            "loss_max": 0.3045310974121094,
+            "gradient_norm_mean": 1.39743965446949,
+            "target_token_std_mean": 0.7560509544610977,
+            "prediction_token_std_mean": 0.5876244407892227,
+            "target_covariance_rms_mean": 0.4817419443279505
+          },
+          {
+            "first_step": 2101,
+            "last_step": 2200,
+            "count": 100,
+            "loss_mean": 0.13537189941853284,
+            "loss_min": 0.03202104941010475,
+            "loss_max": 0.34584540128707886,
+            "gradient_norm_mean": 1.000712430179119,
+            "target_token_std_mean": 0.7617882168293,
+            "prediction_token_std_mean": 0.5876240879297256,
+            "target_covariance_rms_mean": 0.47483871310949327
+          },
+          {
+            "first_step": 2201,
+            "last_step": 2223,
+            "count": 23,
+            "loss_mean": 0.11176600161453952,
+            "loss_min": 0.04344698041677475,
+            "loss_max": 0.20508736371994019,
+            "gradient_norm_mean": 0.7198299208412999,
+            "target_token_std_mean": 0.7345523808313452,
+            "prediction_token_std_mean": 0.5922629535198212,
+            "target_covariance_rms_mean": 0.4548789185026418
+          }
+        ],
+        "limitation": "Token spread and prediction loss are execution diagnostics, not downstream quality or proof against pooled-feature collapse"
+      }
+    },
+    "scale1.0-seed20261003": {
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261003,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "checkpoint_sha256": "b88481328e6484c76d2588405b90170c7874b9509b71641b46d74b8d07f7b005",
+      "train_image_order_sha256": "0e5114fff2e4ff0b6a7096c7f41f3b34ce2df8cca6b0a03ccc4424af36ddf260",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "diagnostics": {
+        "completed_steps": 2223,
+        "window": 100,
+        "sample_draws": 8892,
+        "unique_training_images": 8072,
+        "windows": [
+          {
+            "first_step": 1,
+            "last_step": 100,
+            "count": 100,
+            "loss_mean": 0.15187304794788362,
+            "loss_min": 0.06184835731983185,
+            "loss_max": 0.5203785300254822,
+            "gradient_norm_mean": 0.3298527066409588,
+            "target_token_std_mean": 0.37260119780898093,
+            "prediction_token_std_mean": 0.13542285263538362,
+            "target_covariance_rms_mean": 0.1087428267300129
+          },
+          {
+            "first_step": 101,
+            "last_step": 200,
+            "count": 100,
+            "loss_mean": 0.12457508891820908,
+            "loss_min": 0.05003459006547928,
+            "loss_max": 0.2476155161857605,
+            "gradient_norm_mean": 0.34291124403476714,
+            "target_token_std_mean": 0.4829143816232681,
+            "prediction_token_std_mean": 0.2505671179294586,
+            "target_covariance_rms_mean": 0.23984272710978985
+          },
+          {
+            "first_step": 201,
+            "last_step": 300,
+            "count": 100,
+            "loss_mean": 0.1408852481469512,
+            "loss_min": 0.03346880152821541,
+            "loss_max": 0.28318578004837036,
+            "gradient_norm_mean": 0.3850526463985443,
+            "target_token_std_mean": 0.5550081565976143,
+            "prediction_token_std_mean": 0.3215930515527725,
+            "target_covariance_rms_mean": 0.3373240169882774
+          },
+          {
+            "first_step": 301,
+            "last_step": 400,
+            "count": 100,
+            "loss_mean": 0.13516635470092297,
+            "loss_min": 0.042806025594472885,
+            "loss_max": 0.2574199438095093,
+            "gradient_norm_mean": 0.4282363824546337,
+            "target_token_std_mean": 0.606353765875101,
+            "prediction_token_std_mean": 0.40502493023872377,
+            "target_covariance_rms_mean": 0.38991350144147874
+          },
+          {
+            "first_step": 401,
+            "last_step": 500,
+            "count": 100,
+            "loss_mean": 0.1511865310743451,
+            "loss_min": 0.04830126464366913,
+            "loss_max": 0.35911625623703003,
+            "gradient_norm_mean": 0.456694525629282,
+            "target_token_std_mean": 0.6097148537635804,
+            "prediction_token_std_mean": 0.39262335605919363,
+            "target_covariance_rms_mean": 0.3895789371430874
+          },
+          {
+            "first_step": 501,
+            "last_step": 600,
+            "count": 100,
+            "loss_mean": 0.1454901187121868,
+            "loss_min": 0.04100668802857399,
+            "loss_max": 0.3573562204837799,
+            "gradient_norm_mean": 0.4646115769445896,
+            "target_token_std_mean": 0.6447938296198845,
+            "prediction_token_std_mean": 0.45783928453922274,
+            "target_covariance_rms_mean": 0.416694445759058
+          },
+          {
+            "first_step": 601,
+            "last_step": 700,
+            "count": 100,
+            "loss_mean": 0.15410204112529755,
+            "loss_min": 0.05908579379320145,
+            "loss_max": 0.4446493983268738,
+            "gradient_norm_mean": 0.4782302317023277,
+            "target_token_std_mean": 0.6460364136099815,
+            "prediction_token_std_mean": 0.45803697675466537,
+            "target_covariance_rms_mean": 0.4005939118564129
+          },
+          {
+            "first_step": 701,
+            "last_step": 800,
+            "count": 100,
+            "loss_mean": 0.14380311608314514,
+            "loss_min": 0.0348258912563324,
+            "loss_max": 0.28268322348594666,
+            "gradient_norm_mean": 0.4572717197239399,
+            "target_token_std_mean": 0.6534415009617806,
+            "prediction_token_std_mean": 0.466577073931694,
+            "target_covariance_rms_mean": 0.3814984513819218
+          },
+          {
+            "first_step": 801,
+            "last_step": 900,
+            "count": 100,
+            "loss_mean": 0.13585447564721106,
+            "loss_min": 0.03964869678020477,
+            "loss_max": 0.2730911076068878,
+            "gradient_norm_mean": 0.46273429855704307,
+            "target_token_std_mean": 0.6590627977252006,
+            "prediction_token_std_mean": 0.4870815062522888,
+            "target_covariance_rms_mean": 0.36906773298978807
+          },
+          {
+            "first_step": 901,
+            "last_step": 1000,
+            "count": 100,
+            "loss_mean": 0.1328509434312582,
+            "loss_min": 0.0435052365064621,
+            "loss_max": 0.3333565890789032,
+            "gradient_norm_mean": 0.4423143084347248,
+            "target_token_std_mean": 0.6751126798987389,
+            "prediction_token_std_mean": 0.5181114965677261,
+            "target_covariance_rms_mean": 0.37687793597579
+          },
+          {
+            "first_step": 1001,
+            "last_step": 1100,
+            "count": 100,
+            "loss_mean": 0.12723125234246255,
+            "loss_min": 0.038938745856285095,
+            "loss_max": 0.27086713910102844,
+            "gradient_norm_mean": 0.48024508625268936,
+            "target_token_std_mean": 0.685240375995636,
+            "prediction_token_std_mean": 0.5246343523263931,
+            "target_covariance_rms_mean": 0.37157076865434646
+          },
+          {
+            "first_step": 1101,
+            "last_step": 1200,
+            "count": 100,
+            "loss_mean": 0.12214031301438809,
+            "loss_min": 0.04081869497895241,
+            "loss_max": 0.23308785259723663,
+            "gradient_norm_mean": 0.4712442807853222,
+            "target_token_std_mean": 0.6899808695912362,
+            "prediction_token_std_mean": 0.5401500123739242,
+            "target_covariance_rms_mean": 0.36966249734163287
+          },
+          {
+            "first_step": 1201,
+            "last_step": 1300,
+            "count": 100,
+            "loss_mean": 0.12057223808020354,
+            "loss_min": 0.039426036179065704,
+            "loss_max": 0.23041486740112305,
+            "gradient_norm_mean": 0.4509827122092247,
+            "target_token_std_mean": 0.6990284776687622,
+            "prediction_token_std_mean": 0.5550046876072884,
+            "target_covariance_rms_mean": 0.3736866270005703
+          },
+          {
+            "first_step": 1301,
+            "last_step": 1400,
+            "count": 100,
+            "loss_mean": 0.12199825959280133,
+            "loss_min": 0.02568220905959606,
+            "loss_max": 0.22338387370109558,
+            "gradient_norm_mean": 0.4318267396092415,
+            "target_token_std_mean": 0.7110346508026123,
+            "prediction_token_std_mean": 0.5639995011687279,
+            "target_covariance_rms_mean": 0.38286789774894714
+          },
+          {
+            "first_step": 1401,
+            "last_step": 1500,
+            "count": 100,
+            "loss_mean": 0.11323304051533341,
+            "loss_min": 0.029080478474497795,
+            "loss_max": 0.23885977268218994,
+            "gradient_norm_mean": 0.4289311096072197,
+            "target_token_std_mean": 0.7113738340139389,
+            "prediction_token_std_mean": 0.5653142610192299,
+            "target_covariance_rms_mean": 0.3755172367393971
+          },
+          {
+            "first_step": 1501,
+            "last_step": 1600,
+            "count": 100,
+            "loss_mean": 0.12391143716871739,
+            "loss_min": 0.03180908411741257,
+            "loss_max": 0.2521180808544159,
+            "gradient_norm_mean": 0.42233190894126893,
+            "target_token_std_mean": 0.7146504777669906,
+            "prediction_token_std_mean": 0.5650225627422333,
+            "target_covariance_rms_mean": 0.37742282435297964
+          },
+          {
+            "first_step": 1601,
+            "last_step": 1700,
+            "count": 100,
+            "loss_mean": 0.11784499783068896,
+            "loss_min": 0.05734781548380852,
+            "loss_max": 0.22397638857364655,
+            "gradient_norm_mean": 0.41340999156236646,
+            "target_token_std_mean": 0.7040246945619583,
+            "prediction_token_std_mean": 0.5622563886642457,
+            "target_covariance_rms_mean": 0.3532467116415501
+          },
+          {
+            "first_step": 1701,
+            "last_step": 1800,
+            "count": 100,
+            "loss_mean": 0.1310518966987729,
+            "loss_min": 0.054440028965473175,
+            "loss_max": 0.24447278678417206,
+            "gradient_norm_mean": 0.4023215343058109,
+            "target_token_std_mean": 0.7213556027412414,
+            "prediction_token_std_mean": 0.5673768699169159,
+            "target_covariance_rms_mean": 0.37478495940566064
+          },
+          {
+            "first_step": 1801,
+            "last_step": 1900,
+            "count": 100,
+            "loss_mean": 0.1334036684036255,
+            "loss_min": 0.03961370885372162,
+            "loss_max": 0.3103458881378174,
+            "gradient_norm_mean": 0.46478610411286353,
+            "target_token_std_mean": 0.7033652228116989,
+            "prediction_token_std_mean": 0.5458427798748017,
+            "target_covariance_rms_mean": 0.3623702646791935
+          },
+          {
+            "first_step": 1901,
+            "last_step": 2000,
+            "count": 100,
+            "loss_mean": 0.12536074742674827,
+            "loss_min": 0.020782172679901123,
+            "loss_max": 0.26840677857398987,
+            "gradient_norm_mean": 0.48468051239848137,
+            "target_token_std_mean": 0.6986784434318543,
+            "prediction_token_std_mean": 0.5528982046246529,
+            "target_covariance_rms_mean": 0.3670823635160923
+          },
+          {
+            "first_step": 2001,
+            "last_step": 2100,
+            "count": 100,
+            "loss_mean": 0.12185239415615796,
+            "loss_min": 0.047450195997953415,
+            "loss_max": 0.28987064957618713,
+            "gradient_norm_mean": 0.43071245729923247,
+            "target_token_std_mean": 0.6879868224263191,
+            "prediction_token_std_mean": 0.53619707852602,
+            "target_covariance_rms_mean": 0.3610758921504021
+          },
+          {
+            "first_step": 2101,
+            "last_step": 2200,
+            "count": 100,
+            "loss_mean": 0.11867315050214529,
+            "loss_min": 0.027752533555030823,
+            "loss_max": 0.25870445370674133,
+            "gradient_norm_mean": 0.45028555929660796,
+            "target_token_std_mean": 0.7034165424108505,
+            "prediction_token_std_mean": 0.5591006246209145,
+            "target_covariance_rms_mean": 0.3653432911634445
+          },
+          {
+            "first_step": 2201,
+            "last_step": 2223,
+            "count": 23,
+            "loss_mean": 0.11224467210147691,
+            "loss_min": 0.05811992287635803,
+            "loss_max": 0.20101536810398102,
+            "gradient_norm_mean": 0.41205664238204126,
+            "target_token_std_mean": 0.7128798365592957,
+            "prediction_token_std_mean": 0.5684292679247649,
+            "target_covariance_rms_mean": 0.3567487610423047
+          }
+        ],
+        "limitation": "Token spread and prediction loss are execution diagnostics, not downstream quality or proof against pooled-feature collapse"
+      }
+    },
+    "scale1.0-seed20261010": {
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261010,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "checkpoint_sha256": "aca797f03e5159fc497430e5affe78a3a0cbe23e2d238dccbcabb010c3bb744e",
+      "train_image_order_sha256": "604a65150857095c653556bfb85a76c4913cde644b3c36bde1997576103bea96",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "diagnostics": {
+        "completed_steps": 2223,
+        "window": 100,
+        "sample_draws": 8892,
+        "unique_training_images": 8061,
+        "windows": [
+          {
+            "first_step": 1,
+            "last_step": 100,
+            "count": 100,
+            "loss_mean": 0.13427267372608184,
+            "loss_min": 0.06307308375835419,
+            "loss_max": 0.4765457808971405,
+            "gradient_norm_mean": 0.33065752282738686,
+            "target_token_std_mean": 0.37407889604568484,
+            "prediction_token_std_mean": 0.13959175445139407,
+            "target_covariance_rms_mean": 0.09418523769825697
+          },
+          {
+            "first_step": 101,
+            "last_step": 200,
+            "count": 100,
+            "loss_mean": 0.09530919630080462,
+            "loss_min": 0.04948852211236954,
+            "loss_max": 0.1994752734899521,
+            "gradient_norm_mean": 0.36451933681964876,
+            "target_token_std_mean": 0.483186936378479,
+            "prediction_token_std_mean": 0.2935680231451988,
+            "target_covariance_rms_mean": 0.20767753042280673
+          },
+          {
+            "first_step": 201,
+            "last_step": 300,
+            "count": 100,
+            "loss_mean": 0.08787577655166387,
+            "loss_min": 0.02289431355893612,
+            "loss_max": 0.2606281042098999,
+            "gradient_norm_mean": 0.38724997073411943,
+            "target_token_std_mean": 0.5427835074067116,
+            "prediction_token_std_mean": 0.39383917927742007,
+            "target_covariance_rms_mean": 0.29829650949686765
+          },
+          {
+            "first_step": 301,
+            "last_step": 400,
+            "count": 100,
+            "loss_mean": 0.08106278240680695,
+            "loss_min": 0.03187049552798271,
+            "loss_max": 0.22125762701034546,
+            "gradient_norm_mean": 0.3431257925182581,
+            "target_token_std_mean": 0.5257096618413926,
+            "prediction_token_std_mean": 0.38973232097923755,
+            "target_covariance_rms_mean": 0.28416011549532416
+          },
+          {
+            "first_step": 401,
+            "last_step": 500,
+            "count": 100,
+            "loss_mean": 0.07712414084002375,
+            "loss_min": 0.023878565058112144,
+            "loss_max": 0.21770167350769043,
+            "gradient_norm_mean": 0.34686766922473905,
+            "target_token_std_mean": 0.5141730910539627,
+            "prediction_token_std_mean": 0.37738222688436507,
+            "target_covariance_rms_mean": 0.2759797815605998
+          },
+          {
+            "first_step": 501,
+            "last_step": 600,
+            "count": 100,
+            "loss_mean": 0.07549510963261127,
+            "loss_min": 0.021019253879785538,
+            "loss_max": 0.16504377126693726,
+            "gradient_norm_mean": 0.30556874752044677,
+            "target_token_std_mean": 0.5123898068070412,
+            "prediction_token_std_mean": 0.3815139991044998,
+            "target_covariance_rms_mean": 0.268827193826437
+          },
+          {
+            "first_step": 601,
+            "last_step": 700,
+            "count": 100,
+            "loss_mean": 0.08117427997291088,
+            "loss_min": 0.025747638195753098,
+            "loss_max": 0.17359960079193115,
+            "gradient_norm_mean": 0.3248825065791607,
+            "target_token_std_mean": 0.531217525601387,
+            "prediction_token_std_mean": 0.384326703697443,
+            "target_covariance_rms_mean": 0.2827954678982496
+          },
+          {
+            "first_step": 701,
+            "last_step": 800,
+            "count": 100,
+            "loss_mean": 0.08718687457963824,
+            "loss_min": 0.024303242564201355,
+            "loss_max": 0.21844464540481567,
+            "gradient_norm_mean": 0.3287292017787695,
+            "target_token_std_mean": 0.5428459709882736,
+            "prediction_token_std_mean": 0.40367603689432147,
+            "target_covariance_rms_mean": 0.29420788168907164
+          },
+          {
+            "first_step": 801,
+            "last_step": 900,
+            "count": 100,
+            "loss_mean": 0.10704642437398433,
+            "loss_min": 0.03171185776591301,
+            "loss_max": 0.25695544481277466,
+            "gradient_norm_mean": 0.3596492360532284,
+            "target_token_std_mean": 0.5937546867132187,
+            "prediction_token_std_mean": 0.4289399719238281,
+            "target_covariance_rms_mean": 0.32693945795297624
+          },
+          {
+            "first_step": 901,
+            "last_step": 1000,
+            "count": 100,
+            "loss_mean": 0.11144441839307546,
+            "loss_min": 0.04442597180604935,
+            "loss_max": 0.2709059715270996,
+            "gradient_norm_mean": 0.34351096257567404,
+            "target_token_std_mean": 0.592732806801796,
+            "prediction_token_std_mean": 0.41108977362513544,
+            "target_covariance_rms_mean": 0.3227413882315159
+          },
+          {
+            "first_step": 1001,
+            "last_step": 1100,
+            "count": 100,
+            "loss_mean": 0.11551250897347927,
+            "loss_min": 0.03262294456362724,
+            "loss_max": 0.28711387515068054,
+            "gradient_norm_mean": 0.3459925527125597,
+            "target_token_std_mean": 0.6155261757969857,
+            "prediction_token_std_mean": 0.433691860884428,
+            "target_covariance_rms_mean": 0.3279611027240753
+          },
+          {
+            "first_step": 1101,
+            "last_step": 1200,
+            "count": 100,
+            "loss_mean": 0.1293311770260334,
+            "loss_min": 0.05310621112585068,
+            "loss_max": 0.27127015590667725,
+            "gradient_norm_mean": 0.41671679973602294,
+            "target_token_std_mean": 0.614270952641964,
+            "prediction_token_std_mean": 0.4338684293627739,
+            "target_covariance_rms_mean": 0.3187419211864471
+          },
+          {
+            "first_step": 1201,
+            "last_step": 1300,
+            "count": 100,
+            "loss_mean": 0.12131057795137166,
+            "loss_min": 0.04447367414832115,
+            "loss_max": 0.23307165503501892,
+            "gradient_norm_mean": 0.40676708370447157,
+            "target_token_std_mean": 0.6272064366936684,
+            "prediction_token_std_mean": 0.4537810358405113,
+            "target_covariance_rms_mean": 0.32460591971874236
+          },
+          {
+            "first_step": 1301,
+            "last_step": 1400,
+            "count": 100,
+            "loss_mean": 0.11598258696496487,
+            "loss_min": 0.04021396487951279,
+            "loss_max": 0.22503075003623962,
+            "gradient_norm_mean": 0.41166843682527543,
+            "target_token_std_mean": 0.6298099035024642,
+            "prediction_token_std_mean": 0.46873038619756696,
+            "target_covariance_rms_mean": 0.3188105322420597
+          },
+          {
+            "first_step": 1401,
+            "last_step": 1500,
+            "count": 100,
+            "loss_mean": 0.11639980878680944,
+            "loss_min": 0.03714698180556297,
+            "loss_max": 0.30277687311172485,
+            "gradient_norm_mean": 0.4089396859705448,
+            "target_token_std_mean": 0.6556739273667336,
+            "prediction_token_std_mean": 0.501077208518982,
+            "target_covariance_rms_mean": 0.3439559206366539
+          },
+          {
+            "first_step": 1501,
+            "last_step": 1600,
+            "count": 100,
+            "loss_mean": 0.10966126810759307,
+            "loss_min": 0.04441055655479431,
+            "loss_max": 0.24512912333011627,
+            "gradient_norm_mean": 0.43231619253754616,
+            "target_token_std_mean": 0.652913633286953,
+            "prediction_token_std_mean": 0.5096856316924095,
+            "target_covariance_rms_mean": 0.3311364458501339
+          },
+          {
+            "first_step": 1601,
+            "last_step": 1700,
+            "count": 100,
+            "loss_mean": 0.10029826033860445,
+            "loss_min": 0.03962215781211853,
+            "loss_max": 0.19267772138118744,
+            "gradient_norm_mean": 0.37836185842752457,
+            "target_token_std_mean": 0.6524270060658455,
+            "prediction_token_std_mean": 0.5107933926582336,
+            "target_covariance_rms_mean": 0.3163158552348614
+          },
+          {
+            "first_step": 1701,
+            "last_step": 1800,
+            "count": 100,
+            "loss_mean": 0.10672404270619154,
+            "loss_min": 0.03708469495177269,
+            "loss_max": 0.24148890376091003,
+            "gradient_norm_mean": 0.42803062841296197,
+            "target_token_std_mean": 0.6611628025770188,
+            "prediction_token_std_mean": 0.5261648106575012,
+            "target_covariance_rms_mean": 0.33290115669369696
+          },
+          {
+            "first_step": 1801,
+            "last_step": 1900,
+            "count": 100,
+            "loss_mean": 0.09941227219998837,
+            "loss_min": 0.033752042800188065,
+            "loss_max": 0.1846846342086792,
+            "gradient_norm_mean": 0.43117028519511225,
+            "target_token_std_mean": 0.6530937722325325,
+            "prediction_token_std_mean": 0.5222913548350334,
+            "target_covariance_rms_mean": 0.30964274272322656
+          },
+          {
+            "first_step": 1901,
+            "last_step": 2000,
+            "count": 100,
+            "loss_mean": 0.09703144166618585,
+            "loss_min": 0.03873451054096222,
+            "loss_max": 0.16768592596054077,
+            "gradient_norm_mean": 0.38534237116575243,
+            "target_token_std_mean": 0.6547475117444992,
+            "prediction_token_std_mean": 0.5216995683312416,
+            "target_covariance_rms_mean": 0.30939194291830063
+          },
+          {
+            "first_step": 2001,
+            "last_step": 2100,
+            "count": 100,
+            "loss_mean": 0.09352149493992329,
+            "loss_min": 0.03502507507801056,
+            "loss_max": 0.17381958663463593,
+            "gradient_norm_mean": 0.391620647162199,
+            "target_token_std_mean": 0.6465705028176307,
+            "prediction_token_std_mean": 0.5221561121940613,
+            "target_covariance_rms_mean": 0.2962686996161938
+          },
+          {
+            "first_step": 2101,
+            "last_step": 2200,
+            "count": 100,
+            "loss_mean": 0.0953946627676487,
+            "loss_min": 0.047546353191137314,
+            "loss_max": 0.19911958277225494,
+            "gradient_norm_mean": 0.40817971125245095,
+            "target_token_std_mean": 0.651536894440651,
+            "prediction_token_std_mean": 0.5199476957321167,
+            "target_covariance_rms_mean": 0.29293572694063186
+          },
+          {
+            "first_step": 2201,
+            "last_step": 2223,
+            "count": 23,
+            "loss_mean": 0.08525078792286955,
+            "loss_min": 0.04316447675228119,
+            "loss_max": 0.15783998370170593,
+            "gradient_norm_mean": 0.3890478455502054,
+            "target_token_std_mean": 0.6556524556616078,
+            "prediction_token_std_mean": 0.5434874723786893,
+            "target_covariance_rms_mean": 0.30727309182934137
+          }
+        ],
+        "limitation": "Token spread and prediction loss are execution diagnostics, not downstream quality or proof against pooled-feature collapse"
+      }
+    },
+    "scale1.0-seed20261011": {
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261011,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "checkpoint_sha256": "13a794a7aab8c5745f94891870c4322e6e74b480d37bd4032a1a912de4ab5741",
+      "train_image_order_sha256": "edc4376d80aee3acd086bcbeccda29f3dbe1de4785b6fef31336e25b014e4bc4",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "diagnostics": {
+        "completed_steps": 2223,
+        "window": 100,
+        "sample_draws": 8892,
+        "unique_training_images": 8112,
+        "windows": [
+          {
+            "first_step": 1,
+            "last_step": 100,
+            "count": 100,
+            "loss_mean": 0.14037185296416282,
+            "loss_min": 0.045355092734098434,
+            "loss_max": 0.5610713958740234,
+            "gradient_norm_mean": 0.3380388753116131,
+            "target_token_std_mean": 0.39304810523986816,
+            "prediction_token_std_mean": 0.15729336254298687,
+            "target_covariance_rms_mean": 0.11226829249411821
+          },
+          {
+            "first_step": 101,
+            "last_step": 200,
+            "count": 100,
+            "loss_mean": 0.09196451164782048,
+            "loss_min": 0.03819695860147476,
+            "loss_max": 0.26964661478996277,
+            "gradient_norm_mean": 0.3650968642532825,
+            "target_token_std_mean": 0.5194395065307618,
+            "prediction_token_std_mean": 0.35359613329172135,
+            "target_covariance_rms_mean": 0.2593535679206252
+          },
+          {
+            "first_step": 201,
+            "last_step": 300,
+            "count": 100,
+            "loss_mean": 0.10359898492693902,
+            "loss_min": 0.029665660113096237,
+            "loss_max": 0.25302159786224365,
+            "gradient_norm_mean": 0.4322379112243652,
+            "target_token_std_mean": 0.5505648851394653,
+            "prediction_token_std_mean": 0.39755290672183036,
+            "target_covariance_rms_mean": 0.3101933930814266
+          },
+          {
+            "first_step": 301,
+            "last_step": 400,
+            "count": 100,
+            "loss_mean": 0.11114615762606263,
+            "loss_min": 0.0307015310972929,
+            "loss_max": 0.23157228529453278,
+            "gradient_norm_mean": 0.4529985322058201,
+            "target_token_std_mean": 0.5936701354384423,
+            "prediction_token_std_mean": 0.44110006347298625,
+            "target_covariance_rms_mean": 0.3702263418585062
+          },
+          {
+            "first_step": 401,
+            "last_step": 500,
+            "count": 100,
+            "loss_mean": 0.13233578097075224,
+            "loss_min": 0.0339357927441597,
+            "loss_max": 0.2907484471797943,
+            "gradient_norm_mean": 0.5010551726818084,
+            "target_token_std_mean": 0.6285200753808021,
+            "prediction_token_std_mean": 0.46671362444758413,
+            "target_covariance_rms_mean": 0.4086782924458385
+          },
+          {
+            "first_step": 501,
+            "last_step": 600,
+            "count": 100,
+            "loss_mean": 0.1140043674968183,
+            "loss_min": 0.028011923655867577,
+            "loss_max": 0.29013222455978394,
+            "gradient_norm_mean": 0.44675946459174154,
+            "target_token_std_mean": 0.6257520812749863,
+            "prediction_token_std_mean": 0.4740710324048996,
+            "target_covariance_rms_mean": 0.392890057861805
+          },
+          {
+            "first_step": 601,
+            "last_step": 700,
+            "count": 100,
+            "loss_mean": 0.12678216196596623,
+            "loss_min": 0.027437135577201843,
+            "loss_max": 0.2881717085838318,
+            "gradient_norm_mean": 0.48641837820410727,
+            "target_token_std_mean": 0.655571420788765,
+            "prediction_token_std_mean": 0.487916199862957,
+            "target_covariance_rms_mean": 0.4111847753822804
+          },
+          {
+            "first_step": 701,
+            "last_step": 800,
+            "count": 100,
+            "loss_mean": 0.1459507393091917,
+            "loss_min": 0.029611386358737946,
+            "loss_max": 0.335358202457428,
+            "gradient_norm_mean": 0.553833473175764,
+            "target_token_std_mean": 0.6874069014191627,
+            "prediction_token_std_mean": 0.5231632746756076,
+            "target_covariance_rms_mean": 0.4513586838543415
+          },
+          {
+            "first_step": 801,
+            "last_step": 900,
+            "count": 100,
+            "loss_mean": 0.13082828998565674,
+            "loss_min": 0.031453631818294525,
+            "loss_max": 0.3124452233314514,
+            "gradient_norm_mean": 0.5073799520730973,
+            "target_token_std_mean": 0.6987119019031525,
+            "prediction_token_std_mean": 0.5416859868168831,
+            "target_covariance_rms_mean": 0.4361736913025379
+          },
+          {
+            "first_step": 901,
+            "last_step": 1000,
+            "count": 100,
+            "loss_mean": 0.14279854841530323,
+            "loss_min": 0.033817365765571594,
+            "loss_max": 0.2950016260147095,
+            "gradient_norm_mean": 0.5366555236279964,
+            "target_token_std_mean": 0.7172377640008927,
+            "prediction_token_std_mean": 0.5435210573673248,
+            "target_covariance_rms_mean": 0.4376390461623669
+          },
+          {
+            "first_step": 1001,
+            "last_step": 1100,
+            "count": 100,
+            "loss_mean": 0.13156983423978091,
+            "loss_min": 0.045938506722450256,
+            "loss_max": 0.27612724900245667,
+            "gradient_norm_mean": 0.496564669907093,
+            "target_token_std_mean": 0.7071182510256767,
+            "prediction_token_std_mean": 0.5656993800401687,
+            "target_covariance_rms_mean": 0.41301857396960256
+          },
+          {
+            "first_step": 1101,
+            "last_step": 1200,
+            "count": 100,
+            "loss_mean": 0.13197319999337195,
+            "loss_min": 0.04067692160606384,
+            "loss_max": 0.2486211657524109,
+            "gradient_norm_mean": 0.47636280477046966,
+            "target_token_std_mean": 0.7079976570606231,
+            "prediction_token_std_mean": 0.5483279293775558,
+            "target_covariance_rms_mean": 0.4186644871532917
+          },
+          {
+            "first_step": 1201,
+            "last_step": 1300,
+            "count": 100,
+            "loss_mean": 0.1329110711812973,
+            "loss_min": 0.05243963375687599,
+            "loss_max": 0.3322816491127014,
+            "gradient_norm_mean": 0.4825131426751614,
+            "target_token_std_mean": 0.7289807051420212,
+            "prediction_token_std_mean": 0.5679880118370056,
+            "target_covariance_rms_mean": 0.43008162900805474
+          },
+          {
+            "first_step": 1301,
+            "last_step": 1400,
+            "count": 100,
+            "loss_mean": 0.12976556293666364,
+            "loss_min": 0.037430111318826675,
+            "loss_max": 0.3207229673862457,
+            "gradient_norm_mean": 0.4505041068792343,
+            "target_token_std_mean": 0.7300258871912956,
+            "prediction_token_std_mean": 0.5824133363366127,
+            "target_covariance_rms_mean": 0.423316151201725
+          },
+          {
+            "first_step": 1401,
+            "last_step": 1500,
+            "count": 100,
+            "loss_mean": 0.12379012636840343,
+            "loss_min": 0.038975898176431656,
+            "loss_max": 0.25791916251182556,
+            "gradient_norm_mean": 0.4341923819482327,
+            "target_token_std_mean": 0.7222407603263855,
+            "prediction_token_std_mean": 0.5784640431404113,
+            "target_covariance_rms_mean": 0.4143022474646568
+          },
+          {
+            "first_step": 1501,
+            "last_step": 1600,
+            "count": 100,
+            "loss_mean": 0.11615108447149396,
+            "loss_min": 0.02839919738471508,
+            "loss_max": 0.2836953401565552,
+            "gradient_norm_mean": 0.4372302982211113,
+            "target_token_std_mean": 0.733507861495018,
+            "prediction_token_std_mean": 0.5931575521826744,
+            "target_covariance_rms_mean": 0.4227386075258255
+          },
+          {
+            "first_step": 1601,
+            "last_step": 1700,
+            "count": 100,
+            "loss_mean": 0.11780489899218083,
+            "loss_min": 0.053416889160871506,
+            "loss_max": 0.27094513177871704,
+            "gradient_norm_mean": 0.4584302543103695,
+            "target_token_std_mean": 0.7063615447282792,
+            "prediction_token_std_mean": 0.5675389215350151,
+            "target_covariance_rms_mean": 0.3872909788787365
+          },
+          {
+            "first_step": 1701,
+            "last_step": 1800,
+            "count": 100,
+            "loss_mean": 0.11054843094199895,
+            "loss_min": 0.048114653676748276,
+            "loss_max": 0.3079603314399719,
+            "gradient_norm_mean": 0.4415247781574726,
+            "target_token_std_mean": 0.7196997433900834,
+            "prediction_token_std_mean": 0.58948701441288,
+            "target_covariance_rms_mean": 0.39788696601986884
+          },
+          {
+            "first_step": 1801,
+            "last_step": 1900,
+            "count": 100,
+            "loss_mean": 0.11898955725133419,
+            "loss_min": 0.02710934355854988,
+            "loss_max": 0.24575334787368774,
+            "gradient_norm_mean": 0.4537020774185658,
+            "target_token_std_mean": 0.706202278137207,
+            "prediction_token_std_mean": 0.572483294904232,
+            "target_covariance_rms_mean": 0.38432986080646514
+          },
+          {
+            "first_step": 1901,
+            "last_step": 2000,
+            "count": 100,
+            "loss_mean": 0.10540137618780136,
+            "loss_min": 0.03641334921121597,
+            "loss_max": 0.19142861664295197,
+            "gradient_norm_mean": 0.4557539375126362,
+            "target_token_std_mean": 0.7052627569437027,
+            "prediction_token_std_mean": 0.5851112353801727,
+            "target_covariance_rms_mean": 0.37838045626878736
+          },
+          {
+            "first_step": 2001,
+            "last_step": 2100,
+            "count": 100,
+            "loss_mean": 0.09711709138005972,
+            "loss_min": 0.030469447374343872,
+            "loss_max": 0.22226589918136597,
+            "gradient_norm_mean": 0.4002122531831265,
+            "target_token_std_mean": 0.6939997059106827,
+            "prediction_token_std_mean": 0.5820219191908836,
+            "target_covariance_rms_mean": 0.3679382574558258
+          },
+          {
+            "first_step": 2101,
+            "last_step": 2200,
+            "count": 100,
+            "loss_mean": 0.09465197592973709,
+            "loss_min": 0.0368233248591423,
+            "loss_max": 0.173511803150177,
+            "gradient_norm_mean": 0.4177030622959137,
+            "target_token_std_mean": 0.7070895254611969,
+            "prediction_token_std_mean": 0.5938114267587662,
+            "target_covariance_rms_mean": 0.37147050991654396
+          },
+          {
+            "first_step": 2201,
+            "last_step": 2223,
+            "count": 23,
+            "loss_mean": 0.09277160238960515,
+            "loss_min": 0.03960442170500755,
+            "loss_max": 0.14639252424240112,
+            "gradient_norm_mean": 0.38720632117727527,
+            "target_token_std_mean": 0.7083801445753678,
+            "prediction_token_std_mean": 0.595824905063795,
+            "target_covariance_rms_mean": 0.3777740545894789
+          }
+        ],
+        "limitation": "Token spread and prediction loss are execution diagnostics, not downstream quality or proof against pooled-feature collapse"
+      }
+    }
+  },
+  "actual_image_order_matched": true,
+  "trainable_capacity_matched": true,
+  "images_sampled": false,
+  "models_trained": false,
+  "classifiers_fitted": false,
+  "confirmation_scored": false,
+  "test_evaluated": false,
+  "limitation": "Replayed training diagnostics only. Finite loss and token variance do not establish useful embeddings or rule out collapse."
+}
