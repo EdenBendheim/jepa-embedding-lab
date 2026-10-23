@@ -130,12 +130,20 @@ def main():
     parser.add_argument('--root', type=Path, default=Path('data/cifar-10-batches-bin'))
     parser.add_argument('--directory', type=Path, default=DEFAULT_DIRECTORY)
     parser.add_argument('--reuse-only', action='store_true')
+    parser.add_argument('--evaluate', action='store_true')
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
-        reports = ScaleRun(args.root, args.directory).training(reuse_only=args.reuse_only)
-        print(json.dumps({key: {k: row[k] for k in ('completed_steps', 'train_image_order_sha256', 'model_size')}
-                          for key, row in reports.items()}, indent=2))
+        run = ScaleRun(args.root, args.directory)
+        if args.evaluate:
+            from .scale_evaluation import evaluation
+            result = evaluation(run, reuse_only=args.reuse_only)
+            print(json.dumps(dict(summary=result['summary'], primary_delta=result['primary_delta'],
+                                  linear=result['verified_linear_states'], knn=result['verified_neighbor_states']), indent=2))
+        else:
+            reports = run.training(reuse_only=args.reuse_only)
+            print(json.dumps({key: {k: row[k] for k in ('completed_steps', 'train_image_order_sha256', 'model_size')}
+                              for key, row in reports.items()}, indent=2))
     except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
         parser.error(str(exc))
 

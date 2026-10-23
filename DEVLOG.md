@@ -2,6 +2,14 @@
 
 ## October 22, 2026
 
+- Added frozen scale evaluation: shared pixel heads, exact-initialization random
+  controls, full saved-candidate/state audits, locked selections, paired
+  small-minus-one comparisons and source-replayed exposure extension. Before
+  fresh extraction, persist a conservative observation receipt; interrupted
+  attempts keep those rows consumed. Three synthetic workflow tests pass for
+  lock/receipt ordering, no-fit/no-image byte-identical replay, interrupted
+  recovery and tampered-feature/receipt refusal with prior output preserved.
+
 - Extracted the complete neighbor selection-cache workflow for reuse in scale
   evaluation and the existing position driver. It now checks the selection
   context/rule, every candidate score, adjacent artifact path and every partial

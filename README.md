@@ -684,5 +684,9 @@ results, not official test evidence or a general JEPA advantage.
 source pins and reservation, trains the .02 arm in bounded local chunks, and
 reuses the pinned scale-one checkpoints. Each seed must have identical actual
 image-order journals and equal trainable capacity across scales. `--reuse-only`
-requires completed caches and performs no training. This command currently
-checks training, not downstream representation quality.
+requires completed caches and performs no training. Add `--evaluate` to select and audit heads on the old tuning rows, lock them,
+register the reservation as conservatively consumed, and score fresh rows
+without refitting. `--evaluate --reuse-only` requires all caches and replays
+without image reads, extraction, training or fitting. An interrupted evaluation
+retains `observed-exposure.json` and `observation-receipt.json`; use that complete
+source-pinned history when reserving later rows. Keep these files local.

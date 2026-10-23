@@ -72,9 +72,10 @@ The [October 20 amplitude protocol](experiments/SCALE-2026-10-20-PROTOCOL.md)
 now declares .02 versus 1.0 at fixed width/parameter count. Source replay
 recreates the same 500-row unscored reservation from October 19; the observed
 union remains 2,246. Scaling, command-line resume binding and saved-feature
-comparison/audit APIs work. Next, build the scale-specific training/evaluation
-driver, train the .02 arm and verify actual image order against the pinned
-scale-one runs, then lock heads before scoring. Do not tune on already observed scores
+comparison/audit APIs work. The scale-specific training/evaluation
+driver now verifies actual image order, locks selected heads and records
+conservative exposure before fresh access. Synthetic replay and interruption
+checks pass. Real frozen evaluation and aggregate publication are next. Do not tune on already observed scores
 or compare absolute metrics across different row sets as improvement. Keep the
 official test reserved. No raw images, features, weights or row-level evidence
 belong in public commits; a local-only thumbnail view remains optional.
