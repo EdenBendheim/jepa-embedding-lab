@@ -2,6 +2,13 @@
 
 ## October 24, 2026
 
+- Connected stability diagnostics to the completed amplitude experiment using
+  only its original fitting images. The audit compares context/teacher and
+  matching initialization controls, spatial/pooled geometry and parameter gaps;
+  pixel geometry is shared. Two synthetic integration tests verify exact
+  training-only image reads, unchanged checkpoint bytes and caller RNG, no
+  retraining, and rejection of changed weights before image access.
+
 - Added named student/teacher parameter-gap diagnostics with separate buffer
   equality checks. Two new tests check the expected EMA interpolation of a
   known gap, unchanged state/RNG, missing or incompatible parameters and a
