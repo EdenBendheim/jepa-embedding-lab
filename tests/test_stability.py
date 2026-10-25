@@ -55,3 +55,34 @@ class StabilityTests(unittest.TestCase):
         for x in (torch.ones(2, 2), torch.ones(2, 65, 2), torch.ones(0, 2, 2),
                   torch.ones(2, 2, 2).double(), torch.full((2, 2, 2), float('inf'))):
             with self.assertRaises(ValueError): token_spread(x)
+
+    def test_parameter_lag_matches_ema_interpolation_and_keeps_state(self):
+        from copy import deepcopy
+        from jepa_lab.model import JEPA, ModelConfig
+        from jepa_lab.stability import parameter_lag
+        model = JEPA(ModelConfig(embedding_dim=8, heads=2, encoder_depth=1,
+                                  position_encoding='sincos2d'))
+        with torch.no_grad():
+            for p in model.context_encoder.parameters(): p.add_(.5)
+        before = deepcopy(model.state_dict()); rng = torch.get_rng_state().clone()
+        lag = parameter_lag(model.context_encoder, model.target_encoder)
+        self.assertAlmostEqual(.5, lag['rmse'], places=6)
+        self.assertTrue(lag['buffers_identical']); self.assertEqual(1, lag['buffer_count'])
+        self.assertTrue(all(torch.equal(v, model.state_dict()[k]) for k, v in before.items()))
+        self.assertTrue(torch.equal(rng, torch.get_rng_state()))
+        model.update_target(.75)
+        after = parameter_lag(model.context_encoder, model.target_encoder)
+        self.assertAlmostEqual(.75 * lag['rmse'], after['rmse'], places=6)
+        self.assertTrue(all(p.grad is None for p in model.parameters()))
+
+    def test_parameter_lag_rejects_mismatches_and_handles_zero_reference(self):
+        from jepa_lab.stability import parameter_lag
+        a, b = torch.nn.Linear(2, 2), torch.nn.Linear(2, 2)
+        with torch.no_grad():
+            for p in b.parameters(): p.zero_()
+        self.assertIsNone(parameter_lag(a, b)['relative_l2'])
+        with self.assertRaises(ValueError): parameter_lag(a, torch.nn.Linear(3, 2))
+        with self.assertRaises(ValueError): parameter_lag(a, b.double())
+        with self.assertRaises(ValueError): parameter_lag(torch.nn.Identity(), torch.nn.Identity())
+        with torch.no_grad(): a.weight[0, 0] = float('nan')
+        with self.assertRaises(ValueError): parameter_lag(a, torch.nn.Linear(2, 2))

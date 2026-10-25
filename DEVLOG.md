@@ -2,6 +2,12 @@
 
 ## October 24, 2026
 
+- Added named student/teacher parameter-gap diagnostics with separate buffer
+  equality checks. Two new tests check the expected EMA interpolation of a
+  known gap, unchanged state/RNG, missing or incompatible parameters and a
+  zero-norm reference. Six stability tests pass. An endpoint gap cannot measure
+  temporal stability or prove the training EMA updates were correct.
+
 - Added the full-image token variance decomposition: within-image variation
   versus between-image pooled variation, with existing pooled geometry metrics.
   Two new tests demonstrate that large spatial variance can hide identical image

@@ -61,3 +61,38 @@ def token_spread(tokens):
         total_population_variance=total, between_fraction=between/total if total else None,
         pooled_geometry=feature_geometry(pooled.float()),
         limitation='Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee')
+
+
+@torch.inference_mode()
+def parameter_lag(context, target):
+    """Measure an encoder pair's current weight gap, without performing EMA.
+
+    This is an endpoint comparison, not an update-rate or training-trajectory
+    estimate. Fixed positional buffers are checked separately from parameters.
+    """
+    left, right = dict(context.named_parameters()), dict(target.named_parameters())
+    lb, rb = dict(context.named_buffers()), dict(target.named_buffers())
+    if not left or left.keys() != right.keys() or lb.keys() != rb.keys():
+        raise ValueError('Encoders must have matching named parameters and buffers')
+    count, squared_gap, squared_target = 0, 0., 0.
+    rows = {}
+    for name, x in left.items():
+        y = right[name]
+        if (x.shape != y.shape or x.device.type != 'cpu' or y.device.type != 'cpu'
+                or x.dtype != torch.float32 or y.dtype != torch.float32
+                or not x.numel() or not torch.isfinite(x).all() or not torch.isfinite(y).all()):
+            raise ValueError('Encoder parameters must be matching finite CPU float32 tensors')
+        gap = float((x.detach().double()-y.detach().double()).square().sum())
+        target_energy = float(y.detach().double().square().sum())
+        count += x.numel(); squared_gap += gap; squared_target += target_energy
+        rows[name] = dict(count=x.numel(), rmse=(gap/x.numel())**.5,
+            relative_l2=(gap/target_energy)**.5 if target_energy else None)
+    for name, x in lb.items():
+        y = rb[name]
+        if (x.shape != y.shape or x.dtype != y.dtype or x.device.type != 'cpu'
+                or y.device.type != 'cpu' or not torch.isfinite(x).all() or not torch.isfinite(y).all()):
+            raise ValueError('Encoder buffers must have matching finite CPU layouts')
+    return dict(parameter_count=count, rmse=(squared_gap/count)**.5,
+        relative_l2=(squared_gap/squared_target)**.5 if squared_target else None,
+        parameters=rows, buffer_count=len(lb), buffers_identical=all(torch.equal(x, rb[n]) for n, x in lb.items()),
+        limitation='Current student-teacher weight gap only; not temporal stability, EMA correctness, or feature quality')
