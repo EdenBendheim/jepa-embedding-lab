@@ -1,5 +1,13 @@
 # Development log
 
+## October 24, 2026
+
+- Added aligned pooled-feature RMSE, cosine and centered linear CKA diagnostics.
+  Two synthetic tests verify row-order sensitivity, translation/rotation/scale
+  invariance of CKA, undefined degenerate ratios, invalid inputs and unchanged
+  caller tensors/gradients/RNG. Similarity does not establish useful features
+  or stability across training time. No held-out images or scores were used.
+
 ## October 22, 2026
 
 - Executed frozen amplitude evaluation on the predeclared 500 new rows,
