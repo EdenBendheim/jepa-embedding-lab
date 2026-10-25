@@ -2,6 +2,23 @@
 
 ## October 24, 2026
 
+- Ran the aggregate audit on the original 500 fitting images for all six
+  completed scale/seed checkpoints and matching random controls. Context
+  effective ranks are 3.25–3.88 (numerical rank 31); student/teacher endpoint
+  CKA is 0.9935–0.9976. These diagnose concentrated variance and current
+  agreement, not useful features or stability over time. The earlier weak
+  classification results remain unchanged. Published aggregate-only evidence
+  and interpretation in experiments/STABILITY-2026-10-24.md.
+- All 185 local tests passed, plus the mask demo and three-step synthetic
+  training smoke. Real cache replay with image reads, training and diagnostic
+  recomputation disabled was byte-identical. No new held-out rows, images,
+  features, weights or private data were published; official test is reserved.
+  The next step checks full-image versus masked-context variation on training
+  rows before predeclaring one objective/normalization intervention.
+- Interview explanation: “I separated variation within an image from variation
+  between images, checked student/teacher agreement, and reported concentrated
+  representations without treating diagnostic statistics as accuracy gains.”
+
 - Added a CLI and atomic aggregate-report cache bound to source/data/checkpoint,
   code and runtime identity. Two new integration checks prove image-free,
   calculation-free replay, stale-code/corrupt-report refusal, protected evidence

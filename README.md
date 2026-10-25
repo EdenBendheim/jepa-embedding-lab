@@ -2,7 +2,7 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 22, 2026:** the [predeclared amplitude comparison](experiments/SCALE-2026-10-22.md)
+**Status — October 24, 2026:** the [predeclared amplitude comparison](experiments/SCALE-2026-10-22.md)
 is complete. Three new .02 runs and pinned 1.0 controls share actual image order
 and 29,472 trainable parameters. On 500 fresh validation rows, trained .02 / 1.0
 AdamW accuracy is **25.53% / 26.51%** (−0.98 points). Matching random controls
@@ -10,6 +10,9 @@ score 25.38% / 26.60%; a broad learned-feature advantage remains unproven.
 Frozen heads, full candidate audits and conservative exposure receipts now
 replay the evaluation. The ledger retains 2,746 observed rows; official test
 stays reserved. These are descriptive validation results, not test accuracy.
+A [training-only diagnostic audit](experiments/STABILITY-2026-10-24.md) now
+finds concentrated pooled variance and high student/teacher endpoint agreement,
+with matching random controls. It adds no new accuracy or temporal-stability claim.
 
 ## Why this experiment
 

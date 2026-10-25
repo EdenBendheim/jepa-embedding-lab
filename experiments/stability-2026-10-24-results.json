@@ -1,0 +1,1856 @@
+{
+  "identity": {
+    "version": 1,
+    "protocol_sha256": "26c3f7facd70e1b2593ecd500345798d5583f33a31a93ab3d413d5da56146a1d",
+    "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+    "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+    "checkpoints": {
+      "scale0.02-seed20261003": "d3f23396cb0ed61e0e9dcf943e32b199009d790fe92269bc4a66790b7b559051",
+      "scale0.02-seed20261010": "54dc94f75e6e49f8dff5302e116f21f635d4d191f36c63280122038aec2efc47",
+      "scale0.02-seed20261011": "de64892b775b91ff970e18e34a7308fb11271a1c96afb65eded35ffaadc43c19",
+      "scale1.0-seed20261003": "b88481328e6484c76d2588405b90170c7874b9509b71641b46d74b8d07f7b005",
+      "scale1.0-seed20261010": "aca797f03e5159fc497430e5affe78a3a0cbe23e2d238dccbcabb010c3bb744e",
+      "scale1.0-seed20261011": "13a794a7aab8c5745f94891870c4322e6e74b480d37bd4032a1a912de4ab5741"
+    },
+    "batch_size": 16,
+    "runtime": {
+      "torch": "2.8.0",
+      "cpu_threads": 1
+    },
+    "code_sha256": {
+      "__init__.py": "8e83c30d44126d588835b0a5f544f9f800e830fe2de02dbd155943897d66f806",
+      "cifar10.py": "eea1bfd7d08899697fa87675d44cff9c5506d2581397ece7491147462bf91944",
+      "cifar10_smoke.py": "ae6c503046a13bf0154845517302762519c0df71e3b16952b8b7bd0ba6ea38a7",
+      "cifar10_train.py": "1b127bffa370097723f69e6e5abf602e6a0c1208267e3daf72708691cd701a89",
+      "compare.py": "3e097c6b97cc1250837f66f8ac1b1f6fb434e02667528301743cf7af368abace",
+      "confirmation.py": "0fdc4828c5482ac9593a686cc3ac0bcfa61a48a461047be1d774a01b750d13b7",
+      "confirmation_compare.py": "135544112cd96c3d7556e5c90ffeda1534cf11003d682c980eb879405dbf6fad",
+      "demo.py": "7586de38427eb3fc620205ee10097be970d5b9f4bee332fee5a01b4f557e0427",
+      "diagnostics.py": "cec211b618a42921dd722c4b6709313c2eaed803dadd1eb2be89f1745f5ef9b7",
+      "embeddings.py": "2d539615cf40845d5fe5c4aa843f7106a1fd8c68302f36882503f3aea86def8c",
+      "explorer.py": "36798f731c0df997e3e3b1d62dd03e15adca8a93337559239a74f51b7357d5d3",
+      "explorer_compare.py": "a1c7ad4df4bb88026762375f4d70c562f0d24487eb4fd57658990223f5388f28",
+      "explorer_html.py": "ae1f4322c4ebcf9c4d3156284efc87f794f637bddae20ae57d3f775aee963ae2",
+      "exposure.py": "8e1454795a39e9e2845893e1658af2e3f67488a91148d1a8ea14dc5b32eb46a6",
+      "feature_geometry.py": "a40331d6b97323e24584f879097f5d9fee37acbbd097ac65c798e25e1d5adfea",
+      "features.py": "0f851221809e46a339313e882fc37232deeb89673cc3877045021433d18064ff",
+      "masking.py": "5f464fba20090718b102ef4804062139805524f18b7407f370da74018f6180e3",
+      "model.py": "f4f8aaa83f44a81844be2a22eaf0a3cbc16935baa41a6f3e08036e63a8b226ad",
+      "model_cli.py": "c1222944643ac311c6da0980a1cd056a713b52938da582bb9d5a9a8706f2fdc7",
+      "model_size.py": "015f6133b01245b26d45bb3f24da2f9a482c9d797fd7186f0a315ff5f086dab5",
+      "neighbor_artifacts.py": "20704628ca76ae867204f4c3dbd6b2a8279f3258678b0bba2777678349b16b5e",
+      "neighbor_cli.py": "23778b5d2c3ee13c433a5deec2a5b095fbc0b9e13e6fcb5a0d0cbcc075e4fd99",
+      "neighbor_confirmation.py": "7e55d17fe754d0dd94fa6053d084f2b8d42f3dc052cc73a087cbc68e6ab01c83",
+      "neighbor_workflow.py": "fa1eee7bb3b8e414e040066c43cfb42c67569dae7d656c877302a45c2949453a",
+      "neighbors.py": "aba622a8f0167e345ec13e7e46a61aa2dabd0a5a654f7f298daea162596b42cc",
+      "patches.py": "b238e8342c52a3d270f72c489403564aa74e8c1543658d5754faba8d47d85fd2",
+      "pooling.py": "c5dffc969f86b4632baeabf3180a8af9a683abb9ef7faeba78a9b6ccdfe7a6c6",
+      "pooling_compare.py": "be7a08a83058cbeb3f2c73363b86f626ef2e5518fa9ec9e591cb6c5ff8cc78bb",
+      "position_compare.py": "ad42ac1e22d1d37da6b3a6ba9e205501d01af820d673d65e364ae005a889e5e3",
+      "positions.py": "bfc84ce66e4628143689cd34016801b37ac285d0b89e131774a231e55ee9eff9",
+      "pretrained.py": "392b875fde1e03f6f0292ba29fe674baeacef58104fb0ef5889fbd55c5ff3892",
+      "pretrained_extract.py": "566813b2c097f599c1d0fc2a938cd3788eb73a5c74fdf3a182df5cc47a5d503c",
+      "probe_artifacts.py": "f7283e8c89c557fc05bc4eae3cde94031d39b5ea2e5f6e1e3110cf7c215c7b97",
+      "probe_audit.py": "f8f55a26ddfcc744075abe078371f69a0f77ae6fdba39e0ab80aa5053918eefc",
+      "probe_compare.py": "cab0d6981947903e31071745b17e61c81a6e6e85eb70fa1973d38e80012c1ef7",
+      "probe_score.py": "4bb2998df16b7eb97c28a9533fafd6fec205022efbe8ca89ae79b51c19ee5961",
+      "probes.py": "a3f4028414a149a332679aed51295433399edb03c28381c9c46ab5fcb52663c8",
+      "progression.py": "8dfb4af4f818773eb9d0a8d4722f672b3ba1d38fe19e512d7c966f1cf48b2bf0",
+      "ridge.py": "9a376ffca8fa4b6b98704c22a4e06a9cdb2a5b12233ca04e5390953acb3f8aec",
+      "scale_audit.py": "a183831b7c42f2dd9133dfbede0eb9310624c1a24d8b44d6c6b8bb054c83192b",
+      "scale_compare.py": "51773efc80589cd70b5f0eb82a5cc0b5ae2f6428f74e8ae1ff676cfd6cc033dd",
+      "scale_evaluation.py": "84ba3386cb95f7a030e317c736cbf49db79529c757b7cea9eb942193ad710687",
+      "scale_run.py": "583654cf01b6d8c041be9e5abc4f6179c4bb08d20644545e602f69c5f7590a40",
+      "selection.py": "0f8dcbdb1a069881d5a08667e638adb789213e0f1bfdb49d021e481073c96eb9",
+      "stability.py": "2ebb6837aed5f07dd4aa89316980a37ad3782ca818cee9951f91ad218dae0daa",
+      "stability_audit.py": "a0ed2d2c3d82088b8a82a6b7e61b826ef12d2422f38234953ee91bfd6770d45a",
+      "train.py": "bd1c5a94b4b40437218a454d22e9159e585267adafa8a259e74070bac44ca3a7",
+      "training_budget.py": "f0ce678538b26ce1a4d7c212f76b5c1e085eacae82c60bb895d878f72bf2935f",
+      "training_diagnostics.py": "ddefb4636cc079790116a1711a8952a4fa7f43280f86162ce2efbfc2ea4b94b2",
+      "transfer_audit.py": "7f3efaa5812c76e391694baa6d1b2fa2d632a2f647940f94284cf27dea9cb571",
+      "transfer_compare.py": "d3c6c227436796915ea1e002bd164afbdac7252feb4fd5caf813539cace011f0",
+      "width_compare.py": "de6de05f49fa0962748a454c4fbada52a75eceab8106412b9a854e5f103fb4ac"
+    }
+  },
+  "report": {
+    "version": 1,
+    "protocol_sha256": "26c3f7facd70e1b2593ecd500345798d5583f33a31a93ab3d413d5da56146a1d",
+    "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+    "training_selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+    "ordered_training_indices_sha256": "cdbdd2f17778701453832a6f0930847e7fefd544e50cb387d16d50df184638bd",
+    "count": 500,
+    "batch_size": 16,
+    "runtime": {
+      "torch": "2.8.0",
+      "cpu_threads": 1
+    },
+    "arms": {
+      "scale0.02-seed20261003": {
+        "checkpoint": {
+          "checkpoint_sha256": "d3f23396cb0ed61e0e9dcf943e32b199009d790fe92269bc4a66790b7b559051",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d",
+            "position_scale": 0.02
+          },
+          "training_settings": {
+            "seed": 20261003,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.2815736065841376,
+          "between_image_population_variance": 0.5013617256607211,
+          "total_population_variance": 0.7829353322448589,
+          "between_fraction": 0.640361604608135,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6600649513217347,
+            "mean_row_l2": 4.55351021545798,
+            "min_row_l2": 1.5717461699923483,
+            "max_row_l2": 5.621538163915646,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.4159104440528214,
+            "eigenvalue_tolerance": 5.204285112819468e-10,
+            "mean_nonzero_row_pair_cosine": 0.2619802613510547,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.26075106547627114,
+          "between_image_population_variance": 0.5064876647478611,
+          "total_population_variance": 0.7672387302241322,
+          "between_fraction": 0.660143505268434,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6632106873263142,
+            "mean_row_l2": 4.648570293848314,
+            "min_row_l2": 1.6321259228533829,
+            "max_row_l2": 5.62360201123358,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.4304540354418385,
+            "eigenvalue_tolerance": 5.354887862814841e-10,
+            "mean_nonzero_row_pair_cosine": 0.2823002233355755,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.2887932666593877,
+          "between_image_population_variance": 0.2925128611452195,
+          "total_population_variance": 0.5813061278046071,
+          "between_fraction": 0.5031993422294373,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.5038888553338841,
+            "mean_row_l2": 4.741919883212209,
+            "min_row_l2": 2.9932714149586293,
+            "max_row_l2": 5.64418665044355,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.306706645431522,
+            "eigenvalue_tolerance": 3.4866342358275456e-10,
+            "mean_nonzero_row_pair_cosine": 0.6068010630039391,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.2887932666593877,
+          "between_image_population_variance": 0.2925128611452195,
+          "total_population_variance": 0.5813061278046071,
+          "between_fraction": 0.5031993422294373,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.5038888553338841,
+            "mean_row_l2": 4.741919883212209,
+            "min_row_l2": 2.9932714149586293,
+            "max_row_l2": 5.64418665044355,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.306706645431522,
+            "eigenvalue_tolerance": 3.4866342358275456e-10,
+            "mean_nonzero_row_pair_cosine": 0.6068010630039391,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "context_target": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.08994865215808655,
+          "mean_paired_cosine": 0.9930639196049014,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9934784188561376,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "context_random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.8209583602637751,
+          "mean_paired_cosine": 0.5117666613791749,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.8067977068938412,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "parameter_lag": {
+          "parameter_count": 18720,
+          "rmse": 0.003090276290648135,
+          "relative_l2": 0.022719647096888083,
+          "parameters": {
+            "projection.weight": {
+              "count": 1536,
+              "rmse": 0.003451653389548196,
+              "relative_l2": 0.03642962714819809
+            },
+            "projection.bias": {
+              "count": 32,
+              "rmse": 0.001795285034597503,
+              "relative_l2": 0.019249059237502156
+            },
+            "blocks.layers.0.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.003521112068838369,
+              "relative_l2": 0.027834144703345203
+            },
+            "blocks.layers.0.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.001391575529701374,
+              "relative_l2": 0.07526352424258084
+            },
+            "blocks.layers.0.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.0028370762953349752,
+              "relative_l2": 0.02631656045640333
+            },
+            "blocks.layers.0.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.0017040376246803257,
+              "relative_l2": 0.09938810247006138
+            },
+            "blocks.layers.0.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.003218009414108893,
+              "relative_l2": 0.03141601167882888
+            },
+            "blocks.layers.0.linear1.bias": {
+              "count": 64,
+              "rmse": 0.0021935891187449368,
+              "relative_l2": 0.022500468179553874
+            },
+            "blocks.layers.0.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.0030212276903025725,
+              "relative_l2": 0.04129504370886388
+            },
+            "blocks.layers.0.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0017231908407250077,
+              "relative_l2": 0.02533117340193505
+            },
+            "blocks.layers.0.norm1.weight": {
+              "count": 32,
+              "rmse": 0.0038536713476619786,
+              "relative_l2": 0.004044494085876497
+            },
+            "blocks.layers.0.norm1.bias": {
+              "count": 32,
+              "rmse": 0.001267660499063063,
+              "relative_l2": 0.05831499651268379
+            },
+            "blocks.layers.0.norm2.weight": {
+              "count": 32,
+              "rmse": 0.0042265869920803225,
+              "relative_l2": 0.004464908908630658
+            },
+            "blocks.layers.0.norm2.bias": {
+              "count": 32,
+              "rmse": 0.001976938695129915,
+              "relative_l2": 0.07859606021999489
+            },
+            "blocks.layers.1.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.0036018641380750433,
+              "relative_l2": 0.028649468165657156
+            },
+            "blocks.layers.1.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0020418386125174823,
+              "relative_l2": 0.11322320081821703
+            },
+            "blocks.layers.1.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.0024400191419618744,
+              "relative_l2": 0.024241200874744438
+            },
+            "blocks.layers.1.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.0015785141450051074,
+              "relative_l2": 0.10204896110691106
+            },
+            "blocks.layers.1.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.0024305635323626684,
+              "relative_l2": 0.023702935038108035
+            },
+            "blocks.layers.1.linear1.bias": {
+              "count": 64,
+              "rmse": 0.0020865940835538884,
+              "relative_l2": 0.02101246363105022
+            },
+            "blocks.layers.1.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.0023917622277830303,
+              "relative_l2": 0.03325984303049798
+            },
+            "blocks.layers.1.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0015523880410677384,
+              "relative_l2": 0.021558420658330302
+            },
+            "blocks.layers.1.norm1.weight": {
+              "count": 32,
+              "rmse": 0.004353745801317948,
+              "relative_l2": 0.004618433985584624
+            },
+            "blocks.layers.1.norm1.bias": {
+              "count": 32,
+              "rmse": 0.0023141557697178555,
+              "relative_l2": 0.07336518066626736
+            },
+            "blocks.layers.1.norm2.weight": {
+              "count": 32,
+              "rmse": 0.0033000963071092284,
+              "relative_l2": 0.003477341652202688
+            },
+            "blocks.layers.1.norm2.bias": {
+              "count": 32,
+              "rmse": 0.0021302430332395595,
+              "relative_l2": 0.06540561140636926
+            },
+            "blocks.norm.weight": {
+              "count": 32,
+              "rmse": 0.0027345726274114156,
+              "relative_l2": 0.0027801464278839247
+            },
+            "blocks.norm.bias": {
+              "count": 32,
+              "rmse": 0.0019419837266399906,
+              "relative_l2": 0.07979617177508908
+            }
+          },
+          "buffer_count": 1,
+          "buffers_identical": true,
+          "limitation": "Current student-teacher weight gap only; not temporal stability, EMA correctness, or feature quality"
+        }
+      },
+      "scale0.02-seed20261010": {
+        "checkpoint": {
+          "checkpoint_sha256": "54dc94f75e6e49f8dff5302e116f21f635d4d191f36c63280122038aec2efc47",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d",
+            "position_scale": 0.02
+          },
+          "training_settings": {
+            "seed": 20261010,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.2645182028907608,
+          "between_image_population_variance": 0.5240633748546372,
+          "total_population_variance": 0.7885815777453979,
+          "between_fraction": 0.6645645671218516,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6601265998871849,
+            "mean_row_l2": 4.665537210060805,
+            "min_row_l2": 2.9089162608526244,
+            "max_row_l2": 5.597615658800372,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.8783513468870043,
+            "eigenvalue_tolerance": 4.836484914033266e-10,
+            "mean_nonzero_row_pair_cosine": 0.26679412962638127,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.22406035360180437,
+          "between_image_population_variance": 0.5447384637603079,
+          "total_population_variance": 0.7687988173621122,
+          "between_fraction": 0.7085578846614308,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6726775333428014,
+            "mean_row_l2": 4.820093736667225,
+            "min_row_l2": 3.1213189128637513,
+            "max_row_l2": 5.602908268642516,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.8489678487691763,
+            "eigenvalue_tolerance": 5.089637117343775e-10,
+            "mean_nonzero_row_pair_cosine": 0.2770732830037358,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.2611424359321671,
+          "between_image_population_variance": 0.34248948678181446,
+          "total_population_variance": 0.6036319227139816,
+          "between_fraction": 0.5673813360333098,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.5372649791742627,
+            "mean_row_l2": 4.835045062269404,
+            "min_row_l2": 3.2364400631384664,
+            "max_row_l2": 5.634992488334252,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.926314112537498,
+            "eigenvalue_tolerance": 3.522762901054502e-10,
+            "mean_nonzero_row_pair_cosine": 0.5563829950802784,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.2611424359321671,
+          "between_image_population_variance": 0.34248948678181446,
+          "total_population_variance": 0.6036319227139816,
+          "between_fraction": 0.5673813360333098,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.5372649791742627,
+            "mean_row_l2": 4.835045062269404,
+            "min_row_l2": 3.2364400631384664,
+            "max_row_l2": 5.634992488334252,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.926314112537498,
+            "eigenvalue_tolerance": 3.522762901054502e-10,
+            "mean_nonzero_row_pair_cosine": 0.5563829950802784,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "context_target": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.09850020610305008,
+          "mean_paired_cosine": 0.9935953103400864,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.995866137346188,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "context_random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.8688500367828652,
+          "mean_paired_cosine": 0.47650382289920423,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.6260442718887816,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "parameter_lag": {
+          "parameter_count": 18720,
+          "rmse": 0.0030146071041250565,
+          "relative_l2": 0.022119969403180915,
+          "parameters": {
+            "projection.weight": {
+              "count": 1536,
+              "rmse": 0.0025297619475293178,
+              "relative_l2": 0.02718569544415019
+            },
+            "projection.bias": {
+              "count": 32,
+              "rmse": 0.001658562536851838,
+              "relative_l2": 0.01952528124283011
+            },
+            "blocks.layers.0.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.003252446041791415,
+              "relative_l2": 0.025954659264293016
+            },
+            "blocks.layers.0.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0014028688006825693,
+              "relative_l2": 0.09396172987475769
+            },
+            "blocks.layers.0.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.0022715790821581827,
+              "relative_l2": 0.020526308886863107
+            },
+            "blocks.layers.0.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.001291883188058144,
+              "relative_l2": 0.0922978153253921
+            },
+            "blocks.layers.0.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.0029791370824318346,
+              "relative_l2": 0.02868289444145533
+            },
+            "blocks.layers.0.linear1.bias": {
+              "count": 64,
+              "rmse": 0.002112418499153456,
+              "relative_l2": 0.020358709492095898
+            },
+            "blocks.layers.0.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.0025914735015890662,
+              "relative_l2": 0.0346288889673068
+            },
+            "blocks.layers.0.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0011883743428381137,
+              "relative_l2": 0.01678371813905875
+            },
+            "blocks.layers.0.norm1.weight": {
+              "count": 32,
+              "rmse": 0.003178772815288261,
+              "relative_l2": 0.003304140900887242
+            },
+            "blocks.layers.0.norm1.bias": {
+              "count": 32,
+              "rmse": 0.00138305123047662,
+              "relative_l2": 0.06543099260040804
+            },
+            "blocks.layers.0.norm2.weight": {
+              "count": 32,
+              "rmse": 0.0024538130659287147,
+              "relative_l2": 0.002585756914365865
+            },
+            "blocks.layers.0.norm2.bias": {
+              "count": 32,
+              "rmse": 0.0026464825801997315,
+              "relative_l2": 0.09327066863595544
+            },
+            "blocks.layers.1.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.0035062960113749807,
+              "relative_l2": 0.02854505904813962
+            },
+            "blocks.layers.1.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.001334506778882557,
+              "relative_l2": 0.0794316891849424
+            },
+            "blocks.layers.1.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.0020946910903587657,
+              "relative_l2": 0.020336742425316145
+            },
+            "blocks.layers.1.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.0013856314932613695,
+              "relative_l2": 0.08598322083387402
+            },
+            "blocks.layers.1.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.003617283638476339,
+              "relative_l2": 0.03464171945232228
+            },
+            "blocks.layers.1.linear1.bias": {
+              "count": 64,
+              "rmse": 0.002590963459828903,
+              "relative_l2": 0.024534315150661696
+            },
+            "blocks.layers.1.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.002928377869551755,
+              "relative_l2": 0.03959399241514222
+            },
+            "blocks.layers.1.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0011887719371793423,
+              "relative_l2": 0.016762391872903393
+            },
+            "blocks.layers.1.norm1.weight": {
+              "count": 32,
+              "rmse": 0.003590704970213244,
+              "relative_l2": 0.003786281970413259
+            },
+            "blocks.layers.1.norm1.bias": {
+              "count": 32,
+              "rmse": 0.0018922101684700954,
+              "relative_l2": 0.08463218905414052
+            },
+            "blocks.layers.1.norm2.weight": {
+              "count": 32,
+              "rmse": 0.00413158468451845,
+              "relative_l2": 0.004320802846761267
+            },
+            "blocks.layers.1.norm2.bias": {
+              "count": 32,
+              "rmse": 0.003182076823572421,
+              "relative_l2": 0.11891871009117737
+            },
+            "blocks.norm.weight": {
+              "count": 32,
+              "rmse": 0.0029463145756738604,
+              "relative_l2": 0.003007328324759434
+            },
+            "blocks.norm.bias": {
+              "count": 32,
+              "rmse": 0.0019212986427805817,
+              "relative_l2": 0.08362609245837715
+            }
+          },
+          "buffer_count": 1,
+          "buffers_identical": true,
+          "limitation": "Current student-teacher weight gap only; not temporal stability, EMA correctness, or feature quality"
+        }
+      },
+      "scale0.02-seed20261011": {
+        "checkpoint": {
+          "checkpoint_sha256": "de64892b775b91ff970e18e34a7308fb11271a1c96afb65eded35ffaadc43c19",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d",
+            "position_scale": 0.02
+          },
+          "training_settings": {
+            "seed": 20261011,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.23777571292415473,
+          "between_image_population_variance": 0.601990561691243,
+          "total_population_variance": 0.8397662746153979,
+          "between_fraction": 0.7168548915196039,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.7209935187187241,
+            "mean_row_l2": 4.73120382757857,
+            "min_row_l2": 1.6424506902936002,
+            "max_row_l2": 5.581630129624316,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.763227516101224,
+            "eigenvalue_tolerance": 5.955160379629919e-10,
+            "mean_nonzero_row_pair_cosine": 0.17713171595180904,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.2295164310224082,
+          "between_image_population_variance": 0.6181495769869981,
+          "total_population_variance": 0.8476660080094064,
+          "between_fraction": 0.7292371891125056,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.7293478300718662,
+            "mean_row_l2": 4.769658202063307,
+            "min_row_l2": 1.7212254453643263,
+            "max_row_l2": 5.589967076853172,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.68853070310039,
+            "eigenvalue_tolerance": 6.184851415281495e-10,
+            "mean_nonzero_row_pair_cosine": 0.16607163586148968,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.19970956933946143,
+          "between_image_population_variance": 0.4190339608298198,
+          "total_population_variance": 0.6187435301692812,
+          "between_fraction": 0.6772336847145325,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.594134890029678,
+            "mean_row_l2": 5.039187245934537,
+            "min_row_l2": 3.5227463884694847,
+            "max_row_l2": 5.650190528994014,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.038504926081945,
+            "eigenvalue_tolerance": 5.096444760881211e-10,
+            "mean_nonzero_row_pair_cosine": 0.4890499130564107,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.19970956933946143,
+          "between_image_population_variance": 0.4190339608298198,
+          "total_population_variance": 0.6187435301692812,
+          "between_fraction": 0.6772336847145325,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.594134890029678,
+            "mean_row_l2": 5.039187245934537,
+            "min_row_l2": 3.5227463884694847,
+            "max_row_l2": 5.650190528994014,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.038504926081945,
+            "eigenvalue_tolerance": 5.096444760881211e-10,
+            "mean_nonzero_row_pair_cosine": 0.4890499130564107,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "context_target": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.07488979417155538,
+          "mean_paired_cosine": 0.9958255042190188,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9974272948513095,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "context_random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.884533086073337,
+          "mean_paired_cosine": 0.4594046104426582,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.8537083771692393,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "parameter_lag": {
+          "parameter_count": 18720,
+          "rmse": 0.0025307010256767223,
+          "relative_l2": 0.018525932684539087,
+          "parameters": {
+            "projection.weight": {
+              "count": 1536,
+              "rmse": 0.00206030520409679,
+              "relative_l2": 0.02234033843594508
+            },
+            "projection.bias": {
+              "count": 32,
+              "rmse": 0.0012771840063353092,
+              "relative_l2": 0.015412024129635762
+            },
+            "blocks.layers.0.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.003143877980441199,
+              "relative_l2": 0.025058867649375826
+            },
+            "blocks.layers.0.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0019753536826484456,
+              "relative_l2": 0.09830120149922714
+            },
+            "blocks.layers.0.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.0018130972333080073,
+              "relative_l2": 0.016656895359603803
+            },
+            "blocks.layers.0.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.0010746755682953454,
+              "relative_l2": 0.06809727648695195
+            },
+            "blocks.layers.0.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.002250659299961493,
+              "relative_l2": 0.02160250310854871
+            },
+            "blocks.layers.0.linear1.bias": {
+              "count": 64,
+              "rmse": 0.0011936720507073734,
+              "relative_l2": 0.012397070637654906
+            },
+            "blocks.layers.0.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.002257028059174814,
+              "relative_l2": 0.03060613453575429
+            },
+            "blocks.layers.0.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0010264814029604745,
+              "relative_l2": 0.013712300188143681
+            },
+            "blocks.layers.0.norm1.weight": {
+              "count": 32,
+              "rmse": 0.0027228668920775225,
+              "relative_l2": 0.0028092909929411988
+            },
+            "blocks.layers.0.norm1.bias": {
+              "count": 32,
+              "rmse": 0.0009126862251730299,
+              "relative_l2": 0.033084037385539874
+            },
+            "blocks.layers.0.norm2.weight": {
+              "count": 32,
+              "rmse": 0.001944233622695553,
+              "relative_l2": 0.002050285878909472
+            },
+            "blocks.layers.0.norm2.bias": {
+              "count": 32,
+              "rmse": 0.0012919656999573373,
+              "relative_l2": 0.06336213231687582
+            },
+            "blocks.layers.1.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.002985519275771274,
+              "relative_l2": 0.02373230161602288
+            },
+            "blocks.layers.1.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0014775458518255398,
+              "relative_l2": 0.06923402837583185
+            },
+            "blocks.layers.1.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.002388641125493635,
+              "relative_l2": 0.02284955289987506
+            },
+            "blocks.layers.1.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.00092378828286831,
+              "relative_l2": 0.06128886052331365
+            },
+            "blocks.layers.1.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.0026121902191239134,
+              "relative_l2": 0.025326787208181125
+            },
+            "blocks.layers.1.linear1.bias": {
+              "count": 64,
+              "rmse": 0.001707049412044272,
+              "relative_l2": 0.017239687209002184
+            },
+            "blocks.layers.1.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.0021196968298397858,
+              "relative_l2": 0.028767418499927946
+            },
+            "blocks.layers.1.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0009842394925295196,
+              "relative_l2": 0.012974137944582045
+            },
+            "blocks.layers.1.norm1.weight": {
+              "count": 32,
+              "rmse": 0.002450921032311765,
+              "relative_l2": 0.0025504225398308776
+            },
+            "blocks.layers.1.norm1.bias": {
+              "count": 32,
+              "rmse": 0.0013053803201324727,
+              "relative_l2": 0.05101559004078396
+            },
+            "blocks.layers.1.norm2.weight": {
+              "count": 32,
+              "rmse": 0.00396055716993412,
+              "relative_l2": 0.004190410836950014
+            },
+            "blocks.layers.1.norm2.bias": {
+              "count": 32,
+              "rmse": 0.0014974652939121233,
+              "relative_l2": 0.0819302253479793
+            },
+            "blocks.norm.weight": {
+              "count": 32,
+              "rmse": 0.0016138447816789708,
+              "relative_l2": 0.0016471680288460949
+            },
+            "blocks.norm.bias": {
+              "count": 32,
+              "rmse": 0.0012315042119916202,
+              "relative_l2": 0.040411809409873795
+            }
+          },
+          "buffer_count": 1,
+          "buffers_identical": true,
+          "limitation": "Current student-teacher weight gap only; not temporal stability, EMA correctness, or feature quality"
+        }
+      },
+      "scale1.0-seed20261003": {
+        "checkpoint": {
+          "checkpoint_sha256": "b88481328e6484c76d2588405b90170c7874b9509b71641b46d74b8d07f7b005",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d"
+          },
+          "training_settings": {
+            "seed": 20261003,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.5330933235114972,
+          "between_image_population_variance": 0.18335609118265586,
+          "total_population_variance": 0.7164494146941529,
+          "between_fraction": 0.2559232897983862,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.38896090709365194,
+            "mean_row_l2": 3.46259045364548,
+            "min_row_l2": 2.0424873551040705,
+            "max_row_l2": 5.108375219274001,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.4701662602169048,
+            "eigenvalue_tolerance": 1.6820640723675148e-10,
+            "mean_nonzero_row_pair_cosine": 0.5702965945988848,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.5388288600038748,
+          "between_image_population_variance": 0.17829621107882365,
+          "total_population_variance": 0.7171250710826983,
+          "between_fraction": 0.24862638090401204,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.38170248460421663,
+            "mean_row_l2": 3.4704587285272166,
+            "min_row_l2": 2.116455722936806,
+            "max_row_l2": 5.098637155643594,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.512848263046499,
+            "eigenvalue_tolerance": 1.6610228475655978e-10,
+            "mean_nonzero_row_pair_cosine": 0.5841796822370257,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.16742458288441883,
+          "between_image_population_variance": 0.06067279027066058,
+          "total_population_variance": 0.22809737315507944,
+          "between_fraction": 0.2659951293231694,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.2134047338665555,
+            "mean_row_l2": 5.159716388235802,
+            "min_row_l2": 4.570806245481883,
+            "max_row_l2": 5.414742619733784,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.0281093546920395,
+            "eigenvalue_tolerance": 9.019288649651112e-11,
+            "mean_nonzero_row_pair_cosine": 0.9281192282552762,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.16742458288441883,
+          "between_image_population_variance": 0.06067279027066058,
+          "total_population_variance": 0.22809737315507944,
+          "between_fraction": 0.2659951293231694,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.2134047338665555,
+            "mean_row_l2": 5.159716388235802,
+            "min_row_l2": 4.570806245481883,
+            "max_row_l2": 5.414742619733784,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.0281093546920395,
+            "eigenvalue_tolerance": 9.019288649651112e-11,
+            "mean_nonzero_row_pair_cosine": 0.9281192282552762,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "context_target": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.10277273854189234,
+          "mean_paired_cosine": 0.9855901815500913,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9955368724690995,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "context_random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.9108298035446436,
+          "mean_paired_cosine": 0.3563660213238281,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.8337205501540524,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "parameter_lag": {
+          "parameter_count": 18720,
+          "rmse": 0.004060429006146753,
+          "relative_l2": 0.028969500932772802,
+          "parameters": {
+            "projection.weight": {
+              "count": 1536,
+              "rmse": 0.0030727067954221653,
+              "relative_l2": 0.031827484852636034
+            },
+            "projection.bias": {
+              "count": 32,
+              "rmse": 0.002572569669331961,
+              "relative_l2": 0.02890790865403488
+            },
+            "blocks.layers.0.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.003695695834719133,
+              "relative_l2": 0.02810247091822158
+            },
+            "blocks.layers.0.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.002607625888434588,
+              "relative_l2": 0.11097443279408713
+            },
+            "blocks.layers.0.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.003861218891048977,
+              "relative_l2": 0.03826699638120021
+            },
+            "blocks.layers.0.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.0021384831750228413,
+              "relative_l2": 0.10456289842806686
+            },
+            "blocks.layers.0.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.0043331148084012,
+              "relative_l2": 0.03756227598014083
+            },
+            "blocks.layers.0.linear1.bias": {
+              "count": 64,
+              "rmse": 0.0034112635037696765,
+              "relative_l2": 0.032367497926778975
+            },
+            "blocks.layers.0.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.003945178538988298,
+              "relative_l2": 0.04722858103547835
+            },
+            "blocks.layers.0.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0026148420221288496,
+              "relative_l2": 0.041475665674905404
+            },
+            "blocks.layers.0.norm1.weight": {
+              "count": 32,
+              "rmse": 0.0037881657068907925,
+              "relative_l2": 0.003933446806827286
+            },
+            "blocks.layers.0.norm1.bias": {
+              "count": 32,
+              "rmse": 0.003335049557429559,
+              "relative_l2": 0.06748724589932327
+            },
+            "blocks.layers.0.norm2.weight": {
+              "count": 32,
+              "rmse": 0.004776657598710867,
+              "relative_l2": 0.004934647315649954
+            },
+            "blocks.layers.0.norm2.bias": {
+              "count": 32,
+              "rmse": 0.002855701225572311,
+              "relative_l2": 0.0651835096210048
+            },
+            "blocks.layers.1.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.00465206437115222,
+              "relative_l2": 0.036068051826794595
+            },
+            "blocks.layers.1.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0027538623718311663,
+              "relative_l2": 0.1375692071339886
+            },
+            "blocks.layers.1.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.0036406824805544887,
+              "relative_l2": 0.03682625423801113
+            },
+            "blocks.layers.1.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.0023633861826023866,
+              "relative_l2": 0.0986836322598176
+            },
+            "blocks.layers.1.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.004561118898230238,
+              "relative_l2": 0.041028943654473106
+            },
+            "blocks.layers.1.linear1.bias": {
+              "count": 64,
+              "rmse": 0.0037815046092493395,
+              "relative_l2": 0.036046382402105316
+            },
+            "blocks.layers.1.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.004135427697208967,
+              "relative_l2": 0.05282666669344249
+            },
+            "blocks.layers.1.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0022979406743817406,
+              "relative_l2": 0.036464740177965464
+            },
+            "blocks.layers.1.norm1.weight": {
+              "count": 32,
+              "rmse": 0.004637805217675056,
+              "relative_l2": 0.004917303466898973
+            },
+            "blocks.layers.1.norm1.bias": {
+              "count": 32,
+              "rmse": 0.0032288138907520707,
+              "relative_l2": 0.07092632204358762
+            },
+            "blocks.layers.1.norm2.weight": {
+              "count": 32,
+              "rmse": 0.004574401168229669,
+              "relative_l2": 0.0047720993708714665
+            },
+            "blocks.layers.1.norm2.bias": {
+              "count": 32,
+              "rmse": 0.0033508806225576917,
+              "relative_l2": 0.0918871788740854
+            },
+            "blocks.norm.weight": {
+              "count": 32,
+              "rmse": 0.005351229588044162,
+              "relative_l2": 0.0055726497111918665
+            },
+            "blocks.norm.bias": {
+              "count": 32,
+              "rmse": 0.002214899279241778,
+              "relative_l2": 0.06325182586304318
+            }
+          },
+          "buffer_count": 1,
+          "buffers_identical": true,
+          "limitation": "Current student-teacher weight gap only; not temporal stability, EMA correctness, or feature quality"
+        }
+      },
+      "scale1.0-seed20261010": {
+        "checkpoint": {
+          "checkpoint_sha256": "aca797f03e5159fc497430e5affe78a3a0cbe23e2d238dccbcabb010c3bb744e",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d"
+          },
+          "training_settings": {
+            "seed": 20261010,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.4049208629147066,
+          "between_image_population_variance": 0.13355832823607172,
+          "total_population_variance": 0.5384791911507782,
+          "between_fraction": 0.24802876402827306,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.33305658617139844,
+            "mean_row_l2": 3.934033238643639,
+            "min_row_l2": 2.6154067246241324,
+            "max_row_l2": 4.9131476785510895,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.877988716562519,
+            "eigenvalue_tolerance": 1.2634449694774894e-10,
+            "mean_nonzero_row_pair_cosine": 0.7460864682692319,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.4388133460238424,
+          "between_image_population_variance": 0.14339218001302362,
+          "total_population_variance": 0.5822055260368662,
+          "between_fraction": 0.24629134145996376,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.33901313894958285,
+            "mean_row_l2": 3.8382619328831487,
+            "min_row_l2": 2.5528820525520004,
+            "max_row_l2": 4.952970791058627,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.8029638899173377,
+            "eigenvalue_tolerance": 1.3063556168095236e-10,
+            "mean_nonzero_row_pair_cosine": 0.7161512885350474,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.1623308704050557,
+          "between_image_population_variance": 0.040499887964304954,
+          "total_population_variance": 0.20283075836936068,
+          "between_fraction": 0.1996733054192574,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.1723347268873881,
+            "mean_row_l2": 5.176287917919017,
+            "min_row_l2": 4.734101055110312,
+            "max_row_l2": 5.358121578647492,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.4462279107556597,
+            "eigenvalue_tolerance": 5.3784069384780805e-11,
+            "mean_nonzero_row_pair_cosine": 0.9521686385315468,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.1623308704050557,
+          "between_image_population_variance": 0.040499887964304954,
+          "total_population_variance": 0.20283075836936068,
+          "between_fraction": 0.1996733054192574,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.1723347268873881,
+            "mean_row_l2": 5.176287917919017,
+            "min_row_l2": 4.734101055110312,
+            "max_row_l2": 5.358121578647492,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.4462279107556597,
+            "eigenvalue_tolerance": 5.3784069384780805e-11,
+            "mean_nonzero_row_pair_cosine": 0.9521686385315468,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "context_target": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.08211813625905981,
+          "mean_paired_cosine": 0.9935806197260477,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.994556323257972,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "context_random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 1.0284160064472145,
+          "mean_paired_cosine": 0.21441906948598333,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9045761815009657,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "parameter_lag": {
+          "parameter_count": 18720,
+          "rmse": 0.004520603070953435,
+          "relative_l2": 0.03233220775710637,
+          "parameters": {
+            "projection.weight": {
+              "count": 1536,
+              "rmse": 0.003272792531383327,
+              "relative_l2": 0.03512373966949164
+            },
+            "projection.bias": {
+              "count": 32,
+              "rmse": 0.0019868426048750723,
+              "relative_l2": 0.023429314007955362
+            },
+            "blocks.layers.0.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.003870355510791029,
+              "relative_l2": 0.030063514799151505
+            },
+            "blocks.layers.0.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0024416196285187313,
+              "relative_l2": 0.12503640689625772
+            },
+            "blocks.layers.0.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.003652740003725107,
+              "relative_l2": 0.03519175184351399
+            },
+            "blocks.layers.0.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.001922015045132428,
+              "relative_l2": 0.08703577070095701
+            },
+            "blocks.layers.0.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.004757412953801525,
+              "relative_l2": 0.040594581876190645
+            },
+            "blocks.layers.0.linear1.bias": {
+              "count": 64,
+              "rmse": 0.0037217880148372414,
+              "relative_l2": 0.03512921220716339
+            },
+            "blocks.layers.0.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.0050291395246699535,
+              "relative_l2": 0.059852428556570185
+            },
+            "blocks.layers.0.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0017178153161778811,
+              "relative_l2": 0.02342593176288225
+            },
+            "blocks.layers.0.norm1.weight": {
+              "count": 32,
+              "rmse": 0.004170443322543684,
+              "relative_l2": 0.004390629613687719
+            },
+            "blocks.layers.0.norm1.bias": {
+              "count": 32,
+              "rmse": 0.0017886293157044605,
+              "relative_l2": 0.03934729957056869
+            },
+            "blocks.layers.0.norm2.weight": {
+              "count": 32,
+              "rmse": 0.004866995678279466,
+              "relative_l2": 0.005039988639987171
+            },
+            "blocks.layers.0.norm2.bias": {
+              "count": 32,
+              "rmse": 0.0023240387617855752,
+              "relative_l2": 0.05411039021093372
+            },
+            "blocks.layers.1.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.005136145708176277,
+              "relative_l2": 0.04011126149268304
+            },
+            "blocks.layers.1.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0021080522232775844,
+              "relative_l2": 0.07588293762034838
+            },
+            "blocks.layers.1.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.004744507059998606,
+              "relative_l2": 0.04511641846552819
+            },
+            "blocks.layers.1.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.0016509215512633057,
+              "relative_l2": 0.060133268090693796
+            },
+            "blocks.layers.1.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.005149246925672437,
+              "relative_l2": 0.04550008124123185
+            },
+            "blocks.layers.1.linear1.bias": {
+              "count": 64,
+              "rmse": 0.003348385423418249,
+              "relative_l2": 0.03130562320885818
+            },
+            "blocks.layers.1.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.004567960725238955,
+              "relative_l2": 0.05835007022432881
+            },
+            "blocks.layers.1.linear2.bias": {
+              "count": 32,
+              "rmse": 0.0016036841636214005,
+              "relative_l2": 0.02029456831767582
+            },
+            "blocks.layers.1.norm1.weight": {
+              "count": 32,
+              "rmse": 0.003446516176429435,
+              "relative_l2": 0.0036333004916076724
+            },
+            "blocks.layers.1.norm1.bias": {
+              "count": 32,
+              "rmse": 0.0013253614981783384,
+              "relative_l2": 0.03731663108845825
+            },
+            "blocks.layers.1.norm2.weight": {
+              "count": 32,
+              "rmse": 0.0048711290838624795,
+              "relative_l2": 0.00512422537658177
+            },
+            "blocks.layers.1.norm2.bias": {
+              "count": 32,
+              "rmse": 0.002905245077738693,
+              "relative_l2": 0.07382568332720786
+            },
+            "blocks.norm.weight": {
+              "count": 32,
+              "rmse": 0.005380448314926605,
+              "relative_l2": 0.00567862183416066
+            },
+            "blocks.norm.bias": {
+              "count": 32,
+              "rmse": 0.0013247967103885013,
+              "relative_l2": 0.03671963980534359
+            }
+          },
+          "buffer_count": 1,
+          "buffers_identical": true,
+          "limitation": "Current student-teacher weight gap only; not temporal stability, EMA correctness, or feature quality"
+        }
+      },
+      "scale1.0-seed20261011": {
+        "checkpoint": {
+          "checkpoint_sha256": "13a794a7aab8c5745f94891870c4322e6e74b480d37bd4032a1a912de4ab5741",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d"
+          },
+          "training_settings": {
+            "seed": 20261011,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.5320346606976474,
+          "between_image_population_variance": 0.19096640851879498,
+          "total_population_variance": 0.7230010692164425,
+          "between_fraction": 0.2641301882523579,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.39605245186703275,
+            "mean_row_l2": 3.4858957851196104,
+            "min_row_l2": 2.1153923524613503,
+            "max_row_l2": 5.182935819476099,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.2535831897983876,
+            "eigenvalue_tolerance": 2.0671328886034336e-10,
+            "mean_nonzero_row_pair_cosine": 0.5716742536380568,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.5387592296432936,
+          "between_image_population_variance": 0.18533410289119084,
+          "total_population_variance": 0.7240933325344843,
+          "between_fraction": 0.2559533344168232,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.38661001116548943,
+            "mean_row_l2": 3.4757088691592015,
+            "min_row_l2": 2.139107511409077,
+            "max_row_l2": 5.213818675168512,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.1918530474872067,
+            "eigenvalue_tolerance": 2.024362836450274e-10,
+            "mean_nonzero_row_pair_cosine": 0.5858830849654477,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_context": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.21242976776855357,
+          "between_image_population_variance": 0.06913566503621604,
+          "total_population_variance": 0.28156543280476964,
+          "between_fraction": 0.2455403149013429,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.24533384628509225,
+            "mean_row_l2": 5.01828337708571,
+            "min_row_l2": 4.546600632693536,
+            "max_row_l2": 5.34788921190369,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.198625269678208,
+            "eigenvalue_tolerance": 9.716293897614737e-11,
+            "mean_nonzero_row_pair_cosine": 0.9132830876076519,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "random_target": {
+          "count": 500,
+          "tokens_per_image": 64,
+          "feature_dim": 32,
+          "within_image_population_variance": 0.21242976776855357,
+          "between_image_population_variance": 0.06913566503621604,
+          "total_population_variance": 0.28156543280476964,
+          "between_fraction": 0.2455403149013429,
+          "pooled_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.24533384628509225,
+            "mean_row_l2": 5.01828337708571,
+            "min_row_l2": 4.546600632693536,
+            "max_row_l2": 5.34788921190369,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.198625269678208,
+            "eigenvalue_tolerance": 9.716293897614737e-11,
+            "mean_nonzero_row_pair_cosine": 0.9132830876076519,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "limitation": "Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee"
+        },
+        "context_target": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.07408604941670623,
+          "mean_paired_cosine": 0.9934921687953434,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9975731687217161,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "context_random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.9634303734584487,
+          "mean_paired_cosine": 0.2271958115326349,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.8769235865578647,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "parameter_lag": {
+          "parameter_count": 18720,
+          "rmse": 0.003722464279291777,
+          "relative_l2": 0.026855673078971055,
+          "parameters": {
+            "projection.weight": {
+              "count": 1536,
+              "rmse": 0.0030379677719158064,
+              "relative_l2": 0.03229066853911228
+            },
+            "projection.bias": {
+              "count": 32,
+              "rmse": 0.0013450650843165257,
+              "relative_l2": 0.01821700964512147
+            },
+            "blocks.layers.0.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.0032151088780595647,
+              "relative_l2": 0.024874687812633932
+            },
+            "blocks.layers.0.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0012243119629353713,
+              "relative_l2": 0.05912937669979312
+            },
+            "blocks.layers.0.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.0027587517045341726,
+              "relative_l2": 0.026757702697243233
+            },
+            "blocks.layers.0.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.001515459750234064,
+              "relative_l2": 0.07936420386392601
+            },
+            "blocks.layers.0.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.0038833046110400772,
+              "relative_l2": 0.03386226782734741
+            },
+            "blocks.layers.0.linear1.bias": {
+              "count": 64,
+              "rmse": 0.0030629502612948144,
+              "relative_l2": 0.029748714497386208
+            },
+            "blocks.layers.0.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.003963672107919826,
+              "relative_l2": 0.04878615195722055
+            },
+            "blocks.layers.0.linear2.bias": {
+              "count": 32,
+              "rmse": 0.001219283301398346,
+              "relative_l2": 0.015838361437382452
+            },
+            "blocks.layers.0.norm1.weight": {
+              "count": 32,
+              "rmse": 0.0038716579366804833,
+              "relative_l2": 0.004025474378617542
+            },
+            "blocks.layers.0.norm1.bias": {
+              "count": 32,
+              "rmse": 0.001072823332520021,
+              "relative_l2": 0.024246352402447574
+            },
+            "blocks.layers.0.norm2.weight": {
+              "count": 32,
+              "rmse": 0.005813814718626751,
+              "relative_l2": 0.006050848342926177
+            },
+            "blocks.layers.0.norm2.bias": {
+              "count": 32,
+              "rmse": 0.001869990056673621,
+              "relative_l2": 0.059333152663241545
+            },
+            "blocks.layers.1.self_attn.in_proj_weight": {
+              "count": 3072,
+              "rmse": 0.004596610717011838,
+              "relative_l2": 0.036112008654268835
+            },
+            "blocks.layers.1.self_attn.in_proj_bias": {
+              "count": 96,
+              "rmse": 0.0023364913930363643,
+              "relative_l2": 0.09282947215543962
+            },
+            "blocks.layers.1.self_attn.out_proj.weight": {
+              "count": 1024,
+              "rmse": 0.003198202190576561,
+              "relative_l2": 0.03185893334478696
+            },
+            "blocks.layers.1.self_attn.out_proj.bias": {
+              "count": 32,
+              "rmse": 0.0011998039015394116,
+              "relative_l2": 0.051439020213072985
+            },
+            "blocks.layers.1.linear1.weight": {
+              "count": 2048,
+              "rmse": 0.004041647347146024,
+              "relative_l2": 0.03689738326683929
+            },
+            "blocks.layers.1.linear1.bias": {
+              "count": 64,
+              "rmse": 0.002549353400550534,
+              "relative_l2": 0.02376082546234823
+            },
+            "blocks.layers.1.linear2.weight": {
+              "count": 2048,
+              "rmse": 0.003707633709341522,
+              "relative_l2": 0.04941015168733578
+            },
+            "blocks.layers.1.linear2.bias": {
+              "count": 32,
+              "rmse": 0.001148673802347241,
+              "relative_l2": 0.014339987502800518
+            },
+            "blocks.layers.1.norm1.weight": {
+              "count": 32,
+              "rmse": 0.004199513470046931,
+              "relative_l2": 0.004471936060950985
+            },
+            "blocks.layers.1.norm1.bias": {
+              "count": 32,
+              "rmse": 0.0023095140547350966,
+              "relative_l2": 0.0541225405776948
+            },
+            "blocks.layers.1.norm2.weight": {
+              "count": 32,
+              "rmse": 0.0037107394492448182,
+              "relative_l2": 0.003937895164461774
+            },
+            "blocks.layers.1.norm2.bias": {
+              "count": 32,
+              "rmse": 0.002402942016195042,
+              "relative_l2": 0.07682151891216538
+            },
+            "blocks.norm.weight": {
+              "count": 32,
+              "rmse": 0.004115307258138073,
+              "relative_l2": 0.004316696913459227
+            },
+            "blocks.norm.bias": {
+              "count": 32,
+              "rmse": 0.0013876643541107106,
+              "relative_l2": 0.03527949879574596
+            }
+          },
+          "buffer_count": 1,
+          "buffers_identical": true,
+          "limitation": "Current student-teacher weight gap only; not temporal stability, EMA correctness, or feature quality"
+        }
+      }
+    },
+    "pixels": {
+      "count": 500,
+      "feature_dim": 3072,
+      "zero_norm_rows": 0,
+      "zero_variance_columns": 0,
+      "mean_feature_population_std": 0.49183974138859426,
+      "mean_row_l2": 26.941631280785398,
+      "min_row_l2": 10.761487406792662,
+      "max_row_l2": 47.20077826845821,
+      "centered_numerical_rank": 499,
+      "covariance_entropy_effective_rank": 34.39396037338584,
+      "eigenvalue_tolerance": 7.046838062870911e-08,
+      "mean_nonzero_row_pair_cosine": 0.030603356001559924,
+      "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+    },
+    "images_sampled": true,
+    "partition": "train",
+    "classifiers_fitted": false,
+    "models_trained": false,
+    "validation_images_read": false,
+    "test_evaluated": false,
+    "limitation": "Exploratory training-only endpoint diagnostics, not downstream quality, temporal stability or a new held-out comparison"
+  },
+  "report_sha256": "0cd74d70598da4053993160d54c4aa1a65bfb1f4d805ca686fb21ce40fb95202"
+}
