@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import unittest
+import tempfile
 from unittest.mock import patch
 
 import torch
@@ -17,6 +18,8 @@ class StabilityAuditTests(unittest.TestCase):
     def setUp(self):
         fixtures.ScaleRunTests.setUp(self)
         self.run.training()
+        cache = tempfile.TemporaryDirectory(); self.addCleanup(cache.cleanup)
+        self.cache = Path(cache.name)
         p = patch('jepa_lab.stability_audit.CIFAR10Binary', Fixture)
         p.start(); self.addCleanup(p.stop)
 
@@ -47,3 +50,34 @@ class StabilityAuditTests(unittest.TestCase):
             saved['model']['context_encoder.projection.weight'][0, 0] += 1
             torch.save(saved, path)
             with self.assertRaises(ValueError): stability_audit.inspect_training(self.run)
+
+    def test_cache_replay_no_images_or_diagnostics_and_corruption_preserves_bytes(self):
+        path = self.cache/'audit-cache.json'
+        result, reused = stability_audit.cached_audit(self.run, path)
+        self.assertFalse(reused); before = path.read_bytes()
+        with patch.object(Fixture, '__getitem__', side_effect=AssertionError('image access')), \
+                patch.object(stability_audit, 'inspect_training', side_effect=AssertionError('recompute')):
+            self.assertEqual((result, True), stability_audit.cached_audit(self.run, path, reuse_only=True))
+            with self.assertRaisesRegex(ValueError, 'missing'):
+                stability_audit.cached_audit(self.run, self.cache/'missing.json', reuse_only=True)
+            with patch.object(stability_audit, '_code_fingerprints', return_value={'changed': 'code'}):
+                with self.assertRaisesRegex(ValueError, 'differs'):
+                    stability_audit.cached_audit(self.run, path)
+        self.assertEqual(before, path.read_bytes())
+        saved = json.loads(before); saved['report']['count'] += 1
+        path.write_text(json.dumps(saved)); corrupt = path.read_bytes()
+        with self.assertRaisesRegex(ValueError, 'differs'):
+            stability_audit.cached_audit(self.run, path)
+        self.assertEqual(corrupt, path.read_bytes())
+
+    def test_protected_evidence_and_failed_atomic_save(self):
+        d = json.loads(self.run.protocol.read_text())
+        for path in (self.run.protocol, Path(d['selection_path']), self.directory/'cache.json', self.root/'data.json'):
+            with self.assertRaisesRegex(ValueError, 'cannot replace'):
+                stability_audit.cached_audit(self.run, path)
+        path = self.cache/'failed.json'
+        with patch.object(stability_audit, 'inspect_training', return_value={'count': 10}), \
+                patch('jepa_lab.compare.os.replace', side_effect=OSError('disk error')):
+            with self.assertRaisesRegex(OSError, 'disk error'):
+                stability_audit.cached_audit(self.run, path)
+        self.assertFalse(path.exists()); self.assertEqual([], list(self.cache.iterdir()))

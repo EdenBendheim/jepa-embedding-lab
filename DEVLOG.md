@@ -2,6 +2,12 @@
 
 ## October 24, 2026
 
+- Added a CLI and atomic aggregate-report cache bound to source/data/checkpoint,
+  code and runtime identity. Two new integration checks prove image-free,
+  calculation-free replay, stale-code/corrupt-report refusal, protected evidence
+  and cleanup after failed atomic replacement. All four audit integration
+  tests pass; CLI help works. The checksum is not producer authentication.
+
 - Connected stability diagnostics to the completed amplitude experiment using
   only its original fitting images. The audit compares context/teacher and
   matching initialization controls, spatial/pooled geometry and parameter gaps;

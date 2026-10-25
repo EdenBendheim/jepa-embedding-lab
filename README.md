@@ -702,3 +702,29 @@ loss are diagnostics only; downstream quality requires frozen evaluation.
 negative primary contrast and all random/pixel, ridge and neighbor controls.
 The .02 signal did not improve AdamW; the real no-fit replay and check outcomes
 are recorded in the development log.
+
+## Inspect training-only student and teacher diagnostics
+
+```sh
+PYTHONPATH=src .venv/bin/python -m jepa_lab.stability_audit \
+  --output runs/stability-20261024/audit.json
+PYTHONPATH=src .venv/bin/python -m jepa_lab.stability_audit \
+  --output runs/stability-20261024/audit.json --reuse-only
+```
+
+This inspects completed amplitude checkpoints on the original 500 fitting
+images. It compares full-image context/EMA-target tokens, matching random
+encoders and shared pixel geometry. Population variance is decomposed into
+within-image spatial variation and between-image pooled variation. Aligned
+pooled RMSE, cosine and centered linear CKA complement named parameter gaps.
+These are exploratory endpoint measurements, not temporal stability or accuracy.
+A constant pooled representation has undefined CKA; undefined ratios are JSON null.
+
+No models/classifiers are fitted, no validation images are read and official
+test stays reserved. Cached replay checks original source pins, dataset hashes,
+complete training journals, checkpoint bytes, code, runtime and report checksum
+without reading images or recalculating diagnostics. The saved report describes
+the original computation; stdout separately states whether this invocation read
+images. Changed caches fail rather than being replaced. Checksums detect
+accidental changes, not a forged report. Keep the cache outside the scale-run
+state/data/source directories. Only aggregate reports belong in public commits.

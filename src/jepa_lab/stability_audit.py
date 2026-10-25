@@ -68,3 +68,81 @@ def inspect_training(run, *, batch_size=16):
         images_sampled=True, partition='train', classifiers_fitted=False, models_trained=False,
         validation_images_read=False, test_evaluated=False,
         limitation='Exploratory training-only endpoint diagnostics, not downstream quality, temporal stability or a new held-out comparison')
+
+
+def _digest(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+
+
+def _code_fingerprints():
+    from pathlib import Path
+    # Include transitive local helpers, so changed extraction/diagnostic code
+    # cannot silently reuse an older calculation. This is not authentication.
+    return {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in sorted(Path(__file__).parent.glob('*.py'))}
+
+
+def cached_audit(run, output, *, batch_size=16, reuse_only=False):
+    """Return a byte-bound saved diagnostic report, or create it atomically.
+
+    Cache replay rechecks the dataset, source pins, completed journals, weights,
+    runtime and code. It does not read images or recalculate token diagnostics.
+    A checksum detects accidental corruption, not a deliberately forged report.
+    """
+    from pathlib import Path
+    from .compare import write_report
+    from .exposure import load_exposure_bundle
+    if type(batch_size) is not int or not 1 <= batch_size <= 32:
+        raise ValueError('Audit batch size must be 1-32')
+    reports = run.training(reuse_only=True)
+    d, manifest, reference, _, labels = run.inputs()
+    output = Path(output)
+    protected = {Path(row['path']).resolve() for row in d['sources']} | {run.protocol.resolve()}
+    bundle = load_exposure_bundle(d['exposure_bundle_path'], manifest, labels)
+    protected.update(Path(row['path']).resolve() for row in bundle['source_files'])
+    code_directory = Path(__file__).resolve().parent
+    if (output.resolve() in protected or output.resolve().is_relative_to(run.root.resolve())
+            or output.resolve().is_relative_to(run.directory.resolve())
+            or output.resolve().is_relative_to(code_directory)):
+        raise ValueError('Stability cache cannot replace experiment evidence, code or raw data')
+    identity = dict(version=1, protocol_sha256=run.expected_sha,
+        manifest_sha256=manifest['manifest_sha256'], selection_sha256=reference['selection_sha256'],
+        checkpoints={name: row['checkpoint_sha256'] for name, row in reports.items()},
+        batch_size=batch_size, runtime=dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()),
+        code_sha256=_code_fingerprints())
+    if output.exists():
+        saved = json.loads(output.read_text())
+        if (not isinstance(saved, dict) or set(saved) != {'identity', 'report', 'report_sha256'}
+                or saved['identity'] != identity or saved['report_sha256'] != _digest(saved['report'])):
+            raise ValueError('Existing stability cache differs; preserve it and use a new output path')
+        return saved['report'], True
+    if reuse_only:
+        raise ValueError('Reuse-only stability cache is missing')
+    result = inspect_training(run, batch_size=batch_size)
+    write_report(output, dict(identity=identity, report=result, report_sha256=_digest(result)))
+    return result, False
+
+
+def main():
+    import argparse
+    from pathlib import Path
+    from .scale_run import DEFAULT_DIRECTORY, ScaleRun
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, default=Path('data/cifar-10-batches-bin'))
+    parser.add_argument('--directory', type=Path, default=DEFAULT_DIRECTORY)
+    parser.add_argument('--output', type=Path, required=True, help='Local JSON cache outside the scale-run directory')
+    parser.add_argument('--batch-size', type=int, default=16)
+    parser.add_argument('--reuse-only', action='store_true')
+    args = parser.parse_args()
+    torch.set_num_threads(1)
+    try:
+        result, reused = cached_audit(ScaleRun(args.root, args.directory), args.output,
+            batch_size=args.batch_size, reuse_only=args.reuse_only)
+        print(json.dumps(dict(count=result['count'], runs=len(result['arms']), cache_reused=reused,
+            images_sampled_this_invocation=not reused, validation_images_read=False, test_evaluated=False)))
+    except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
+        parser.error(str(exc))
+
+
+if __name__ == '__main__':
+    main()
