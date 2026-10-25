@@ -2,6 +2,12 @@
 
 ## October 24, 2026
 
+- Added the full-image token variance decomposition: within-image variation
+  versus between-image pooled variation, with existing pooled geometry metrics.
+  Two new tests demonstrate that large spatial variance can hide identical image
+  means, verify the population variance identity and check degenerate/invalid
+  inputs. All four stability tests pass; no quality threshold is invented.
+
 - Added aligned pooled-feature RMSE, cosine and centered linear CKA diagnostics.
   Two synthetic tests verify row-order sensitivity, translation/rotation/scale
   invariance of CKA, undefined degenerate ratios, invalid inputs and unchanged

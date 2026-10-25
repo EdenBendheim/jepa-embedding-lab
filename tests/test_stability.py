@@ -28,3 +28,30 @@ class StabilityTests(unittest.TestCase):
                   torch.ones(2, 2).double(), torch.full((2, 2), float('nan'))):
             with self.assertRaises(ValueError): paired_features(x, x)
         with self.assertRaises(ValueError): paired_features(torch.ones(3, 2), torch.ones(2, 2))
+
+    def test_spatial_variation_can_hide_identical_image_means(self):
+        from jepa_lab.stability import token_spread
+        spatial = torch.tensor([[[-1., 0.], [1., 0.]]]).repeat(3, 1, 1)
+        result = token_spread(spatial)
+        self.assertGreater(result['within_image_population_variance'], 0)
+        self.assertEqual(0., result['between_fraction'])
+        self.assertEqual(0, result['pooled_geometry']['centered_numerical_rank'])
+        images = torch.tensor([-1., 0., 1.])[:, None, None].expand(3, 2, 2).clone()
+        image_result = token_spread(images)
+        self.assertEqual(1., image_result['between_fraction'])
+        mixed = token_spread(spatial + images)
+        self.assertAlmostEqual(mixed['total_population_variance'],
+            mixed['within_image_population_variance'] + mixed['between_image_population_variance'])
+        scaled = token_spread((spatial + images) * 3 + 2)
+        self.assertAlmostEqual(mixed['between_fraction'], scaled['between_fraction'])
+        self.assertAlmostEqual(9*mixed['total_population_variance'], scaled['total_population_variance'])
+
+    def test_spatial_degenerate_invalid_and_unchanged(self):
+        from jepa_lab.stability import token_spread
+        x = torch.ones(1, 1, 3, requires_grad=True); rng = torch.get_rng_state().clone()
+        self.assertIsNone(token_spread(x)['between_fraction'])
+        self.assertIsNone(x.grad); self.assertTrue(torch.equal(x, torch.ones_like(x)))
+        self.assertTrue(torch.equal(rng, torch.get_rng_state()))
+        for x in (torch.ones(2, 2), torch.ones(2, 65, 2), torch.ones(0, 2, 2),
+                  torch.ones(2, 2, 2).double(), torch.full((2, 2, 2), float('inf'))):
+            with self.assertRaises(ValueError): token_spread(x)

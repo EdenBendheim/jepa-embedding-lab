@@ -34,3 +34,30 @@ def paired_features(context, target):
         mean_paired_cosine=float(cosines.mean()) if valid.any() else None,
         cosine_defined_rows=int(valid.sum()), centered_linear_cka=cka,
         limitation='Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability')
+
+
+@torch.inference_mode()
+def token_spread(tokens):
+    """Decompose population variance into within-image and between-image parts.
+
+    All images have the same token count. Therefore total variance equals the
+    sum of mean within-image variance and variance of image means. Large token
+    variance can coexist with identical pooled image embeddings.
+    """
+    if (not isinstance(tokens, torch.Tensor) or tokens.device.type != 'cpu'
+            or tokens.dtype != torch.float32 or tokens.ndim != 3
+            or not 1 <= tokens.shape[0] <= 1000 or not 1 <= tokens.shape[1] <= 64
+            or not 1 <= tokens.shape[2] <= 4096 or tokens.numel() > 4_000_000
+            or not torch.isfinite(tokens).all()):
+        raise ValueError('Use finite bounded CPU float32 [images, 1-64 tokens, dimensions]')
+    from .feature_geometry import feature_geometry
+    values = tokens.detach().double()
+    pooled = values.mean(1)
+    within = float((values - pooled[:, None]).square().mean())
+    between = float((pooled - pooled.mean(0)).square().mean())
+    total = float((values - values.mean((0, 1))).square().mean())
+    return dict(count=len(values), tokens_per_image=values.shape[1], feature_dim=values.shape[2],
+        within_image_population_variance=within, between_image_population_variance=between,
+        total_population_variance=total, between_fraction=between/total if total else None,
+        pooled_geometry=feature_geometry(pooled.float()),
+        limitation='Full-image spatial decomposition at one checkpoint; no classification or temporal-stability guarantee')
