@@ -2,6 +2,13 @@
 
 ## October 25, 2026
 
+- Integrated masked-context diagnostics into the training-only scale audit and
+  CLI with a separate cache-mode identity. Declared geometry is shared across
+  trained and exact-initialization random arms. All five audit integration tests
+  pass, including exact training-only image access, unchanged checkpoint bytes
+  and RNG, image-free replay and refusal to reuse a masked cache as a full-image
+  cache. CLI help checked; no accuracy evaluation or training occurs.
+
 - Added fixed-mask context diagnostics comparing full-image pooling, visible-subset
   pooling of full-attention tokens, and raw-visible-patch re-encoding. The subset
   control deliberately retains full-image attention and cannot serve as a leak-free

@@ -9,6 +9,7 @@ from .cifar10 import CIFAR10Binary, patchify_rgb
 from .embeddings import load_encoder, pixel_features, random_encoder
 from .feature_geometry import feature_geometry
 from .model import config_dict
+from .masked_context import masked_context_report
 from .stability import paired_features, parameter_lag, token_spread
 
 
@@ -24,7 +25,7 @@ def _tokens(model, images, batch_size):
     return torch.cat(context), torch.cat(target)
 
 
-def inspect_training(run, *, batch_size=16):
+def inspect_training(run, *, batch_size=16, masked=False):
     """Reuse completed training, then compare fixed full-image encoder endpoints.
 
     No optimization, masked prediction, class scoring, validation extraction or
@@ -33,6 +34,8 @@ def inspect_training(run, *, batch_size=16):
     """
     if type(batch_size) is not int or not 1 <= batch_size <= 32:
         raise ValueError('Audit batch size must be 1-32')
+    if type(masked) is not bool:
+        raise ValueError('Masked audit mode must be boolean')
     reports = run.training(reuse_only=True)
     d, manifest, reference, _, _ = run.inputs()
     indices = reference['partitions']['train']['indices']
@@ -52,6 +55,11 @@ def inspect_training(run, *, batch_size=16):
                     or metadata['completed_steps'] != d['total_steps']):
                 raise ValueError('Audit checkpoint differs from the verified completed run')
             random = random_encoder(run.config(d, scale), seed)
+            if masked:
+                arms[name] = dict(checkpoint=metadata,
+                    context=masked_context_report(model, images, batch_size=batch_size, **d['mask']),
+                    random_context=masked_context_report(random, images, batch_size=batch_size, **d['mask']))
+                continue
             context, target = _tokens(model, images, batch_size)
             random_context, random_target = _tokens(random, images, batch_size)
             arms[name] = dict(checkpoint=metadata,
@@ -60,7 +68,7 @@ def inspect_training(run, *, batch_size=16):
                 context_target=paired_features(context.mean(1), target.mean(1)),
                 context_random=paired_features(context.mean(1), random_context.mean(1)),
                 parameter_lag=parameter_lag(model.context_encoder, model.target_encoder))
-    return dict(version=1, protocol_sha256=run.expected_sha, manifest_sha256=manifest['manifest_sha256'],
+    return dict(version=2 if masked else 1, protocol_sha256=run.expected_sha, manifest_sha256=manifest['manifest_sha256'],
         training_selection_sha256=reference['selection_sha256'],
         ordered_training_indices_sha256=hashlib.sha256(json.dumps(indices, separators=(',', ':')).encode()).hexdigest(),
         count=len(indices), batch_size=batch_size, runtime=dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()),
@@ -82,7 +90,7 @@ def _code_fingerprints():
             for p in sorted(Path(__file__).parent.glob('*.py'))}
 
 
-def cached_audit(run, output, *, batch_size=16, reuse_only=False):
+def cached_audit(run, output, *, batch_size=16, reuse_only=False, masked=False):
     """Return a byte-bound saved diagnostic report, or create it atomically.
 
     Cache replay rechecks the dataset, source pins, completed journals, weights,
@@ -94,6 +102,8 @@ def cached_audit(run, output, *, batch_size=16, reuse_only=False):
     from .exposure import load_exposure_bundle
     if type(batch_size) is not int or not 1 <= batch_size <= 32:
         raise ValueError('Audit batch size must be 1-32')
+    if type(masked) is not bool:
+        raise ValueError('Masked audit mode must be boolean')
     reports = run.training(reuse_only=True)
     d, manifest, reference, _, labels = run.inputs()
     output = Path(output)
@@ -110,6 +120,8 @@ def cached_audit(run, output, *, batch_size=16, reuse_only=False):
         checkpoints={name: row['checkpoint_sha256'] for name, row in reports.items()},
         batch_size=batch_size, runtime=dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()),
         code_sha256=_code_fingerprints())
+    if masked:
+        identity['diagnostic_mode'] = 'fixed-masked-context-v1'
     if output.exists():
         saved = json.loads(output.read_text())
         if (not isinstance(saved, dict) or set(saved) != {'identity', 'report', 'report_sha256'}
@@ -118,7 +130,7 @@ def cached_audit(run, output, *, batch_size=16, reuse_only=False):
         return saved['report'], True
     if reuse_only:
         raise ValueError('Reuse-only stability cache is missing')
-    result = inspect_training(run, batch_size=batch_size)
+    result = inspect_training(run, batch_size=batch_size, masked=masked)
     write_report(output, dict(identity=identity, report=result, report_sha256=_digest(result)))
     return result, False
 
@@ -133,11 +145,13 @@ def main():
     parser.add_argument('--output', type=Path, required=True, help='Local JSON cache outside the scale-run directory')
     parser.add_argument('--batch-size', type=int, default=16)
     parser.add_argument('--reuse-only', action='store_true')
+    parser.add_argument('--masked-context', action='store_true',
+                        help='Compare full pooling, subset pooling and visible-only attention using four fixed masks')
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
         result, reused = cached_audit(ScaleRun(args.root, args.directory), args.output,
-            batch_size=args.batch_size, reuse_only=args.reuse_only)
+            batch_size=args.batch_size, reuse_only=args.reuse_only, masked=args.masked_context)
         print(json.dumps(dict(count=result['count'], runs=len(result['arms']), cache_reused=reused,
             images_sampled_this_invocation=not reused, validation_images_read=False, test_evaluated=False)))
     except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:

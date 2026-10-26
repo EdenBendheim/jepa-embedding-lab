@@ -81,3 +81,27 @@ class StabilityAuditTests(unittest.TestCase):
             with self.assertRaisesRegex(OSError, 'disk error'):
                 stability_audit.cached_audit(self.run, path)
         self.assertFalse(path.exists()); self.assertEqual([], list(self.cache.iterdir()))
+
+    def test_masked_training_only_exact_images_and_cache_mode_boundary(self):
+        path = self.cache/'masked.json'
+        before = {p: p.read_bytes() for p in self.directory.rglob('*') if p.is_file()}
+        rng = torch.get_rng_state().clone(); Fixture.accessed.clear()
+        with patch('jepa_lab.training_budget.train_cifar10', side_effect=AssertionError('training')):
+            result, reused = stability_audit.cached_audit(self.run, path, masked=True)
+        pilot = json.loads(Path(json.loads(self.run.protocol.read_text())['selection_path']).read_text())
+        self.assertEqual([(True,i) for i in pilot['partitions']['train']['indices']], Fixture.accessed)
+        self.assertFalse(reused); self.assertEqual(2, result['version'])
+        self.assertFalse(result['validation_images_read']); self.assertFalse(result['test_evaluated'])
+        self.assertTrue(torch.equal(rng, torch.get_rng_state()))
+        self.assertEqual(before, {p:p.read_bytes() for p in before})
+        for arm in result['arms'].values():
+            self.assertEqual(arm['context']['mask_recipe_sha256'], arm['random_context']['mask_recipe_sha256'])
+            self.assertEqual(4, arm['context']['views']); self.assertEqual(45, arm['context']['visible_tokens'])
+        cached = path.read_bytes()
+        with patch.object(Fixture, '__getitem__', side_effect=AssertionError('images')), \
+                patch.object(stability_audit, 'inspect_training', side_effect=AssertionError('recompute')):
+            self.assertEqual((result,True),stability_audit.cached_audit(self.run,path,masked=True,reuse_only=True))
+            with self.assertRaisesRegex(ValueError,'differs'): stability_audit.cached_audit(self.run,path)
+        self.assertEqual(cached,path.read_bytes())
+        with self.assertRaisesRegex(ValueError,'boolean'):
+            stability_audit.cached_audit(self.run,self.cache/'bad.json',masked=1)

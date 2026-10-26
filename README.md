@@ -739,3 +739,11 @@ pooling retains hidden-image attention and is only a diagnostic control; the
 re-encoded arm gathers raw visible patches before attention. It fits nothing
 and preserves model modes, weights and RNG. These statistics do not establish
 robustness or downstream accuracy.
+
+Add `--masked-context` to `jepa_lab.stability_audit` with a **new output path**
+(for example `runs/masked-context-20261025/audit.json`) to inspect the original
+fitting images at every completed scale/seed checkpoint and matching random
+initialization. Four fixed seeds (29, 31, 37, 41) share each run's declared
+target geometry/context fraction. The cache identity distinguishes this mode;
+`--masked-context --reuse-only` must read no images or recompute diagnostics.
+Original full-image caches remain separate and are never overwritten.
