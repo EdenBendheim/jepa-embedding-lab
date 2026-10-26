@@ -2,7 +2,7 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Status — October 24, 2026:** the [predeclared amplitude comparison](experiments/SCALE-2026-10-22.md)
+**Status — October 25, 2026:** the [predeclared amplitude comparison](experiments/SCALE-2026-10-22.md)
 is complete. Three new .02 runs and pinned 1.0 controls share actual image order
 and 29,472 trainable parameters. On 500 fresh validation rows, trained .02 / 1.0
 AdamW accuracy is **25.53% / 26.51%** (−0.98 points). Matching random controls
@@ -13,6 +13,9 @@ stays reserved. These are descriptive validation results, not test accuracy.
 A [training-only diagnostic audit](experiments/STABILITY-2026-10-24.md) now
 finds concentrated pooled variance and high student/teacher endpoint agreement,
 with matching random controls. It adds no new accuracy or temporal-stability claim.
+The [fixed-mask fitting-image audit](experiments/MASKED-CONTEXT-2026-10-25.md)
+finds that full-image versus visible-only context still has concentrated pooled
+variance. Four-mask sensitivity is a diagnostic, not a robustness or accuracy result.
 
 ## Why this experiment
 

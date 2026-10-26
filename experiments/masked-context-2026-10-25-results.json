@@ -1,0 +1,3034 @@
+{
+  "identity": {
+    "version": 1,
+    "protocol_sha256": "26c3f7facd70e1b2593ecd500345798d5583f33a31a93ab3d413d5da56146a1d",
+    "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+    "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+    "checkpoints": {
+      "scale0.02-seed20261003": "d3f23396cb0ed61e0e9dcf943e32b199009d790fe92269bc4a66790b7b559051",
+      "scale0.02-seed20261010": "54dc94f75e6e49f8dff5302e116f21f635d4d191f36c63280122038aec2efc47",
+      "scale0.02-seed20261011": "de64892b775b91ff970e18e34a7308fb11271a1c96afb65eded35ffaadc43c19",
+      "scale1.0-seed20261003": "b88481328e6484c76d2588405b90170c7874b9509b71641b46d74b8d07f7b005",
+      "scale1.0-seed20261010": "aca797f03e5159fc497430e5affe78a3a0cbe23e2d238dccbcabb010c3bb744e",
+      "scale1.0-seed20261011": "13a794a7aab8c5745f94891870c4322e6e74b480d37bd4032a1a912de4ab5741"
+    },
+    "batch_size": 16,
+    "runtime": {
+      "torch": "2.8.0",
+      "cpu_threads": 1
+    },
+    "code_sha256": {
+      "__init__.py": "8e83c30d44126d588835b0a5f544f9f800e830fe2de02dbd155943897d66f806",
+      "cifar10.py": "eea1bfd7d08899697fa87675d44cff9c5506d2581397ece7491147462bf91944",
+      "cifar10_smoke.py": "ae6c503046a13bf0154845517302762519c0df71e3b16952b8b7bd0ba6ea38a7",
+      "cifar10_train.py": "1b127bffa370097723f69e6e5abf602e6a0c1208267e3daf72708691cd701a89",
+      "compare.py": "3e097c6b97cc1250837f66f8ac1b1f6fb434e02667528301743cf7af368abace",
+      "confirmation.py": "0fdc4828c5482ac9593a686cc3ac0bcfa61a48a461047be1d774a01b750d13b7",
+      "confirmation_compare.py": "135544112cd96c3d7556e5c90ffeda1534cf11003d682c980eb879405dbf6fad",
+      "demo.py": "7586de38427eb3fc620205ee10097be970d5b9f4bee332fee5a01b4f557e0427",
+      "diagnostics.py": "cec211b618a42921dd722c4b6709313c2eaed803dadd1eb2be89f1745f5ef9b7",
+      "embeddings.py": "2d539615cf40845d5fe5c4aa843f7106a1fd8c68302f36882503f3aea86def8c",
+      "explorer.py": "36798f731c0df997e3e3b1d62dd03e15adca8a93337559239a74f51b7357d5d3",
+      "explorer_compare.py": "a1c7ad4df4bb88026762375f4d70c562f0d24487eb4fd57658990223f5388f28",
+      "explorer_html.py": "ae1f4322c4ebcf9c4d3156284efc87f794f637bddae20ae57d3f775aee963ae2",
+      "exposure.py": "8e1454795a39e9e2845893e1658af2e3f67488a91148d1a8ea14dc5b32eb46a6",
+      "feature_geometry.py": "a40331d6b97323e24584f879097f5d9fee37acbbd097ac65c798e25e1d5adfea",
+      "features.py": "0f851221809e46a339313e882fc37232deeb89673cc3877045021433d18064ff",
+      "masked_context.py": "c6ea24e857ffa9ae2e24bad5a15350abcf8adced4245871e417fe78f6ad2cc20",
+      "masking.py": "5f464fba20090718b102ef4804062139805524f18b7407f370da74018f6180e3",
+      "model.py": "f4f8aaa83f44a81844be2a22eaf0a3cbc16935baa41a6f3e08036e63a8b226ad",
+      "model_cli.py": "c1222944643ac311c6da0980a1cd056a713b52938da582bb9d5a9a8706f2fdc7",
+      "model_size.py": "015f6133b01245b26d45bb3f24da2f9a482c9d797fd7186f0a315ff5f086dab5",
+      "neighbor_artifacts.py": "20704628ca76ae867204f4c3dbd6b2a8279f3258678b0bba2777678349b16b5e",
+      "neighbor_cli.py": "23778b5d2c3ee13c433a5deec2a5b095fbc0b9e13e6fcb5a0d0cbcc075e4fd99",
+      "neighbor_confirmation.py": "7e55d17fe754d0dd94fa6053d084f2b8d42f3dc052cc73a087cbc68e6ab01c83",
+      "neighbor_workflow.py": "fa1eee7bb3b8e414e040066c43cfb42c67569dae7d656c877302a45c2949453a",
+      "neighbors.py": "aba622a8f0167e345ec13e7e46a61aa2dabd0a5a654f7f298daea162596b42cc",
+      "patches.py": "b238e8342c52a3d270f72c489403564aa74e8c1543658d5754faba8d47d85fd2",
+      "pooling.py": "c5dffc969f86b4632baeabf3180a8af9a683abb9ef7faeba78a9b6ccdfe7a6c6",
+      "pooling_compare.py": "be7a08a83058cbeb3f2c73363b86f626ef2e5518fa9ec9e591cb6c5ff8cc78bb",
+      "position_compare.py": "ad42ac1e22d1d37da6b3a6ba9e205501d01af820d673d65e364ae005a889e5e3",
+      "positions.py": "bfc84ce66e4628143689cd34016801b37ac285d0b89e131774a231e55ee9eff9",
+      "pretrained.py": "392b875fde1e03f6f0292ba29fe674baeacef58104fb0ef5889fbd55c5ff3892",
+      "pretrained_extract.py": "566813b2c097f599c1d0fc2a938cd3788eb73a5c74fdf3a182df5cc47a5d503c",
+      "probe_artifacts.py": "f7283e8c89c557fc05bc4eae3cde94031d39b5ea2e5f6e1e3110cf7c215c7b97",
+      "probe_audit.py": "f8f55a26ddfcc744075abe078371f69a0f77ae6fdba39e0ab80aa5053918eefc",
+      "probe_compare.py": "cab0d6981947903e31071745b17e61c81a6e6e85eb70fa1973d38e80012c1ef7",
+      "probe_score.py": "4bb2998df16b7eb97c28a9533fafd6fec205022efbe8ca89ae79b51c19ee5961",
+      "probes.py": "a3f4028414a149a332679aed51295433399edb03c28381c9c46ab5fcb52663c8",
+      "progression.py": "8dfb4af4f818773eb9d0a8d4722f672b3ba1d38fe19e512d7c966f1cf48b2bf0",
+      "ridge.py": "9a376ffca8fa4b6b98704c22a4e06a9cdb2a5b12233ca04e5390953acb3f8aec",
+      "scale_audit.py": "a183831b7c42f2dd9133dfbede0eb9310624c1a24d8b44d6c6b8bb054c83192b",
+      "scale_compare.py": "51773efc80589cd70b5f0eb82a5cc0b5ae2f6428f74e8ae1ff676cfd6cc033dd",
+      "scale_evaluation.py": "84ba3386cb95f7a030e317c736cbf49db79529c757b7cea9eb942193ad710687",
+      "scale_run.py": "583654cf01b6d8c041be9e5abc4f6179c4bb08d20644545e602f69c5f7590a40",
+      "selection.py": "0f8dcbdb1a069881d5a08667e638adb789213e0f1bfdb49d021e481073c96eb9",
+      "stability.py": "2ebb6837aed5f07dd4aa89316980a37ad3782ca818cee9951f91ad218dae0daa",
+      "stability_audit.py": "ac4a1f410960d9a33999f0afbd54726c8ae910322dfb11ed7e0fc5b1f16cfb25",
+      "train.py": "bd1c5a94b4b40437218a454d22e9159e585267adafa8a259e74070bac44ca3a7",
+      "training_budget.py": "f0ce678538b26ce1a4d7c212f76b5c1e085eacae82c60bb895d878f72bf2935f",
+      "training_diagnostics.py": "ddefb4636cc079790116a1711a8952a4fa7f43280f86162ce2efbfc2ea4b94b2",
+      "transfer_audit.py": "7f3efaa5812c76e391694baa6d1b2fa2d632a2f647940f94284cf27dea9cb571",
+      "transfer_compare.py": "d3c6c227436796915ea1e002bd164afbdac7252feb4fd5caf813539cace011f0",
+      "width_compare.py": "de6de05f49fa0962748a454c4fbada52a75eceab8106412b9a854e5f103fb4ac"
+    },
+    "diagnostic_mode": "fixed-masked-context-v1"
+  },
+  "report": {
+    "version": 2,
+    "protocol_sha256": "26c3f7facd70e1b2593ecd500345798d5583f33a31a93ab3d413d5da56146a1d",
+    "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+    "training_selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+    "ordered_training_indices_sha256": "cdbdd2f17778701453832a6f0930847e7fefd544e50cb387d16d50df184638bd",
+    "count": 500,
+    "batch_size": 16,
+    "runtime": {
+      "torch": "2.8.0",
+      "cpu_threads": 1
+    },
+    "arms": {
+      "scale0.02-seed20261003": {
+        "checkpoint": {
+          "checkpoint_sha256": "d3f23396cb0ed61e0e9dcf943e32b199009d790fe92269bc4a66790b7b559051",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d",
+            "position_scale": 0.02
+          },
+          "training_settings": {
+            "seed": 20261003,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6600649510696504,
+            "mean_row_l2": 4.553510214301096,
+            "min_row_l2": 1.5717461897846559,
+            "max_row_l2": 5.6215381857921844,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.4159104425462345,
+            "eigenvalue_tolerance": 5.204285114564626e-10,
+            "mean_nonzero_row_pair_cosine": 0.26198026118263146,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6658219660198483,
+            "mean_row_l2": 4.549712381464584,
+            "min_row_l2": 1.4534981974192145,
+            "max_row_l2": 5.627128159581878,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.389989204387994,
+            "eigenvalue_tolerance": 5.322093174662062e-10,
+            "mean_nonzero_row_pair_cosine": 0.24896111949727293,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.007366041544645081,
+          "between_image_mean_variance": 0.5101852871935896,
+          "total_variance": 0.5175513287382347,
+          "mask_variance_fraction": 0.014232485041827902,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6651588732228854,
+                "mean_row_l2": 4.545975688721085,
+                "min_row_l2": 1.4094940632532045,
+                "max_row_l2": 5.6284770269875875,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.4072832485978197,
+                "eigenvalue_tolerance": 5.317906591427272e-10,
+                "mean_nonzero_row_pair_cosine": 0.24834134587446272,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04162484767459476,
+                "mean_paired_cosine": 0.9975493372176737,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9983011318612945,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09323512344002888,
+                "mean_paired_cosine": 0.9904239425976363,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9881066154662445,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07552419101679672,
+                "mean_paired_cosine": 0.9943025832882988,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9942122043111128,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6706265618089583,
+                "mean_row_l2": 4.604968327683543,
+                "min_row_l2": 1.4818751413596065,
+                "max_row_l2": 5.638718068466536,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.441338881264913,
+                "eigenvalue_tolerance": 5.315017884920478e-10,
+                "mean_nonzero_row_pair_cosine": 0.25889840972350125,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04480750158050171,
+                "mean_paired_cosine": 0.9976887123415479,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9978592449717062,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.10664000729949663,
+                "mean_paired_cosine": 0.9901748898128108,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9859492698041441,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09090674399186396,
+                "mean_paired_cosine": 0.9934681012331725,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9930416896195605,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6650408622610238,
+                "mean_row_l2": 4.563499070107934,
+                "min_row_l2": 1.380711123165966,
+                "max_row_l2": 5.645133317545526,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.4404632580406016,
+                "eigenvalue_tolerance": 5.25842837963756e-10,
+                "mean_nonzero_row_pair_cosine": 0.25603896460164943,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03978757735200618,
+                "mean_paired_cosine": 0.9978142446019297,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9984160777224272,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09530532034659732,
+                "mean_paired_cosine": 0.9911948251159509,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9890347562446051,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.08014107493560171,
+                "mean_paired_cosine": 0.9946379272770423,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9944506379725812,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6834303762500857,
+                "mean_row_l2": 4.587861862513435,
+                "min_row_l2": 1.294762564356401,
+                "max_row_l2": 5.641193201819129,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.3990295540221767,
+                "eigenvalue_tolerance": 5.574960494784997e-10,
+                "mean_nonzero_row_pair_cosine": 0.22431102409218484,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06393948520532652,
+                "mean_paired_cosine": 0.9947113315865821,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9958168584447279,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.14964772702595924,
+                "mean_paired_cosine": 0.9800781810800981,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9751790565409028,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.12569653323358423,
+                "mean_paired_cosine": 0.9874534660156487,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9884843100351631,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        },
+        "random_context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.5038888553382765,
+            "mean_row_l2": 4.741919885962196,
+            "min_row_l2": 2.9932714725334337,
+            "max_row_l2": 5.644186606981271,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.306706640135131,
+            "eigenvalue_tolerance": 3.4866342382949934e-10,
+            "mean_nonzero_row_pair_cosine": 0.6068010635696576,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.5148163562458624,
+            "mean_row_l2": 4.750484231979984,
+            "min_row_l2": 3.066408310684993,
+            "max_row_l2": 5.645703800765363,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.308269035276536,
+            "eigenvalue_tolerance": 3.6478572701244055e-10,
+            "mean_nonzero_row_pair_cosine": 0.5913878073042398,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.0052542884963664915,
+          "between_image_mean_variance": 0.3053659411800136,
+          "total_variance": 0.3106202296763801,
+          "mask_variance_fraction": 0.016915474249184208,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.5145922964271369,
+                "mean_row_l2": 4.74521101973555,
+                "min_row_l2": 3.0491096694174002,
+                "max_row_l2": 5.642527024105715,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.39884798880329,
+                "eigenvalue_tolerance": 3.592564641544802e-10,
+                "mean_nonzero_row_pair_cosine": 0.5919100182541921,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0425263345885747,
+                "mean_paired_cosine": 0.9985535690175724,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9980578915939199,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0827031035074531,
+                "mean_paired_cosine": 0.9946240629930411,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.987229733333615,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07025545142032356,
+                "mean_paired_cosine": 0.9961546548138326,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9940678344330731,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.5190808052340468,
+                "mean_row_l2": 4.783052544945293,
+                "min_row_l2": 3.04750931080592,
+                "max_row_l2": 5.6466734722139815,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.3769047078853474,
+                "eigenvalue_tolerance": 3.6750156162708576e-10,
+                "mean_nonzero_row_pair_cosine": 0.5905136585955395,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04660131167881418,
+                "mean_paired_cosine": 0.9984188035357945,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9972814073656326,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.08609420523126148,
+                "mean_paired_cosine": 0.994565605564112,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9836007448362916,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07401233660480827,
+                "mean_paired_cosine": 0.9959585600717181,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.992784995883025,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.5109562476829324,
+                "mean_row_l2": 4.760497351810716,
+                "min_row_l2": 3.216989481147213,
+                "max_row_l2": 5.646507992614921,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.40009489577962,
+                "eigenvalue_tolerance": 3.5508462875823696e-10,
+                "mean_nonzero_row_pair_cosine": 0.5987008949973863,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04270093409045241,
+                "mean_paired_cosine": 0.9985705989166427,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9979057788157086,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.08364254396384202,
+                "mean_paired_cosine": 0.9945992837500719,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9861164183049618,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07155079319024274,
+                "mean_paired_cosine": 0.9960671914919661,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9935533973960509,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.5338569933405634,
+                "mean_row_l2": 4.78427217562991,
+                "min_row_l2": 3.061183324526129,
+                "max_row_l2": 5.647989675556332,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.338038602150259,
+                "eigenvalue_tolerance": 3.928685095820021e-10,
+                "mean_nonzero_row_pair_cosine": 0.5675248054459263,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.061655390944864503,
+                "mean_paired_cosine": 0.9972306935300014,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9949112069802618,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.1144043651314768,
+                "mean_paired_cosine": 0.9902295510520853,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9729848239889979,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0963051843702905,
+                "mean_paired_cosine": 0.9931434080637196,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9891825766202417,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        }
+      },
+      "scale0.02-seed20261010": {
+        "checkpoint": {
+          "checkpoint_sha256": "54dc94f75e6e49f8dff5302e116f21f635d4d191f36c63280122038aec2efc47",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d",
+            "position_scale": 0.02
+          },
+          "training_settings": {
+            "seed": 20261010,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6601266000192088,
+            "mean_row_l2": 4.665537208790434,
+            "min_row_l2": 2.9089163096164765,
+            "max_row_l2": 5.597615645542296,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.8783513491189314,
+            "eigenvalue_tolerance": 4.836484915307548e-10,
+            "mean_nonzero_row_pair_cosine": 0.2667941292590727,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6651798572298131,
+            "mean_row_l2": 4.670340035162677,
+            "min_row_l2": 2.8281478087037124,
+            "max_row_l2": 5.597770116005561,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.8545498953100625,
+            "eigenvalue_tolerance": 4.957772985921557e-10,
+            "mean_nonzero_row_pair_cosine": 0.257389209579236,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.007133359588458151,
+          "between_image_mean_variance": 0.5320871024203031,
+          "total_variance": 0.5392204620087612,
+          "mask_variance_fraction": 0.013229022433392464,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6636331480739357,
+                "mean_row_l2": 4.674223398836792,
+                "min_row_l2": 2.85395163527445,
+                "max_row_l2": 5.5974543030132935,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.9051321096298586,
+                "eigenvalue_tolerance": 4.87317459029605e-10,
+                "mean_nonzero_row_pair_cosine": 0.26287884375448073,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0399702902372038,
+                "mean_paired_cosine": 0.9985530213299509,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9986531299176201,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09172732017328415,
+                "mean_paired_cosine": 0.9927280343499668,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.987049668497173,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07490823918456258,
+                "mean_paired_cosine": 0.9952199797837065,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.992882167447477,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.670551453177296,
+                "mean_row_l2": 4.701461413853992,
+                "min_row_l2": 2.8156671613147513,
+                "max_row_l2": 5.599530240854406,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.8644943328489774,
+                "eigenvalue_tolerance": 5.050665799110511e-10,
+                "mean_nonzero_row_pair_cosine": 0.2546284344460945,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.043432152914209377,
+                "mean_paired_cosine": 0.9984928964313017,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.998243669167988,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.10650719033771269,
+                "mean_paired_cosine": 0.9912256922405477,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9819001710698466,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0903283743130465,
+                "mean_paired_cosine": 0.9938233544670683,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.989877077085913,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.664242347238958,
+                "mean_row_l2": 4.688773330235457,
+                "min_row_l2": 2.8734592474836673,
+                "max_row_l2": 5.59765183799464,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.8915369399632542,
+                "eigenvalue_tolerance": 4.920344715698929e-10,
+                "mean_nonzero_row_pair_cosine": 0.26387437559716515,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03969590627197656,
+                "mean_paired_cosine": 0.9986521158407317,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9986623990686188,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09114213070084567,
+                "mean_paired_cosine": 0.9932988278771074,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9878026870106048,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07427607027221296,
+                "mean_paired_cosine": 0.9956402297796413,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9933616127369768,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.681130996610685,
+                "mean_row_l2": 4.715530353399605,
+                "min_row_l2": 2.5566243519737926,
+                "max_row_l2": 5.60458903434604,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.870296772825455,
+                "eigenvalue_tolerance": 5.210312634183181e-10,
+                "mean_nonzero_row_pair_cosine": 0.23847451585199883,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05949801706228934,
+                "mean_paired_cosine": 0.9970812930005499,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9965196189086909,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.1408370159137715,
+                "mean_paired_cosine": 0.9846872447537212,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9708810353704563,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.11913586482267594,
+                "mean_paired_cosine": 0.9894734853849385,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.984802827630427,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        },
+        "random_context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.5372649787437076,
+            "mean_row_l2": 4.835045062876757,
+            "min_row_l2": 3.2364400201438954,
+            "max_row_l2": 5.634992526955508,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.926314115244886,
+            "eigenvalue_tolerance": 3.5227629055394633e-10,
+            "mean_nonzero_row_pair_cosine": 0.5563829953827366,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.5438738321486429,
+            "mean_row_l2": 4.849303175733086,
+            "min_row_l2": 3.255206186727718,
+            "max_row_l2": 5.636027836024081,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.9157814139034866,
+            "eigenvalue_tolerance": 3.633816514781041e-10,
+            "mean_nonzero_row_pair_cosine": 0.5476909846968239,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.0069149311670805656,
+          "between_image_mean_variance": 0.3509073198375231,
+          "total_variance": 0.35782225100460374,
+          "mask_variance_fraction": 0.019325045180020397,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.5440805076952469,
+                "mean_row_l2": 4.858157073564403,
+                "min_row_l2": 3.256520563303306,
+                "max_row_l2": 5.633572640508827,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 4.023153461492292,
+                "eigenvalue_tolerance": 3.582186949062872e-10,
+                "mean_nonzero_row_pair_cosine": 0.5499272017534758,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04152921270255821,
+                "mean_paired_cosine": 0.9986238870450976,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9993235688070325,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09299340005228547,
+                "mean_paired_cosine": 0.9936392705784158,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9881200803540923,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09487294972214312,
+                "mean_paired_cosine": 0.993332743237107,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9869717802108601,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.552717735264698,
+                "mean_row_l2": 4.875487692184235,
+                "min_row_l2": 3.28711775137464,
+                "max_row_l2": 5.637235733206881,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 4.008115221630051,
+                "eigenvalue_tolerance": 3.711247050625135e-10,
+                "mean_nonzero_row_pair_cosine": 0.5383998808423113,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04318322444274494,
+                "mean_paired_cosine": 0.9986051922390072,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9993229311738339,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.10057007624731949,
+                "mean_paired_cosine": 0.9927310062292013,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9814083755854228,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.10648195347549697,
+                "mean_paired_cosine": 0.9917742743583451,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9796147220767991,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.5445216888200982,
+                "mean_row_l2": 4.8616467829030805,
+                "min_row_l2": 3.1332001245905508,
+                "max_row_l2": 5.637687294631766,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 4.059791112197828,
+                "eigenvalue_tolerance": 3.5406459546506494e-10,
+                "mean_nonzero_row_pair_cosine": 0.5504795691092456,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.040279189413574314,
+                "mean_paired_cosine": 0.9987354188137029,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9993717896721512,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0943819555519886,
+                "mean_paired_cosine": 0.9934708130543191,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9874752380208189,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09575378568989504,
+                "mean_paired_cosine": 0.9932237517875613,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9867865656906158,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.5594755393284523,
+                "mean_row_l2": 4.894459689971906,
+                "min_row_l2": 3.151594080582617,
+                "max_row_l2": 5.639992261358297,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.9696422578287187,
+                "eigenvalue_tolerance": 3.8590231153709734e-10,
+                "mean_nonzero_row_pair_cosine": 0.5307000382484912,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05572533604816568,
+                "mean_paired_cosine": 0.997665981026267,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9989077941617757,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.12278556146602901,
+                "mean_paired_cosine": 0.9892151484324126,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9724957512628564,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.13076614374506337,
+                "mean_paired_cosine": 0.9876743085860394,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.970819376132757,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        }
+      },
+      "scale0.02-seed20261011": {
+        "checkpoint": {
+          "checkpoint_sha256": "de64892b775b91ff970e18e34a7308fb11271a1c96afb65eded35ffaadc43c19",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d",
+            "position_scale": 0.02
+          },
+          "training_settings": {
+            "seed": 20261011,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.7209935187641793,
+            "mean_row_l2": 4.7312038287514655,
+            "min_row_l2": 1.6424507151765182,
+            "max_row_l2": 5.581630247989229,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.7632275138186,
+            "eigenvalue_tolerance": 5.955160388366033e-10,
+            "mean_nonzero_row_pair_cosine": 0.17713171575852232,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.722975013694455,
+            "mean_row_l2": 4.732445103470349,
+            "min_row_l2": 1.6522523127726476,
+            "max_row_l2": 5.59045026625259,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.710614280391841,
+            "eigenvalue_tolerance": 6.108904009974975e-10,
+            "mean_nonzero_row_pair_cosine": 0.17047414051845786,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.007900010497062565,
+          "between_image_mean_variance": 0.6077174144295959,
+          "total_variance": 0.6156174249266585,
+          "mask_variance_fraction": 0.01283266226261177,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.7235405846289136,
+                "mean_row_l2": 4.732938656031849,
+                "min_row_l2": 1.6586143716467237,
+                "max_row_l2": 5.585273024471308,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.747586916170237,
+                "eigenvalue_tolerance": 6.060583272740249e-10,
+                "mean_nonzero_row_pair_cosine": 0.17114100909675384,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03663400110470284,
+                "mean_paired_cosine": 0.9985095839440812,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9993281506531388,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09521618606629871,
+                "mean_paired_cosine": 0.9915379928961943,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9888225442948061,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.08327292281909636,
+                "mean_paired_cosine": 0.993689142703488,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9927198442529581,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.7289785923676546,
+                "mean_row_l2": 4.780307330906629,
+                "min_row_l2": 1.6118776298644428,
+                "max_row_l2": 5.600124570204127,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.751600843417516,
+                "eigenvalue_tolerance": 6.156132855756252e-10,
+                "mean_nonzero_row_pair_cosine": 0.17206484594280866,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04045861387024886,
+                "mean_paired_cosine": 0.9984564740873684,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9990657191281834,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.11107165431699968,
+                "mean_paired_cosine": 0.9900283994774298,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9842273064933239,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09946278835983803,
+                "mean_paired_cosine": 0.9920992055007611,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.989655778947851,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.7249958942445989,
+                "mean_row_l2": 4.751473550153676,
+                "min_row_l2": 1.6378919622871058,
+                "max_row_l2": 5.596043337446852,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.7606569127017164,
+                "eigenvalue_tolerance": 6.047855786316303e-10,
+                "mean_nonzero_row_pair_cosine": 0.1735126297781131,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03663020974497265,
+                "mean_paired_cosine": 0.9985905083467236,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9992795166585225,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09893239935544357,
+                "mean_paired_cosine": 0.9915125097351106,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9884064338081952,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.08852345540276586,
+                "mean_paired_cosine": 0.9933583349134676,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9923106236714327,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.7349037018969462,
+                "mean_row_l2": 4.774597618682447,
+                "min_row_l2": 1.4534853837625177,
+                "max_row_l2": 5.6056609869857414,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.6845169122766994,
+                "eigenvalue_tolerance": 6.402118650238602e-10,
+                "mean_nonzero_row_pair_cosine": 0.1559562326865361,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05700289639755006,
+                "mean_paired_cosine": 0.9966314888769933,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9980721449473822,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.1461127244454693,
+                "mean_paired_cosine": 0.9823674749186787,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9744809514343925,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.1290360740708732,
+                "mean_paired_cosine": 0.9867258786133235,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9844582199069,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        },
+        "random_context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.594134890564004,
+            "mean_row_l2": 5.03918724989215,
+            "min_row_l2": 3.5227463897057603,
+            "max_row_l2": 5.650190561178221,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.0385049286821952,
+            "eigenvalue_tolerance": 5.09644476897789e-10,
+            "mean_nonzero_row_pair_cosine": 0.4890499129493515,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.6013373821111322,
+            "mean_row_l2": 5.038721643489492,
+            "min_row_l2": 3.3263177148553424,
+            "max_row_l2": 5.65066461969343,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.0251045024246053,
+            "eigenvalue_tolerance": 5.239580724343816e-10,
+            "mean_nonzero_row_pair_cosine": 0.47684093962317853,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.007934089892255478,
+          "between_image_mean_variance": 0.4293086576893534,
+          "total_variance": 0.4372427475816088,
+          "mask_variance_fraction": 0.018145732401827035,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6024838395907247,
+                "mean_row_l2": 5.051388679189276,
+                "min_row_l2": 3.3641173797878827,
+                "max_row_l2": 5.649840157615682,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.1011337996928328,
+                "eigenvalue_tolerance": 5.201169612622515e-10,
+                "mean_nonzero_row_pair_cosine": 0.47749003955968755,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03671417532477183,
+                "mean_paired_cosine": 0.9990129403844414,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9992971393878156,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.10263884276285003,
+                "mean_paired_cosine": 0.9924008800505382,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.982636619654366,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09428986001745211,
+                "mean_paired_cosine": 0.9936045578054481,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9872591424545273,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6065090968669196,
+                "mean_row_l2": 5.073685088804159,
+                "min_row_l2": 3.463207488573225,
+                "max_row_l2": 5.651406893171551,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.0713881279147444,
+                "eigenvalue_tolerance": 5.310074225351335e-10,
+                "mean_nonzero_row_pair_cosine": 0.4741228341473043,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03654155072193825,
+                "mean_paired_cosine": 0.9990902460133779,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9992673228664023,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.10699608502827208,
+                "mean_paired_cosine": 0.9921460439823853,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9781742464622236,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09763669738618558,
+                "mean_paired_cosine": 0.9934149981331919,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9838074183552263,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6006273043493322,
+                "mean_row_l2": 5.054588802275702,
+                "min_row_l2": 3.3587745208221955,
+                "max_row_l2": 5.6507950130567295,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.100456999919479,
+                "eigenvalue_tolerance": 5.177125089464025e-10,
+                "mean_nonzero_row_pair_cosine": 0.48160840119500387,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03511878543560003,
+                "mean_paired_cosine": 0.9991185200789411,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9994298829756116,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0991786922269456,
+                "mean_paired_cosine": 0.9929785092417784,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9830050783333047,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.09172979518103332,
+                "mean_paired_cosine": 0.9939625608923519,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9870301579547712,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.6196254373920664,
+                "mean_row_l2": 5.0799673653703525,
+                "min_row_l2": 3.1765332705239815,
+                "max_row_l2": 5.6512932291769085,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.043487984961942,
+                "eigenvalue_tolerance": 5.575145637322504e-10,
+                "mean_nonzero_row_pair_cosine": 0.4533591708878943,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04874459696214719,
+                "mean_paired_cosine": 0.9983484491929457,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9986493257585438,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.13551329776185186,
+                "mean_paired_cosine": 0.9873751783276395,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.966623803094508,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.12351436283417427,
+                "mean_paired_cosine": 0.9894951773723798,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9762833294665969,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        }
+      },
+      "scale1.0-seed20261003": {
+        "checkpoint": {
+          "checkpoint_sha256": "b88481328e6484c76d2588405b90170c7874b9509b71641b46d74b8d07f7b005",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d"
+          },
+          "training_settings": {
+            "seed": 20261003,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.38896090724210347,
+            "mean_row_l2": 3.4625904513634906,
+            "min_row_l2": 2.04248731562565,
+            "max_row_l2": 5.108375154632462,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.470166267182863,
+            "eigenvalue_tolerance": 1.6820640752224628e-10,
+            "mean_nonzero_row_pair_cosine": 0.5702965943956685,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.3960053362548389,
+            "mean_row_l2": 3.454608776610922,
+            "min_row_l2": 1.9698246541160789,
+            "max_row_l2": 5.127618105491352,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.454397542178243,
+            "eigenvalue_tolerance": 1.7791838608276012e-10,
+            "mean_nonzero_row_pair_cosine": 0.553372989836402,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.0038400627060723217,
+          "between_image_mean_variance": 0.19045011423671132,
+          "total_variance": 0.1942901769427837,
+          "mask_variance_fraction": 0.019764574650643185,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.3917627054382099,
+                "mean_row_l2": 3.4229263157222474,
+                "min_row_l2": 2.007478873852228,
+                "max_row_l2": 5.1193023877776245,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.499252440137822,
+                "eigenvalue_tolerance": 1.7232691179241061e-10,
+                "mean_nonzero_row_pair_cosine": 0.5552219992206758,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05329834723220964,
+                "mean_paired_cosine": 0.9955439609269591,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9956033789775031,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06652481374852284,
+                "mean_paired_cosine": 0.9933410023389376,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9892302476279903,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04128731493878126,
+                "mean_paired_cosine": 0.9974340269320017,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9976779860557549,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.39844857065506156,
+                "mean_row_l2": 3.5145964798135574,
+                "min_row_l2": 2.009488015302832,
+                "max_row_l2": 5.19859471360094,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.4774407154786453,
+                "eigenvalue_tolerance": 1.801916796944921e-10,
+                "mean_nonzero_row_pair_cosine": 0.5630825411354825,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06668290042686888,
+                "mean_paired_cosine": 0.9936229747141949,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9936633687225376,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07635483085698071,
+                "mean_paired_cosine": 0.9920208481964953,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9848895795696124,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.054548560838063115,
+                "mean_paired_cosine": 0.9960419444991976,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9966804764822341,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.3958304996751104,
+                "mean_row_l2": 3.444532561314416,
+                "min_row_l2": 2.0009754518677605,
+                "max_row_l2": 5.072883015205915,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.556177651811874,
+                "eigenvalue_tolerance": 1.720701836400902e-10,
+                "mean_nonzero_row_pair_cosine": 0.5499408107701337,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04865588126120437,
+                "mean_paired_cosine": 0.9963761347746113,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9957421113958308,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06350587856837989,
+                "mean_paired_cosine": 0.9940925016519938,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9886675038413844,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04502181487085207,
+                "mean_paired_cosine": 0.9970525751480962,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.997020251283331,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.408610973484009,
+                "mean_row_l2": 3.5055581629953885,
+                "min_row_l2": 1.9884864631907226,
+                "max_row_l2": 5.141879016021894,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.4354907596881583,
+                "eigenvalue_tolerance": 1.9461087795512826e-10,
+                "mean_nonzero_row_pair_cosine": 0.5384297958514181,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.08620736179478009,
+                "mean_paired_cosine": 0.989067052676658,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9886496425416169,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.10279943841551954,
+                "mean_paired_cosine": 0.98484054346083,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9776886226422776,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.059969524701702956,
+                "mean_paired_cosine": 0.9952011355710604,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9969274138802455,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        },
+        "random_context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.21340473356429396,
+            "mean_row_l2": 5.1597163859516115,
+            "min_row_l2": 4.570806179994747,
+            "max_row_l2": 5.414742510170516,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.028109354279163,
+            "eigenvalue_tolerance": 9.019288619914966e-11,
+            "mean_nonzero_row_pair_cosine": 0.9281192284364539,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.22140703143839974,
+            "mean_row_l2": 5.159342618884291,
+            "min_row_l2": 4.571582673282297,
+            "max_row_l2": 5.413886505813955,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.0281432050380195,
+            "eigenvalue_tolerance": 9.715942023132855e-11,
+            "mean_nonzero_row_pair_cosine": 0.9226393779676056,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.0018090512001915585,
+          "between_image_mean_variance": 0.06528799563413532,
+          "total_variance": 0.06709704683432687,
+          "mask_variance_fraction": 0.026961711215970352,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.2195603058567901,
+                "mean_row_l2": 5.167197811042753,
+                "min_row_l2": 4.622703493295216,
+                "max_row_l2": 5.420127441901307,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.071069233806658,
+                "eigenvalue_tolerance": 9.446680498382403e-11,
+                "mean_nonzero_row_pair_cosine": 0.9245553799408185,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03201967773990464,
+                "mean_paired_cosine": 0.9993776203551761,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9967103453980722,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04684855603843177,
+                "mean_paired_cosine": 0.9986749916023477,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9896644350863293,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03677212853707397,
+                "mean_paired_cosine": 0.9991836439636399,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9978105687093736,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.22468758539542355,
+                "mean_row_l2": 5.169271138995404,
+                "min_row_l2": 4.576165633832155,
+                "max_row_l2": 5.4411869341909345,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.079205628936657,
+                "eigenvalue_tolerance": 9.874196617888685e-11,
+                "mean_nonzero_row_pair_cosine": 0.9211832978101882,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.049083307498847054,
+                "mean_paired_cosine": 0.998556091094123,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9955959350891765,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06765981086837886,
+                "mean_paired_cosine": 0.9972570938621336,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9868127894632983,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05625348339053771,
+                "mean_paired_cosine": 0.9981070754126299,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9974028040916143,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.2174170762466341,
+                "mean_row_l2": 5.1550781015020934,
+                "min_row_l2": 4.553287854955424,
+                "max_row_l2": 5.412394181840986,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.057362691658681,
+                "eigenvalue_tolerance": 9.33796957037976e-11,
+                "mean_nonzero_row_pair_cosine": 0.9252331701966415,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.027667897277686555,
+                "mean_paired_cosine": 0.9995360655599906,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9965107374749876,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03990414670549421,
+                "mean_paired_cosine": 0.9990331195631584,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9889318241863694,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.028097694917974758,
+                "mean_paired_cosine": 0.9995185515344022,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9976167714922447,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.23036727590101086,
+                "mean_row_l2": 5.168179867055025,
+                "min_row_l2": 4.591348191259655,
+                "max_row_l2": 5.420499588181373,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.027709058704079,
+                "eigenvalue_tolerance": 1.0556540071270031e-10,
+                "mean_nonzero_row_pair_cosine": 0.9164435385336565,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04392088412579501,
+                "mean_paired_cosine": 0.9988425678702526,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9916515649680471,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06669952676485323,
+                "mean_paired_cosine": 0.9973331644429796,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9789911154542196,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.049283956037917784,
+                "mean_paired_cosine": 0.9985400612189037,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9968235924622096,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        }
+      },
+      "scale1.0-seed20261010": {
+        "checkpoint": {
+          "checkpoint_sha256": "aca797f03e5159fc497430e5affe78a3a0cbe23e2d238dccbcabb010c3bb744e",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d"
+          },
+          "training_settings": {
+            "seed": 20261010,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.3330565864678168,
+            "mean_row_l2": 3.9340332382181487,
+            "min_row_l2": 2.61540673379514,
+            "max_row_l2": 4.9131476105901095,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.877988719088348,
+            "eigenvalue_tolerance": 1.2634449727820008e-10,
+            "mean_nonzero_row_pair_cosine": 0.7460864676981374,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.3401189064203882,
+            "mean_row_l2": 3.955419999361117,
+            "min_row_l2": 2.6162059313114425,
+            "max_row_l2": 4.96057095340756,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.837809454904954,
+            "eigenvalue_tolerance": 1.335927008796074e-10,
+            "mean_nonzero_row_pair_cosine": 0.7379624885201366,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.0027317873946469283,
+          "between_image_mean_variance": 0.1394390484899892,
+          "total_variance": 0.1421708358846361,
+          "mask_variance_fraction": 0.019214822629752455,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.3380052075684643,
+                "mean_row_l2": 3.9338449173233623,
+                "min_row_l2": 2.608980090445236,
+                "max_row_l2": 4.887198835430921,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.952519360264293,
+                "eigenvalue_tolerance": 1.284893579173095e-10,
+                "mean_nonzero_row_pair_cosine": 0.7403617217078204,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05056016662396538,
+                "mean_paired_cosine": 0.9971729997923648,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9961255400962095,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.056510443761047656,
+                "mean_paired_cosine": 0.99652954078286,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9884081342643035,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04510320751687821,
+                "mean_paired_cosine": 0.9978731609127344,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9970215416024019,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.34395673899650514,
+                "mean_row_l2": 3.950628404788623,
+                "min_row_l2": 2.637313488682333,
+                "max_row_l2": 4.994815144993436,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.865831315510659,
+                "eigenvalue_tolerance": 1.372232615038827e-10,
+                "mean_nonzero_row_pair_cosine": 0.7307976099112079,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05913863087992683,
+                "mean_paired_cosine": 0.9962101791606565,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9943061088802022,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0686826123372355,
+                "mean_paired_cosine": 0.9951533973614932,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9841401968300777,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05837121906487827,
+                "mean_paired_cosine": 0.9965092553591112,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9963226221368061,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.33815452938303325,
+                "mean_row_l2": 3.954323803205751,
+                "min_row_l2": 2.5985197681545307,
+                "max_row_l2": 4.974984168611602,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.9391050402746877,
+                "eigenvalue_tolerance": 1.2940509803044696e-10,
+                "mean_nonzero_row_pair_cosine": 0.7400784419297299,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04547711545612267,
+                "mean_paired_cosine": 0.9977199000035216,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9959125994173647,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.053902883434629394,
+                "mean_paired_cosine": 0.9969777391018138,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9884625209161176,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.039701685173782676,
+                "mean_paired_cosine": 0.9983722242959254,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9970956775970622,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.35073940240762075,
+                "mean_row_l2": 4.02509467708869,
+                "min_row_l2": 2.671402785630448,
+                "max_row_l2": 5.024951100480718,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.7725633494745416,
+                "eigenvalue_tolerance": 1.450674900272882e-10,
+                "mean_nonzero_row_pair_cosine": 0.7312896570989557,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07787268258590828,
+                "mean_paired_cosine": 0.9936424457190274,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.99035333767183,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.08588303776901413,
+                "mean_paired_cosine": 0.9926277336249526,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9720615444851414,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06913607731904958,
+                "mean_paired_cosine": 0.9953923860075395,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9935040724496662,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        },
+        "random_context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.1723347265682789,
+            "mean_row_l2": 5.176287918850962,
+            "min_row_l2": 4.734101262680004,
+            "max_row_l2": 5.358121574370533,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.446227899978843,
+            "eigenvalue_tolerance": 5.37840692848674e-11,
+            "mean_nonzero_row_pair_cosine": 0.952168638588665,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.17769862412528467,
+            "mean_row_l2": 5.182751142301819,
+            "min_row_l2": 4.742002603507161,
+            "max_row_l2": 5.361456939479925,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.4268091843065496,
+            "eigenvalue_tolerance": 5.783159755031885e-11,
+            "mean_nonzero_row_pair_cosine": 0.9490284290846203,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.001799351505419115,
+          "between_image_mean_variance": 0.04325531138707618,
+          "total_variance": 0.0450546628924953,
+          "mask_variance_fraction": 0.039937076207018536,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.17868604175356853,
+                "mean_row_l2": 5.181066135804115,
+                "min_row_l2": 4.727753167883797,
+                "max_row_l2": 5.364915487655189,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.514298927622905,
+                "eigenvalue_tolerance": 5.7278945449845484e-11,
+                "mean_nonzero_row_pair_cosine": 0.9489023844671189,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03546608069915777,
+                "mean_paired_cosine": 0.9992413099441239,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9982848618868702,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04610526273585055,
+                "mean_paired_cosine": 0.9987217766854265,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9908571248422773,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.036677702179746564,
+                "mean_paired_cosine": 0.9991904159660483,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9960461945352641,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.17967009362212805,
+                "mean_row_l2": 5.192103461451224,
+                "min_row_l2": 4.760053907801543,
+                "max_row_l2": 5.38833569870443,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.476986127240171,
+                "eigenvalue_tolerance": 5.847535161122875e-11,
+                "mean_nonzero_row_pair_cosine": 0.9483686009377638,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.049100353923927316,
+                "mean_paired_cosine": 0.9985650605645935,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9980544680305521,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06508778467053386,
+                "mean_paired_cosine": 0.9974807948285785,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9868969661335457,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05801430214675012,
+                "mean_paired_cosine": 0.9979970503054582,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.994101799609837,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.17247026138708998,
+                "mean_row_l2": 5.189485863555933,
+                "min_row_l2": 4.792304061252527,
+                "max_row_l2": 5.359047328683414,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.504238694343807,
+                "eigenvalue_tolerance": 5.333110225265158e-11,
+                "mean_nonzero_row_pair_cosine": 0.952493166741717,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.02743402355079901,
+                "mean_paired_cosine": 0.9995541483322996,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9984012824490277,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03456458699379248,
+                "mean_paired_cosine": 0.9992921959289113,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9908881752960439,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.028207732438327613,
+                "mean_paired_cosine": 0.9995225578057825,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9959183051927363,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.18613357321430068,
+                "mean_row_l2": 5.19051353357902,
+                "min_row_l2": 4.7149234961613695,
+                "max_row_l2": 5.369169261890652,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.411225139924938,
+                "eigenvalue_tolerance": 6.436366069694435e-11,
+                "mean_nonzero_row_pair_cosine": 0.9439981128987495,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04392440063855537,
+                "mean_paired_cosine": 0.9988430039556697,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9965640133627159,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06459316020348273,
+                "mean_paired_cosine": 0.9975133370426427,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9796827438702123,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05154306008123301,
+                "mean_paired_cosine": 0.9984151350270012,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9916975380824291,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        }
+      },
+      "scale1.0-seed20261011": {
+        "checkpoint": {
+          "checkpoint_sha256": "13a794a7aab8c5745f94891870c4322e6e74b480d37bd4032a1a912de4ab5741",
+          "completed_steps": 2223,
+          "config": {
+            "rows": 8,
+            "cols": 8,
+            "patch_dim": 48,
+            "embedding_dim": 32,
+            "heads": 4,
+            "encoder_depth": 2,
+            "predictor_depth": 1,
+            "position_encoding": "sincos2d"
+          },
+          "training_settings": {
+            "seed": 20261011,
+            "batch_size": 4,
+            "learning_rate": 0.001,
+            "momentum": 0.99
+          }
+        },
+        "context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.39605245144852064,
+            "mean_row_l2": 3.485895782417701,
+            "min_row_l2": 2.1153924127698005,
+            "max_row_l2": 5.182935703036141,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.2535831941686437,
+            "eigenvalue_tolerance": 2.0671328772383788e-10,
+            "mean_nonzero_row_pair_cosine": 0.5716742537102683,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.40233399127980696,
+            "mean_row_l2": 3.4945849873000863,
+            "min_row_l2": 2.1105976972352836,
+            "max_row_l2": 5.2271053123201945,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 3.202616758264601,
+            "eigenvalue_tolerance": 2.1691290458294398e-10,
+            "mean_nonzero_row_pair_cosine": 0.5611940533083074,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.0035999119384174027,
+          "between_image_mean_variance": 0.1975431382223184,
+          "total_variance": 0.20114305016073575,
+          "mask_variance_fraction": 0.01789727229223516,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.3991519003883864,
+                "mean_row_l2": 3.462954895910652,
+                "min_row_l2": 2.1047981215763794,
+                "max_row_l2": 5.205856615121016,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.2602607116080535,
+                "eigenvalue_tolerance": 2.107472345676208e-10,
+                "mean_nonzero_row_pair_cosine": 0.5618606407042933,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05365676024490354,
+                "mean_paired_cosine": 0.9954280116570251,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9970139358857428,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06919680974726768,
+                "mean_paired_cosine": 0.9929556049581204,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9899840535059655,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.043801288703347145,
+                "mean_paired_cosine": 0.9974046160675575,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9968098204473876,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.4059909230765178,
+                "mean_row_l2": 3.5456704755564608,
+                "min_row_l2": 2.114905189525713,
+                "max_row_l2": 5.3119507000478015,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.221357329485255,
+                "eigenvalue_tolerance": 2.204801751932013e-10,
+                "mean_nonzero_row_pair_cosine": 0.5651838597463508,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06173141020375505,
+                "mean_paired_cosine": 0.9945623314943339,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9957828807610956,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07464356956120721,
+                "mean_paired_cosine": 0.9926926287804966,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9845139054193832,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05359717506918329,
+                "mean_paired_cosine": 0.996359812918064,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9950853950034781,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.3978209194365549,
+                "mean_row_l2": 3.465590820490188,
+                "min_row_l2": 2.0968277184646955,
+                "max_row_l2": 5.152068675912146,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.250211574920137,
+                "eigenvalue_tolerance": 2.1078766869009732e-10,
+                "mean_nonzero_row_pair_cosine": 0.5634221944632186,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.046167332649199415,
+                "mean_paired_cosine": 0.9967395233747789,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9968181614654629,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05712762054577314,
+                "mean_paired_cosine": 0.9955112271685103,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9891209366340609,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04204406734587746,
+                "mean_paired_cosine": 0.9976047939538912,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9965898949061454,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.41697088092756807,
+                "mean_row_l2": 3.5659996780794807,
+                "min_row_l2": 2.1701469631194374,
+                "max_row_l2": 5.253651008746477,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 3.200185500931624,
+                "eigenvalue_tolerance": 2.3450155668440113e-10,
+                "mean_nonzero_row_pair_cosine": 0.5470612629485834,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.08271494946238857,
+                "mean_paired_cosine": 0.9898783902089385,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9925963667869078,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.10241336457212216,
+                "mean_paired_cosine": 0.9862419296679398,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9736476835606358,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07502156054435484,
+                "mean_paired_cosine": 0.993331678581583,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9910317643431797,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        },
+        "random_context": {
+          "count": 500,
+          "views": 4,
+          "visible_tokens": 45,
+          "mask_recipe_sha256": "8388079233811515154a1a55de673b422146feefadae99d10e7bc38325511dd2",
+          "mask_seeds": [
+            29,
+            31,
+            37,
+            41
+          ],
+          "target_rows": 2,
+          "target_cols": 2,
+          "context_fraction": 0.75,
+          "full_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.24533384649458917,
+            "mean_row_l2": 5.018283377543341,
+            "min_row_l2": 4.546600688059743,
+            "max_row_l2": 5.347889160012788,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.198625278610734,
+            "eigenvalue_tolerance": 9.716293895146718e-11,
+            "mean_nonzero_row_pair_cosine": 0.9132830875349655,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "masked_mean_geometry": {
+            "count": 500,
+            "feature_dim": 32,
+            "zero_norm_rows": 0,
+            "zero_variance_columns": 0,
+            "mean_feature_population_std": 0.25541038641016744,
+            "mean_row_l2": 5.002488282461452,
+            "min_row_l2": 4.5357850332356655,
+            "max_row_l2": 5.349777473038808,
+            "centered_numerical_rank": 31,
+            "covariance_entropy_effective_rank": 2.189478795839437,
+            "eigenvalue_tolerance": 1.0593639495749208e-10,
+            "mean_nonzero_row_pair_cosine": 0.9053952464671339,
+            "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+          },
+          "within_image_mask_variance": 0.0025094965122754386,
+          "between_image_mean_variance": 0.07502554301295168,
+          "total_variance": 0.07753503952522713,
+          "mask_variance_fraction": 0.03236596676343911,
+          "per_view": [
+            {
+              "seed": 29,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.25358165407588373,
+                "mean_row_l2": 5.009753113917741,
+                "min_row_l2": 4.5355560128984065,
+                "max_row_l2": 5.344685166711027,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.226954855981322,
+                "eigenvalue_tolerance": 1.0378511612552433e-10,
+                "mean_nonzero_row_pair_cosine": 0.9070985176007742,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.035761027080372744,
+                "mean_paired_cosine": 0.999180662052069,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9980804145482602,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05688585526618081,
+                "mean_paired_cosine": 0.9979176192740868,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9877839516973062,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04231550080044699,
+                "mean_paired_cosine": 0.9988422132658823,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9949602661524807,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 31,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.2578933190850661,
+                "mean_row_l2": 5.017918554677706,
+                "min_row_l2": 4.528327881573249,
+                "max_row_l2": 5.343914422422907,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.2296336591613355,
+                "eigenvalue_tolerance": 1.073945644785407e-10,
+                "mean_nonzero_row_pair_cosine": 0.9042651671703079,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.05760039905284391,
+                "mean_paired_cosine": 0.9978762528148736,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9975506716234356,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07675346078314446,
+                "mean_paired_cosine": 0.9962115260721933,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9846837848365887,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.06016092838435815,
+                "mean_paired_cosine": 0.9976777233424964,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9940455963337896,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 37,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.25105408457959744,
+                "mean_row_l2": 4.990942974518782,
+                "min_row_l2": 4.459219774727588,
+                "max_row_l2": 5.348784188401495,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.248300738500802,
+                "eigenvalue_tolerance": 1.0146848156837527e-10,
+                "mean_nonzero_row_pair_cosine": 0.9081805134219367,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.03034453096380121,
+                "mean_paired_cosine": 0.999411184352799,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9983829321079619,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.050040897896885095,
+                "mean_paired_cosine": 0.9983962510852044,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9885305444688529,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.037880471957476076,
+                "mean_paired_cosine": 0.9990734622222456,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9950450987767274,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            },
+            {
+              "seed": 41,
+              "masked_geometry": {
+                "count": 500,
+                "feature_dim": 32,
+                "zero_norm_rows": 0,
+                "zero_variance_columns": 0,
+                "mean_feature_population_std": 0.2663033276831165,
+                "mean_row_l2": 5.023470351878475,
+                "min_row_l2": 4.5352222532419155,
+                "max_row_l2": 5.380218327330208,
+                "centered_numerical_rank": 31,
+                "covariance_entropy_effective_rank": 2.1782364107718335,
+                "eigenvalue_tolerance": 1.159432247085498e-10,
+                "mean_nonzero_row_pair_cosine": 0.8979968785164202,
+                "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+              },
+              "full_to_subset": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.04715873843578486,
+                "mean_paired_cosine": 0.9985799630415217,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9951972179044608,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "full_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.07312520948561792,
+                "mean_paired_cosine": 0.9965593449171268,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9714987157121301,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              },
+              "subset_to_masked": {
+                "count": 500,
+                "feature_dim": 32,
+                "rmse": 0.0521306186897614,
+                "mean_paired_cosine": 0.9982511127303146,
+                "cosine_defined_rows": 500,
+                "centered_linear_cka": 0.9893169800455514,
+                "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+              }
+            }
+          ],
+          "limitation": "Fixed-mask training-row endpoint diagnosis only; subset control sees full-image attention; no accuracy, robustness or temporal-stability claim"
+        }
+      }
+    },
+    "pixels": {
+      "count": 500,
+      "feature_dim": 3072,
+      "zero_norm_rows": 0,
+      "zero_variance_columns": 0,
+      "mean_feature_population_std": 0.49183974138859426,
+      "mean_row_l2": 26.941631280785398,
+      "min_row_l2": 10.761487406792662,
+      "max_row_l2": 47.20077826845821,
+      "centered_numerical_rank": 499,
+      "covariance_entropy_effective_rank": 34.39396037338584,
+      "eigenvalue_tolerance": 7.046838062870911e-08,
+      "mean_nonzero_row_pair_cosine": 0.030603356001559924,
+      "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+    },
+    "images_sampled": true,
+    "partition": "train",
+    "classifiers_fitted": false,
+    "models_trained": false,
+    "validation_images_read": false,
+    "test_evaluated": false,
+    "limitation": "Exploratory training-only endpoint diagnostics, not downstream quality, temporal stability or a new held-out comparison"
+  },
+  "report_sha256": "ebd770fabbaa739c7be645784c012a2c7b73db84f0b6ddd8f6cf622d928cd4d2"
+}

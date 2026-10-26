@@ -2,6 +2,21 @@
 
 ## October 25, 2026
 
+- Executed the fixed-mask audit on the original 500 fitting images for six
+  completed scale/seed checkpoints and matching random controls. Trained mask
+  variance fractions are 1.28–1.98%; full/masked CKA is 0.9819–0.9851. Mean-of-view
+  effective rank remains 3.20–3.85. These four-mask endpoint statistics do not
+  establish robustness, useful features or accuracy gains. Published aggregate
+  report/equations/control definitions in experiments/MASKED-CONTEXT-2026-10-25.md.
+- All **189 local tests passed**, plus the mask demo and three-step synthetic
+  training smoke. Real cache replay with raw image access, training and diagnostic
+  recomputation disabled reproduced byte-identical output. No held-out images,
+  new downloads, paid compute, private data or model artifacts were published.
+  The official test stays reserved; next predeclare one objective intervention.
+- Interview explanation: “I isolated changes caused by pooling fewer patches
+  from changes caused by removing hidden patches from attention. The low-rank
+  picture persisted, so I reported the diagnosis without calling it better ML.”
+
 - Integrated masked-context diagnostics into the training-only scale audit and
   CLI with a separate cache-mode identity. Declared geometry is shared across
   trained and exact-initialization random arms. All five audit integration tests

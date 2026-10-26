@@ -80,9 +80,11 @@ The [October 24 training-only audit](experiments/STABILITY-2026-10-24.md)
 compares original fitting-image context/teacher geometry and matching random
 controls. Context effective rank is 3.25–3.88 and endpoint teacher CKA exceeds
 0.993, without proving quality or temporal stability. No held-out rows were read.
-Next inspect full-image versus masked-context pooled variation with fixed masks
-on these same training rows, then predeclare one objective/normalization
-intervention. Do not tune on the latest confirmation scores.
+The [October 25 fixed-mask audit](experiments/MASKED-CONTEXT-2026-10-25.md)
+completed the full/subset/masked comparison on these same training rows. Low
+effective rank persists; four-mask sensitivity cannot establish useful features
+or robustness. Next predeclare one objective/normalization intervention, with
+matched budgets and random controls. Do not tune on the latest confirmation scores.
 For any future reservation, retain `runs/scale-20261020/observed-exposure.json`:
 all 2,746 observed rows are retained, with 2,254 still unused. The original
 unscored reservation is now observed. Fingerprints cannot detect omitted
