@@ -1,5 +1,15 @@
 # Development log
 
+## October 25, 2026
+
+- Added fixed-mask context diagnostics comparing full-image pooling, visible-subset
+  pooling of full-attention tokens, and raw-visible-patch re-encoding. The subset
+  control deliberately retains full-image attention and cannot serve as a leak-free
+  training context. Reports separate mask variation within an image from variation
+  between image means. Three synthetic tests pass for deterministic views, the
+  variance identity, hidden-patch isolation, state/RNG preservation and invalid inputs.
+  No real-data or quality result is claimed in this first implementation step.
+
 ## October 24, 2026
 
 - Ran the aggregate audit on the original 500 fitting images for all six

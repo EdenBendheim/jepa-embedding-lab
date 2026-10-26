@@ -731,3 +731,11 @@ the original computation; stdout separately states whether this invocation read
 images. Changed caches fail rather than being replaced. Checksums detect
 accidental changes, not a forged report. Keep the cache outside the scale-run
 state/data/source directories. Only aggregate reports belong in public commits.
+
+The `masked_context.masked_context_report` API compares full-image means with
+fixed visible-subset pooling and visible-only re-encoding. It uses 2–8 fixed
+mask seeds shared across images and reports aggregate view sensitivity. Subset
+pooling retains hidden-image attention and is only a diagnostic control; the
+re-encoded arm gathers raw visible patches before attention. It fits nothing
+and preserves model modes, weights and RNG. These statistics do not establish
+robustness or downstream accuracy.
