@@ -1,5 +1,15 @@
 # Development log
 
+## October 27, 2026
+
+- Added an opt-in between-image variance hinge on visible-context mean embeddings,
+  with separate prediction/penalty terms and a zero-weight historical default.
+  The model can expose its already-computed visible tokens without a second
+  encoding pass. Four focused synthetic tests cover the variance equation,
+  spatial-only variation, useful gradients, stopped teacher/hidden-pixel gradients,
+  unchanged default outputs/RNG and invalid inputs. Training integration is next;
+  this objective alone establishes no useful embeddings or accuracy improvement.
+
 ## October 25, 2026
 
 - Executed the fixed-mask audit on the original 500 fitting images for six

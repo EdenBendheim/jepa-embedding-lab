@@ -127,7 +127,10 @@ class JEPA(nn.Module):
         self.target_encoder.eval()
         return self
 
-    def forward(self, patches: torch.Tensor, context, target) -> tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, patches: torch.Tensor, context, target, *, return_context: bool = False):
+        """Optionally expose visible-only tokens for training objectives, without re-encoding."""
+        if type(return_context) is not bool:
+            raise ValueError("return_context must be boolean")
         config = self.config
         if patches.ndim != 3 or patches.shape[0] < 1 or patches.shape[1:] != (config.rows*config.cols, config.patch_dim):
             raise ValueError("Patches must have shape [batch, grid_size, patch_dim]")
@@ -148,6 +151,8 @@ class JEPA(nn.Module):
             full = torch.arange(patches.shape[1], device=patches.device).expand(patches.shape[0], -1)
             targets = gather(self.target_encoder(patches, full), target)
             targets = F.layer_norm(targets, (config.embedding_dim,))
+        if return_context:
+            return predictions, targets, encoded
         return predictions, targets
 
     def loss(self, patches: torch.Tensor, context, target) -> torch.Tensor:

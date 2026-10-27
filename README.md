@@ -37,6 +37,13 @@ The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [offi
 
 ## Working now
 
+An opt-in `objective.context_variance` helper penalizes low **between-image**
+variance after visible-token mean pooling. `JEPA.forward(..., return_context=True)`
+returns those existing context tokens as a third output. Spatial variation alone
+does not satisfy the penalty; mask variation can still contribute to it. The
+historical prediction-only objective remains the default. This is a training
+intervention foundation, not a measured quality improvement.
+
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.
 - Separate context, target, and unused indices: the context encoder must never receive target pixels.
