@@ -77,3 +77,10 @@ def objective_diagnostics(terms, config):
     if not config.variance_weight:
         return {}
     return {name: float(value.detach()) for name, value in terms.items() if name != "loss"}
+
+
+def add_objective_options(parser):
+    parser.add_argument('--context-variance-weight', type=float, default=0.0,
+                        help='Opt-in visible-context image-variance penalty (default: prediction only)')
+    parser.add_argument('--context-std-floor', type=float, default=1.0,
+                        help='Per-feature population standard-deviation floor; resume-bound when enabled')

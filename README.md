@@ -44,6 +44,13 @@ does not satisfy the penalty; mask variation can still contribute to it. The
 historical prediction-only objective remains the default. This is a training
 intervention foundation, not a measured quality improvement.
 
+Synthetic training accepts `--context-variance-weight 0.1 --context-std-floor 1.0`.
+Enabled runs require at least two images per batch, record prediction and variance
+terms separately, and bind the objective to exact checkpoint resume. Supply the
+same options when resuming. Omitted/zero weight keeps historical checkpoint and
+journal identities; the floor is inactive at zero weight. A synthetic smoke run
+tests execution and recovery, not downstream embedding quality.
+
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.
 - Separate context, target, and unused indices: the context encoder must never receive target pixels.

@@ -10,6 +10,7 @@ import torch
 
 from .masking import block_mask
 from .model import JEPA, ModelConfig, config_dict
+from .objective import ObjectiveConfig, add_objective_options, objective_diagnostics, objective_terms
 
 
 def synthetic_batch(config: ModelConfig, batch_size: int, generator: torch.Generator) -> torch.Tensor:
@@ -34,7 +35,11 @@ def embedding_stats(values: torch.Tensor) -> dict:
 def train_smoke(*, steps: int = 10, batch_size: int = 4, seed: int = 29,
                 learning_rate: float = 1e-3, momentum: float = 0.99,
                 config: ModelConfig | None = None, resume: str | Path | None = None,
-                checkpoint: str | Path | None = None) -> dict:
+                checkpoint: str | Path | None = None, context_variance_weight: float = 0.0,
+                context_std_floor: float = 1.0) -> dict:
+    objective = ObjectiveConfig(context_variance_weight, context_std_floor)
+    if objective.variance_weight and batch_size < 2:
+        raise ValueError("Context variance training requires at least two images per batch")
     if steps < 1 or batch_size < 1 or not math.isfinite(learning_rate) or learning_rate <= 0:
         raise ValueError("Steps, batch size, and learning rate must be positive")
     if not math.isfinite(momentum) or not 0 <= momentum <= 1:
@@ -44,6 +49,8 @@ def train_smoke(*, steps: int = 10, batch_size: int = 4, seed: int = 29,
         saved_config = ModelConfig(**saved["config"])
         if config is not None and config != saved_config:
             raise ValueError("Model config does not match the checkpoint")
+        if saved.get('objective', {}) != objective.settings().get('objective', {}):
+            raise ValueError("Training objective must match the checkpoint for exact resume")
         if (batch_size, seed, learning_rate, momentum) != (saved["batch_size"], saved["seed"],
                                                          saved["learning_rate"], saved["momentum"]):
             raise ValueError("Training settings must match the checkpoint for exact resume")
@@ -71,8 +78,13 @@ def train_smoke(*, steps: int = 10, batch_size: int = 4, seed: int = 29,
         context = torch.tensor([mask.context for mask in masks])
         target = torch.tensor([mask.target for mask in masks])
         optimizer.zero_grad(set_to_none=True)
-        predictions, targets = model(patches, context, target)
-        loss = torch.nn.functional.smooth_l1_loss(predictions, targets)
+        if objective.variance_weight:
+            predictions, targets, encoded = model(patches, context, target, return_context=True)
+        else:
+            predictions, targets = model(patches, context, target)
+            encoded = None
+        terms = objective_terms(predictions, targets, encoded, config=objective)
+        loss = terms['loss']
         if not torch.isfinite(loss):
             raise RuntimeError("Training produced a non-finite loss")
         loss.backward()
@@ -81,16 +93,19 @@ def train_smoke(*, steps: int = 10, batch_size: int = 4, seed: int = 29,
         optimizer.step()
         model.update_target(momentum)
         history.append(dict(step=step+1, loss=float(loss.detach()),
-                            prediction=embedding_stats(predictions), target=embedding_stats(targets)))
+                            prediction=embedding_stats(predictions), target=embedding_stats(targets),
+                            **objective_diagnostics(terms, objective)))
     if checkpoint:
         path = Path(checkpoint)
         path.parent.mkdir(parents=True, exist_ok=True)
         torch.save(dict(format_version=1, config=config_dict(config), model=model.state_dict(),
                         optimizer=optimizer.state_dict(), step=start+steps, seed=seed,
                         batch_size=batch_size, learning_rate=learning_rate, momentum=momentum,
-                        data_rng=generator.get_state(), torch_rng=torch.get_rng_state()), path)
+                        data_rng=generator.get_state(), torch_rng=torch.get_rng_state(),
+                        **objective.settings()), path)
     return dict(dataset="synthetic spatial patterns", config=config_dict(config), seed=seed,
                 start_step=start, completed_step=start+steps, history=history,
+                **objective.settings(),
                 limitation="Smoke check only; no public-dataset or downstream-quality evaluation")
 
 
@@ -104,12 +119,15 @@ def main():
     parser.add_argument("--resume")
     parser.add_argument("--checkpoint")
     parser.add_argument("--output", help="Optional JSON metrics file (use ignored runs/)")
+    add_objective_options(parser)
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
         result = train_smoke(steps=args.steps, batch_size=args.batch_size, seed=args.seed,
                              learning_rate=args.learning_rate, momentum=args.momentum,
-                             resume=args.resume, checkpoint=args.checkpoint)
+                             resume=args.resume, checkpoint=args.checkpoint,
+                             context_variance_weight=args.context_variance_weight,
+                             context_std_floor=args.context_std_floor)
     except (ValueError, OSError) as exc:
         parser.error(str(exc))
     if args.output:

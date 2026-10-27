@@ -2,6 +2,12 @@
 
 ## October 27, 2026
 
+- Integrated the opt-in objective into synthetic training and CLI checkpoints.
+  Four new tests verify exact split-versus-continuous model/optimizer/RNG state,
+  separate loss terms, default historical identities, refusal of changed resume
+  objectives or single-image batches, and the real CLI. No public images or
+  downstream scores were used.
+
 - Added an opt-in between-image variance hinge on visible-context mean embeddings,
   with separate prediction/penalty terms and a zero-weight historical default.
   The model can expose its already-computed visible tokens without a second
