@@ -2,6 +2,24 @@
 
 ## October 27, 2026
 
+- Final local verification: all **204 tests passed**, the seeded mask demo
+  passed, and both historical and regularized synthetic runs completed three
+  steps plus one resumed step. No real-image objective experiment, new accuracy
+  score, official-test use, paid compute or public model/data artifact was added.
+- Interview explanation: “I added an experimental penalty on variation between
+  image embeddings, checked that variation among patches alone cannot satisfy
+  it, and bound training/recovery and frozen features to the declared objective.
+  Whether it improves classification still needs the controlled comparison.”
+
+- Frozen encoder and feature readers now retain/validate objective provenance,
+  rejecting missing/unknown fields and invalid or ambiguously disabled penalties.
+  Three new fixture tests verify frozen feature round trips, unchanged checkpoint
+  bytes/RNG/training-row boundaries, and refusal of malformed recipes before
+  sampling or output replacement. Variance overflow and false config objects
+  are also rejected. Added the prospective matched-comparison recipe; its
+  source-lock/reservation/evaluation driver remains next, before real-image
+  objective training or a new downstream-quality claim.
+
 - Connected the objective to CIFAR-10 training and the chunked budget driver,
   including CLI options, recipe-bound resume/cache identity and separate loss
   diagnostics. Four new synthetic-fixture tests verify exact continuous/resumed

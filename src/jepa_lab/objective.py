@@ -27,6 +27,22 @@ class ObjectiveConfig:
                               "context_std_floor": float(self.std_floor)}}
 
 
+def objective_from_settings(settings):
+    """Validate the declared training objective in checkpoint/feature provenance."""
+    if not isinstance(settings, dict):
+        raise ValueError('Training settings must be a dictionary')
+    if 'objective' not in settings:
+        return ObjectiveConfig()
+    spec = settings['objective']
+    keys = {'context_variance_weight', 'context_std_floor'}
+    if not isinstance(spec, dict) or set(spec) != keys:
+        raise ValueError('Training objective metadata has missing or unknown fields')
+    config = ObjectiveConfig(spec['context_variance_weight'], spec['context_std_floor'])
+    if spec != config.settings().get('objective'):
+        raise ValueError('Disabled training objectives must retain the historical identity')
+    return config
+
+
 def context_variance(tokens, *, std_floor=1.0):
     """Penalize low between-image variance, after visible-token mean pooling.
 
@@ -43,14 +59,14 @@ def context_variance(tokens, *, std_floor=1.0):
     pooled = tokens.float().mean(dim=1)
     std = torch.sqrt(pooled.var(dim=0, unbiased=False) + 1e-4)
     penalty = F.relu(std_floor - std).mean()
-    if not torch.isfinite(penalty):
+    if not torch.isfinite(std).all() or not torch.isfinite(penalty):
         raise ValueError("Context variance penalty is not finite")
     return penalty, std.mean()
 
 
 def objective_terms(predictions, targets, context_tokens=None, *, config=None):
     """Return differentiable loss components, keeping target gradients stopped."""
-    config = config or ObjectiveConfig()
+    config = ObjectiveConfig() if config is None else config
     if not isinstance(config, ObjectiveConfig):
         raise ValueError("Expected ObjectiveConfig")
     if (not isinstance(predictions, torch.Tensor) or not isinstance(targets, torch.Tensor)

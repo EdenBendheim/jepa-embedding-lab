@@ -18,6 +18,7 @@ from .model import ModelConfig
 from .pooling import pooling_dimension, pooling_mode
 from .selection import validate_pilot
 from .pretrained import pretrained_metadata
+from .objective import objective_from_settings
 
 
 @dataclass(frozen=True)
@@ -113,6 +114,7 @@ def load_features(path: str | Path, *, manifest: dict, selection: dict, training
             if (not _sha(metadata.get("checkpoint_sha256")) or type(metadata.get("completed_steps")) is not int
                     or metadata["completed_steps"] < 1 or not isinstance(metadata.get("training_settings"), dict)):
                 raise ValueError("Checkpoint feature metadata lacks valid weight/training provenance")
+            objective_from_settings(metadata['training_settings'])
         elif type(metadata.get("seed")) is not int or not 0 <= metadata["seed"] < 2**63:
             raise ValueError("Random-encoder features require a valid initialization seed")
     elif representation == "pretrained":

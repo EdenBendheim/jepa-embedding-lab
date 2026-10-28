@@ -62,9 +62,11 @@ class ObjectiveTests(unittest.TestCase):
             with self.subTest(weight=weight, floor=floor), self.assertRaises(ValueError):
                 ObjectiveConfig(weight, floor)
         for bad in [torch.zeros(1, 2, 3), torch.zeros(2, 0, 3), torch.ones(2, 2, 3).long(),
-                    torch.full((2, 2, 3), float('nan'))]:
+                    torch.full((2, 2, 3), float('nan')),
+                    torch.tensor([[[-3e38]], [[3e38]]])]:
             with self.assertRaises(ValueError): context_variance(bad)
         pred = torch.zeros(2, 2, 3)
+        with self.assertRaises(ValueError): objective_terms(pred, pred, config=False)
         with self.assertRaises(ValueError): objective_terms(pred, pred[:, :1])
         with self.assertRaises(ValueError):
             objective_terms(pred, pred, torch.zeros(3, 2, 3), config=ObjectiveConfig(.1))

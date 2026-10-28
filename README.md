@@ -2,6 +2,11 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**Implementation update — October 27:** an opt-in context-variance objective now
+works in synthetic/CIFAR training, exact resume and budget chunks. Frozen feature
+provenance retains and validates the objective. The controlled comparison is
+still pending; the measured results below have not changed.
+
 **Status — October 25, 2026:** the [predeclared amplitude comparison](experiments/SCALE-2026-10-22.md)
 is complete. Three new .02 runs and pinned 1.0 controls share actual image order
 and 29,472 trainable parameters. On 500 fresh validation rows, trained .02 / 1.0
@@ -58,6 +63,18 @@ reuse an existing checkpoint. Budget chunks preserve the same recipe. No held-ou
 image is used by this penalty, and the encoder architecture is unchanged. A
 controlled comparison must hold initialization, image order and fitting budget
 fixed before judging any downstream benefit.
+
+For visible-context means `z[b,d]`, the extra term is
+`mean_d max(0, floor - sqrt(var_b(z, correction=0) + 1e-4))`;
+total loss is historical Smooth L1 plus `weight * term`. Teacher targets keep
+their existing layer normalization and stop-gradient behavior. The penalty is
+on context means, not predictor output or teacher variance. An exactly constant
+batch has zero gradient through variance; small batches and different masks
+limit its interpretation. It is a testable intervention, not a guarantee against
+collapse. Checkpoint and frozen-feature readers reject malformed declared
+objective metadata; they do not authenticate that a producer trained honestly.
+The [prospective comparison recipe](experiments/CONTEXT-VARIANCE-2026-10-27.md)
+records the next evaluation boundary; no new public-data quality result exists.
 
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.

@@ -83,8 +83,13 @@ controls. Context effective rank is 3.25–3.88 and endpoint teacher CKA exceeds
 The [October 25 fixed-mask audit](experiments/MASKED-CONTEXT-2026-10-25.md)
 completed the full/subset/masked comparison on these same training rows. Low
 effective rank persists; four-mask sensitivity cannot establish useful features
-or robustness. Next predeclare one objective/normalization intervention, with
-matched budgets and random controls. Do not tune on the latest confirmation scores.
+or robustness. October 27 added an opt-in variance hinge on visible-context
+image means, with synthetic/CIFAR training, exact resume/budget identity and
+validated frozen-feature provenance. Prediction-only defaults remain unchanged.
+The [prospective objective recipe](experiments/CONTEXT-VARIANCE-2026-10-27.md)
+specifies the contrast; next implement and pin its matched comparison driver
+and complete evidence before training/scoring. No quality gain is established.
+Do not tune on the latest confirmation scores.
 For any future reservation, retain `runs/scale-20261020/observed-exposure.json`:
 all 2,746 observed rows are retained, with 2,254 still unused. The original
 unscored reservation is now observed. Fingerprints cannot detect omitted

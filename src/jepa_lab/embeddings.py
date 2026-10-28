@@ -15,6 +15,7 @@ from .model import JEPA, ModelConfig, config_dict
 from .masking import block_mask
 from .pooling import POOLING, pool_tokens, pooling_dimension
 from .selection import validate_pilot
+from .objective import objective_from_settings
 
 
 def rgb_config(config: ModelConfig):
@@ -84,6 +85,7 @@ def load_encoder(checkpoint: str | Path, manifest_sha256: str) -> tuple[JEPA, di
         settings = saved["settings"]
         if not isinstance(settings, dict):
             raise ValueError("Training settings must be a recorded dictionary")
+        objective_from_settings(settings)
         if "mask" in settings:
             mask = settings["mask"]
             if not isinstance(mask, dict) or set(mask) != {"target_rows", "target_cols", "context_fraction"}:
