@@ -17,6 +17,7 @@ from .model import JEPA, ModelConfig, config_dict
 from .model_size import validate_local_config
 from .model_cli import add_model_options,config_from_args
 from .train import embedding_stats
+from .objective import ObjectiveConfig, add_objective_options, objective_diagnostics, objective_terms
 
 DEFAULT_MASK = dict(target_rows=2, target_cols=2, context_fraction=0.75)
 
@@ -59,7 +60,11 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
                   seed: int | None = None, config: ModelConfig | None = None,
                   target_rows: int = 2, target_cols: int = 2, context_fraction: float = 0.75,
                   checkpoint: str | Path | None = None, resume: str | Path | None = None,
-                  checkpoint_every: int = 0) -> dict:
+                  checkpoint_every: int = 0, context_variance_weight: float = 0.0,
+                  context_std_floor: float = 1.0) -> dict:
+    objective = ObjectiveConfig(context_variance_weight, context_std_floor)
+    if objective.variance_weight and batch_size < 2:
+        raise ValueError("Context variance training requires at least two images per batch")
     if type(steps) is not int or not 1 <= steps <= 1000 or type(batch_size) is not int or not 1 <= batch_size <= 32:
         raise ValueError("Local runs allow 1-1000 additional steps and a batch size of 1-32")
     if not math.isfinite(learning_rate) or learning_rate <= 0 or not math.isfinite(momentum) or not 0 <= momentum <= 1:
@@ -84,6 +89,7 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
     # Preserve default identities; custom masks are recorded explicitly.
     if mask_settings != DEFAULT_MASK:
         settings["mask"] = mask_settings
+    settings.update(objective.settings())
     runtime = dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads())
     identity = dict(format_version=1, dataset="CIFAR-10", manifest_sha256=manifest["manifest_sha256"],
                     config=config_dict(config), settings=settings, runtime=runtime)
@@ -125,8 +131,14 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
         masks = [block_mask(8, 8, **mask_settings, seed=seed+step*batch_size+i)
                  for i in range(batch_size)]
         optimizer.zero_grad(set_to_none=True)
-        predictions, targets = model(patches, [mask.context for mask in masks], [mask.target for mask in masks])
-        loss = torch.nn.functional.smooth_l1_loss(predictions, targets)
+        context, target = [mask.context for mask in masks], [mask.target for mask in masks]
+        if objective.variance_weight:
+            predictions, targets, encoded = model(patches, context, target, return_context=True)
+        else:
+            predictions, targets = model(patches, context, target)
+            encoded = None
+        terms = objective_terms(predictions, targets, encoded, config=objective)
+        loss = terms['loss']
         if not torch.isfinite(loss):
             raise RuntimeError("CIFAR-10 training produced non-finite loss")
         loss.backward()
@@ -136,7 +148,7 @@ def train_cifar10(root: str | Path, manifest_path: str | Path, *, steps: int = 2
         model.update_target(momentum)
         history.append(dict(step=step+1, train_indices=chosen, loss=float(loss.detach()),
                             gradient_norm=float(norm), prediction=embedding_stats(predictions),
-                            target=embedding_stats(targets)))
+                            target=embedding_stats(targets), **objective_diagnostics(terms, objective)))
         if checkpoint_every and (step+1) % checkpoint_every == 0:
             save_progress(step+1)
     if checkpoint:
@@ -167,13 +179,16 @@ def main():
                         help='Atomically save state and accumulated diagnostics every N global steps (0: end only)')
     parser.add_argument("--output", type=Path, help="Write this invocation's diagnostics beneath ignored runs/")
     add_model_options(parser)
+    add_objective_options(parser)
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
         report = train_cifar10(args.root, args.manifest, config=config_from_args(args), steps=args.steps, batch_size=args.batch_size,
                               learning_rate=args.learning_rate, momentum=args.momentum, seed=args.seed,
                               target_rows=args.target_rows, target_cols=args.target_cols, context_fraction=args.context_fraction,
-                              checkpoint=args.checkpoint, resume=args.resume, checkpoint_every=args.checkpoint_every)
+                              checkpoint=args.checkpoint, resume=args.resume, checkpoint_every=args.checkpoint_every,
+                              context_variance_weight=args.context_variance_weight,
+                              context_std_floor=args.context_std_floor)
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.error(str(exc))
     if args.output:

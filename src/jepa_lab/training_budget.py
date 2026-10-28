@@ -15,6 +15,7 @@ from .compare import write_report
 from .model import ModelConfig, config_dict
 from .model_size import validate_local_config
 from .model_cli import add_model_options,config_from_args
+from .objective import ObjectiveConfig, add_objective_options
 
 
 def verify_budget_state(path, identity, indices, total_steps):
@@ -37,7 +38,10 @@ def verify_budget_state(path, identity, indices, total_steps):
 def run_training_budget(root, manifest_path, checkpoint, *, total_steps=2223, chunk_steps=1000,
                         checkpoint_every=50, batch_size=4, learning_rate=0.001, momentum=0.99,
                         seed=None, config=None, target_rows=2, target_cols=2, context_fraction=0.75,
-                        reuse_only=False):
+                        reuse_only=False, context_variance_weight=0.0, context_std_floor=1.0):
+    objective = ObjectiveConfig(context_variance_weight, context_std_floor)
+    if objective.variance_weight and batch_size < 2:
+        raise ValueError('Context variance training requires at least two images per batch')
     if (type(total_steps) is not int or not 1 <= total_steps <= 10000
             or type(chunk_steps) is not int or not 1 <= chunk_steps <= 1000
             or type(checkpoint_every) is not int or not 1 <= checkpoint_every <= 1000):
@@ -51,6 +55,7 @@ def run_training_budget(root, manifest_path, checkpoint, *, total_steps=2223, ch
     settings = dict(seed=seed, batch_size=batch_size, learning_rate=learning_rate, momentum=momentum)
     mask = dict(target_rows=target_rows, target_cols=target_cols, context_fraction=float(context_fraction))
     if mask != DEFAULT_MASK: settings['mask'] = mask
+    settings.update(objective.settings())
     identity = dict(format_version=1, dataset='CIFAR-10', manifest_sha256=manifest['manifest_sha256'],
                     config=config_dict(config), settings=settings,
                     runtime=dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()))
@@ -65,7 +70,8 @@ def run_training_budget(root, manifest_path, checkpoint, *, total_steps=2223, ch
         train_cifar10(root, manifest_path, steps=count, batch_size=batch_size, learning_rate=learning_rate,
                       momentum=momentum, seed=seed, config=config, **mask,
                       checkpoint=path, resume=path if state is not None else None,
-                      checkpoint_every=checkpoint_every)
+                      checkpoint_every=checkpoint_every, context_variance_weight=context_variance_weight,
+                      context_std_floor=context_std_floor)
         state = verify_budget_state(path, identity, indices, total_steps)
         completed = state['step']
     history = state['training_history']
@@ -87,6 +93,7 @@ def main():
     parser.add_argument('--seed', type=int); parser.add_argument('--batch-size', type=int, default=4)
     parser.add_argument('--target-rows', type=int, default=2); parser.add_argument('--target-cols', type=int, default=2)
     add_model_options(parser)
+    add_objective_options(parser)
     parser.add_argument('--reuse-only', action='store_true')
     parser.add_argument('--output', type=Path)
     args=parser.parse_args(); torch.set_num_threads(1)
@@ -95,6 +102,7 @@ def main():
             chunk_steps=args.chunk_steps, checkpoint_every=args.checkpoint_every, seed=args.seed,
             batch_size=args.batch_size, target_rows=args.target_rows, target_cols=args.target_cols,
             config=config_from_args(args),
+            context_variance_weight=args.context_variance_weight, context_std_floor=args.context_std_floor,
             reuse_only=args.reuse_only)
         if args.output: write_report(args.output, result)
     except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc: parser.error(str(exc))

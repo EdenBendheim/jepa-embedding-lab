@@ -51,6 +51,14 @@ same options when resuming. Omitted/zero weight keeps historical checkpoint and
 journal identities; the floor is inactive at zero weight. A synthetic smoke run
 tests execution and recovery, not downstream embedding quality.
 
+The same objective options work in `jepa_lab.cifar10_train` and
+`jepa_lab.training_budget`. Enabled settings are recorded in the training recipe,
+feature provenance and journals; changing the weight or floor cannot resume or
+reuse an existing checkpoint. Budget chunks preserve the same recipe. No held-out
+image is used by this penalty, and the encoder architecture is unchanged. A
+controlled comparison must hold initialization, image order and fitting budget
+fixed before judging any downstream benefit.
+
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.
 - Separate context, target, and unused indices: the context encoder must never receive target pixels.

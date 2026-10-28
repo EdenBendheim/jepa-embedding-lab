@@ -2,6 +2,12 @@
 
 ## October 27, 2026
 
+- Connected the objective to CIFAR-10 training and the chunked budget driver,
+  including CLI options, recipe-bound resume/cache identity and separate loss
+  diagnostics. Four new synthetic-fixture tests verify exact continuous/resumed
+  states, training-only sampling, immutable checkpoints on changed objectives,
+  chunk/cache replay and both CLI paths. No real-data quality result is claimed.
+
 - Integrated the opt-in objective into synthetic training and CLI checkpoints.
   Four new tests verify exact split-versus-continuous model/optimizer/RNG state,
   separate loss terms, default historical identities, refusal of changed resume
