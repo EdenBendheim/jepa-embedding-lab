@@ -1,5 +1,13 @@
 # Development log
 
+## October 29, 2026
+
+- Added objective-comparison preparation that verifies all experiment modules,
+  dataset/split/fitting-selection bytes and original exposure sources before
+  reserving fresh rows. Three synthetic tests pass for image-free/idempotent
+  reservation, unchanged caller RNG, protected evidence and malformed contrast,
+  runtime/source/history rejection. No new observed rows, models or scores.
+
 ## October 27, 2026
 
 - Final local verification: all **204 tests passed**, the seeded mask demo

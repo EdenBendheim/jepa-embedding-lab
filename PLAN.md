@@ -52,6 +52,12 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
+October 29 added source-pinned objective-comparison preparation with protected
+outputs and unscored reservation replay. Three synthetic tests cover the code
+and historical-source gates, unchanged RNG, invalid recipes and no image reads.
+Next connect matched training/recovery, then freeze actual source pins before
+any real-image objective run. Downstream evaluation is still pending.
+
 The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
 complete: three new fixed-position runs and three historical learned-position
 runs, 2,223 updates each with matched non-position initialization and actual

@@ -2,6 +2,12 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**Implementation update — October 29:** `objective_run.ObjectiveRun.prepare`
+replays source-pinned data/splits/exposure and reserves fresh rows without image
+tensor reads. It requires pins for every experiment module and validates the
+bounded two-arm recipe. This is reservation infrastructure; matched training,
+the real protocol lock and downstream scoring remain pending.
+
 **Implementation update — October 27:** an opt-in context-variance objective now
 works in synthetic/CIFAR training, exact resume and budget chunks. Frozen feature
 provenance retains and validates the objective. The controlled comparison is
