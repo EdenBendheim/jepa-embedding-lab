@@ -1,0 +1,360 @@
+{
+  "version": 1,
+  "kind": "context_variance_comparison",
+  "date": "2026-10-29",
+  "config": {
+    "rows": 8,
+    "cols": 8,
+    "patch_dim": 48,
+    "embedding_dim": 32,
+    "heads": 4,
+    "encoder_depth": 2,
+    "predictor_depth": 1,
+    "position_encoding": "sincos2d"
+  },
+  "arms": [
+    {
+      "name": "prediction",
+      "context_variance_weight": 0.0,
+      "context_std_floor": 1.0
+    },
+    {
+      "name": "context_variance",
+      "context_variance_weight": 0.1,
+      "context_std_floor": 1.0
+    }
+  ],
+  "training_seeds": [
+    20261003,
+    20261010,
+    20261011
+  ],
+  "total_steps": 2223,
+  "chunk_steps": 1000,
+  "checkpoint_every": 50,
+  "batch_size": 4,
+  "learning_rate": 0.001,
+  "momentum": 0.99,
+  "mask": {
+    "target_rows": 2,
+    "target_cols": 2,
+    "context_fraction": 0.75
+  },
+  "runtime": {
+    "torch": "2.8.0",
+    "cpu_threads": 1
+  },
+  "manifest_path": "runs/cifar10-manifest.json",
+  "selection_path": "runs/pilot-selection-20261009.json",
+  "exposure_bundle_path": "runs/scale-20261020/observed-exposure.json",
+  "sources": [
+    {
+      "path": "experiments/CONTEXT-VARIANCE-2026-10-27.md",
+      "sha256": "859ec2b1ef9e360d1f0c66963705d8bf9de176b7d25c48ba4f244be4f0b53b7e"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "b818bbb6a3c73eb39a15e254a86c72b65d946542cc235627e431582108165684"
+    },
+    {
+      "path": "runs/budget-20261014/confirmation-selection.json",
+      "sha256": "758e0a7deebc9a61de87806e6a84817a377dbb9fe5fd6ff94a39601b8c62da8b"
+    },
+    {
+      "path": "runs/cifar10-manifest.json",
+      "sha256": "97f4201d5d57ee4fcf58e98e291ad18a54a03f3995571213907e2e8b619893cc"
+    },
+    {
+      "path": "runs/confirmation-20261012/selection.json",
+      "sha256": "d015120243f01968b5744a6c223dcb89c081de2d158ebad4e51bb0eba57f4af9"
+    },
+    {
+      "path": "runs/pilot-selection-20261007.json",
+      "sha256": "7b45d136122157325921a30e63febad313acf728e02dc1db79a90a6d395e58d2"
+    },
+    {
+      "path": "runs/pilot-selection-20261009.json",
+      "sha256": "a1e87b95e7fee9137c1568d26cd85d7845022b1a77524fd86aa49f68365265bf"
+    },
+    {
+      "path": "runs/position-20261018/confirmation-selection.json",
+      "sha256": "683e38050995d3128b6bea68a72ffaab663516d8137550c5d41abe1ca80c76a8"
+    },
+    {
+      "path": "runs/scale-20261020/confirmation-selection.json",
+      "sha256": "7b9cf8c91d1c87f18be37bdfa29ebbed14cc07cf511e8c939f14fd957279b7c0"
+    },
+    {
+      "path": "runs/scale-20261020/observed-exposure.json",
+      "sha256": "fc9f041039bbbcbd72970eac13f860aafe7eda5c80bdd6e635121218af916240"
+    },
+    {
+      "path": "runs/width-20261015/confirmation-selection.json",
+      "sha256": "dbfd75b64b21b9d0ba9bd05cda67c577a61233dfa3a67cf21984be6d76752f46"
+    },
+    {
+      "path": "src/jepa_lab/__init__.py",
+      "sha256": "8e83c30d44126d588835b0a5f544f9f800e830fe2de02dbd155943897d66f806"
+    },
+    {
+      "path": "src/jepa_lab/cifar10.py",
+      "sha256": "eea1bfd7d08899697fa87675d44cff9c5506d2581397ece7491147462bf91944"
+    },
+    {
+      "path": "src/jepa_lab/cifar10_smoke.py",
+      "sha256": "ae6c503046a13bf0154845517302762519c0df71e3b16952b8b7bd0ba6ea38a7"
+    },
+    {
+      "path": "src/jepa_lab/cifar10_train.py",
+      "sha256": "a8bc5549a3af21328e08c68881eccdc87d0da028aa8734822c707865627b37a7"
+    },
+    {
+      "path": "src/jepa_lab/compare.py",
+      "sha256": "3e097c6b97cc1250837f66f8ac1b1f6fb434e02667528301743cf7af368abace"
+    },
+    {
+      "path": "src/jepa_lab/confirmation.py",
+      "sha256": "0fdc4828c5482ac9593a686cc3ac0bcfa61a48a461047be1d774a01b750d13b7"
+    },
+    {
+      "path": "src/jepa_lab/confirmation_compare.py",
+      "sha256": "135544112cd96c3d7556e5c90ffeda1534cf11003d682c980eb879405dbf6fad"
+    },
+    {
+      "path": "src/jepa_lab/demo.py",
+      "sha256": "7586de38427eb3fc620205ee10097be970d5b9f4bee332fee5a01b4f557e0427"
+    },
+    {
+      "path": "src/jepa_lab/diagnostics.py",
+      "sha256": "cec211b618a42921dd722c4b6709313c2eaed803dadd1eb2be89f1745f5ef9b7"
+    },
+    {
+      "path": "src/jepa_lab/embeddings.py",
+      "sha256": "b2392831dd53909d127c1434e7b5eb641c03e4d01188666fb27f303d606caf25"
+    },
+    {
+      "path": "src/jepa_lab/explorer.py",
+      "sha256": "36798f731c0df997e3e3b1d62dd03e15adca8a93337559239a74f51b7357d5d3"
+    },
+    {
+      "path": "src/jepa_lab/explorer_compare.py",
+      "sha256": "a1c7ad4df4bb88026762375f4d70c562f0d24487eb4fd57658990223f5388f28"
+    },
+    {
+      "path": "src/jepa_lab/explorer_html.py",
+      "sha256": "ae1f4322c4ebcf9c4d3156284efc87f794f637bddae20ae57d3f775aee963ae2"
+    },
+    {
+      "path": "src/jepa_lab/exposure.py",
+      "sha256": "8e1454795a39e9e2845893e1658af2e3f67488a91148d1a8ea14dc5b32eb46a6"
+    },
+    {
+      "path": "src/jepa_lab/feature_geometry.py",
+      "sha256": "a40331d6b97323e24584f879097f5d9fee37acbbd097ac65c798e25e1d5adfea"
+    },
+    {
+      "path": "src/jepa_lab/features.py",
+      "sha256": "485197b6f83777e6b1bc7c03cbbf6eaa437f08d7c11c21d6293cf3ddce222f99"
+    },
+    {
+      "path": "src/jepa_lab/masked_context.py",
+      "sha256": "c6ea24e857ffa9ae2e24bad5a15350abcf8adced4245871e417fe78f6ad2cc20"
+    },
+    {
+      "path": "src/jepa_lab/masking.py",
+      "sha256": "5f464fba20090718b102ef4804062139805524f18b7407f370da74018f6180e3"
+    },
+    {
+      "path": "src/jepa_lab/model.py",
+      "sha256": "119f7d02202824c6f7472c6aa74d587592886ab65ab4bb8978c269cb626e008f"
+    },
+    {
+      "path": "src/jepa_lab/model_cli.py",
+      "sha256": "c1222944643ac311c6da0980a1cd056a713b52938da582bb9d5a9a8706f2fdc7"
+    },
+    {
+      "path": "src/jepa_lab/model_size.py",
+      "sha256": "015f6133b01245b26d45bb3f24da2f9a482c9d797fd7186f0a315ff5f086dab5"
+    },
+    {
+      "path": "src/jepa_lab/neighbor_artifacts.py",
+      "sha256": "20704628ca76ae867204f4c3dbd6b2a8279f3258678b0bba2777678349b16b5e"
+    },
+    {
+      "path": "src/jepa_lab/neighbor_cli.py",
+      "sha256": "23778b5d2c3ee13c433a5deec2a5b095fbc0b9e13e6fcb5a0d0cbcc075e4fd99"
+    },
+    {
+      "path": "src/jepa_lab/neighbor_confirmation.py",
+      "sha256": "7e55d17fe754d0dd94fa6053d084f2b8d42f3dc052cc73a087cbc68e6ab01c83"
+    },
+    {
+      "path": "src/jepa_lab/neighbor_workflow.py",
+      "sha256": "fa1eee7bb3b8e414e040066c43cfb42c67569dae7d656c877302a45c2949453a"
+    },
+    {
+      "path": "src/jepa_lab/neighbors.py",
+      "sha256": "aba622a8f0167e345ec13e7e46a61aa2dabd0a5a654f7f298daea162596b42cc"
+    },
+    {
+      "path": "src/jepa_lab/objective.py",
+      "sha256": "75a2a524f6cb5db5fd5057aa4760fa8bc25c51adf129870d4ff41d50528c4efc"
+    },
+    {
+      "path": "src/jepa_lab/objective_audit.py",
+      "sha256": "e0ed0cc08b19b949a5a27cca46a3de9c0a42cf28abc5d87164c17d5b0f07120d"
+    },
+    {
+      "path": "src/jepa_lab/objective_run.py",
+      "sha256": "cf5e0eb22dc010a8e095516d310dc0eefd57f0148d8c8dfca2d18dc1a8fb4f4e"
+    },
+    {
+      "path": "src/jepa_lab/patches.py",
+      "sha256": "b238e8342c52a3d270f72c489403564aa74e8c1543658d5754faba8d47d85fd2"
+    },
+    {
+      "path": "src/jepa_lab/pooling.py",
+      "sha256": "c5dffc969f86b4632baeabf3180a8af9a683abb9ef7faeba78a9b6ccdfe7a6c6"
+    },
+    {
+      "path": "src/jepa_lab/pooling_compare.py",
+      "sha256": "be7a08a83058cbeb3f2c73363b86f626ef2e5518fa9ec9e591cb6c5ff8cc78bb"
+    },
+    {
+      "path": "src/jepa_lab/position_compare.py",
+      "sha256": "ad42ac1e22d1d37da6b3a6ba9e205501d01af820d673d65e364ae005a889e5e3"
+    },
+    {
+      "path": "src/jepa_lab/positions.py",
+      "sha256": "bfc84ce66e4628143689cd34016801b37ac285d0b89e131774a231e55ee9eff9"
+    },
+    {
+      "path": "src/jepa_lab/pretrained.py",
+      "sha256": "392b875fde1e03f6f0292ba29fe674baeacef58104fb0ef5889fbd55c5ff3892"
+    },
+    {
+      "path": "src/jepa_lab/pretrained_extract.py",
+      "sha256": "566813b2c097f599c1d0fc2a938cd3788eb73a5c74fdf3a182df5cc47a5d503c"
+    },
+    {
+      "path": "src/jepa_lab/probe_artifacts.py",
+      "sha256": "f7283e8c89c557fc05bc4eae3cde94031d39b5ea2e5f6e1e3110cf7c215c7b97"
+    },
+    {
+      "path": "src/jepa_lab/probe_audit.py",
+      "sha256": "f8f55a26ddfcc744075abe078371f69a0f77ae6fdba39e0ab80aa5053918eefc"
+    },
+    {
+      "path": "src/jepa_lab/probe_compare.py",
+      "sha256": "cab0d6981947903e31071745b17e61c81a6e6e85eb70fa1973d38e80012c1ef7"
+    },
+    {
+      "path": "src/jepa_lab/probe_score.py",
+      "sha256": "4bb2998df16b7eb97c28a9533fafd6fec205022efbe8ca89ae79b51c19ee5961"
+    },
+    {
+      "path": "src/jepa_lab/probes.py",
+      "sha256": "a3f4028414a149a332679aed51295433399edb03c28381c9c46ab5fcb52663c8"
+    },
+    {
+      "path": "src/jepa_lab/progression.py",
+      "sha256": "8dfb4af4f818773eb9d0a8d4722f672b3ba1d38fe19e512d7c966f1cf48b2bf0"
+    },
+    {
+      "path": "src/jepa_lab/ridge.py",
+      "sha256": "9a376ffca8fa4b6b98704c22a4e06a9cdb2a5b12233ca04e5390953acb3f8aec"
+    },
+    {
+      "path": "src/jepa_lab/scale_audit.py",
+      "sha256": "a183831b7c42f2dd9133dfbede0eb9310624c1a24d8b44d6c6b8bb054c83192b"
+    },
+    {
+      "path": "src/jepa_lab/scale_compare.py",
+      "sha256": "51773efc80589cd70b5f0eb82a5cc0b5ae2f6428f74e8ae1ff676cfd6cc033dd"
+    },
+    {
+      "path": "src/jepa_lab/scale_evaluation.py",
+      "sha256": "84ba3386cb95f7a030e317c736cbf49db79529c757b7cea9eb942193ad710687"
+    },
+    {
+      "path": "src/jepa_lab/scale_run.py",
+      "sha256": "583654cf01b6d8c041be9e5abc4f6179c4bb08d20644545e602f69c5f7590a40"
+    },
+    {
+      "path": "src/jepa_lab/selection.py",
+      "sha256": "0f8dcbdb1a069881d5a08667e638adb789213e0f1bfdb49d021e481073c96eb9"
+    },
+    {
+      "path": "src/jepa_lab/stability.py",
+      "sha256": "2ebb6837aed5f07dd4aa89316980a37ad3782ca818cee9951f91ad218dae0daa"
+    },
+    {
+      "path": "src/jepa_lab/stability_audit.py",
+      "sha256": "ac4a1f410960d9a33999f0afbd54726c8ae910322dfb11ed7e0fc5b1f16cfb25"
+    },
+    {
+      "path": "src/jepa_lab/train.py",
+      "sha256": "cb8de0d1fa5de8bd32c29d101470af04fce3ed67e3bc5f1f32edc6a07f397ab0"
+    },
+    {
+      "path": "src/jepa_lab/training_budget.py",
+      "sha256": "62f2372311c62fb1b7b4cf01b19849794a56dfdd132715a0546332db9e880aed"
+    },
+    {
+      "path": "src/jepa_lab/training_diagnostics.py",
+      "sha256": "ddefb4636cc079790116a1711a8952a4fa7f43280f86162ce2efbfc2ea4b94b2"
+    },
+    {
+      "path": "src/jepa_lab/transfer_audit.py",
+      "sha256": "7f3efaa5812c76e391694baa6d1b2fa2d632a2f647940f94284cf27dea9cb571"
+    },
+    {
+      "path": "src/jepa_lab/transfer_compare.py",
+      "sha256": "d3c6c227436796915ea1e002bd164afbdac7252feb4fd5caf813539cace011f0"
+    },
+    {
+      "path": "src/jepa_lab/width_compare.py",
+      "sha256": "de6de05f49fa0962748a454c4fbada52a75eceab8106412b9a854e5f103fb4ac"
+    }
+  ],
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "ledger_sha256": "16a928e1e139f9ff27297b58a7e336acc01c5703cc4d0e7b2178dda5314347ef",
+  "confirmation_seed": 20261027,
+  "confirmation_per_class": 50,
+  "confirmation_selection_sha256": "89e0432f0845c22e0a139a41c07fa5b380c3936fe57d2b9409d937ea489ae049",
+  "evaluation": {
+    "pooling": "mean",
+    "encoder": "context",
+    "classifier_seeds": [
+      29,
+      31,
+      37
+    ],
+    "probe_steps": 200,
+    "learning_rates": [
+      0.0001,
+      0.001,
+      0.01,
+      0.05
+    ],
+    "weight_decays": [
+      0.01,
+      0.1
+    ],
+    "ridge_alphas": [
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "neighbor_counts": [
+      1,
+      5,
+      15
+    ],
+    "primary_comparison": "Context-variance minus prediction-only AdamW accuracy on identical fresh rows, averaged across matched encoder/classifier seeds; include negative results and shared random/pixel/ridge/kNN controls"
+  },
+  "status": "Source lock and unscored reservation only; no real-image objective training or downstream scoring",
+  "test_evaluated": false
+}

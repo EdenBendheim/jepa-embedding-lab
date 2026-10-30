@@ -7,8 +7,10 @@ replays source-pinned data/splits/exposure and reserves fresh rows without image
 tensor reads. It requires pins for every experiment module and validates the
 bounded two-arm recipe. Its training coordinator now starts both objectives
 from the same seeded architecture, binds recovery to a pre-training receipt,
-and verifies actual image-order journals. The real protocol lock and downstream
-scoring remain pending.
+and verifies actual image-order journals. A source manifest freezes the next
+training contrast; preparation reserves 500 unscored rows. Aggregate audits
+verify the loss components without fitting or image reads. Real-image objective
+training and downstream scoring remain pending; measured results are unchanged.
 
 **Implementation update — October 27:** an opt-in context-variance objective now
 works in synthetic/CIFAR training, exact resume and budget chunks. Frozen feature
@@ -93,6 +95,24 @@ from checkpoint journals. A missing receipt cannot adopt existing checkpoints.
 Synthetic tests observe matching initial tensors/masks and recover an interrupted
 arm without retraining its completed partner. No real-image objective training
 or quality evaluation has been run yet.
+
+Use `python -m jepa_lab.objective_run --protocol
+experiments/context-variance-sources-20261029.json --expected-sha256 SHA256
+--directory runs/context-variance-20261029 --mode prepare` (one line), taking
+the expected digest from the [published protocol record](experiments/CONTEXT-VARIANCE-2026-10-29-PROTOCOL.md). `prepare` hashes data
+files and reads labels, but never indexes an image. It does not mark the
+reservation observed. `--mode train` explicitly runs the locked budgets;
+`--reuse-only` requires already-completed states. `--mode audit --output
+runs/context-variance-20261029-audit.json` replays completed journals and writes
+only aggregates to a separate file. It checks the enabled loss decomposition
+and reports prediction and variance terms separately, since raw total losses
+are not comparable across objectives. It never trains or scores quality.
+
+The locked training driver has no downstream scoring mode. Objective-specific
+feature/probe/neighbor comparison and pre-access observation receipts still
+need implementation before accessing the reserved images. Keep the source
+files and previous exposure bundle intact. A changed pinned implementation
+requires a new declared source manifest, rather than silently resuming this one.
 
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.

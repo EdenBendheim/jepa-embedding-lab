@@ -2,6 +2,24 @@
 
 ## October 29, 2026
 
+- Added aggregate loss-component audits and explicit prepare/train/audit CLI
+  modes. Three more synthetic tests verify no-image/no-fit replay, finite and
+  consistent enabled-loss terms, protected/idempotent outputs and all CLI modes.
+  **All 214 local tests passed**, plus the seeded mask demo, CLI help and both
+  objectives' three-step synthetic smoke plus one resumed step. The smoke
+  wrapper initially used the public trainer's plural completed_steps key; using
+  the synthetic report's actual completed_step field fixed the wrapper only.
+- Locked 67 code/data/history/recipe source pins and replayed the real complete
+  exposure ledger: 2,746 observed rows, 2,254 unused. Reserved 500 new rows
+  without image indexing and reproduced preparation through the published CLI.
+  These rows remain unscored/unobserved, not new exposure. No real-image objective
+  training, feature fitting, new accuracy, official-test use, paid compute or
+  public image/model artifacts. Downstream comparison/observation gates are next.
+- Interview explanation: “I built a controlled experiment runner that holds
+  initialization and actual image order fixed, recovers interrupted arms, and
+  distinguishes training diagnostics from downstream evidence. I reserved new
+  evaluation rows without looking at them; no model-quality gain is claimed.”
+
 - Connected bounded two-arm training and recovery with an immutable recipe/
   reconstructed-initialization receipt and actual image-order replay. All seven
   objective-run tests pass, including matching initial tensors and masks observed

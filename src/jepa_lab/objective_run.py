@@ -4,6 +4,7 @@ Preparation reads dataset hashes and labels, never image tensors. A reservation
 is not an observation and must not enter the exposure ledger until scoring.
 """
 
+import argparse
 import hashlib
 import json
 import math
@@ -40,7 +41,7 @@ def _sha(value):
 
 def validate_recipe(d):
     """Bound the two-arm experiment before any output or raw-image access."""
-    if (type(d.get('version')) is not int or d['version'] != 1
+    if (not isinstance(d, dict) or type(d.get('version')) is not int or d['version'] != 1
             or d.get('kind') != 'context_variance_comparison'):
         raise ValueError('Expected a version-one context-variance comparison protocol')
     config = validate_local_config(ModelConfig(**d['config']))
@@ -256,3 +257,37 @@ class ObjectiveRun:
                     != [r['train_indices'] for r in rows[1]['history']]):
                 raise ValueError('Actual objective training image order differs across arms')
         return reports
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, default=Path('data/cifar-10-batches-bin'))
+    parser.add_argument('--directory', type=Path, required=True)
+    parser.add_argument('--protocol', type=Path, required=True)
+    parser.add_argument('--expected-sha256', required=True)
+    parser.add_argument('--mode', choices=('prepare', 'train', 'audit'), required=True)
+    parser.add_argument('--reuse-only', action='store_true')
+    parser.add_argument('--output', type=Path, help='Separate aggregate audit file; audit mode only')
+    args = parser.parse_args()
+    torch.set_num_threads(1)
+    try:
+        if args.output and args.mode != 'audit':
+            raise ValueError('--output is only supported for aggregate audit mode')
+        run = ObjectiveRun(args.root, args.directory, protocol=args.protocol, expected_sha=args.expected_sha256)
+        if args.mode == 'prepare':
+            result = run.prepare(reuse_only=args.reuse_only)
+        elif args.mode == 'train':
+            reports = run.training(reuse_only=args.reuse_only)
+            result = dict(completed_runs={name: {k: row[k] for k in ('completed_steps',
+                'checkpoint_sha256', 'train_image_order_sha256')} for name, row in reports.items()},
+                confirmation_scored=False, test_evaluated=False)
+        else:
+            from .objective_audit import audit_training
+            result = audit_training(run, output=args.output)
+        print(json.dumps(result, indent=2, allow_nan=False))
+    except (ValueError, OSError, KeyError, TypeError, RuntimeError) as exc:
+        parser.error(str(exc))
+
+
+if __name__ == '__main__':
+    main()

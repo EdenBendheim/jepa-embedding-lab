@@ -31,9 +31,18 @@ have layer normalization; adding it again would not be a new intervention.
 
 ## Evidence boundary before running
 
-Training APIs and synthetic-fixture resume/extraction checks work. **The matched
-objective comparison driver, original-source pins and fresh reservation are not
-implemented/locked yet. Do not execute this recipe as if those gates exist.**
+Training APIs and synthetic-fixture resume/extraction checks work. October 29
+added a matched **training** coordinator and no-image aggregate audit. Its
+two-arm synthetic tests observe identical actual initial tensors/masks/image
+order and recover an interrupted arm. A separate prospective source manifest,
+`context-variance-sources-20261029.json`, freezes the complete implementation,
+original dataset/splits, exposure bundle and this recipe before any real-image
+objective training. The 500-row reservation is unscored, not observed.
+
+**Downstream feature/probe/kNN comparison, selected-state locking, conservative
+pre-access observation receipt and fresh scoring for the objective axis are
+still pending. Do not use the scale-evaluation driver as if it implements this
+contrast, or access reserved images before those gates are implemented.**
 
 Before any real-image experiment, commit the driver and exact code/data/source
 pins. Rebuild complete then-current exposure from original files, retaining
@@ -55,4 +64,9 @@ The batch-four statistic is noisy. Different visible masks can contribute to
 between-image variation, and exact constant representations have zero variance
 gradient. Increased variance or lower total loss is not proof of useful content,
 robustness or higher accuracy. Do not choose a new weight/floor from confirmation
-scores; another intervention would require a new prospective protocol.
+scores; another intervention would require a new prospective protocol. The
+training receipt reconstructs seeded initial tensors and the deterministic
+mask schedule from pinned code. Actual image order is replayed from durable
+journals; the mask schedule is not a separately observed journal. Neither hash
+authenticates a producer or detects undisclosed experiments. Both total-loss
+definitions differ, so the audit reports prediction/penalty terms separately.

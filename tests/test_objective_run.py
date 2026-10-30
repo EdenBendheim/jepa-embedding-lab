@@ -1,4 +1,6 @@
 from copy import deepcopy
+import contextlib
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -10,7 +12,8 @@ import torch
 from jepa_lab.cifar10 import make_manifest
 from jepa_lab.exposure import make_exposure_bundle, make_ledger_confirmation
 from jepa_lab.model import JEPA, ModelConfig, config_dict
-from jepa_lab.objective_run import ObjectiveRun, code_paths, file_sha, initialization_evidence
+from jepa_lab.objective_run import ObjectiveRun, code_paths, file_sha, initialization_evidence, main
+from jepa_lab.objective_audit import audit_training, objective_diagnostics
 from jepa_lab.masking import block_mask
 from jepa_lab.training_budget import run_training_budget
 from jepa_lab.cifar10_train import train_cifar10
@@ -221,3 +224,52 @@ class ObjectiveRunTests(unittest.TestCase):
         lock.unlink()
         with self.assertRaisesRegex(ValueError, 'unowned'):
             self.run.training()
+
+    def test_aggregate_audit_replays_without_images_and_preserves_original_evidence(self):
+        self.run.training()
+        external = tempfile.TemporaryDirectory()
+        self.addCleanup(external.cleanup)
+        output = Path(external.name) / 'aggregate.json'
+        before = {p: p.read_bytes() for p in self.directory.rglob('*') if p.is_file()}
+        with patch('jepa_lab.training_budget.train_cifar10', side_effect=AssertionError('training')), \
+                patch.object(Fixture, '__getitem__', side_effect=AssertionError('image access')):
+            result = audit_training(self.run, output=output)
+            self.assertEqual(result, audit_training(self.run, output=output))
+            for protected in (self.protocol, self.run.checkpoint(self.d['arms'][0], 29), self.root / 'new-data.json'):
+                with self.assertRaisesRegex(ValueError, 'cannot replace'):
+                    audit_training(self.run, output=protected)
+        self.assertEqual(before, {p: p.read_bytes() for p in before})
+        self.assertNotIn('train_indices', json.dumps(result))
+        self.assertNotIn('history', json.dumps(result))
+        enabled = result['training']['context_variance-seed29']['diagnostics']['windows'][0]
+        baseline = result['training']['prediction-seed29']['diagnostics']['windows'][0]
+        self.assertIn('context_variance_penalty_mean', enabled)
+        self.assertNotIn('context_variance_penalty_mean', baseline)
+        self.assertFalse(result['confirmation_scored'])
+        output.write_text('{}')
+        with self.assertRaisesRegex(ValueError, 'Existing objective audit'):
+            audit_training(self.run, output=output)
+        self.assertEqual('{}', output.read_text())
+
+    def test_component_audit_rejects_nonfinite_missing_or_inconsistent_enabled_losses(self):
+        report = self.run.training()['context_variance-seed29']
+        for changes in (dict(prediction_loss=float('nan')), dict(context_variance_penalty=None),
+                        dict(context_std_mean=-.1), dict(prediction_loss=99.)):
+            changed = deepcopy(report)
+            changed['history'][0].update(changes)
+            with self.subTest(changes=changes), self.assertRaisesRegex(ValueError, 'components|decomposition'):
+                objective_diagnostics(changed)
+
+    def test_cli_preparation_training_audit_and_invalid_mode_options(self):
+        base = ['objective_run', '--root', str(self.root), '--directory', str(self.directory),
+                '--protocol', str(self.protocol), '--expected-sha256', self.run.expected_sha]
+        for mode in ('prepare', 'train', 'audit'):
+            stdout = io.StringIO()
+            with patch('sys.argv', base + ['--mode', mode]), contextlib.redirect_stdout(stdout):
+                main()
+            result = json.loads(stdout.getvalue())
+            self.assertFalse(result['confirmation_scored'])
+        with patch('sys.argv', base + ['--mode', 'prepare', '--output', str(self.root/'bad.json')]), \
+                contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+            main()
+        self.assertFalse((self.root / 'bad.json').exists())
