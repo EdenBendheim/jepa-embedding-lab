@@ -55,8 +55,11 @@ Started September 29, 2026; model implementation completed its first working syn
 October 29 added source-pinned objective-comparison preparation with protected
 outputs and unscored reservation replay. Three synthetic tests cover the code
 and historical-source gates, unchanged RNG, invalid recipes and no image reads.
-Next connect matched training/recovery, then freeze actual source pins before
-any real-image objective run. Downstream evaluation is still pending.
+Matched training/recovery now works: four additional synthetic tests verify
+actual initial tensors/masks, training-only image order, interrupted recovery,
+image-free completed retries and all-arm preflight. Next freeze actual source
+pins and add aggregate audit/CLI before a real-image objective run. Downstream
+evaluation is still pending.
 
 The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
 complete: three new fixed-position runs and three historical learned-position

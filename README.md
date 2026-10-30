@@ -5,8 +5,10 @@ A small, reproducible representation-learning experiment: predict target embeddi
 **Implementation update — October 29:** `objective_run.ObjectiveRun.prepare`
 replays source-pinned data/splits/exposure and reserves fresh rows without image
 tensor reads. It requires pins for every experiment module and validates the
-bounded two-arm recipe. This is reservation infrastructure; matched training,
-the real protocol lock and downstream scoring remain pending.
+bounded two-arm recipe. Its training coordinator now starts both objectives
+from the same seeded architecture, binds recovery to a pre-training receipt,
+and verifies actual image-order journals. The real protocol lock and downstream
+scoring remain pending.
 
 **Implementation update — October 27:** an opt-in context-variance objective now
 works in synthetic/CIFAR training, exact resume and budget chunks. Frozen feature
@@ -81,6 +83,16 @@ collapse. Checkpoint and frozen-feature readers reject malformed declared
 objective metadata; they do not authenticate that a producer trained honestly.
 The [prospective comparison recipe](experiments/CONTEXT-VARIANCE-2026-10-27.md)
 records the next evaluation boundary; no new public-data quality result exists.
+
+`ObjectiveRun.training` runs/resumes both arms within the declared local budget.
+Every extant checkpoint/report is preflighted before new work. Completed retries
+with `reuse_only=True` perform no training or image reads. The receipt records
+reconstructed initial tensor hashes and deterministic mask schedules; these are
+not independent proof of a producer's ancestry. Actual image order is replayed
+from checkpoint journals. A missing receipt cannot adopt existing checkpoints.
+Synthetic tests observe matching initial tensors/masks and recover an interrupted
+arm without retraining its completed partner. No real-image objective training
+or quality evaluation has been run yet.
 
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.

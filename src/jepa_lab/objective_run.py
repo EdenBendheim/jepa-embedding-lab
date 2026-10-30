@@ -15,10 +15,12 @@ from .cifar10 import CIFAR10Binary, make_manifest
 from .compare import write_report
 from .exposure import exposure_summary, load_exposure_bundle, make_ledger_confirmation
 from .masking import block_mask
-from .model import ModelConfig, config_dict
+from .model import JEPA, ModelConfig, config_dict
 from .model_size import model_size, validate_local_config
 from .objective import ObjectiveConfig
 from .selection import validate_pilot
+from .cifar10_train import DEFAULT_MASK
+from .training_budget import run_training_budget, verify_budget_state
 
 
 def file_sha(path):
@@ -76,6 +78,31 @@ def validate_recipe(d):
     if d.get('runtime') != dict(torch=str(torch.__version__), cpu_threads=torch.get_num_threads()):
         raise ValueError('Objective runtime differs from its predeclared identity')
     return config
+
+
+def initialization_evidence(d):
+    """Reconstruct identical seeded tensors/masks; do not claim producer authentication.
+
+    Mask hashes describe the pinned trainer's deterministic schedule. Actual
+    image order is separately replayed from each checkpoint's durable journal.
+    """
+    result = {}
+    for seed in d['training_seeds']:
+        with torch.random.fork_rng(devices=[]):
+            torch.manual_seed(seed)
+            state = JEPA(ModelConfig(**d['config'])).state_dict()
+        digest = hashlib.sha256()
+        for name, tensor in sorted(state.items()):
+            digest.update(json.dumps([name, str(tensor.dtype), list(tensor.shape)]).encode())
+            digest.update(tensor.contiguous().numpy().tobytes())
+        masks = hashlib.sha256()
+        for step in range(d['total_steps']):
+            for i in range(d['batch_size']):
+                mask = block_mask(8, 8, **d['mask'], seed=seed + step*d['batch_size'] + i)
+                masks.update(json.dumps([mask.context, mask.target], separators=(',', ':')).encode())
+        result[str(seed)] = dict(reconstructed_initial_state_sha256=digest.hexdigest(),
+                                derived_mask_order_sha256=masks.hexdigest())
+    return result
 
 
 class ObjectiveRun:
@@ -146,3 +173,86 @@ class ObjectiveRun:
             model_size=model_size(ModelConfig(**d['config'])), raw_images_sampled=False,
             models_trained=False, confirmation_scored=False, test_evaluated=False,
             limitation='Reservation only; source pins cannot detect omitted observations or authenticate a producer')
+
+    def checkpoint(self, arm, seed):
+        return self.directory / 'checkpoints' / f'{arm["name"]}-seed{seed}.pt'
+
+    def report_path(self, arm, seed):
+        return self.directory / 'training' / f'{arm["name"]}-seed{seed}.json'
+
+    @staticmethod
+    def settings(d, arm, seed):
+        settings = dict(seed=seed, batch_size=d['batch_size'], learning_rate=d['learning_rate'],
+                        momentum=d['momentum'])
+        if d['mask'] != DEFAULT_MASK:
+            settings['mask'] = d['mask']
+        settings.update(ObjectiveConfig(arm['context_variance_weight'], arm['context_std_floor']).settings())
+        return settings
+
+    def _budget(self, d, arm, seed, lock, *, reuse_only):
+        with torch.random.fork_rng(devices=[]):
+            result = run_training_budget(self.root, d['manifest_path'], self.checkpoint(arm, seed),
+                total_steps=d['total_steps'], chunk_steps=d['chunk_steps'], checkpoint_every=d['checkpoint_every'],
+                config=ModelConfig(**d['config']), seed=seed, batch_size=d['batch_size'],
+                learning_rate=d['learning_rate'], momentum=d['momentum'], **d['mask'],
+                context_variance_weight=arm['context_variance_weight'],
+                context_std_floor=arm['context_std_floor'], reuse_only=reuse_only)
+        return result | dict(protocol_sha256=self.expected_sha, model_size=lock['model_size'],
+                             **lock['initialization'][str(seed)])
+
+    def training(self, *, reuse_only=False):
+        d, manifest, reference, fresh, labels, bundle = self.inputs()
+        lock = dict(version=1, protocol_sha256=self.expected_sha, config=d['config'], runtime=d['runtime'],
+                    model_size=model_size(ModelConfig(**d['config'])), initialization=initialization_evidence(d))
+        lock_path = self.directory / 'training-lock.json'
+        if lock_path.exists():
+            if json.loads(lock_path.read_text()) != lock:
+                raise ValueError('Objective training lock differs from the pinned recipe/initialization')
+        elif reuse_only or any(self.checkpoint(a, s).exists() or self.report_path(a, s).exists()
+                               for a in d['arms'] for s in d['training_seeds']):
+            raise ValueError('Objective training lock is missing; do not adopt unowned checkpoints')
+        # Preflight EVERY extant arm before writing a reservation or starting another.
+        for arm in d['arms']:
+            for seed in d['training_seeds']:
+                path, output = self.checkpoint(arm, seed), self.report_path(arm, seed)
+                identity = dict(format_version=1, dataset='CIFAR-10', config=d['config'],
+                    manifest_sha256=manifest['manifest_sha256'], runtime=d['runtime'],
+                    settings=self.settings(d, arm, seed))
+                if path.exists():
+                    state = verify_budget_state(path, identity, manifest['partitions']['train']['indices'], d['total_steps'])
+                    if reuse_only and state['step'] != d['total_steps']:
+                        raise ValueError('Completed objective checkpoint is missing')
+                elif reuse_only or output.exists():
+                    raise ValueError('Completed objective checkpoint is missing')
+        for arm in d['arms']:
+            for seed in d['training_seeds']:
+                output = self.report_path(arm, seed)
+                if output.exists():
+                    if json.loads(output.read_text()) != self._budget(d, arm, seed, lock, reuse_only=True):
+                        raise ValueError('Completed objective training report changed')
+                elif reuse_only:
+                    raise ValueError('Completed objective training report is missing')
+        if reuse_only and not (self.directory / 'confirmation-selection.json').exists():
+            raise ValueError('Reserved objective selection is missing')
+        if not lock_path.exists():
+            write_report(lock_path, lock)
+        if not (self.directory / 'confirmation-selection.json').exists():
+            write_report(self.directory / 'confirmation-selection.json', fresh)
+        reports = {}
+        for arm in d['arms']:
+            for seed in d['training_seeds']:
+                result = self._budget(d, arm, seed, lock, reuse_only=reuse_only)
+                output = self.report_path(arm, seed)
+                if output.exists():
+                    if json.loads(output.read_text()) != result:
+                        raise ValueError('Completed objective training report changed')
+                else:
+                    write_report(output, result)
+                reports[f'{arm["name"]}-seed{seed}'] = result
+        for seed in d['training_seeds']:
+            rows = [reports[f'{a["name"]}-seed{seed}'] for a in d['arms']]
+            if (rows[0]['train_image_order_sha256'] != rows[1]['train_image_order_sha256']
+                    or [r['train_indices'] for r in rows[0]['history']]
+                    != [r['train_indices'] for r in rows[1]['history']]):
+                raise ValueError('Actual objective training image order differs across arms')
+        return reports

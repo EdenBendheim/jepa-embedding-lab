@@ -2,6 +2,14 @@
 
 ## October 29, 2026
 
+- Connected bounded two-arm training and recovery with an immutable recipe/
+  reconstructed-initialization receipt and actual image-order replay. All seven
+  objective-run tests pass, including matching initial tensors and masks observed
+  in the synthetic trainer, interrupted-arm recovery, training-only sampling,
+  unchanged caller RNG, no-image/no-training retries and all-arm preflight. An
+  initial test exposed interleaved report/checkpoint preflight; the runner now
+  verifies every checkpoint before replaying any report. No real-image run yet.
+
 - Added objective-comparison preparation that verifies all experiment modules,
   dataset/split/fitting-selection bytes and original exposure sources before
   reserving fresh rows. Three synthetic tests pass for image-free/idempotent
