@@ -9,6 +9,7 @@ import torch
 from jepa_lab import objective_features as workflow
 from jepa_lab.objective_compare import validate_objective_features
 from jepa_lab.probes import ProbeConfig
+from jepa_lab.objective_selection import prepare_selection
 import test_objective_run as fixtures
 from test_cifar10_train import Fixture
 
@@ -64,3 +65,19 @@ class ObjectiveWorkflowTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'observation gate'):
                 workflow.feature(self.run, d, m, fresh, labels, 'pixels', 'validation')
         self.assertFalse((self.directory / 'features/pixels-fresh.pt').exists())
+
+    def test_tuning_fits_shared_sources_once_and_locks_without_observing_fresh_rows(self):
+        result = prepare_selection(self.run)
+        self.assertEqual(8, result['verified_candidate_states'])
+        self.assertEqual(8, len(result['lock']['linear']))
+        self.assertEqual(4, len(result['lock']['neighbors']))
+        self.assertTrue(result['lock_path'].exists())
+        self.assertFalse((self.directory/'observed-exposure.json').exists())
+        before = {p: p.read_bytes() for p in self.directory.rglob('*') if p.is_file()}
+        with patch('jepa_lab.objective_selection.fit_probe', side_effect=AssertionError('refit')), \
+                patch('jepa_lab.objective_selection.fit_ridge', side_effect=AssertionError('refit')), \
+                patch('jepa_lab.neighbor_workflow.select_neighbors', side_effect=AssertionError('retune')), \
+                patch.object(Fixture, '__getitem__', side_effect=AssertionError('images')):
+            cached = prepare_selection(self.run, reuse_only=True)
+        self.assertEqual(result['lock'], cached['lock'])
+        self.assertEqual(before, {p: p.read_bytes() for p in before})
