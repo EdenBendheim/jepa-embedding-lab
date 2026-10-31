@@ -10,6 +10,7 @@ from jepa_lab import objective_features as workflow
 from jepa_lab.objective_compare import validate_objective_features
 from jepa_lab.probes import ProbeConfig
 from jepa_lab.objective_selection import prepare_selection
+from jepa_lab.objective_observation import observation_gate
 import test_objective_run as fixtures
 from test_cifar10_train import Fixture
 
@@ -47,6 +48,47 @@ class ObjectiveWorkflowTests(unittest.TestCase):
             again = self.pairs(reuse_only=True)
         self.assertEqual(pairs.keys(), again.keys())
         self.assertEqual(before, {p: p.read_bytes() for p in before})
+
+    def test_observation_gate_consumes_before_images_and_refuses_tampered_receipts(self):
+        state = prepare_selection(self.run)
+        d, m, ref, fresh, labels, bundle = self.run.inputs()
+        with patch.object(Fixture, '__getitem__', side_effect=AssertionError('image before receipt')):
+            exposure = observation_gate(self.run, d, m, fresh, labels, register=True)
+        self.assertEqual(30, exposure['observed_validation_count'])
+        result = workflow.feature(self.run, d, m, fresh, labels, 'pixels', 'validation')
+        self.assertEqual(tuple(fresh['partitions']['validation']['indices']), result.indices)
+        receipt = self.directory/'observation-receipt.json'
+        row = json.loads(receipt.read_text())
+        receipt.write_text(json.dumps(row | dict(selection_lock_sha256='0'*64)))
+        with patch.object(workflow, 'extract_cifar10', side_effect=AssertionError('fresh read')):
+            with self.assertRaisesRegex(ValueError, 'observation evidence'):
+                workflow.feature(self.run, d, m, fresh, labels, 'random-seed29', 'validation')
+
+    def test_interrupted_receipt_write_blocks_access_and_retries_preserve_original_bundle(self):
+        import jepa_lab.objective_observation as observation
+        prepare_selection(self.run)
+        d, m, ref, fresh, labels, bundle = self.run.inputs()
+        from jepa_lab.compare import write_report
+        def interrupted(path, value):
+            if path.name == 'observation-receipt.json':
+                raise OSError('receipt interrupted')
+            return write_report(path, value)
+        with patch.object(observation, 'write_report', side_effect=interrupted):
+            with self.assertRaisesRegex(OSError, 'interrupted'):
+                observation_gate(self.run, d, m, fresh, labels, register=True)
+        bundle_path = self.directory/'observed-exposure.json'
+        before = bundle_path.read_bytes()
+        with patch.object(workflow, 'extract_cifar10', side_effect=AssertionError('fresh read')):
+            with self.assertRaisesRegex(ValueError, 'gate receipt'):
+                workflow.feature(self.run, d, m, fresh, labels, 'pixels', 'validation')
+        observation_gate(self.run, d, m, fresh, labels, register=True)
+        self.assertEqual(before, bundle_path.read_bytes())
+        report = next((self.directory/'tuning').glob('*.json'))
+        state = json.loads(report.read_text())
+        artifact = Path(state['grids'][0]['candidates'][0]['path'])
+        artifact.write_bytes(artifact.read_bytes()+b'changed')
+        with self.assertRaisesRegex(ValueError, 'candidate artifact'):
+            observation_gate(self.run, d, m, fresh, labels)
 
     def test_wrong_objective_and_content_fail_and_fresh_access_is_blocked(self):
         self.pairs()

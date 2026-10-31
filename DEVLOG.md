@@ -2,6 +2,8 @@
 
 ## October 30, 2026
 
+- Added conservative observation registration before fresh image indexing or cached fresh-feature reads. All five workflow checks pass, including two new cases for receipt interruption/recovery, observed-row retention and changed candidate/receipt refusal. A partially written exposure bundle cannot open the fresh gate until its matching receipt exists.
+
 - Added tuning-only selection that saves and reproduces every AdamW/ridge candidate, including losing states, and shares pixel/random controls without duplicate fitting. Two candidate-cache tests and the three-test feature/tuning workflow pass; selected linear/kNN states and report hashes are locked before any observation. Partial-report recovery reuses verified states; changed losing scores are rejected.
 
 - Added source-specific objective feature caches with one shared random control per encoder seed and one shared pixel source. Two synthetic workflow tests pass for eight unique feature extractions, no-image cache replay, wrong-objective/content refusal and an explicit fresh-image gate. No new real-image scores.

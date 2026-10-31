@@ -21,8 +21,11 @@ def feature(run, d, manifest, selection, labels, key, partition, *, reuse_only=F
     spec = source_specs(d)[key]
     fresh = selection.get('kind') == 'confirmation'
     if fresh:
-        raise ValueError('Fresh objective features require the observation gate')
-    path = run.directory / 'features' / f'{key}-{partition}.pt'
+        if partition != 'validation':
+            raise ValueError('Fresh objective features are validation-only')
+        from .objective_observation import observation_gate
+        observation_gate(run, d, manifest, selection, labels)
+    path = run.directory / 'features' / f'{key}-{"fresh" if fresh else partition}.pt'
     rep, seed, arm = spec['representation'], spec['seed'], spec['arm']
     checkpoint = run.checkpoint(arm, seed) if arm else None
     recipe = d['evaluation']
@@ -31,7 +34,8 @@ def feature(run, d, manifest, selection, labels, key, partition, *, reuse_only=F
             raise ValueError('Cached objective feature is missing')
         extract_cifar10(run.root, d['manifest_path'], representation=rep, partition=partition,
             checkpoint=checkpoint, config=ModelConfig(**d['config']) if rep == 'random' else None,
-            seed=seed if seed is not None else 29, selection_path=d['selection_path'],
+            seed=seed if seed is not None else 29,
+            selection_path=run.directory/'confirmation-selection.json' if fresh else d['selection_path'],
             pooling=recipe['pooling'], encoder=recipe['encoder'], output=path)
     value = load_features(path, manifest=manifest, selection=selection, training_labels=labels, partition=partition)
     metadata = value.metadata
