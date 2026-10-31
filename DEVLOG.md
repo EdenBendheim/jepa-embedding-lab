@@ -1,5 +1,9 @@
 # Development log
 
+## October 31, 2026 — continuation of the October 30 daily run
+
+- Connected frozen objective scoring, shared-control aggregates and paired linear/kNN errors. Three synthetic integration tests pass for selection/observation ordering, interrupted fresh extraction, unchanged selection/exposure on recovery, and byte-identical replay with fitting, training and image reads disabled. Changed fresh features cannot replace the prior summary. No real-image objective result yet.
+
 ## October 30, 2026
 
 - Added conservative observation registration before fresh image indexing or cached fresh-feature reads. All five workflow checks pass, including two new cases for receipt interruption/recovery, observed-row retention and changed candidate/receipt refusal. A partially written exposure bundle cannot open the fresh gate until its matching receipt exists.
