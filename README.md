@@ -2,15 +2,12 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
-**Implementation update — October 29:** `objective_run.ObjectiveRun.prepare`
-replays source-pinned data/splits/exposure and reserves fresh rows without image
-tensor reads. It requires pins for every experiment module and validates the
-bounded two-arm recipe. Its training coordinator now starts both objectives
-from the same seeded architecture, binds recovery to a pre-training receipt,
-and verifies actual image-order journals. A source manifest freezes the next
-training contrast; preparation reserves 500 unscored rows. Aggregate audits
-verify the loss components without fitting or image reads. Real-image objective
-training and downstream scoring remain pending; measured results are unchanged.
+**Implementation update — October 31:** objective-specific frozen evaluation now
+works: one random control per seed, shared pixels, every linear candidate saved
+and replayed, immutable selected-state locks, conservative exposure before fresh
+access, paired errors and no-fit/no-image cache replay. The original 500-row
+reservation is retained. [Complete prospective protocol](experiments/CONTEXT-VARIANCE-2026-10-31-PROTOCOL.md).
+Real-image objective training/scoring is next; measured results below are unchanged.
 
 **Implementation update — October 27:** an opt-in context-variance objective now
 works in synthetic/CIFAR training, exact resume and budget chunks. Frozen feature
@@ -97,22 +94,28 @@ arm without retraining its completed partner. No real-image objective training
 or quality evaluation has been run yet.
 
 Use `python -m jepa_lab.objective_run --protocol
-experiments/context-variance-sources-20261029.json --expected-sha256 SHA256
---directory runs/context-variance-20261029 --mode prepare` (one line), taking
-the expected digest from the [published protocol record](experiments/CONTEXT-VARIANCE-2026-10-29-PROTOCOL.md). `prepare` hashes data
+experiments/context-variance-sources-20261031.json --expected-sha256 SHA256
+--directory runs/context-variance-20261031 --mode prepare` (one line), taking
+the expected digest from the [published protocol record](experiments/CONTEXT-VARIANCE-2026-10-31-PROTOCOL.md). `prepare` hashes data
 files and reads labels, but never indexes an image. It does not mark the
 reservation observed. `--mode train` explicitly runs the locked budgets;
 `--reuse-only` requires already-completed states. `--mode audit --output
-runs/context-variance-20261029-audit.json` replays completed journals and writes
+runs/context-variance-20261031-audit.json` replays completed journals and writes
 only aggregates to a separate file. It checks the enabled loss decomposition
 and reports prediction and variance terms separately, since raw total losses
 are not comparable across objectives. It never trains or scores quality.
 
-The locked training driver has no downstream scoring mode. Objective-specific
-feature/probe/neighbor comparison and pre-access observation receipts still
-need implementation before accessing the reserved images. Keep the source
-files and previous exposure bundle intact. A changed pinned implementation
-requires a new declared source manifest, rather than silently resuming this one.
+`--mode select` fits only on the original fitting/tuning pilot and locks every
+selected linear head and neighbor index. Every AdamW/ridge candidate, including
+losing states, is saved and reproduced on replay. One pixel source and one
+random initialization per encoder seed are shared across the trained arms.
+`--mode evaluate` records conservative exposure before any fresh feature read,
+then scores the frozen states and computes paired errors. Interrupted attempts
+retain those rows as observed. `--reuse-only` requires completed caches and
+performs no fitting, training or image indexing; missing or altered artifacts
+fail before replacing a previous summary. Keep original evidence intact. A
+changed pinned implementation needs a new source manifest; source hashes do
+not authenticate a producer or disclose omitted experiments.
 
 - Non-overlapping patch extraction with explicit positions and strict shape/finite-value validation.
 - Seeded rectangular target blocks with context sampled outside the target.

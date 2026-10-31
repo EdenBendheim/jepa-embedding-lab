@@ -60,3 +60,14 @@ class ObjectiveSelectionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'configuration'):
             self.record()
         self.assertEqual(before, self.path.read_bytes())
+
+    def test_evaluation_grid_validation_precedes_any_extraction(self):
+        d = dict(evaluation=dict(pooling='mean', encoder='context', classifier_seeds=[29],
+            probe_steps=3, learning_rates=[.001], weight_decays=[.01], ridge_alphas=[.1], neighbor_counts=[1, 3]))
+        candidates, neighbors = selection.evaluation_recipe(d)
+        self.assertEqual(1, len(candidates))
+        self.assertEqual(2, len(neighbors))
+        for change in (dict(pooling='max'), dict(classifier_seeds=[29, 29]), dict(neighbor_counts=[1, 1]),
+                       dict(learning_rates=[float('nan')]), dict(ridge_alphas=[]), dict(probe_steps=True)):
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                selection.evaluation_recipe(dict(evaluation=d['evaluation'] | change))

@@ -52,22 +52,14 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
-October 30: objective-only feature validation now works with shared controls.
-Next connect verified feature caches, tuning/selection locks and pre-access
-observation recording before any reserved-image access.
-
-October 29 added source-pinned objective-comparison preparation with protected
-outputs and unscored reservation replay. Three synthetic tests cover the code
-and historical-source gates, unchanged RNG, invalid recipes and no image reads.
-Matched training/recovery now works: four additional synthetic tests verify
-actual initial tensors/masks, training-only image order, interrupted recovery,
-image-free completed retries and all-arm preflight. Three more tests cover
-aggregate-only audit replay, loss-component validation and the CLI modes.
-The prospective training protocol now pins code/data/history and reserves 500
-unscored rows. No real-image objective training was executed. Next implement
-the objective-specific feature/probe/neighbor comparison and pre-access
-observation receipt, then train the paired budgets and score frozen heads.
-Do not access reserved images before those evaluation gates exist.
+The October 30 run continued into October 31 with the objective-specific
+feature/tuning/confirmation workflow. Shared controls, complete candidate-state
+replay, selected-state locks and pre-access observation receipts work in
+synthetic integration tests, including interrupted recovery and no-fit/no-image
+replay. The [complete prospective protocol](experiments/CONTEXT-VARIANCE-2026-10-31-PROTOCOL.md)
+retains the earlier 500-row unscored reservation and original history. Next train
+the six matched budgets and run frozen confirmation. Report every control,
+paired errors and negative results; keep the official test reserved.
 
 The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
 complete: three new fixed-position runs and three historical learned-position

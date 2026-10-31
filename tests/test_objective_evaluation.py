@@ -1,4 +1,6 @@
 import json
+import contextlib
+import io
 import unittest
 from unittest.mock import patch
 
@@ -66,3 +68,17 @@ class ObjectiveEvaluationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'fingerprint'):
             evaluation.evaluation(self.run, reuse_only=True)
         self.assertEqual(summary, (self.directory/'summary.json').read_bytes())
+
+    def test_cli_select_then_evaluate_and_replay_with_unchanged_selection(self):
+        from jepa_lab.objective_run import main
+        base = ['objective_run', '--root', str(self.root), '--directory', str(self.directory),
+                '--protocol', str(self.protocol), '--expected-sha256', self.run.expected_sha]
+        outputs = []
+        for mode, options in [('select', []), ('evaluate', []), ('evaluate', ['--reuse-only'])]:
+            out = io.StringIO()
+            with patch('sys.argv', base + ['--mode', mode] + options), contextlib.redirect_stdout(out):
+                main()
+            outputs.append(json.loads(out.getvalue()))
+            if mode == 'select':
+                self.assertFalse((self.directory/'observed-exposure.json').exists())
+        self.assertEqual(outputs[1], outputs[2])

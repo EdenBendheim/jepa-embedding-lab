@@ -265,7 +265,7 @@ def main():
     parser.add_argument('--directory', type=Path, required=True)
     parser.add_argument('--protocol', type=Path, required=True)
     parser.add_argument('--expected-sha256', required=True)
-    parser.add_argument('--mode', choices=('prepare', 'train', 'audit'), required=True)
+    parser.add_argument('--mode', choices=('prepare', 'train', 'audit', 'select', 'evaluate'), required=True)
     parser.add_argument('--reuse-only', action='store_true')
     parser.add_argument('--output', type=Path, help='Separate aggregate audit file; audit mode only')
     args = parser.parse_args()
@@ -281,6 +281,15 @@ def main():
             result = dict(completed_runs={name: {k: row[k] for k in ('completed_steps',
                 'checkpoint_sha256', 'train_image_order_sha256')} for name, row in reports.items()},
                 confirmation_scored=False, test_evaluated=False)
+        elif args.mode == 'select':
+            from .objective_selection import prepare_selection
+            state = prepare_selection(run, reuse_only=args.reuse_only)
+            result = dict(verified_candidate_states=state['verified_candidate_states'],
+                verified_selected_states=len(state['lock']['linear']), selection_lock_sha256=file_sha(state['lock_path']),
+                confirmation_scored=False, test_evaluated=False)
+        elif args.mode == 'evaluate':
+            from .objective_evaluation import evaluation
+            result = evaluation(run, reuse_only=args.reuse_only)
         else:
             from .objective_audit import audit_training
             result = audit_training(run, output=args.output)

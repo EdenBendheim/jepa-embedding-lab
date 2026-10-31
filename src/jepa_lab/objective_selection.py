@@ -11,6 +11,23 @@ from .probes import fit_probe, validate_candidates
 from .ridge import fit_ridge, validate_ridge_candidates
 
 
+def evaluation_recipe(d):
+    from .probes import ProbeConfig
+    from .neighbors import NeighborConfig
+    settings = d.get('evaluation')
+    if not isinstance(settings, dict) or settings.get('pooling') != 'mean' or settings.get('encoder') != 'context':
+        raise ValueError('Objective evaluation uses declared context mean embeddings')
+    validate_probe_seeds(settings['classifier_seeds'])
+    candidates = tuple(ProbeConfig(settings['probe_steps'], lr, decay, settings['classifier_seeds'][0])
+        for lr in settings['learning_rates'] for decay in settings['weight_decays'])
+    validate_candidates(candidates)
+    validate_ridge_candidates(settings['ridge_alphas'])
+    counts = settings['neighbor_counts']
+    if not isinstance(counts, list) or not 1 <= len(counts) <= 8 or len(set(counts)) != len(counts):
+        raise ValueError('Declare 1-8 distinct neighbor counts')
+    return candidates, [NeighborConfig(k) for k in counts]
+
+
 def source_record(path, pair, candidates, seeds, ridge_alphas, *, reuse_only=False):
     path = Path(path)
     context = probe_context(*pair)
@@ -74,14 +91,9 @@ def prepare_selection(run, *, reuse_only=False):
     from .objective_run import file_sha
     from .probes import ProbeConfig
     d, manifest, ref, fresh, labels, bundle = run.inputs()
-    completed = run.training(reuse_only=True)
     settings = d['evaluation']
-    candidates = tuple(ProbeConfig(settings['probe_steps'], lr, decay, settings['classifier_seeds'][0])
-        for lr in settings['learning_rates'] for decay in settings['weight_decays'])
-    validate_candidates(candidates)
-    validate_probe_seeds(settings['classifier_seeds'])
-    validate_ridge_candidates(settings['ridge_alphas'])
-    neighbors = [NeighborConfig(k) for k in settings['neighbor_counts']]
+    candidates, neighbors = evaluation_recipe(d)
+    completed = run.training(reuse_only=True)
     pairs = {key: tuple(feature(run, d, manifest, ref, labels, key, partition, reuse_only=reuse_only)
         for partition in ('train', 'validation')) for key in source_specs(d)}
     for seed in d['training_seeds']:
