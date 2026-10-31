@@ -7,7 +7,9 @@ works: one random control per seed, shared pixels, every linear candidate saved
 and replayed, immutable selected-state locks, conservative exposure before fresh
 access, paired errors and no-fit/no-image cache replay. The original 500-row
 reservation is retained. [Complete prospective protocol](experiments/CONTEXT-VARIANCE-2026-10-31-PROTOCOL.md).
-Real-image objective training/scoring is next; measured results below are unchanged.
+All six real-image objective budgets now completed 2,223 updates each with
+matched actual image order. [Training-only audit](experiments/CONTEXT-VARIANCE-TRAINING-2026-10-31.md).
+Frozen confirmation is next; measured classification results below are unchanged.
 
 **Implementation update — October 27:** an opt-in context-variance objective now
 works in synthetic/CIFAR training, exact resume and budget chunks. Frozen feature

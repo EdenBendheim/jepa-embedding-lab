@@ -57,8 +57,9 @@ feature/tuning/confirmation workflow. Shared controls, complete candidate-state
 replay, selected-state locks and pre-access observation receipts work in
 synthetic integration tests, including interrupted recovery and no-fit/no-image
 replay. The [complete prospective protocol](experiments/CONTEXT-VARIANCE-2026-10-31-PROTOCOL.md)
-retains the earlier 500-row unscored reservation and original history. Next train
-the six matched budgets and run frozen confirmation. Report every control,
+retains the earlier 500-row unscored reservation and original history. All six matched
+budgets now completed 2,223 updates each with equal actual image order. Next
+run locked frozen confirmation. Report every control,
 paired errors and negative results; keep the official test reserved.
 
 The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
