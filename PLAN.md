@@ -52,6 +52,10 @@ Started September 29, 2026; model implementation completed its first working syn
 
 ## Next session
 
+October 30: objective-only feature validation now works with shared controls.
+Next connect verified feature caches, tuning/selection locks and pre-access
+observation recording before any reserved-image access.
+
 October 29 added source-pinned objective-comparison preparation with protected
 outputs and unscored reservation replay. Three synthetic tests cover the code
 and historical-source gates, unchanged RNG, invalid recipes and no image reads.

@@ -1,5 +1,9 @@
 # Development log
 
+## October 30, 2026
+
+- Added an objective-only feature comparison boundary with shared random/pixel controls. Two synthetic tests verify exact examples, checkpoint distinction, matched architecture/budget/extraction and unchanged input/RNG; confounded objectives, seeds and recipes fail before fitting. The downstream workflow is still being connected.
+
 ## October 29, 2026
 
 - Added aggregate loss-component audits and explicit prepare/train/audit CLI
