@@ -2,6 +2,8 @@
 
 ## October 30, 2026
 
+- Added source-specific objective feature caches with one shared random control per encoder seed and one shared pixel source. Two synthetic workflow tests pass for eight unique feature extractions, no-image cache replay, wrong-objective/content refusal and an explicit fresh-image gate. No new real-image scores.
+
 - Added an objective-only feature comparison boundary with shared random/pixel controls. Two synthetic tests verify exact examples, checkpoint distinction, matched architecture/budget/extraction and unchanged input/RNG; confounded objectives, seeds and recipes fail before fitting. The downstream workflow is still being connected.
 
 ## October 29, 2026
