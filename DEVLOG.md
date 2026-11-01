@@ -1,5 +1,12 @@
 # Development log
 
+## November 1, 2026 — completion of the October 30 run
+
+- Reported the frozen objective experiment evaluated October 31: variance/prediction AdamW 22.13%/29.20%, primary −7.07 points. Ridge and kNN also worsen; random/pixel controls remain close to prediction-only. Published aggregates, paired errors and a reproducible figure, without claiming a useful-feature gain.
+- All 280 candidate states, 40 selected linear heads and 10 indices replay; real replay disabled fitters, training, neighbor selection, extraction and raw-image indexing, reproduced the summary and preserved 358 artifact byte hashes. The original reservation is now observed; retained history is 3,246 rows with 1,754 unused. All 228 local tests, demo/smoke and whitespace checks passed. Official test reserved; no paid compute or raw/model artifacts published.
+- This triggered run crossed calendar boundaries. Commits retain their actual timestamps; no backdated or empty history was created.
+- Interview explanation: “I tested a plausible anti-collapse objective with fixed data, initialization, controls and frozen evaluation. It hurt accuracy by seven points, so I kept the negative result and a complete replay trail instead of claiming that higher variance meant better ML.”
+
 ## October 31, 2026 — continuation of the October 30 daily run
 
 - Finished all six real-image objective budgets at 2,223 updates/8,892 draws each. Three paired actual image-order journals, reconstructed initial/mask hashes and 29,472 trainable parameters agree. Published training-only checkpoint/order hashes and fixed final-window component diagnostics. The 500-row reservation remains unobserved; no downstream gain claimed. All 228 local tests, mask demo and synthetic smoke passed; audit uses no training/image indexing.

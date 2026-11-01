@@ -58,8 +58,13 @@ replay, selected-state locks and pre-access observation receipts work in
 synthetic integration tests, including interrupted recovery and no-fit/no-image
 replay. The [complete prospective protocol](experiments/CONTEXT-VARIANCE-2026-10-31-PROTOCOL.md)
 retains the earlier 500-row unscored reservation and original history. All six matched
-budgets now completed 2,223 updates each with equal actual image order. Next
-run locked frozen confirmation. Report every control,
+budgets now completed 2,223 updates each with equal actual image order. Locked frozen
+confirmation is now complete: regularized/prediction-only AdamW 22.13%/29.20%,
+primary −7.07 points. Ridge and kNN also worsen; all 280 candidate states, 40
+selected heads and 10 indices replay without refitting or raw-image reads.
+Next inspect fitting-image representations, then predeclare a new hypothesis.
+Use `runs/context-variance-20261031/observed-exposure.json` for any later
+reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
 paired errors and negative results; keep the official test reserved.
 
 The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
@@ -98,10 +103,12 @@ image means, with synthetic/CIFAR training, exact resume/budget identity and
 validated frozen-feature provenance. Prediction-only defaults remain unchanged.
 The [prospective objective recipe](experiments/CONTEXT-VARIANCE-2026-10-27.md)
 specifies the contrast; the matched training driver and source pins now exist.
-Its downstream scoring path is still pending. No quality gain is established.
+Its downstream scoring path is complete; the intervention worsened fresh
+accuracy. No quality gain is established.
 Do not tune on the latest confirmation scores.
-For any future reservation, retain `runs/scale-20261020/observed-exposure.json`:
-all 2,746 observed rows are retained, with 2,254 still unused. The original
-unscored reservation is now observed. Fingerprints cannot detect omitted
+For any future reservation, retain `runs/context-variance-20261031/observed-exposure.json`
+and its predecessor `runs/scale-20261020/observed-exposure.json` plus all original
+source files. The new bundle retains 3,246 observed rows with 1,754 unused; the
+500-row objective reservation is now observed. Fingerprints cannot detect omitted
 experiments; retain all original evidence. Keep the official test reserved.
 No raw images, features, weights or row-level evidence belong in public commits.

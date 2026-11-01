@@ -2,6 +2,14 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**Result — reported November 1:** the locked context-variance intervention is
+complete. On 500 fresh rows, regularized/prediction-only AdamW means are
+**22.13% / 29.20%** (primary **−7.07 points**); ridge and kNN also worsen.
+Random/pixel controls remain close to prediction-only. All 280 candidate states,
+40 selected linear heads and 10 neighbor indices replay without fitting or image
+indexing. [Results and plot](experiments/CONTEXT-VARIANCE-2026-11-01.md).
+Exposure now retains 3,246 observed rows; official test remains reserved.
+
 **Implementation update — October 31:** objective-specific frozen evaluation now
 works: one random control per seed, shared pixels, every linear candidate saved
 and replayed, immutable selected-state locks, conservative exposure before fresh
@@ -9,12 +17,12 @@ access, paired errors and no-fit/no-image cache replay. The original 500-row
 reservation is retained. [Complete prospective protocol](experiments/CONTEXT-VARIANCE-2026-10-31-PROTOCOL.md).
 All six real-image objective budgets now completed 2,223 updates each with
 matched actual image order. [Training-only audit](experiments/CONTEXT-VARIANCE-TRAINING-2026-10-31.md).
-Frozen confirmation is next; measured classification results below are unchanged.
+Frozen confirmation is complete; the November 1 report above supersedes the
+earlier status. The historical experiments below retain their original results.
 
 **Implementation update — October 27:** an opt-in context-variance objective now
 works in synthetic/CIFAR training, exact resume and budget chunks. Frozen feature
-provenance retains and validates the objective. The controlled comparison is
-still pending; the measured results below have not changed.
+provenance retains and validates the objective. The completed controlled comparison and its negative result are reported above.
 
 **Status — October 25, 2026:** the [predeclared amplitude comparison](experiments/SCALE-2026-10-22.md)
 is complete. Three new .02 runs and pinned 1.0 controls share actual image order
@@ -83,7 +91,8 @@ limit its interpretation. It is a testable intervention, not a guarantee against
 collapse. Checkpoint and frozen-feature readers reject malformed declared
 objective metadata; they do not authenticate that a producer trained honestly.
 The [prospective comparison recipe](experiments/CONTEXT-VARIANCE-2026-10-27.md)
-records the next evaluation boundary; no new public-data quality result exists.
+records the intervention motivation. Its complete locked evaluation is now
+reported above, with a negative primary contrast.
 
 `ObjectiveRun.training` runs/resumes both arms within the declared local budget.
 Every extant checkpoint/report is preflighted before new work. Completed retries
@@ -92,8 +101,9 @@ reconstructed initial tensor hashes and deterministic mask schedules; these are
 not independent proof of a producer's ancestry. Actual image order is replayed
 from checkpoint journals. A missing receipt cannot adopt existing checkpoints.
 Synthetic tests observe matching initial tensors/masks and recover an interrupted
-arm without retraining its completed partner. No real-image objective training
-or quality evaluation has been run yet.
+arm without retraining its completed partner. Real-image objective training
+and frozen confirmation ran under the complete October 31 protocol; see
+the negative result above. Earlier implementation-only status is historical.
 
 Use `python -m jepa_lab.objective_run --protocol
 experiments/context-variance-sources-20261031.json --expected-sha256 SHA256

@@ -1,0 +1,999 @@
+{
+  "version": 1,
+  "protocol_sha256": "0dd2e26a60885435085d59baf4070b330b689b7d875cbbbbc3b0ba2f28e49165",
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "reference_selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "confirmation_selection_sha256": "89e0432f0845c22e0a139a41c07fa5b380c3936fe57d2b9409d937ea489ae049",
+  "selection_lock_sha256": "96091522cd4b20f6cdf83e48c0757cba718c55a0729f615d04e2de3fa1b7b135",
+  "counts": {
+    "train": 500,
+    "tuning": 200,
+    "confirmation": 500,
+    "excluded_observed_validation": 2746
+  },
+  "primary_delta": -0.07066666666666666,
+  "summary": {
+    "prediction": {
+      "adamw": {
+        "original_tuning": {
+          "encoder_means": [
+            0.27166666666666667,
+            0.27666666666666667,
+            0.26166666666666666
+          ],
+          "mean_accuracy": 0.27,
+          "encoder_mean_sample_sd": 0.00763762615825974
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.31333333333333335,
+            0.306,
+            0.25666666666666665
+          ],
+          "mean_accuracy": 0.292,
+          "encoder_mean_sample_sd": 0.0308184648835366
+        }
+      },
+      "ridge": {
+        "original_tuning": {
+          "encoder_means": [
+            0.27,
+            0.29,
+            0.27
+          ],
+          "mean_accuracy": 0.27666666666666667,
+          "encoder_mean_sample_sd": 0.011547005383792493
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.298,
+            0.286,
+            0.278
+          ],
+          "mean_accuracy": 0.28733333333333333,
+          "encoder_mean_sample_sd": 0.010066445913694317
+        }
+      },
+      "knn": {
+        "original_tuning": {
+          "encoder_means": [
+            0.22,
+            0.2,
+            0.205
+          ],
+          "mean_accuracy": 0.20833333333333334,
+          "encoder_mean_sample_sd": 0.010408329997330662
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.222,
+            0.222,
+            0.224
+          ],
+          "mean_accuracy": 0.22266666666666668,
+          "encoder_mean_sample_sd": 0.0011547005383792525
+        }
+      }
+    },
+    "context_variance": {
+      "adamw": {
+        "original_tuning": {
+          "encoder_means": [
+            0.235,
+            0.20666666666666667,
+            0.195
+          ],
+          "mean_accuracy": 0.21222222222222223,
+          "encoder_mean_sample_sd": 0.020570565090637344
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.22133333333333333,
+            0.21066666666666667,
+            0.232
+          ],
+          "mean_accuracy": 0.22133333333333333,
+          "encoder_mean_sample_sd": 0.010666666666666672
+        }
+      },
+      "ridge": {
+        "original_tuning": {
+          "encoder_means": [
+            0.205,
+            0.18,
+            0.17
+          ],
+          "mean_accuracy": 0.185,
+          "encoder_mean_sample_sd": 0.018027756377319935
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.192,
+            0.206,
+            0.218
+          ],
+          "mean_accuracy": 0.20533333333333334,
+          "encoder_mean_sample_sd": 0.01301281419729542
+        }
+      },
+      "knn": {
+        "original_tuning": {
+          "encoder_means": [
+            0.185,
+            0.17,
+            0.18
+          ],
+          "mean_accuracy": 0.17833333333333334,
+          "encoder_mean_sample_sd": 0.0076376261582597246
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.2,
+            0.192,
+            0.18
+          ],
+          "mean_accuracy": 0.19066666666666668,
+          "encoder_mean_sample_sd": 0.010066445913694343
+        }
+      }
+    },
+    "random": {
+      "adamw": {
+        "original_tuning": {
+          "encoder_means": [
+            0.21833333333333332,
+            0.26166666666666666,
+            0.2816666666666667
+          ],
+          "mean_accuracy": 0.2538888888888889,
+          "encoder_mean_sample_sd": 0.03237511618740771
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.26866666666666666,
+            0.284,
+            0.2866666666666666
+          ],
+          "mean_accuracy": 0.27977777777777774,
+          "encoder_mean_sample_sd": 0.009714441330841934
+        }
+      },
+      "ridge": {
+        "original_tuning": {
+          "encoder_means": [
+            0.24,
+            0.27,
+            0.27
+          ],
+          "mean_accuracy": 0.26,
+          "encoder_mean_sample_sd": 0.017320508075688787
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.282,
+            0.28,
+            0.268
+          ],
+          "mean_accuracy": 0.27666666666666667,
+          "encoder_mean_sample_sd": 0.007571877794400352
+        }
+      },
+      "knn": {
+        "original_tuning": {
+          "encoder_means": [
+            0.18,
+            0.18,
+            0.21
+          ],
+          "mean_accuracy": 0.19,
+          "encoder_mean_sample_sd": 0.017320508075688773
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.196,
+            0.228,
+            0.234
+          ],
+          "mean_accuracy": 0.21933333333333335,
+          "encoder_mean_sample_sd": 0.02042873792805942
+        }
+      }
+    },
+    "pixels": {
+      "adamw": {
+        "original_tuning": {
+          "encoder_means": [
+            0.28
+          ],
+          "mean_accuracy": 0.28,
+          "encoder_mean_sample_sd": 0.0
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.2866666666666666
+          ],
+          "mean_accuracy": 0.2866666666666666,
+          "encoder_mean_sample_sd": 0.0
+        }
+      },
+      "ridge": {
+        "original_tuning": {
+          "encoder_means": [
+            0.3
+          ],
+          "mean_accuracy": 0.3,
+          "encoder_mean_sample_sd": 0.0
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.29
+          ],
+          "mean_accuracy": 0.29,
+          "encoder_mean_sample_sd": 0.0
+        }
+      },
+      "knn": {
+        "original_tuning": {
+          "encoder_means": [
+            0.255
+          ],
+          "mean_accuracy": 0.255,
+          "encoder_mean_sample_sd": 0.0
+        },
+        "confirmation": {
+          "encoder_means": [
+            0.246
+          ],
+          "mean_accuracy": 0.246,
+          "encoder_mean_sample_sd": 0.0
+        }
+      }
+    }
+  },
+  "exposure": {
+    "ledger_sha256": "fbc1e416da738cb032a7cdc7a920128597813de4fc05ccb9c7793c84a0dcfcee",
+    "source_count": 8,
+    "observed_validation_count": 3246,
+    "remaining_validation_count": 1754,
+    "remaining_per_class": {
+      "0": 176,
+      "1": 175,
+      "2": 176,
+      "3": 175,
+      "4": 177,
+      "5": 175,
+      "6": 175,
+      "7": 175,
+      "8": 175,
+      "9": 175
+    },
+    "test_selected": false,
+    "limitation": "Covers declared source selections only; fingerprints do not prove complete disclosure or producer authenticity",
+    "registered_before_fresh_access": true,
+    "conservative_on_interruption": true
+  },
+  "training": {
+    "prediction-seed20261003": {
+      "format_version": 1,
+      "dataset": "CIFAR-10",
+      "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261003,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "runtime": {
+        "torch": "2.8.0",
+        "cpu_threads": 1
+      },
+      "total_steps": 2223,
+      "completed_steps": 2223,
+      "checkpoint_sha256": "2b67069b6ecde7d101a59cdfdf84a578d8a3392e1aefc4670bdf6b2fac4c37fd",
+      "train_image_order_sha256": "0e5114fff2e4ff0b6a7096c7f41f3b34ce2df8cca6b0a03ccc4424af36ddf260",
+      "sample_draws": 8892,
+      "unique_training_images": 8072,
+      "test_evaluated": false,
+      "protocol_sha256": "0dd2e26a60885435085d59baf4070b330b689b7d875cbbbbc3b0ba2f28e49165",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "reconstructed_initial_state_sha256": "ef47d42fff0073b84f2fbf745084a47f9647aa017d6ddffee4fcb3ce4e813278",
+      "derived_mask_order_sha256": "ad25d3c3f798d71136a67538e7189c5499dd54265f78d8497f52ab908a20a585"
+    },
+    "prediction-seed20261010": {
+      "format_version": 1,
+      "dataset": "CIFAR-10",
+      "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261010,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "runtime": {
+        "torch": "2.8.0",
+        "cpu_threads": 1
+      },
+      "total_steps": 2223,
+      "completed_steps": 2223,
+      "checkpoint_sha256": "b3d779861b940e4f984d7478d74a3f0f4df227c0612271a858039121552a8d1a",
+      "train_image_order_sha256": "604a65150857095c653556bfb85a76c4913cde644b3c36bde1997576103bea96",
+      "sample_draws": 8892,
+      "unique_training_images": 8061,
+      "test_evaluated": false,
+      "protocol_sha256": "0dd2e26a60885435085d59baf4070b330b689b7d875cbbbbc3b0ba2f28e49165",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "reconstructed_initial_state_sha256": "0433ae34c8905b23851d660c8cbb17d97fa392f2c5c2dc85486e29742a8f771b",
+      "derived_mask_order_sha256": "99bdc639c8ee17a45d9beaedecd255943060c99ef203327b5736cbeaac6ced3f"
+    },
+    "prediction-seed20261011": {
+      "format_version": 1,
+      "dataset": "CIFAR-10",
+      "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261011,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99
+      },
+      "runtime": {
+        "torch": "2.8.0",
+        "cpu_threads": 1
+      },
+      "total_steps": 2223,
+      "completed_steps": 2223,
+      "checkpoint_sha256": "9f72d034502e61363a819185fdf1b4b063f8c8cf600571acfe1f2e746393cd56",
+      "train_image_order_sha256": "edc4376d80aee3acd086bcbeccda29f3dbe1de4785b6fef31336e25b014e4bc4",
+      "sample_draws": 8892,
+      "unique_training_images": 8112,
+      "test_evaluated": false,
+      "protocol_sha256": "0dd2e26a60885435085d59baf4070b330b689b7d875cbbbbc3b0ba2f28e49165",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "reconstructed_initial_state_sha256": "5af54dd9895a1309eca1bb0d47157ca822d6eadca7dd07a3ee8828fa90ff6574",
+      "derived_mask_order_sha256": "1588ef297dfae68f8f464d077090c3b5263cdbafebc235eb7a6c915b5563448c"
+    },
+    "context_variance-seed20261003": {
+      "format_version": 1,
+      "dataset": "CIFAR-10",
+      "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261003,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99,
+        "objective": {
+          "context_variance_weight": 0.1,
+          "context_std_floor": 1.0
+        }
+      },
+      "runtime": {
+        "torch": "2.8.0",
+        "cpu_threads": 1
+      },
+      "total_steps": 2223,
+      "completed_steps": 2223,
+      "checkpoint_sha256": "dd0a5d93d3257e49908828d95ddcec9f1ad2decd8416ae9734734a034dcb5a0b",
+      "train_image_order_sha256": "0e5114fff2e4ff0b6a7096c7f41f3b34ce2df8cca6b0a03ccc4424af36ddf260",
+      "sample_draws": 8892,
+      "unique_training_images": 8072,
+      "test_evaluated": false,
+      "protocol_sha256": "0dd2e26a60885435085d59baf4070b330b689b7d875cbbbbc3b0ba2f28e49165",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "reconstructed_initial_state_sha256": "ef47d42fff0073b84f2fbf745084a47f9647aa017d6ddffee4fcb3ce4e813278",
+      "derived_mask_order_sha256": "ad25d3c3f798d71136a67538e7189c5499dd54265f78d8497f52ab908a20a585"
+    },
+    "context_variance-seed20261010": {
+      "format_version": 1,
+      "dataset": "CIFAR-10",
+      "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261010,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99,
+        "objective": {
+          "context_variance_weight": 0.1,
+          "context_std_floor": 1.0
+        }
+      },
+      "runtime": {
+        "torch": "2.8.0",
+        "cpu_threads": 1
+      },
+      "total_steps": 2223,
+      "completed_steps": 2223,
+      "checkpoint_sha256": "e702b3233fa32adf7e4e13dfae6374ea48b69084153881393b0ee0dcab9fdbf8",
+      "train_image_order_sha256": "604a65150857095c653556bfb85a76c4913cde644b3c36bde1997576103bea96",
+      "sample_draws": 8892,
+      "unique_training_images": 8061,
+      "test_evaluated": false,
+      "protocol_sha256": "0dd2e26a60885435085d59baf4070b330b689b7d875cbbbbc3b0ba2f28e49165",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "reconstructed_initial_state_sha256": "0433ae34c8905b23851d660c8cbb17d97fa392f2c5c2dc85486e29742a8f771b",
+      "derived_mask_order_sha256": "99bdc639c8ee17a45d9beaedecd255943060c99ef203327b5736cbeaac6ced3f"
+    },
+    "context_variance-seed20261011": {
+      "format_version": 1,
+      "dataset": "CIFAR-10",
+      "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+      "config": {
+        "rows": 8,
+        "cols": 8,
+        "patch_dim": 48,
+        "embedding_dim": 32,
+        "heads": 4,
+        "encoder_depth": 2,
+        "predictor_depth": 1,
+        "position_encoding": "sincos2d"
+      },
+      "settings": {
+        "seed": 20261011,
+        "batch_size": 4,
+        "learning_rate": 0.001,
+        "momentum": 0.99,
+        "objective": {
+          "context_variance_weight": 0.1,
+          "context_std_floor": 1.0
+        }
+      },
+      "runtime": {
+        "torch": "2.8.0",
+        "cpu_threads": 1
+      },
+      "total_steps": 2223,
+      "completed_steps": 2223,
+      "checkpoint_sha256": "4932a52bbf99deec485e09646abfca6bff8992fb691f294913337bec8c8a4402",
+      "train_image_order_sha256": "edc4376d80aee3acd086bcbeccda29f3dbe1de4785b6fef31336e25b014e4bc4",
+      "sample_draws": 8892,
+      "unique_training_images": 8112,
+      "test_evaluated": false,
+      "protocol_sha256": "0dd2e26a60885435085d59baf4070b330b689b7d875cbbbbc3b0ba2f28e49165",
+      "model_size": {
+        "config": {
+          "rows": 8,
+          "cols": 8,
+          "patch_dim": 48,
+          "embedding_dim": 32,
+          "heads": 4,
+          "encoder_depth": 2,
+          "predictor_depth": 1,
+          "position_encoding": "sincos2d"
+        },
+        "groups": {
+          "context": {
+            "parameters": 18720,
+            "trainable_parameters": 18720
+          },
+          "target": {
+            "parameters": 18720,
+            "trainable_parameters": 0
+          },
+          "predictor": {
+            "parameters": 10752,
+            "trainable_parameters": 10752
+          }
+        },
+        "parameters": 48192,
+        "trainable_parameters": 29472,
+        "frozen_parameters": 18720,
+        "fp32_parameter_bytes": 192768,
+        "estimated_fp32_parameters_gradients_adam_moments_bytes": 571008,
+        "limitation": "Persistent tensor estimate only; excludes activations, temporary buffers, optimizer scalars and allocator overhead. Equal steps do not mean equal compute.",
+        "buffer_elements": 6144,
+        "fp32_buffer_bytes": 24576
+      },
+      "reconstructed_initial_state_sha256": "5af54dd9895a1309eca1bb0d47157ca822d6eadca7dd07a3ee8828fa90ff6574",
+      "derived_mask_order_sha256": "1588ef297dfae68f8f464d077090c3b5263cdbafebc235eb7a6c915b5563448c"
+    }
+  },
+  "verified_candidate_states": 280,
+  "verified_linear_states": 40,
+  "verified_neighbor_states": 10,
+  "actual_image_order_matched": true,
+  "all_states_locked_before_confirmation": true,
+  "confirmation_refitting": false,
+  "test_evaluated": false,
+  "limitation": "Shared rows, known tuning data and seed variation are descriptive, not independent test uncertainty. Only the declared objective changes; random and pixel controls are shared. A variance penalty does not imply useful features; report negative results without selecting a winner.",
+  "local_complete_summary_sha256": "6211482689aa9926c5316b4874b9a030f9a075fb1a64e3182c9bdd6e65a49d0e",
+  "paired_objectives": [
+    {
+      "training_seed": 20261003,
+      "head": "adamw",
+      "classifier_seed": 29,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 163,
+        "candidate_correct": 110,
+        "both_correct": 70,
+        "both_wrong": 297,
+        "recovered": 40,
+        "regressed": 93,
+        "predictions_changed": 306,
+        "accuracy_delta": -0.106,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261003,
+      "head": "adamw",
+      "classifier_seed": 31,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 153,
+        "candidate_correct": 108,
+        "both_correct": 59,
+        "both_wrong": 298,
+        "recovered": 49,
+        "regressed": 94,
+        "predictions_changed": 322,
+        "accuracy_delta": -0.09,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261003,
+      "head": "adamw",
+      "classifier_seed": 37,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 154,
+        "candidate_correct": 114,
+        "both_correct": 66,
+        "both_wrong": 298,
+        "recovered": 48,
+        "regressed": 88,
+        "predictions_changed": 323,
+        "accuracy_delta": -0.08,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261003,
+      "head": "ridge",
+      "classifier_seed": null,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 149,
+        "candidate_correct": 96,
+        "both_correct": 67,
+        "both_wrong": 322,
+        "recovered": 29,
+        "regressed": 82,
+        "predictions_changed": 268,
+        "accuracy_delta": -0.106,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261003,
+      "head": "knn",
+      "classifier_seed": null,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 111,
+        "candidate_correct": 100,
+        "both_correct": 37,
+        "both_wrong": 326,
+        "recovered": 63,
+        "regressed": 74,
+        "predictions_changed": 386,
+        "accuracy_delta": -0.022,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261010,
+      "head": "adamw",
+      "classifier_seed": 29,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 155,
+        "candidate_correct": 105,
+        "both_correct": 57,
+        "both_wrong": 297,
+        "recovered": 48,
+        "regressed": 98,
+        "predictions_changed": 344,
+        "accuracy_delta": -0.1,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261010,
+      "head": "adamw",
+      "classifier_seed": 31,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 146,
+        "candidate_correct": 106,
+        "both_correct": 57,
+        "both_wrong": 305,
+        "recovered": 49,
+        "regressed": 89,
+        "predictions_changed": 329,
+        "accuracy_delta": -0.08,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261010,
+      "head": "adamw",
+      "classifier_seed": 37,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 158,
+        "candidate_correct": 105,
+        "both_correct": 57,
+        "both_wrong": 294,
+        "recovered": 48,
+        "regressed": 101,
+        "predictions_changed": 347,
+        "accuracy_delta": -0.106,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261010,
+      "head": "ridge",
+      "classifier_seed": null,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 143,
+        "candidate_correct": 103,
+        "both_correct": 64,
+        "both_wrong": 318,
+        "recovered": 39,
+        "regressed": 79,
+        "predictions_changed": 294,
+        "accuracy_delta": -0.08,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261010,
+      "head": "knn",
+      "classifier_seed": null,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 111,
+        "candidate_correct": 96,
+        "both_correct": 46,
+        "both_wrong": 339,
+        "recovered": 50,
+        "regressed": 65,
+        "predictions_changed": 354,
+        "accuracy_delta": -0.03,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261011,
+      "head": "adamw",
+      "classifier_seed": 29,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 119,
+        "candidate_correct": 114,
+        "both_correct": 59,
+        "both_wrong": 326,
+        "recovered": 55,
+        "regressed": 60,
+        "predictions_changed": 301,
+        "accuracy_delta": -0.01,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261011,
+      "head": "adamw",
+      "classifier_seed": 31,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 137,
+        "candidate_correct": 114,
+        "both_correct": 57,
+        "both_wrong": 306,
+        "recovered": 57,
+        "regressed": 80,
+        "predictions_changed": 326,
+        "accuracy_delta": -0.046,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261011,
+      "head": "adamw",
+      "classifier_seed": 37,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 129,
+        "candidate_correct": 120,
+        "both_correct": 62,
+        "both_wrong": 313,
+        "recovered": 58,
+        "regressed": 67,
+        "predictions_changed": 296,
+        "accuracy_delta": -0.018,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261011,
+      "head": "ridge",
+      "classifier_seed": null,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 139,
+        "candidate_correct": 109,
+        "both_correct": 63,
+        "both_wrong": 315,
+        "recovered": 46,
+        "regressed": 76,
+        "predictions_changed": 288,
+        "accuracy_delta": -0.06,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    },
+    {
+      "training_seed": 20261011,
+      "head": "knn",
+      "classifier_seed": null,
+      "baseline": "prediction",
+      "candidate": "context_variance",
+      "paired_confirmation": {
+        "count": 500,
+        "baseline_correct": 112,
+        "candidate_correct": 90,
+        "both_correct": 31,
+        "both_wrong": 329,
+        "recovered": 59,
+        "regressed": 81,
+        "predictions_changed": 386,
+        "accuracy_delta": -0.044,
+        "limitation": "Descriptive paired validation errors only; no significance or independent confirmation"
+      }
+    }
+  ]
+}
