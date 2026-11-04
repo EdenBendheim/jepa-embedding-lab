@@ -2,6 +2,13 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 3 fitting-image audit** — The variance penalty increased between-image
+spread from 0.176 to 1.867 under four fixed masks. Full-image context effective
+rank fell from 3.53 to 1.88. Reassigning predictions to other images increased
+error within every trained seed and mask pair. These endpoint measurements cover
+the original 500 probe fitting images. The audit command and the paired controls
+are documented in the [representation results](experiments/OBJECTIVE-REPRESENTATIONS-2026-11-03.md).
+
 **Result — reported November 1:** the locked context-variance intervention is
 complete. On 500 fresh rows, regularized/prediction-only AdamW means are
 **22.13% / 29.20%** (primary **−7.07 points**); ridge and kNN also worsen.

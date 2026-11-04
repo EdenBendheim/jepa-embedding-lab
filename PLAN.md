@@ -62,7 +62,13 @@ budgets now completed 2,223 updates each with equal actual image order. Locked f
 confirmation is now complete: regularized/prediction-only AdamW 22.13%/29.20%,
 primary −7.07 points. Ridge and kNN also worsen; all 280 candidate states, 40
 selected heads and 10 indices replay without refitting or raw-image reads.
-Next inspect fitting-image representations, then predeclare a new hypothesis.
+The [November 3 fitting-image audit](experiments/OBJECTIVE-REPRESENTATIONS-2026-11-03.md)
+separates image, mask, and interaction effects and tests prediction alignment.
+The variance penalty increases between-image spread about 10.6 times while
+effective rank falls from 3.53 to 1.88. The own-image prediction advantage
+persists across all tested trained masks. Next compare the fitting-image
+representations with simple RGB statistics on disjoint subsets of the original
+fitting selection. Use that evidence to predeclare a new hypothesis.
 Use `runs/context-variance-20261031/observed-exposure.json` for any later
 reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
 paired errors and negative results; keep the official test reserved.

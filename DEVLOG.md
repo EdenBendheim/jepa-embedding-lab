@@ -1,5 +1,19 @@
 # Development log
 
+## November 3, 2026
+
+- Added a crossed variance decomposition and same-mask prediction controls.
+  The fitting-image CLI verifies both arms' completed checkpoints and compares
+  them with matching seeded random models. Synthetic checks cover analytical
+  decompositions, prediction reassignment, invalid inputs, exact fitting reads,
+  checkpoint mismatch, and preservation of saved artifacts and RNG.
+- Two local CPU runs on the 500 original probe fitting images produced identical
+  JSON and preserved 358 original artifact hashes. Between-image variance grew
+  from 0.176 to 1.867 with the penalty while full-image effective rank fell from
+  3.53 to 1.88. Predictions from the aligned image reduced loss across the 24
+  trained seed–mask pairs. The audit covers fitting rows and leaves the cause of
+  the earlier accuracy drop open. [Methods and results](experiments/OBJECTIVE-REPRESENTATIONS-2026-11-03.md)
+
 ## November 1, 2026 — completion of the October 30 run
 
 - Reported the frozen objective experiment evaluated October 31: variance/prediction AdamW 22.13%/29.20%, primary −7.07 points. Ridge and kNN also worsen; random/pixel controls remain close to prediction-only. Published aggregates, paired errors and a reproducible figure, without claiming a useful-feature gain.
