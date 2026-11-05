@@ -2,6 +2,14 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 4 RGB reconstruction audit** — Six global color/contrast statistics
+explain 82.2% of prediction-only feature variation, 60.4% with the variance
+penalty, and 93.4% for matching random encoders on five fixed fitting-row folds.
+Shuffled fitting controls score below zero. The penalty's residual effective
+rank remains about 2.22; this weakens a simple linear-color explanation for its
+earlier accuracy drop. The [methods, per-source results and replay command](experiments/COLOR-RECONSTRUCTION-2026-11-04.md)
+make no new downstream-quality claim. No new held-out images were indexed.
+
 **November 3 fitting-image audit** — The variance penalty increased between-image
 spread from 0.176 to 1.867 under four fixed masks. Full-image context effective
 rank fell from 3.53 to 1.88. Reassigning predictions to other images increased

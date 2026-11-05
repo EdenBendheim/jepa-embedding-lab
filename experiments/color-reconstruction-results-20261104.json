@@ -1,0 +1,1154 @@
+{
+  "version": 1,
+  "kind": "fitting_only_rgb_reconstruction_results",
+  "diagnostic_protocol_sha256": "fae3baa7df972d5cbd166b34450c56bdff42615282f5c02a3c2db4d7a1a23829",
+  "bound_report_sha256": "6391463f9c1bb4e87c4a4019660eaf77ce3d2d0feac303dbb4dffb2b9ed0b126",
+  "count": 500,
+  "partition": "train",
+  "training_selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "ordered_training_indices_sha256": "cdbdd2f17778701453832a6f0930847e7fefd544e50cb387d16d50df184638bd",
+  "fold_assignments_sha256": "fb6768ff6693136878fbccb3dae20d7dc8ff13dfd174efc1c462df4796dcb8a5",
+  "runtime": {
+    "torch": "2.8.0",
+    "cpu_threads": 1
+  },
+  "rgb_features": [
+    "red_mean",
+    "green_mean",
+    "blue_mean",
+    "red_population_std",
+    "green_population_std",
+    "blue_population_std"
+  ],
+  "folds": 5,
+  "fold_seed": 29,
+  "alpha": 0.01,
+  "arm_means": {
+    "prediction": {
+      "encoder_seeds": 3,
+      "aligned_r2_mean": 0.8219589475189228,
+      "permuted_r2_mean": -0.03611248672659969,
+      "original_effective_rank_mean": 3.533912726813285,
+      "residual_effective_rank_mean": 5.265819687417011
+    },
+    "context_variance": {
+      "encoder_seeds": 3,
+      "aligned_r2_mean": 0.6035317179372732,
+      "permuted_r2_mean": -0.044723708576419684,
+      "original_effective_rank_mean": 1.8766721733016434,
+      "residual_effective_rank_mean": 2.219273700114661
+    },
+    "random": {
+      "encoder_seeds": 3,
+      "aligned_r2_mean": 0.9341194917589347,
+      "permuted_r2_mean": -0.037842324595313524,
+      "original_effective_rank_mean": 2.22432084428958,
+      "residual_effective_rank_mean": 5.98832693805289
+    }
+  },
+  "sources": {
+    "pixels": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 3072,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.16795164459064177,
+        "fitting_mean_reference_mse": 0.2443447501816014,
+        "reconstruction_r2": 0.3126447592353955,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 3072,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.24987638804196188,
+        "fitting_mean_reference_mse": 0.2443447501816014,
+        "reconstruction_r2": -0.022638660565652557,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 3072,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.49183974138859426,
+        "mean_row_l2": 26.941631280785398,
+        "min_row_l2": 10.761487406792662,
+        "max_row_l2": 47.20077826845821,
+        "centered_numerical_rank": 499,
+        "covariance_entropy_effective_rank": 34.39396037338584,
+        "eigenvalue_tolerance": 7.046838062870911e-08,
+        "mean_nonzero_row_pair_cosine": 0.030603356001559924,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 3072,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.4090071409990041,
+        "mean_row_l2": 21.82955777110713,
+        "min_row_l2": 8.250384839525038,
+        "max_row_l2": 45.164642298240615,
+        "centered_numerical_rank": 499,
+        "covariance_entropy_effective_rank": 58.739821483227196,
+        "eigenvalue_tolerance": 2.9362604891253423e-08,
+        "mean_nonzero_row_pair_cosine": -0.0015042038215787121,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "random-seed20261003": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.004488232112448525,
+        "fitting_mean_reference_mse": 0.06091242598042288,
+        "reconstruction_r2": 0.9263166416341547,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.06339649493934475,
+        "fitting_mean_reference_mse": 0.06091242598042288,
+        "reconstruction_r2": -0.040780988754580916,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.21340473356429396,
+        "mean_row_l2": 5.1597163859516115,
+        "min_row_l2": 4.570806179994747,
+        "max_row_l2": 5.414742510170516,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.028109354279163,
+        "eigenvalue_tolerance": 9.019288619914966e-11,
+        "mean_nonzero_row_pair_cosine": 0.9281192284364539,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.06307668690201154,
+        "mean_row_l2": 0.3438941465888506,
+        "min_row_l2": 0.14113710679471092,
+        "max_row_l2": 1.20292723788608,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 5.3030076100203605,
+        "eigenvalue_tolerance": 3.8595800262531496e-12,
+        "mean_nonzero_row_pair_cosine": 0.011835075699839083,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "prediction-seed20261003": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.03536814286332996,
+        "fitting_mean_reference_mse": 0.18454096435984102,
+        "reconstruction_r2": 0.8083453016189688,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.1920280230817478,
+        "fitting_mean_reference_mse": 0.18454096435984102,
+        "reconstruction_r2": -0.04057125607790568,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.38896090724210347,
+        "mean_row_l2": 3.4625904513634906,
+        "min_row_l2": 2.04248731562565,
+        "max_row_l2": 5.108375154632462,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.470166267182863,
+        "eigenvalue_tolerance": 1.6820640752224628e-10,
+        "mean_nonzero_row_pair_cosine": 0.5702965943956685,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.17556668183678525,
+        "mean_row_l2": 0.9861969386145701,
+        "min_row_l2": 0.33280621652228903,
+        "max_row_l2": 2.8358668977759818,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 5.158885784800054,
+        "eigenvalue_tolerance": 3.276513431121363e-11,
+        "mean_nonzero_row_pair_cosine": 0.0013084042117845296,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "context_variance-seed20261003": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.7555518411251261,
+        "fitting_mean_reference_mse": 1.948389174690213,
+        "reconstruction_r2": 0.6122171838461091,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 2.089472900250082,
+        "fitting_mean_reference_mse": 1.948389174690213,
+        "reconstruction_r2": -0.07241044417232523,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 1.3877492742948543,
+        "mean_row_l2": 7.894928553064294,
+        "min_row_l2": 4.303484178863839,
+        "max_row_l2": 8.327595784674065,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 1.7996246558179445,
+        "eigenvalue_tolerance": 2.86959863619339e-09,
+        "mean_nonzero_row_pair_cosine": 0.007726696023532281,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.8391230389392234,
+        "mean_row_l2": 4.606469154504397,
+        "min_row_l2": 1.4073242322214388,
+        "max_row_l2": 9.725018509110306,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.1890047503321854,
+        "eigenvalue_tolerance": 8.898341838278662e-10,
+        "mean_nonzero_row_pair_cosine": 0.01996047465175274,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "random-seed20261010": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.002336991006695753,
+        "fitting_mean_reference_mse": 0.040681410717443724,
+        "reconstruction_r2": 0.9425538356344738,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.042461505082385505,
+        "fitting_mean_reference_mse": 0.040681410717443724,
+        "reconstruction_r2": -0.04375694779381134,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.1723347265682789,
+        "mean_row_l2": 5.176287918850962,
+        "min_row_l2": 4.734101262680004,
+        "max_row_l2": 5.358121574370533,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.446227899978843,
+        "eigenvalue_tolerance": 5.37840692848674e-11,
+        "mean_nonzero_row_pair_cosine": 0.952168638588665,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.046367659809874784,
+        "mean_row_l2": 0.2534852228685152,
+        "min_row_l2": 0.1046427757921313,
+        "max_row_l2": 0.910697108283126,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 7.257506384560205,
+        "eigenvalue_tolerance": 1.714446067778417e-12,
+        "mean_nonzero_row_pair_cosine": 0.006104586733603404,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "prediction-seed20261010": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.026749687304260656,
+        "fitting_mean_reference_mse": 0.13418386271763005,
+        "reconstruction_r2": 0.8006489993468784,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.13941113942434186,
+        "fitting_mean_reference_mse": 0.13418386271763005,
+        "reconstruction_r2": -0.03895607564757486,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.3330565864678168,
+        "mean_row_l2": 3.9340332382181487,
+        "min_row_l2": 2.61540673379514,
+        "max_row_l2": 4.9131476105901095,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.877988719088348,
+        "eigenvalue_tolerance": 1.2634449727820008e-10,
+        "mean_nonzero_row_pair_cosine": 0.7460864676981374,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.15513973953094579,
+        "mean_row_l2": 0.8469335575357749,
+        "min_row_l2": 0.25651798426314787,
+        "max_row_l2": 2.701658133544918,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 5.313332952074905,
+        "eigenvalue_tolerance": 2.0148546344848777e-11,
+        "mean_nonzero_row_pair_cosine": 0.005042315512376014,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "context_variance-seed20261010": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.7260326168749514,
+        "fitting_mean_reference_mse": 1.8773603029410537,
+        "reconstruction_r2": 0.6132694316921712,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 1.9687903454700095,
+        "fitting_mean_reference_mse": 1.8773603029410537,
+        "reconstruction_r2": -0.04870138267317281,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 1.3640584629493595,
+        "mean_row_l2": 7.696535362035733,
+        "min_row_l2": 2.0240351662829044,
+        "max_row_l2": 8.418610633887843,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 1.805299993046259,
+        "eigenvalue_tolerance": 2.762473014403381e-09,
+        "mean_nonzero_row_pair_cosine": 0.006824859130500132,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.8254857046352153,
+        "mean_row_l2": 4.5270440844171755,
+        "min_row_l2": 0.9130121127843623,
+        "max_row_l2": 10.512027084550603,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.199449185404968,
+        "eigenvalue_tolerance": 8.571405358621646e-10,
+        "mean_nonzero_row_pair_cosine": 0.016744386015087123,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "random-seed20261011": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.00462163496990984,
+        "fitting_mean_reference_mse": 0.06948572936472307,
+        "reconstruction_r2": 0.9334879980081755,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.07150005376075523,
+        "fitting_mean_reference_mse": 0.06948572936472307,
+        "reconstruction_r2": -0.02898903723754831,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.24533384649458917,
+        "mean_row_l2": 5.018283377543341,
+        "min_row_l2": 4.546600688059743,
+        "max_row_l2": 5.347889160012788,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.198625278610734,
+        "eigenvalue_tolerance": 9.716293895146718e-11,
+        "mean_nonzero_row_pair_cosine": 0.9132830875349655,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.06451649350085875,
+        "mean_row_l2": 0.342843276650712,
+        "min_row_l2": 0.09380009902772185,
+        "max_row_l2": 1.3918074475975863,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 5.404466819578105,
+        "eigenvalue_tolerance": 4.505421223745796e-12,
+        "mean_nonzero_row_pair_cosine": 0.01700700961298335,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "prediction-seed20261011": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.027453472400062767,
+        "fitting_mean_reference_mse": 0.19182476201884038,
+        "reconstruction_r2": 0.8568825415909215,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.19735125805332224,
+        "fitting_mean_reference_mse": 0.19182476201884038,
+        "reconstruction_r2": -0.028810128454318518,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.39605245144852064,
+        "mean_row_l2": 3.485895782417701,
+        "min_row_l2": 2.1153924127698005,
+        "max_row_l2": 5.182935703036141,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.2535831941686437,
+        "eigenvalue_tolerance": 2.0671328772383788e-10,
+        "mean_nonzero_row_pair_cosine": 0.5716742537102683,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.15783775662552813,
+        "mean_row_l2": 0.8552930203669558,
+        "min_row_l2": 0.28144650655455966,
+        "max_row_l2": 2.745219837898271,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 5.325240325376074,
+        "eigenvalue_tolerance": 2.2450964527477087e-11,
+        "mean_nonzero_row_pair_cosine": 0.0040157009090064436,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "context_variance-seed20261011": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.822925268766113,
+        "fitting_mean_reference_mse": 1.98347120796781,
+        "reconstruction_r2": 0.5851085382735395,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 2.0093739512999957,
+        "fitting_mean_reference_mse": 1.98347120796781,
+        "reconstruction_r2": -0.013059298883761006,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "original_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 1.4008788225400695,
+        "mean_row_l2": 7.941833431375277,
+        "min_row_l2": 3.6285106498280175,
+        "max_row_l2": 8.38096402073633,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.025091871040727,
+        "eigenvalue_tolerance": 2.8200219953497744e-09,
+        "mean_nonzero_row_pair_cosine": 0.004175902704004351,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.8744040981154549,
+        "mean_row_l2": 4.823356024846187,
+        "min_row_l2": 1.5321305864287487,
+        "max_row_l2": 11.165659045894783,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.26936716460683,
+        "eigenvalue_tolerance": 1.029927408000281e-09,
+        "mean_nonzero_row_pair_cosine": 0.01547461617893326,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    }
+  },
+  "limitation": "Fixed five-fold diagnostics within the original fitting selection; not a new held-out comparison, causal attribution, or downstream quality score. Residual geometry describes out-of-fold errors, not learned residual features.",
+  "validation_images_read": false,
+  "test_images_read": false
+}

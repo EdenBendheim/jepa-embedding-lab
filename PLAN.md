@@ -66,9 +66,14 @@ The [November 3 fitting-image audit](experiments/OBJECTIVE-REPRESENTATIONS-2026-
 separates image, mask, and interaction effects and tests prediction alignment.
 The variance penalty increases between-image spread about 10.6 times while
 effective rank falls from 3.53 to 1.88. The own-image prediction advantage
-persists across all tested trained masks. Next compare the fitting-image
-representations with simple RGB statistics on disjoint subsets of the original
-fitting selection. Use that evidence to predeclare a new hypothesis.
+persists across all tested trained masks. The [November 4 RGB audit](experiments/COLOR-RECONSTRUCTION-2026-11-04.md)
+now reconstructs cached representations on five disjoint scoring folds within
+the original fitting selection. Aligned R² is .822 prediction-only, .604 penalty,
+and .934 random; permuted controls are negative. The penalty's residual rank
+remains 2.22, so a simple linear-color explanation is incomplete. Next predeclare
+a spatially retained pooling comparison against the original global mean and
+matching random controls. Preserve equal feature/data budgets and all earlier
+observations. Do not choose settings from existing confirmation scores.
 Use `runs/context-variance-20261031/observed-exposure.json` for any later
 reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
 paired errors and negative results; keep the official test reserved.

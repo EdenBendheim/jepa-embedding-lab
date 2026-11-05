@@ -1,5 +1,34 @@
 # Development log
 
+## November 4, 2026
+
+- Added explicit RGB mean/population-standard-deviation controls, continuous
+  ridge reconstruction with fitting-only normalization, and fixed-fold scoring
+  with a fitting-input permutation control. Synthetic checks cover known linear
+  signals, constant targets, per-fold fitting boundaries, invalid inputs, RNG
+  preservation and control failure. The verified runner preflights completed
+  model/feature provenance before indexing the original fitting images.
+- Added immutable aggregate caches, recursive source fingerprints and a declared
+  protocol CLI. Synthetic integration tests cover exact fitting reads, corrupted
+  inputs, no-image/no-fit replay, protocol mismatch, protected outputs and
+  failed-save cleanup. Committed the real-data protocol before outcomes.
+- Ran all ten frozen sources on the same 500 original fitting images and five
+  fixed folds. Mean reconstruction R² is .822 prediction-only, .604 penalty and
+  .934 random, versus negative permuted-fitting controls. The penalty's residual
+  effective rank remains 2.22. This weakens a simple linear-color explanation
+  for the previous accuracy drop; it establishes no downstream improvement.
+  [Methods, results and reproduction](experiments/COLOR-RECONSTRUCTION-2026-11-04.md)
+- Verified exact 500-row image indexing and byte-identical cache replay with
+  reconstruction fitting, model training, extraction and image indexing disabled.
+  All 358 original experiment artifacts retained their hashes. No new validation
+  or test image tensors, private data, paid compute, or public model/feature
+  artifacts. All 244 local tests passed (533.591 s), including ten new tests;
+  seeded mask demo, three-step synthetic training and whitespace checks passed.
+- Interview explanation: “I checked a simple explanation for concentrated
+  embeddings using six image statistics and a shuffled control on fixed folds.
+  The results narrowed the hypothesis without turning a diagnostic into an
+  accuracy claim, and the complete measurement replays without refitting.”
+
 ## November 3, 2026
 
 - Added a crossed variance decomposition and same-mask prediction controls.
