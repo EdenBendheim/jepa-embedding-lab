@@ -27,7 +27,7 @@ def _read(path, identity):
     return saved['report']
 
 
-def cached_audit(run, output, *, reuse_only=False):
+def cached_audit(run, output, *, reuse_only=False, expected_identity=None):
     if type(reuse_only) is not bool:
         raise ValueError('Reuse-only must be boolean')
     output = Path(output)
@@ -40,6 +40,8 @@ def cached_audit(run, output, *, reuse_only=False):
         raise ValueError('Color cache cannot replace experiment evidence, code or raw data')
     measurement, indices, sources = verified_sources(run)
     identity = dict(version=1, measurement=measurement, code_sha256=code_fingerprints())
+    if expected_identity is not None and expected_identity != identity:
+        raise ValueError('Declared color protocol differs from the current inputs, recipe or code')
     if output.exists():
         return _read(output, identity), True
     if reuse_only:
