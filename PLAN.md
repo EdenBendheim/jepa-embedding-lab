@@ -70,10 +70,17 @@ persists across all tested trained masks. The [November 4 RGB audit](experiments
 now reconstructs cached representations on five disjoint scoring folds within
 the original fitting selection. Aligned R² is .822 prediction-only, .604 penalty,
 and .934 random; permuted controls are negative. The penalty's residual rank
-remains 2.22, so a simple linear-color explanation is incomplete. Next predeclare
-a spatially retained pooling comparison against the original global mean and
-matching random controls. Preserve equal feature/data budgets and all earlier
-observations. Do not choose settings from existing confirmation scores.
+remains 2.22, so a simple linear-color explanation is incomplete. The
+[November 7 spatial comparison](experiments/SPATIAL-POOLING-2026-11-07.md)
+is now complete: trained quadrants 25.40%, matching random 25.27%, repeated
+global mean 25.67% on fixed classifier folds within the fitting selection.
+All 130 saved heads reproduce the report without refitting or image access.
+This does not justify spending fresh rows on pooling-only confirmation.
+Next implement a bounded multi-target-block prediction variant with synthetic
+gradient and exact-resume checks, retaining current defaults. It remains a
+candidate training change, not a proven improvement. Predeclare any real-data
+contrast with matching random controls, equal budgets and retained history
+before new held-out access. Do not choose settings from existing confirmation scores.
 Use `runs/context-variance-20261031/observed-exposure.json` for any later
 reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
 paired errors and negative results; keep the official test reserved.

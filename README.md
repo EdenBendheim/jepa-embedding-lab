@@ -2,6 +2,14 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 7 spatial comparison** — Four-region pooling scores 25.40%, versus
+25.27% for matching random encoders and 25.67% for repeated global means.
+These fixed-fold classifier scores use original encoder-training images, so
+they are exploratory. Shuffling region layout hurts both trained and random
+sources; no learned-feature advantage is established. All 130 saved fold heads
+reproduce their scores with fitting, encoding and image access disabled.
+[Results, controls and replay command](experiments/SPATIAL-POOLING-2026-11-07.md).
+
 **November 4 RGB reconstruction audit** — Six global color/contrast statistics
 explain 82.2% of prediction-only feature variation, 60.4% with the variance
 penalty, and 93.4% for matching random encoders on five fixed fitting-row folds.

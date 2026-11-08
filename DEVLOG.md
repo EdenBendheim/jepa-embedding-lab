@@ -1,5 +1,47 @@
 # Development log
 
+## November 7, 2026
+
+- Resumed the unfinished spatial-pooling runner. Fixed its synthetic exposure
+  fixture and completed declared execution, interruption recovery and cache
+  replay. A changed evaluation recipe now fails before image indexing or cache
+  creation. Cached cell means, image-specific shuffled layout and RGB statistics
+  must agree with their declared relationships, beyond content checksums.
+- Added repeated global means to match the four-region classifier width without
+  location information, plus a shared six-statistic RGB classifier baseline.
+  Every view uses the same frozen forward pass, original fitting order and
+  class-stratified folds. Saved all fold classifiers with exact feature/subset
+  identity, score reproduction and no-refit missing-head failures.
+- Committed the prospective recipe before real-image outcomes. On 500 original
+  fitting rows, prediction-only quadrants score 25.40%, matching random 25.27%,
+  repeated global means 25.67%. Layout shuffling hurts trained/random sources by
+  5.13/5.73 points. This establishes no trained-feature or spatial-pooling gain;
+  encoders may have pretrained on scoring images. No new held-out score.
+  [All controls and reproduction](experiments/SPATIAL-POOLING-2026-11-07.md)
+- The real run indexed exactly 500 fitting images once. A second invocation
+  reproduced the report from all 130 saved heads with image access, encoding,
+  encoder training and both ridge-fitting paths disabled. All 358 original
+  experiment artifacts and all 132 new artifacts retained their hashes on
+  replay. No private data, paid compute or public feature/model artifacts.
+- Verification: all 263 local tests passed on Python 3.12.14 (507.211 s),
+  including the previously unfinished spatial workflow. Seeded mask demo,
+  three-step synthetic training, aggregate/fold arithmetic, declared source
+  fingerprints and whitespace checks passed. Remote CI is checked after push;
+  the previous run could not start because of a GitHub account billing lock.
+- Interview explanation: “I compared spatial embeddings with random,
+  shuffled-layout and repeated-mean controls. Layout helped random encoders too,
+  so I kept the negative result. Every fold's score reproduces from saved
+  weights without refitting.”
+
+## November 5, 2026 — interrupted work, verified November 7
+
+- Six local commits added fixed quadrant pooling, deterministic image-specific
+  layout permutations, paired extraction, verified fitting-only sources,
+  immutable feature caches and stratified ridge cross-fitting. The drawn target
+  was eight; this run stopped before completing the runner or pushing. Those
+  six commits retain their original dates and were carried into the November 7
+  verification and push. No November 5 real-image spatial outcome is claimed.
+
 ## November 4, 2026
 
 - Added explicit RGB mean/population-standard-deviation controls, continuous
