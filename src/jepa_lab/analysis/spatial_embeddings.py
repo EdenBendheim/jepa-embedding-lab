@@ -7,7 +7,7 @@ from ..embeddings import rgb_config
 from .spatial_control import _validate_indices, shuffle_quadrants
 from .spatial_pool import spatial_mean
 
-MODES = ('mean', 'quadrants', 'shuffled_quadrants')
+MODES = ('mean', 'quadrants', 'shuffled_quadrants', 'repeated_mean')
 
 
 @torch.inference_mode()
@@ -25,7 +25,8 @@ def paired_embeddings(model, images, indices):
         positions = torch.arange(64).expand(len(images), -1)
         tokens = model.context_encoder(patches, positions)
         quadrants = spatial_mean(tokens)
-        return dict(mean=spatial_mean(tokens, bins=1), quadrants=quadrants,
+        mean = spatial_mean(tokens, bins=1)
+        return dict(mean=mean, quadrants=quadrants, repeated_mean=mean.repeat(1, 4),
                     shuffled_quadrants=shuffle_quadrants(quadrants, indices))
     finally:
         model.train(was_training)

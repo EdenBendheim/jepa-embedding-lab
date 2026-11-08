@@ -74,6 +74,8 @@ def evaluate(inputs, features):
             predictions[f'{key}/mean'], predictions[f'{key}/quadrants'])
         paired[f'{key}/quadrants-minus-shuffled'] = pair(
             predictions[f'{key}/shuffled_quadrants'], predictions[f'{key}/quadrants'])
+        paired[f'{key}/quadrants-minus-repeated-mean'] = pair(
+            predictions[f'{key}/repeated_mean'], predictions[f'{key}/quadrants'])
         if key.startswith('prediction-'):
             random = key.replace('prediction-', 'random-', 1)
             for mode in MODES:

@@ -35,7 +35,8 @@ def validate_features(features, inputs):
         if not torch.allclose(features[f'{key}/mean'], inputs.references[key].features, atol=1e-6, rtol=1e-5):
             raise ValueError('Spatial mean control differs from the verified original')
         quadrants = features[f'{key}/quadrants']
-        if (not torch.allclose(quadrants.reshape(len(inputs.indices), 4, -1).mean(1),
+        if (not torch.equal(features[f'{key}/repeated_mean'], features[f'{key}/mean'].repeat(1, 4))
+                or not torch.allclose(quadrants.reshape(len(inputs.indices), 4, -1).mean(1),
                               features[f'{key}/mean'], atol=1e-6, rtol=1e-5)
                 or not torch.equal(features[f'{key}/shuffled_quadrants'],
                                     shuffle_quadrants(quadrants, inputs.indices))):

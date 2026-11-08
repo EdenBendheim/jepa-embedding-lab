@@ -25,6 +25,8 @@ class SpatialEmbeddingTests(unittest.TestCase):
         self.assertEqual(1, encode.call_count)
         self.assertTrue(torch.equal(values['mean'], image_embeddings(self.model, self.images)))
         self.assertEqual((2, 64), values['quadrants'].shape)
+        self.assertTrue(torch.equal(values['repeated_mean'], values['mean'].repeat(1, 4)))
+        self.assertEqual(values['quadrants'].shape, values['repeated_mean'].shape)
         self.assertTrue(torch.allclose(values['mean'], values['quadrants'].reshape(2, 4, 16).mean(1), atol=1e-6))
         self.assertTrue(self.model.training)
         self.assertFalse(self.model.target_encoder.training)

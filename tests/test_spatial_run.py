@@ -69,9 +69,9 @@ class SpatialRunTests(unittest.TestCase):
             main()
         self.assertFalse(json.loads(stream.getvalue())['report_cache_reused'])
         saved = json.loads(self.output.read_text())
-        self.assertEqual(7, len(saved['report']['sources']))
+        self.assertEqual(9, len(saved['report']['sources']))
         self.assertEqual(5, len(saved['report']['sources']['pixels']['score']['folds']))
-        self.assertEqual(7, len(saved['report']['paired']))
+        self.assertEqual(10, len(saved['report']['paired']))
         before = self.output.read_bytes(), self.features.read_bytes()
         with patch('sys.argv', args+['--reuse-only']), \
                 patch.object(Fixture, '__getitem__', side_effect=AssertionError('images')), \

@@ -22,7 +22,7 @@ class SpatialSourceTests(unittest.TestCase):
                 patch('jepa_lab.training_budget.train_cifar10', side_effect=AssertionError('training')):
             values = spatial_sources.extract_fitting(self.root, inputs)
         self.assertEqual([(True, i) for i in inputs.indices], Fixture.accessed)
-        self.assertEqual(7, len(values))
+        self.assertEqual(9, len(values))
         for key in inputs.models:
             self.assertTrue(torch.allclose(values[f'{key}/mean'], inputs.references[key].features, atol=1e-6))
             self.assertEqual((10, 64), values[f'{key}/quadrants'].shape)
