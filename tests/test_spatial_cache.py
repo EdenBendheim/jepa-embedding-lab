@@ -56,6 +56,18 @@ class SpatialCacheTests(unittest.TestCase):
             cached_features(self.run, output, reuse_only=True)
         self.assertEqual(before, output.read_bytes())
 
+    def test_rehashed_rgb_control_cannot_drift_from_the_original_pixels(self):
+        output = self.output()
+        with patch('jepa_lab.analysis.spatial_sources.CIFAR10Binary', Fixture):
+            cached_features(self.run, output)
+        state = torch.load(output, weights_only=True)
+        state['features']['rgb_statistics'][0, 0] += .1
+        state['features_sha256']['rgb_statistics'] = tensor_sha(state['features']['rgb_statistics'])
+        torch.save(state, output)
+        with patch.object(Fixture, '__getitem__', side_effect=AssertionError('images')), \
+                self.assertRaisesRegex(ValueError, 'RGB statistic control'):
+            cached_features(self.run, output, reuse_only=True)
+
     def test_missing_protected_and_failed_save_leave_no_partial_cache(self):
         output = self.output()
         with self.assertRaisesRegex(ValueError, 'missing'):

@@ -8,6 +8,7 @@ from ..cifar10 import CIFAR10Binary
 from ..embeddings import load_encoder, random_encoder
 from ..model import ModelConfig
 from .color_audit import verified_sources
+from .color_statistics import FEATURE_NAMES, rgb_statistics
 from .spatial_embeddings import MODES, paired_embeddings
 
 
@@ -42,7 +43,7 @@ def prepare_sources(run):
         sources=list(models), modes=list(MODES), bins=2, batch_size=16,
         shuffle_rule='quadrants-v1 SHA-256 image-index seed; local torch permutation', shuffle_seed=29,
         partition='train', feature_dims={mode: config.embedding_dim * (1 if mode == 'mean' else 4)
-                                         for mode in MODES})
+                                         for mode in MODES}, rgb_control_features=list(FEATURE_NAMES))
     return SpatialInputs(spatial_identity, tuple(indices), cached['pixels'].labels.clone(), models, cached)
 
 
@@ -54,7 +55,7 @@ def extract_fitting(root, inputs):
     images = torch.stack([row[0] for row in rows])
     if not torch.equal(torch.tensor([row[1] for row in rows]), inputs.labels):
         raise ValueError('Spatial image labels differ from the verified fitting selection')
-    values = {'pixels': inputs.references['pixels'].features.clone()}
+    values = {'pixels': inputs.references['pixels'].features.clone(), 'rgb_statistics': rgb_statistics(images)}
     for key, model in inputs.models.items():
         parts = {mode: [] for mode in MODES}
         for start in range(0, len(images), inputs.identity['batch_size']):

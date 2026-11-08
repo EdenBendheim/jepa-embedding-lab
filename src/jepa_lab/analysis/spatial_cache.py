@@ -11,6 +11,7 @@ import torch
 from ..objective_run import file_sha
 from ..probes import _values
 from .color_cache import code_fingerprints
+from .color_statistics import rgb_statistics
 from .spatial_control import shuffle_quadrants
 from .spatial_sources import extract_fitting, prepare_sources
 
@@ -21,7 +22,7 @@ def tensor_sha(value):
 
 
 def validate_features(features, inputs):
-    expected = {'pixels': 3072} | {f'{key}/{mode}': width for key in inputs.identity['sources']
+    expected = {'pixels': 3072, 'rgb_statistics': 6} | {f'{key}/{mode}': width for key in inputs.identity['sources']
                                    for mode, width in inputs.identity['feature_dims'].items()}
     if not isinstance(features, dict) or features.keys() != expected.keys():
         raise ValueError('Spatial feature sources differ from the declared paired controls')
@@ -31,6 +32,10 @@ def validate_features(features, inputs):
             raise ValueError('Spatial feature count differs from fitting indices')
     if not torch.equal(features['pixels'], inputs.references['pixels'].features):
         raise ValueError('Spatial pixel control differs from the verified original')
+    # Recover the fixed uint8 transform from the verified pixel control, avoiding image I/O on replay.
+    images = features['pixels'].add(1).mul(127.5).round().to(torch.uint8).reshape(-1, 3, 32, 32)
+    if not torch.equal(features['rgb_statistics'], rgb_statistics(images)):
+        raise ValueError('RGB statistic control differs from the verified original pixels')
     for key in inputs.identity['sources']:
         if not torch.allclose(features[f'{key}/mean'], inputs.references[key].features, atol=1e-6, rtol=1e-5):
             raise ValueError('Spatial mean control differs from the verified original')
