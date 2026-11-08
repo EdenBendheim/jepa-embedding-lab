@@ -31,7 +31,7 @@ def stratified_folds(labels, *, folds=5, seed=29):
 
 
 @torch.inference_mode()
-def crossfit_ridge(features, labels, assignments, *, config=RidgeConfig(.1)):
+def crossfit_ridge(features, labels, assignments, *, config=RidgeConfig(.1), fold_provider=None):
     validate_probe_data(features, labels, fitting=True)
     if (not isinstance(assignments, torch.Tensor) or assignments.device.type != 'cpu'
             or assignments.dtype != torch.long or assignments.shape != labels.shape):
@@ -44,7 +44,8 @@ def crossfit_ridge(features, labels, assignments, *, config=RidgeConfig(.1)):
     rows = []
     for fold in folds:
         fitting, scoring = assignments != fold, assignments == fold
-        probe = fit_ridge(features[fitting], labels[fitting], config)
+        probe = (fit_ridge(features[fitting], labels[fitting], config) if fold_provider is None else
+                 fold_provider(fold, features[fitting], labels[fitting], config))
         predictions[scoring] = probe.logits(features[scoring]).argmax(1)
         rows.append(dict(fold=fold, fitting_count=int(fitting.sum()), scoring_count=int(scoring.sum()),
             scoring_class_counts=torch.bincount(labels[scoring], minlength=10).tolist(),
