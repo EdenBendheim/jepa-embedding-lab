@@ -100,3 +100,13 @@ class SpatialRunTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'declared recipe'):
             run_analysis(self.run, self.features, self.output, declared)
         self.assertEqual(before, self.output.read_bytes())
+
+    def test_wrong_evaluation_is_rejected_before_images_or_cache_creation(self):
+        declared = declare_protocol(self.run)
+        declared['evaluation']['alpha'] = 1.
+        with patch.object(Fixture, '__getitem__', side_effect=AssertionError('images')), \
+                patch('jepa_lab.analysis.spatial_run.cached_features', side_effect=AssertionError('cache')), \
+                self.assertRaisesRegex(ValueError, 'declared recipe'):
+            run_analysis(self.run, self.features, self.output, declared)
+        self.assertFalse(self.features.exists())
+        self.assertFalse(self.output.exists())

@@ -11,6 +11,7 @@ import torch
 from ..objective_run import file_sha
 from ..probes import _values
 from .color_cache import code_fingerprints
+from .spatial_control import shuffle_quadrants
 from .spatial_sources import extract_fitting, prepare_sources
 
 
@@ -33,6 +34,12 @@ def validate_features(features, inputs):
     for key in inputs.identity['sources']:
         if not torch.allclose(features[f'{key}/mean'], inputs.references[key].features, atol=1e-6, rtol=1e-5):
             raise ValueError('Spatial mean control differs from the verified original')
+        quadrants = features[f'{key}/quadrants']
+        if (not torch.allclose(quadrants.reshape(len(inputs.indices), 4, -1).mean(1),
+                              features[f'{key}/mean'], atol=1e-6, rtol=1e-5)
+                or not torch.equal(features[f'{key}/shuffled_quadrants'],
+                                    shuffle_quadrants(quadrants, inputs.indices))):
+            raise ValueError('Spatial layout controls differ from their declared cell relationships')
 
 
 def _load(path, inputs, identity):
@@ -50,7 +57,7 @@ def _load(path, inputs, identity):
     return state['features']
 
 
-def cached_features(run, output, *, reuse_only=False, expected_identity=None):
+def cached_features(run, output, *, reuse_only=False, expected_identity=None, prepared=None):
     if type(reuse_only) is not bool:
         raise ValueError('Reuse-only must be boolean')
     output = Path(output)
@@ -58,7 +65,7 @@ def cached_features(run, output, *, reuse_only=False, expected_identity=None):
     if (output.suffix != '.pt' or any(output.resolve().is_relative_to(folder.resolve())
                                     for folder in (run.root, run.directory, package))):
         raise ValueError('Spatial caches must be outside raw data, completed experiments and code')
-    inputs = prepare_sources(run)
+    inputs = prepare_sources(run) if prepared is None else prepared
     identity = dict(version=1, inputs=inputs.identity, code_sha256=code_fingerprints())
     if expected_identity is not None and expected_identity != identity:
         raise ValueError('Declared spatial protocol differs from the current sources or code')

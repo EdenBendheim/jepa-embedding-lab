@@ -60,10 +60,11 @@ def run_analysis(run, features_path, output, declared, *, reuse_only=False):
     if (output.suffix != '.json' or any(output.resolve().is_relative_to(folder.resolve())
                                       for folder in (run.root, run.directory, package))):
         raise ValueError('Spatial reports must be outside raw data, completed experiments and code')
-    inputs, features, features_reused, features_sha = cached_features(run, features_path,
-        reuse_only=reuse_only or output.exists(), expected_identity=declared['feature_identity'])
+    inputs = prepare_sources(run)
     if declared != _declaration(inputs):
         raise ValueError('Spatial evaluation differs from the declared recipe')
+    inputs, features, features_reused, features_sha = cached_features(run, features_path,
+        reuse_only=reuse_only or output.exists(), expected_identity=declared['feature_identity'], prepared=inputs)
     identity = dict(version=1, declared=declared, feature_artifact_sha256=features_sha)
     if output.exists():
         return _read_report(output, identity), features_reused, True

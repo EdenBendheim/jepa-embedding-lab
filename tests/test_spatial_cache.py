@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import torch
 
-from jepa_lab.analysis.spatial_cache import cached_features
+from jepa_lab.analysis.spatial_cache import cached_features, tensor_sha
 from test_cifar10_train import Fixture
 import test_spatial_sources as fixtures
 
@@ -37,9 +37,24 @@ class SpatialCacheTests(unittest.TestCase):
         state['features']['prediction-seed29/quadrants'][0, 0] += .1
         torch.save(state, output)
         corrupt = output.read_bytes()
-        with self.assertRaisesRegex(ValueError, 'content differs'):
+        with self.assertRaisesRegex(ValueError, 'layout controls|content differs'):
             cached_features(self.run, output)
         self.assertEqual(corrupt, output.read_bytes())
+
+    def test_rehashed_wrong_shuffle_is_rejected_by_the_declared_relationship(self):
+        output = self.output()
+        with patch('jepa_lab.analysis.spatial_sources.CIFAR10Binary', Fixture):
+            cached_features(self.run, output)
+        state = torch.load(output, weights_only=True)
+        key = 'prediction-seed29/shuffled_quadrants'
+        state['features'][key] = state['features'][key].roll(1, dims=1)
+        state['features_sha256'][key] = tensor_sha(state['features'][key])
+        torch.save(state, output)
+        before = output.read_bytes()
+        with patch.object(Fixture, '__getitem__', side_effect=AssertionError('images')), \
+                self.assertRaisesRegex(ValueError, 'layout controls'):
+            cached_features(self.run, output, reuse_only=True)
+        self.assertEqual(before, output.read_bytes())
 
     def test_missing_protected_and_failed_save_leave_no_partial_cache(self):
         output = self.output()
