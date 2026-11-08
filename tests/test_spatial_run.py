@@ -72,14 +72,23 @@ class SpatialRunTests(unittest.TestCase):
         self.assertEqual(10, len(saved['report']['sources']))
         self.assertEqual(5, len(saved['report']['sources']['pixels']['score']['folds']))
         self.assertEqual(10, len(saved['report']['paired']))
+        self.assertEqual(50, len(saved['report']['saved_heads']))
         before = self.output.read_bytes(), self.features.read_bytes()
-        with patch('sys.argv', args+['--reuse-only']), \
+        with patch('sys.argv', args+['--reuse-only', '--verify-scores']), \
                 patch.object(Fixture, '__getitem__', side_effect=AssertionError('images')), \
                 patch('jepa_lab.analysis.spatial_sources.paired_embeddings', side_effect=AssertionError('encoding')), \
                 patch('jepa_lab.analysis.spatial_evaluation.fit_ridge', side_effect=AssertionError('fit')), \
+                patch('jepa_lab.analysis.spatial_heads.fit_ridge', side_effect=AssertionError('artifact fit')), \
                 contextlib.redirect_stdout(io.StringIO()) as stream:
             main()
         self.assertTrue(json.loads(stream.getvalue())['report_cache_reused'])
+        self.assertTrue(json.loads(stream.getvalue())['saved_scores_verified'])
+        self.assertEqual(before, (self.output.read_bytes(), self.features.read_bytes()))
+        head = next(self.features.with_suffix('.heads').glob('*.pt'))
+        head.unlink()
+        with patch('jepa_lab.analysis.spatial_heads.fit_ridge', side_effect=AssertionError('refit')), \
+                self.assertRaisesRegex(ValueError, 'head is missing'):
+            run_analysis(self.run, self.features, self.output, declared, reuse_only=True, verify_scores=True)
         self.assertEqual(before, (self.output.read_bytes(), self.features.read_bytes()))
 
     def test_failed_report_save_recovers_from_features_without_new_images_and_refuses_recipe_changes(self):

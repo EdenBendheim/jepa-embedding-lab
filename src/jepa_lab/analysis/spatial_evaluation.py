@@ -58,12 +58,13 @@ def crossfit_ridge(features, labels, assignments, *, config=RidgeConfig(.1), fol
         limitation='Cross-fitted classifier scores on encoder-training images; not held-out representation quality')
 
 
-def evaluate(inputs, features):
+def evaluate(inputs, features, *, fold_provider=None):
     validate_features(features, inputs)
     assignments = stratified_folds(inputs.labels)
     predictions, sources = {}, {}
     for key, values in features.items():
-        predictions[key], score = crossfit_ridge(values, inputs.labels, assignments)
+        provider = None if fold_provider is None else lambda fold, x, y, c: fold_provider(key, fold, x, y, c)
+        predictions[key], score = crossfit_ridge(values, inputs.labels, assignments, fold_provider=provider)
         sources[key] = dict(score=score, geometry=feature_geometry(values))
     paired = {}
     def pair(baseline, candidate):

@@ -14,6 +14,7 @@ from .color_cache import code_fingerprints
 from .spatial_cache import cached_features
 from .spatial_evaluation import evaluate, stratified_folds
 from .spatial_sources import prepare_sources
+from .spatial_heads import FoldArtifacts
 
 
 def _declaration(inputs):
@@ -52,9 +53,9 @@ def _read_report(path, identity):
     return saved['report']
 
 
-def run_analysis(run, features_path, output, declared, *, reuse_only=False):
-    if type(reuse_only) is not bool:
-        raise ValueError('Reuse-only must be boolean')
+def run_analysis(run, features_path, output, declared, *, reuse_only=False, verify_scores=False):
+    if type(reuse_only) is not bool or type(verify_scores) is not bool:
+        raise ValueError('Reuse-only and verify-scores must be boolean')
     output = Path(output)
     package = Path(__file__).resolve().parent.parent
     if (output.suffix != '.json' or any(output.resolve().is_relative_to(folder.resolve())
@@ -66,11 +67,20 @@ def run_analysis(run, features_path, output, declared, *, reuse_only=False):
     inputs, features, features_reused, features_sha = cached_features(run, features_path,
         reuse_only=reuse_only or output.exists(), expected_identity=declared['feature_identity'], prepared=inputs)
     identity = dict(version=1, declared=declared, feature_artifact_sha256=features_sha)
+    heads = FoldArtifacts(Path(features_path).with_suffix('.heads'), inputs, features,
+                          reuse_only=reuse_only or output.exists())
     if output.exists():
-        return _read_report(output, identity), features_reused, True
+        report = _read_report(output, identity)
+        if verify_scores:
+            reproduced = evaluate(inputs, features, fold_provider=heads)
+            reproduced['saved_heads'] = heads.records
+            if reproduced != report:
+                raise ValueError('Saved spatial heads do not reproduce the aggregate report')
+        return report, features_reused, True
     if reuse_only:
         raise ValueError('Reuse-only spatial report is missing')
-    report = evaluate(inputs, features)
+    report = evaluate(inputs, features, fold_provider=heads)
+    report['saved_heads'] = heads.records
     state = dict(identity=identity, report=report, report_sha256=digest(report))
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = None
@@ -101,6 +111,7 @@ def main():
     parser.add_argument('--features', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--reuse-only', action='store_true')
+    parser.add_argument('--verify-scores', action='store_true', help='Reproduce cached scores from saved heads without fitting')
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
@@ -108,11 +119,12 @@ def main():
         run = ObjectiveRun(args.root, args.directory, protocol=args.objective_protocol,
                            expected_sha=args.objective_sha256)
         report, features_reused, report_reused = run_analysis(run, args.features, args.output, declared,
-                                                             reuse_only=args.reuse_only)
+            reuse_only=args.reuse_only, verify_scores=args.verify_scores)
         print(json.dumps(dict(count=report['count'], sources=len(report['sources']),
             feature_cache_reused=features_reused, report_cache_reused=report_reused,
             images_indexed_this_invocation=not features_reused, validation_images_read=False,
-            test_images_read=False), allow_nan=False))
+            test_images_read=False, saved_heads=len(report['saved_heads']),
+            saved_scores_verified=report_reused and args.verify_scores), allow_nan=False))
     except (OSError, ValueError, KeyError, TypeError, RuntimeError) as exc:
         parser.error(str(exc))
 
