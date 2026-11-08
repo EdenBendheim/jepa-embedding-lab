@@ -1,0 +1,468 @@
+{
+  "version": 1,
+  "kind": "fitting_only_spatial_pooling",
+  "feature_identity": {
+    "version": 1,
+    "inputs": {
+      "version": 1,
+      "source_identity": {
+        "version": 1,
+        "protocol_sha256": "0dd2e26a60885435085d59baf4070b330b689b7d875cbbbbc3b0ba2f28e49165",
+        "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+        "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+        "ordered_training_indices_sha256": "cdbdd2f17778701453832a6f0930847e7fefd544e50cb387d16d50df184638bd",
+        "count": 500,
+        "checkpoints": {
+          "prediction-seed20261003": "2b67069b6ecde7d101a59cdfdf84a578d8a3392e1aefc4670bdf6b2fac4c37fd",
+          "prediction-seed20261010": "b3d779861b940e4f984d7478d74a3f0f4df227c0612271a858039121552a8d1a",
+          "prediction-seed20261011": "9f72d034502e61363a819185fdf1b4b063f8c8cf600571acfe1f2e746393cd56",
+          "context_variance-seed20261003": "dd0a5d93d3257e49908828d95ddcec9f1ad2decd8416ae9734734a034dcb5a0b",
+          "context_variance-seed20261010": "e702b3233fa32adf7e4e13dfae6374ea48b69084153881393b0ee0dcab9fdbf8",
+          "context_variance-seed20261011": "4932a52bbf99deec485e09646abfca6bff8992fb691f294913337bec8c8a4402"
+        },
+        "sources": {
+          "pixels": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 3072,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "5a7dfcc12346c0c2bf185a05829928a5e21de106793e513b525614f4c7668cb0",
+            "feature_metadata": {
+              "representation": "pixels",
+              "pooling": "flatten NCHW RGB values",
+              "normalization": "x / 127.5 - 1"
+            }
+          },
+          "random-seed20261003": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "88b999d7fc8b91253ba0d0fdf638aea4f3e40480b11b7bd4dacafd0e8b133778",
+            "feature_metadata": {
+              "representation": "random",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "encoder": "context",
+              "seed": 20261003,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              }
+            }
+          },
+          "prediction-seed20261003": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "fc2514809846933acb2ef6a07299d5ad941d9969b32d0cec64c6ad520be0c305",
+            "feature_metadata": {
+              "representation": "checkpoint",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "checkpoint_sha256": "2b67069b6ecde7d101a59cdfdf84a578d8a3392e1aefc4670bdf6b2fac4c37fd",
+              "completed_steps": 2223,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              },
+              "training_settings": {
+                "seed": 20261003,
+                "batch_size": 4,
+                "learning_rate": 0.001,
+                "momentum": 0.99
+              },
+              "encoder": "context"
+            }
+          },
+          "context_variance-seed20261003": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "0af3375922f7e053664ae4367052a8377c0b8804aed2a3fc742791e0fa29f553",
+            "feature_metadata": {
+              "representation": "checkpoint",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "checkpoint_sha256": "dd0a5d93d3257e49908828d95ddcec9f1ad2decd8416ae9734734a034dcb5a0b",
+              "completed_steps": 2223,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              },
+              "training_settings": {
+                "seed": 20261003,
+                "batch_size": 4,
+                "learning_rate": 0.001,
+                "momentum": 0.99,
+                "objective": {
+                  "context_variance_weight": 0.1,
+                  "context_std_floor": 1.0
+                }
+              },
+              "encoder": "context"
+            }
+          },
+          "random-seed20261010": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "8b0313990fbbd127cee6db0f6ed91c977df715ece59ec01ea4da0ea1c4ff5bd7",
+            "feature_metadata": {
+              "representation": "random",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "encoder": "context",
+              "seed": 20261010,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              }
+            }
+          },
+          "prediction-seed20261010": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "46fa6e1a27c0d9f92eefa2f1c781126cf5e7249757cec9888d2c3989c5558c5a",
+            "feature_metadata": {
+              "representation": "checkpoint",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "checkpoint_sha256": "b3d779861b940e4f984d7478d74a3f0f4df227c0612271a858039121552a8d1a",
+              "completed_steps": 2223,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              },
+              "training_settings": {
+                "seed": 20261010,
+                "batch_size": 4,
+                "learning_rate": 0.001,
+                "momentum": 0.99
+              },
+              "encoder": "context"
+            }
+          },
+          "context_variance-seed20261010": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "0102728441a0f08c8706bf38481e0564bd1b5a5835e899e10a66c04a2b3a3737",
+            "feature_metadata": {
+              "representation": "checkpoint",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "checkpoint_sha256": "e702b3233fa32adf7e4e13dfae6374ea48b69084153881393b0ee0dcab9fdbf8",
+              "completed_steps": 2223,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              },
+              "training_settings": {
+                "seed": 20261010,
+                "batch_size": 4,
+                "learning_rate": 0.001,
+                "momentum": 0.99,
+                "objective": {
+                  "context_variance_weight": 0.1,
+                  "context_std_floor": 1.0
+                }
+              },
+              "encoder": "context"
+            }
+          },
+          "random-seed20261011": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "0c5d9b361bde373c16487526bb15e1ee64a681f5b1a1b39e389c02f2c4de9a44",
+            "feature_metadata": {
+              "representation": "random",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "encoder": "context",
+              "seed": 20261011,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              }
+            }
+          },
+          "prediction-seed20261011": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "2a2396562e6b7d81bd0cddebc52566af8a2d0f78aba0411ce4537abbf7da7674",
+            "feature_metadata": {
+              "representation": "checkpoint",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "checkpoint_sha256": "9f72d034502e61363a819185fdf1b4b063f8c8cf600571acfe1f2e746393cd56",
+              "completed_steps": 2223,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              },
+              "training_settings": {
+                "seed": 20261011,
+                "batch_size": 4,
+                "learning_rate": 0.001,
+                "momentum": 0.99
+              },
+              "encoder": "context"
+            }
+          },
+          "context_variance-seed20261011": {
+            "partition": "train",
+            "official_split": "train",
+            "selection_kind": "pilot",
+            "count": 500,
+            "feature_dim": 32,
+            "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+            "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+            "artifact_sha256": "00863e241652f9796d7767e5e3a814eeb29da527f1962b84e3727e7c81d4d305",
+            "feature_metadata": {
+              "representation": "checkpoint",
+              "pooling": "mean of all 64 patch tokens",
+              "normalization": "x / 127.5 - 1",
+              "checkpoint_sha256": "4932a52bbf99deec485e09646abfca6bff8992fb691f294913337bec8c8a4402",
+              "completed_steps": 2223,
+              "config": {
+                "rows": 8,
+                "cols": 8,
+                "patch_dim": 48,
+                "embedding_dim": 32,
+                "heads": 4,
+                "encoder_depth": 2,
+                "predictor_depth": 1,
+                "position_encoding": "sincos2d"
+              },
+              "training_settings": {
+                "seed": 20261011,
+                "batch_size": 4,
+                "learning_rate": 0.001,
+                "momentum": 0.99,
+                "objective": {
+                  "context_variance_weight": 0.1,
+                  "context_std_floor": 1.0
+                }
+              },
+              "encoder": "context"
+            }
+          }
+        },
+        "runtime": {
+          "torch": "2.8.0",
+          "cpu_threads": 1
+        }
+      },
+      "encoder": "context",
+      "sources": [
+        "prediction-seed20261003",
+        "random-seed20261003",
+        "prediction-seed20261010",
+        "random-seed20261010",
+        "prediction-seed20261011",
+        "random-seed20261011"
+      ],
+      "modes": [
+        "mean",
+        "quadrants",
+        "shuffled_quadrants",
+        "repeated_mean"
+      ],
+      "bins": 2,
+      "batch_size": 16,
+      "shuffle_rule": "quadrants-v1 SHA-256 image-index seed; local torch permutation",
+      "shuffle_seed": 29,
+      "partition": "train",
+      "feature_dims": {
+        "mean": 32,
+        "quadrants": 128,
+        "shuffled_quadrants": 128,
+        "repeated_mean": 128
+      },
+      "rgb_control_features": [
+        "red_mean",
+        "green_mean",
+        "blue_mean",
+        "red_population_std",
+        "green_population_std",
+        "blue_population_std"
+      ]
+    },
+    "code_sha256": {
+      "__init__.py": "8e83c30d44126d588835b0a5f544f9f800e830fe2de02dbd155943897d66f806",
+      "analysis/__init__.py": "7903f889283a5b2f7310375272192ee686729f21c112fd474911444dd02ab0a0",
+      "analysis/color_audit.py": "035e1a54f7c5bb2d5c8696872628128abb9e20d5c87093b2e6d9b07cce406694",
+      "analysis/color_cache.py": "1932f67917cf48d9a7cefda6cb9a916f1b76b9c1d9e2a54ff3a5f97af50104cf",
+      "analysis/color_cli.py": "58f99d4578e29280222890fa34ed57edda78518738ffed9ce27887c9b3efe8d2",
+      "analysis/color_statistics.py": "0819e4cc22a891df89e0398a12545c9f5c8d4db18d346539b7712de326f4e330",
+      "analysis/crossfit.py": "36485d26babcc959ee02dcf62710723e6e6cf2a15b7c12c433c97fab41486000",
+      "analysis/mask_variance.py": "53d7a3b84e74050d99d6c2e68d1cb37fad0980311d053c04978bee20e061d456",
+      "analysis/objective_representations.py": "e039b20047df429ed25e9ca984ae2c953af975c5868483dc92b8bc686fbc3b9b",
+      "analysis/prediction_controls.py": "a648a67b75116b72392879fad95627efa647b217ad34d70980246ece4825879d",
+      "analysis/reconstruction.py": "33297b59d84d473f54a5051897d7c76fbe86dd046b406b3f9044f2829dee652d",
+      "analysis/spatial_cache.py": "aeaf591ac3d21e8f5056f54a6dde6b9b5234840f19380019e2bac0b7b826e5f1",
+      "analysis/spatial_control.py": "232cc27aede3691efb8781bbad2cc1fb447849426cb9b07f4cb9d631268f2925",
+      "analysis/spatial_embeddings.py": "42171dc2ba0e60a574e8057f172419d804ae6372694a03099233a0f469811f5b",
+      "analysis/spatial_evaluation.py": "9ea5cea305cda2feea9b9ae122d64c5cdaa84c38f048d33a906c85550e878eff",
+      "analysis/spatial_heads.py": "18d5fb8a9d1b010ac4749e578faa35134125417ebf6fc1c4e0bbcf57dd99b880",
+      "analysis/spatial_pool.py": "10f1de44041857c61bf360e70348ad7190857219f7ca9da063ed39484f9e3963",
+      "analysis/spatial_run.py": "01d4cf8716e071b06c069c65d5458d74b2b324c2cfad129b38acedd7b8669c6e",
+      "analysis/spatial_sources.py": "21c4637b3b892589c547f869ab4feec0e105eb6d970961b0106381048d49e451",
+      "cifar10.py": "eea1bfd7d08899697fa87675d44cff9c5506d2581397ece7491147462bf91944",
+      "cifar10_smoke.py": "ae6c503046a13bf0154845517302762519c0df71e3b16952b8b7bd0ba6ea38a7",
+      "cifar10_train.py": "a8bc5549a3af21328e08c68881eccdc87d0da028aa8734822c707865627b37a7",
+      "compare.py": "3e097c6b97cc1250837f66f8ac1b1f6fb434e02667528301743cf7af368abace",
+      "confirmation.py": "0fdc4828c5482ac9593a686cc3ac0bcfa61a48a461047be1d774a01b750d13b7",
+      "confirmation_compare.py": "135544112cd96c3d7556e5c90ffeda1534cf11003d682c980eb879405dbf6fad",
+      "demo.py": "7586de38427eb3fc620205ee10097be970d5b9f4bee332fee5a01b4f557e0427",
+      "diagnostics.py": "cec211b618a42921dd722c4b6709313c2eaed803dadd1eb2be89f1745f5ef9b7",
+      "embeddings.py": "b2392831dd53909d127c1434e7b5eb641c03e4d01188666fb27f303d606caf25",
+      "explorer.py": "36798f731c0df997e3e3b1d62dd03e15adca8a93337559239a74f51b7357d5d3",
+      "explorer_compare.py": "a1c7ad4df4bb88026762375f4d70c562f0d24487eb4fd57658990223f5388f28",
+      "explorer_html.py": "ae1f4322c4ebcf9c4d3156284efc87f794f637bddae20ae57d3f775aee963ae2",
+      "exposure.py": "8e1454795a39e9e2845893e1658af2e3f67488a91148d1a8ea14dc5b32eb46a6",
+      "feature_geometry.py": "a40331d6b97323e24584f879097f5d9fee37acbbd097ac65c798e25e1d5adfea",
+      "features.py": "485197b6f83777e6b1bc7c03cbbf6eaa437f08d7c11c21d6293cf3ddce222f99",
+      "masked_context.py": "c6ea24e857ffa9ae2e24bad5a15350abcf8adced4245871e417fe78f6ad2cc20",
+      "masking.py": "5f464fba20090718b102ef4804062139805524f18b7407f370da74018f6180e3",
+      "model.py": "119f7d02202824c6f7472c6aa74d587592886ab65ab4bb8978c269cb626e008f",
+      "model_cli.py": "c1222944643ac311c6da0980a1cd056a713b52938da582bb9d5a9a8706f2fdc7",
+      "model_size.py": "015f6133b01245b26d45bb3f24da2f9a482c9d797fd7186f0a315ff5f086dab5",
+      "neighbor_artifacts.py": "20704628ca76ae867204f4c3dbd6b2a8279f3258678b0bba2777678349b16b5e",
+      "neighbor_cli.py": "23778b5d2c3ee13c433a5deec2a5b095fbc0b9e13e6fcb5a0d0cbcc075e4fd99",
+      "neighbor_confirmation.py": "7e55d17fe754d0dd94fa6053d084f2b8d42f3dc052cc73a087cbc68e6ab01c83",
+      "neighbor_workflow.py": "fa1eee7bb3b8e414e040066c43cfb42c67569dae7d656c877302a45c2949453a",
+      "neighbors.py": "aba622a8f0167e345ec13e7e46a61aa2dabd0a5a654f7f298daea162596b42cc",
+      "objective.py": "75a2a524f6cb5db5fd5057aa4760fa8bc25c51adf129870d4ff41d50528c4efc",
+      "objective_audit.py": "e0ed0cc08b19b949a5a27cca46a3de9c0a42cf28abc5d87164c17d5b0f07120d",
+      "objective_compare.py": "7ceb3ec85fb6ab3c036a95ec45ee13f29996533b3c3a5d301084126270d84c95",
+      "objective_evaluation.py": "683cb6f1c1030681b1a2f71090c0eb1c4252387a376f2ae89027541d39e241f0",
+      "objective_features.py": "8710cab78d7b02547b4caedb61ed66d9637f75399f09e9191ecfdd0296872440",
+      "objective_observation.py": "8e9f98caeaa9675424eaff7dc59f5a36df5338aae3b898be000ba25a23139fc3",
+      "objective_run.py": "b393446f98ab0885ff4fffcf08d5d4a32b1ec4231a8248c10d0f99e4c1b79fdc",
+      "objective_selection.py": "022de5cbc86106488695179f8fd512f9930665a5f5615fb83d1bbd71f2a30158",
+      "patches.py": "b238e8342c52a3d270f72c489403564aa74e8c1543658d5754faba8d47d85fd2",
+      "pooling.py": "c5dffc969f86b4632baeabf3180a8af9a683abb9ef7faeba78a9b6ccdfe7a6c6",
+      "pooling_compare.py": "be7a08a83058cbeb3f2c73363b86f626ef2e5518fa9ec9e591cb6c5ff8cc78bb",
+      "position_compare.py": "ad42ac1e22d1d37da6b3a6ba9e205501d01af820d673d65e364ae005a889e5e3",
+      "positions.py": "bfc84ce66e4628143689cd34016801b37ac285d0b89e131774a231e55ee9eff9",
+      "pretrained.py": "392b875fde1e03f6f0292ba29fe674baeacef58104fb0ef5889fbd55c5ff3892",
+      "pretrained_extract.py": "566813b2c097f599c1d0fc2a938cd3788eb73a5c74fdf3a182df5cc47a5d503c",
+      "probe_artifacts.py": "f7283e8c89c557fc05bc4eae3cde94031d39b5ea2e5f6e1e3110cf7c215c7b97",
+      "probe_audit.py": "f8f55a26ddfcc744075abe078371f69a0f77ae6fdba39e0ab80aa5053918eefc",
+      "probe_compare.py": "cab0d6981947903e31071745b17e61c81a6e6e85eb70fa1973d38e80012c1ef7",
+      "probe_score.py": "4bb2998df16b7eb97c28a9533fafd6fec205022efbe8ca89ae79b51c19ee5961",
+      "probes.py": "a3f4028414a149a332679aed51295433399edb03c28381c9c46ab5fcb52663c8",
+      "progression.py": "8dfb4af4f818773eb9d0a8d4722f672b3ba1d38fe19e512d7c966f1cf48b2bf0",
+      "ridge.py": "9a376ffca8fa4b6b98704c22a4e06a9cdb2a5b12233ca04e5390953acb3f8aec",
+      "scale_audit.py": "a183831b7c42f2dd9133dfbede0eb9310624c1a24d8b44d6c6b8bb054c83192b",
+      "scale_compare.py": "51773efc80589cd70b5f0eb82a5cc0b5ae2f6428f74e8ae1ff676cfd6cc033dd",
+      "scale_evaluation.py": "84ba3386cb95f7a030e317c736cbf49db79529c757b7cea9eb942193ad710687",
+      "scale_run.py": "583654cf01b6d8c041be9e5abc4f6179c4bb08d20644545e602f69c5f7590a40",
+      "selection.py": "0f8dcbdb1a069881d5a08667e638adb789213e0f1bfdb49d021e481073c96eb9",
+      "stability.py": "2ebb6837aed5f07dd4aa89316980a37ad3782ca818cee9951f91ad218dae0daa",
+      "stability_audit.py": "ac4a1f410960d9a33999f0afbd54726c8ae910322dfb11ed7e0fc5b1f16cfb25",
+      "train.py": "cb8de0d1fa5de8bd32c29d101470af04fce3ed67e3bc5f1f32edc6a07f397ab0",
+      "training_budget.py": "62f2372311c62fb1b7b4cf01b19849794a56dfdd132715a0546332db9e880aed",
+      "training_diagnostics.py": "ddefb4636cc079790116a1711a8952a4fa7f43280f86162ce2efbfc2ea4b94b2",
+      "transfer_audit.py": "7f3efaa5812c76e391694baa6d1b2fa2d632a2f647940f94284cf27dea9cb571",
+      "transfer_compare.py": "d3c6c227436796915ea1e002bd164afbdac7252feb4fd5caf813539cace011f0",
+      "width_compare.py": "de6de05f49fa0962748a454c4fbada52a75eceab8106412b9a854e5f103fb4ac"
+    }
+  },
+  "evaluation": {
+    "classifier": "ridge",
+    "alpha": 0.1,
+    "folds": 5,
+    "fold_seed": 29,
+    "fold_assignments_sha256": "5f0358cc12cf0d3940c039d39891432b3e9f759cbaf98c99673d0f1e51a27e0b",
+    "hyperparameter_search": false,
+    "encoder_training_overlap": true
+  }
+}
