@@ -2,6 +2,14 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 8 multi-block training** — An opt-in synthetic trainer now predicts
+separate target blocks from one shared context encoding. Mask tests exclude
+the complete target union from context; gradient tests verify hidden-patch
+isolation and stopped teacher targets. Ten updates plus three resumed updates
+match a continuous 13-update run across all checkpoint fields and history.
+[Implementation, commands and limits](experiments/MULTIBLOCK-2026-11-08.md).
+Public-data integration and a controlled quality comparison remain next.
+
 **November 7 spatial comparison** — Four-region pooling scores 25.40%, versus
 25.27% for matching random encoders and 25.67% for repeated global means.
 These fixed-fold classifier scores use original encoder-training images, so
@@ -78,7 +86,7 @@ aggregate-only summaries; features, logs and weights remain ignored.
 
 I want to explore the relationship between the input representation, masking geometry, and what an embedding retains. The first public experiment uses [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) and frozen-embedding image classification. Its small RGB images make bounded local iteration practical. Satellite/geospatial imagery remains a later direction because it connects to my research; no unreleased research data is used here.
 
-The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [official implementation](https://github.com/facebookresearch/ijepa). The current single-target-block sampler is a simplified experiment foundation, not a reproduction of the official multi-block training recipe.
+The design reference is [I-JEPA](https://arxiv.org/abs/2301.08243) and its [official implementation](https://github.com/facebookresearch/ijepa). The historical single-target-block sampler and the opt-in tiled multi-block variant are simplified experiments, not reproductions of the official training recipe.
 
 ## Working now
 

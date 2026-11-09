@@ -1,5 +1,37 @@
 # Development log
 
+## November 8, 2026
+
+- Added a bounded, seeded multi-target-tile sampler with complete partition
+  checks. All targets are disjoint, and the shared context excludes the entire
+  target union. Invalid overlap, nonrectangular blocks and unplaceable recipes
+  fail explicitly; sampling preserves the caller's Python RNG.
+- Added independent target-block prediction using one shared context encoding
+  and one full-image stopped teacher pass. Tests reproduce separate block
+  forwards exactly, count encoder/predictor passes, verify target stop-gradient,
+  prove prediction invariance to hidden patches, and check zero hidden-patch
+  gradients with nonzero context/predictor gradients.
+- Added an opt-in synthetic trainer with atomic checkpoints, exact recipe/code/
+  runtime identity, complete mask journal, model/optimizer/data/PyTorch RNG state,
+  protected existing checkpoint destinations and finite per-block diagnostics.
+  A 10+3-step CLI trajectory matches a continuous 13-step run in every checkpoint
+  field and history row. A four-block, three-step smoke run also completes with
+  finite losses. All 358 original experiment artifacts retained their hashes.
+  [Implementation, bounds, commands and next comparison](experiments/MULTIBLOCK-2026-11-08.md)
+- Eleven focused tests pass, including changed recipe/runtime/source/optimizer
+  refusal, caller RNG preservation, exact whole-state resume, failed-save
+  rollback and metrics/checkpoint path collisions. Historical model defaults
+  and top-level pinned source files stay fixed. No real-data training, new
+  held-out observations, paid compute or public weights/features were used.
+- All 274 local tests passed on Python 3.12.14 (530.536 s). Historical seeded
+  mask demo and three-step training, source-fingerprint/aggregate checks and
+  whitespace checks passed. Remote CI is checked after push; the preceding
+  run could not start because of the GitHub account billing lock.
+- Interview explanation: “I implemented multiple target regions sharing one
+  context pass, proved hidden patches cannot leak into predictions, and made
+  resumed training match an uninterrupted run exactly. The synthetic mechanics
+  work; a controlled real-data quality comparison is next.”
+
 ## November 7, 2026
 
 - Resumed the unfinished spatial-pooling runner. Fixed its synthetic exposure

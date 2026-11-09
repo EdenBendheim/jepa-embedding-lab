@@ -76,11 +76,15 @@ is now complete: trained quadrants 25.40%, matching random 25.27%, repeated
 global mean 25.67% on fixed classifier folds within the fitting selection.
 All 130 saved heads reproduce the report without refitting or image access.
 This does not justify spending fresh rows on pooling-only confirmation.
-Next implement a bounded multi-target-block prediction variant with synthetic
-gradient and exact-resume checks, retaining current defaults. It remains a
-candidate training change, not a proven improvement. Predeclare any real-data
-contrast with matching random controls, equal budgets and retained history
-before new held-out access. Do not choose settings from existing confirmation scores.
+The [November 8 multi-block foundation](experiments/MULTIBLOCK-2026-11-08.md)
+now has disjoint tiled targets, shared context/teacher passes, independent
+predictor passes, gradient isolation and exact synthetic resume. Current defaults
+are retained; downstream quality is untested. Next connect this variant to
+public-data training and frozen-feature provenance. Before new outcomes,
+predeclare one 4×4 block versus four 2×2 blocks (16 targets/36 context patches),
+matching image order, initialization, encoder updates, classifier budgets and
+random controls. Report differing predictor computation and retain all exposure
+history before held-out access. Do not choose settings from existing confirmation scores.
 Use `runs/context-variance-20261031/observed-exposure.json` for any later
 reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
 paired errors and negative results; keep the official test reserved.
