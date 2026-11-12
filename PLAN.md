@@ -49,6 +49,8 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Reserve balanced confirmation rows excluding all declared earlier tuning examples.
 - [x] Score frozen selected AdamW/ridge classifiers on fresh examples without refitting or retuning.
 - [x] Publish configurations, provenance, plots, a results table, and a small row-and-label embedding explorer.
+- [x] Train and resume multi-block CIFAR-10 checkpoints with replayed image order and frozen encoder provenance.
+- [x] Run a predeclared one-block versus four-block pilot on fixed fitting rows with matching random and RGB controls.
 
 ## Next session
 
@@ -77,14 +79,16 @@ global mean 25.67% on fixed classifier folds within the fitting selection.
 All 130 saved heads reproduce the report without refitting or image access.
 This does not justify spending fresh rows on pooling-only confirmation.
 The [November 8 multi-block foundation](experiments/MULTIBLOCK-2026-11-08.md)
-now has disjoint tiled targets, shared context/teacher passes, independent
-predictor passes, gradient isolation and exact synthetic resume. Current defaults
-are retained; downstream quality is untested. Next connect this variant to
-public-data training and frozen-feature provenance. Before new outcomes,
-predeclare one 4×4 block versus four 2×2 blocks (16 targets/36 context patches),
-matching image order, initialization, encoder updates, classifier budgets and
-random controls. Report differing predictor computation and retain all exposure
-history before held-out access. Do not choose settings from existing confirmation scores.
+adds disjoint tiled targets, shared context/teacher passes, independent
+predictor passes, gradient isolation and exact synthetic resume. The
+[November 11 pilot](experiments/MULTIBLOCK-CIFAR-2026-11-11.md) extends it to
+fixed CIFAR training rows, verified checkpoint loading and exact real-data
+resume. The matched 32-update runs produced 22.0% for four 2×2 blocks and
+22.8% for one 4×4 block versus 24.4% for matching random features on shared
+ridge folds. One of 500 scoring rows overlaps encoder training. Predictor
+sequence work differs. Next separate layout from predictor grouping with
+matched controls, and plan multiple seeds and a compute budget before
+reserving new held-out rows. Keep existing confirmation outcomes frozen.
 Use `runs/context-variance-20261031/observed-exposure.json` for any later
 reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
 paired errors and negative results; keep the official test reserved.

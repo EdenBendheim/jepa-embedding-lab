@@ -2,13 +2,20 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 11 multi-block CIFAR-10 pilot** — Both geometries trained for 32
+updates with identical initialization and training image order. On 500 fixed
+training rows, four 2×2 blocks scored 22.0%, one 4×4 block scored 22.8%, and the
+matching random encoder scored 24.4% using the same frozen-feature ridge folds.
+The four-block predictor processed 160 tokens per image versus 52 for one
+block. This single-seed pilot leaves independent evaluation open.
+[Results, controls and reproduction](experiments/MULTIBLOCK-CIFAR-2026-11-11.md).
+
 **November 8 multi-block training** — An opt-in synthetic trainer now predicts
 separate target blocks from one shared context encoding. Mask tests exclude
 the complete target union from context; gradient tests verify hidden-patch
 isolation and stopped teacher targets. Ten updates plus three resumed updates
 match a continuous 13-update run across all checkpoint fields and history.
 [Implementation, commands and limits](experiments/MULTIBLOCK-2026-11-08.md).
-Public-data integration and a controlled quality comparison remain next.
 
 **November 7 spatial comparison** — Four-region pooling scores 25.40%, versus
 25.27% for matching random encoders and 25.67% for repeated global means.

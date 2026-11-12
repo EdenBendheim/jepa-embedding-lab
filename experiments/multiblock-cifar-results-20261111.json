@@ -1,0 +1,1769 @@
+{
+  "version": 1,
+  "kind": "matched_multiblock_training_row_diagnostic",
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+  "code_sha256": "971eb93bb97d4fc6a198be4c5744ef9be7b5621d6317bfc4c97c350ab4740d08",
+  "training": {
+    "initial_state_sha256": "5b07766804dbfa30dcbce29f922c77201493d58cc32f6e0694efe761249bdf92",
+    "image_order_sha256": "bef4449cb3efdbc7e426684772159e6f4f9dd0eea634acd65af1dc754bfab691",
+    "updates_per_arm": 32,
+    "sampled_rows_per_arm": 128,
+    "unique_training_rows": 128,
+    "checkpoint_sha256": {
+      "one_4x4": "2d930d319401c181b3a0bb0a4367736cb94602d97b6dc5d228c8ec228808723d",
+      "four_2x2": "8a7509c53674a91a5d087bf183652affd19f35abcb59d9b74e116895ee355f6e"
+    }
+  },
+  "arms": {
+    "one_4x4": {
+      "first_batch_loss": 0.5514136552810669,
+      "last_batch_loss": 0.1802385151386261,
+      "predictor_passes": 1,
+      "predictor_sequence_tokens": 52,
+      "predictor_tokens_per_image": 52,
+      "predictor_attention_pairs_per_head_per_layer": 2704
+    },
+    "four_2x2": {
+      "first_batch_loss": 0.5673650503158569,
+      "last_batch_loss": 0.19431787729263306,
+      "predictor_passes": 4,
+      "predictor_sequence_tokens": 40,
+      "predictor_tokens_per_image": 160,
+      "predictor_attention_pairs_per_head_per_layer": 6400
+    }
+  },
+  "scoring_rows": 500,
+  "scoring_indices_sha256": "cdbdd2f17778701453832a6f0930847e7fefd544e50cb387d16d50df184638bd",
+  "scoring_rows_seen_in_encoder_training": 1,
+  "folds": 5,
+  "fold_seed": 29,
+  "fold_assignments_sha256": "5f0358cc12cf0d3940c039d39891432b3e9f759cbaf98c99673d0f1e51a27e0b",
+  "alpha": 0.1,
+  "encoder": "context",
+  "pooling": "mean",
+  "rgb_statistics": [
+    "red_mean",
+    "green_mean",
+    "blue_mean",
+    "red_population_std",
+    "green_population_std",
+    "blue_population_std"
+  ],
+  "scores": {
+    "one_4x4": {
+      "score": {
+        "count": 500,
+        "correct": 114,
+        "accuracy": 0.228,
+        "alpha": 0.1,
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 22
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 17
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 21
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 25
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 29
+          }
+        ],
+        "confusion_matrix": [
+          [
+            25,
+            0,
+            1,
+            1,
+            0,
+            2,
+            2,
+            1,
+            15,
+            3
+          ],
+          [
+            6,
+            3,
+            1,
+            1,
+            1,
+            5,
+            7,
+            3,
+            10,
+            13
+          ],
+          [
+            10,
+            0,
+            0,
+            1,
+            16,
+            4,
+            11,
+            0,
+            6,
+            2
+          ],
+          [
+            6,
+            3,
+            3,
+            5,
+            5,
+            9,
+            9,
+            1,
+            2,
+            7
+          ],
+          [
+            3,
+            1,
+            4,
+            0,
+            14,
+            4,
+            14,
+            3,
+            5,
+            2
+          ],
+          [
+            8,
+            3,
+            0,
+            2,
+            2,
+            11,
+            11,
+            5,
+            1,
+            7
+          ],
+          [
+            7,
+            1,
+            1,
+            1,
+            8,
+            3,
+            25,
+            2,
+            0,
+            2
+          ],
+          [
+            7,
+            4,
+            0,
+            0,
+            7,
+            13,
+            7,
+            2,
+            0,
+            10
+          ],
+          [
+            21,
+            4,
+            0,
+            0,
+            1,
+            2,
+            2,
+            1,
+            16,
+            3
+          ],
+          [
+            5,
+            6,
+            1,
+            3,
+            3,
+            3,
+            4,
+            1,
+            11,
+            13
+          ]
+        ],
+        "classifier_weight_parameters": 320,
+        "limitation": "Cross-fitted classifier scores on encoder-training images; not held-out representation quality"
+      },
+      "geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.6366985197385493,
+        "mean_row_l2": 5.1297663830968805,
+        "min_row_l2": 3.143689600286484,
+        "max_row_l2": 5.674266187857564,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.2760336391386202,
+        "eigenvalue_tolerance": 6.514013557656185e-10,
+        "mean_nonzero_row_pair_cosine": 0.43788460677451646,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "four_2x2": {
+      "score": {
+        "count": 500,
+        "correct": 110,
+        "accuracy": 0.22,
+        "alpha": 0.1,
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 23
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 14
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 19
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 26
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 28
+          }
+        ],
+        "confusion_matrix": [
+          [
+            23,
+            2,
+            1,
+            2,
+            0,
+            2,
+            1,
+            0,
+            18,
+            1
+          ],
+          [
+            5,
+            1,
+            2,
+            2,
+            1,
+            4,
+            6,
+            6,
+            13,
+            10
+          ],
+          [
+            9,
+            0,
+            0,
+            7,
+            13,
+            1,
+            12,
+            1,
+            6,
+            1
+          ],
+          [
+            6,
+            1,
+            3,
+            9,
+            6,
+            7,
+            8,
+            2,
+            2,
+            6
+          ],
+          [
+            3,
+            1,
+            4,
+            1,
+            15,
+            4,
+            14,
+            3,
+            4,
+            1
+          ],
+          [
+            8,
+            4,
+            0,
+            4,
+            5,
+            8,
+            8,
+            5,
+            2,
+            6
+          ],
+          [
+            7,
+            2,
+            1,
+            2,
+            10,
+            2,
+            22,
+            3,
+            0,
+            1
+          ],
+          [
+            7,
+            1,
+            0,
+            0,
+            10,
+            13,
+            5,
+            3,
+            1,
+            10
+          ],
+          [
+            20,
+            2,
+            0,
+            2,
+            2,
+            2,
+            0,
+            0,
+            20,
+            2
+          ],
+          [
+            5,
+            4,
+            1,
+            5,
+            4,
+            3,
+            4,
+            1,
+            14,
+            9
+          ]
+        ],
+        "classifier_weight_parameters": 320,
+        "limitation": "Cross-fitted classifier scores on encoder-training images; not held-out representation quality"
+      },
+      "geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.5930645566599615,
+        "mean_row_l2": 5.16690605350671,
+        "min_row_l2": 3.4096462608089557,
+        "max_row_l2": 5.6749086770052575,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 2.3748269376707984,
+        "eigenvalue_tolerance": 5.551232504285803e-10,
+        "mean_nonzero_row_pair_cosine": 0.5178415576307842,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "random": {
+      "score": {
+        "count": 500,
+        "correct": 122,
+        "accuracy": 0.244,
+        "alpha": 0.1,
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 25
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 22
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 21
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 26
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 28
+          }
+        ],
+        "confusion_matrix": [
+          [
+            21,
+            1,
+            3,
+            0,
+            1,
+            2,
+            2,
+            2,
+            18,
+            0
+          ],
+          [
+            6,
+            5,
+            2,
+            4,
+            4,
+            4,
+            6,
+            6,
+            7,
+            6
+          ],
+          [
+            6,
+            0,
+            10,
+            3,
+            11,
+            1,
+            11,
+            1,
+            6,
+            1
+          ],
+          [
+            5,
+            4,
+            4,
+            4,
+            7,
+            8,
+            9,
+            3,
+            2,
+            4
+          ],
+          [
+            2,
+            1,
+            9,
+            1,
+            14,
+            2,
+            14,
+            4,
+            2,
+            1
+          ],
+          [
+            5,
+            3,
+            3,
+            4,
+            7,
+            5,
+            8,
+            7,
+            1,
+            7
+          ],
+          [
+            5,
+            1,
+            3,
+            2,
+            10,
+            2,
+            22,
+            4,
+            0,
+            1
+          ],
+          [
+            5,
+            3,
+            3,
+            0,
+            11,
+            9,
+            7,
+            7,
+            0,
+            5
+          ],
+          [
+            15,
+            3,
+            0,
+            1,
+            1,
+            0,
+            2,
+            2,
+            23,
+            3
+          ],
+          [
+            4,
+            4,
+            2,
+            4,
+            4,
+            2,
+            4,
+            4,
+            11,
+            11
+          ]
+        ],
+        "classifier_weight_parameters": 320,
+        "limitation": "Cross-fitted classifier scores on encoder-training images; not held-out representation quality"
+      },
+      "geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.5726453499030197,
+        "mean_row_l2": 4.954805650625942,
+        "min_row_l2": 2.967821285393135,
+        "max_row_l2": 5.649125627765907,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.129005922162581,
+        "eigenvalue_tolerance": 4.617534463975439e-10,
+        "mean_nonzero_row_pair_cosine": 0.523240019486157,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "rgb_statistics": {
+      "score": {
+        "count": 500,
+        "correct": 104,
+        "accuracy": 0.208,
+        "alpha": 0.1,
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 23
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 18
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 22
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 21
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100,
+            "scoring_class_counts": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "correct": 20
+          }
+        ],
+        "confusion_matrix": [
+          [
+            23,
+            3,
+            5,
+            0,
+            0,
+            0,
+            1,
+            0,
+            11,
+            7
+          ],
+          [
+            11,
+            1,
+            2,
+            1,
+            2,
+            4,
+            3,
+            0,
+            8,
+            18
+          ],
+          [
+            9,
+            1,
+            5,
+            2,
+            15,
+            1,
+            9,
+            0,
+            3,
+            5
+          ],
+          [
+            8,
+            4,
+            6,
+            2,
+            7,
+            1,
+            6,
+            2,
+            1,
+            13
+          ],
+          [
+            3,
+            2,
+            9,
+            1,
+            19,
+            2,
+            9,
+            0,
+            1,
+            4
+          ],
+          [
+            5,
+            8,
+            1,
+            3,
+            6,
+            0,
+            9,
+            2,
+            1,
+            15
+          ],
+          [
+            6,
+            2,
+            6,
+            2,
+            18,
+            2,
+            9,
+            2,
+            0,
+            3
+          ],
+          [
+            8,
+            5,
+            2,
+            0,
+            6,
+            1,
+            7,
+            2,
+            0,
+            19
+          ],
+          [
+            23,
+            2,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            17,
+            5
+          ],
+          [
+            4,
+            4,
+            2,
+            2,
+            2,
+            1,
+            2,
+            0,
+            7,
+            26
+          ]
+        ],
+        "classifier_weight_parameters": 60,
+        "limitation": "Cross-fitted classifier scores on encoder-training images; not held-out representation quality"
+      },
+      "geometry": {
+        "count": 500,
+        "feature_dim": 6,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.0977120887423959,
+        "mean_row_l2": 0.9091391019674451,
+        "min_row_l2": 0.33352221711416835,
+        "max_row_l2": 1.5322032585472318,
+        "centered_numerical_rank": 6,
+        "covariance_entropy_effective_rank": 2.59809701304019,
+        "eigenvalue_tolerance": 2.4794852497605777e-12,
+        "mean_nonzero_row_pair_cosine": 0.9673358079639404,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    }
+  },
+  "paired": {
+    "four_2x2-minus-one_4x4": {
+      "count": 500,
+      "baseline_correct": 114,
+      "candidate_correct": 110,
+      "both_correct": 98,
+      "both_wrong": 374,
+      "recovered": 12,
+      "regressed": 16,
+      "predictions_changed": 78,
+      "accuracy_delta": -0.008,
+      "per_class": [
+        {
+          "label": 0,
+          "count": 50,
+          "baseline_correct": 25,
+          "candidate_correct": 23,
+          "recovered": 0,
+          "regressed": 2,
+          "accuracy_delta": -0.03999999910593033
+        },
+        {
+          "label": 1,
+          "count": 50,
+          "baseline_correct": 3,
+          "candidate_correct": 1,
+          "recovered": 0,
+          "regressed": 2,
+          "accuracy_delta": -0.03999999910593033
+        },
+        {
+          "label": 2,
+          "count": 50,
+          "baseline_correct": 0,
+          "candidate_correct": 0,
+          "recovered": 0,
+          "regressed": 0,
+          "accuracy_delta": 0.0
+        },
+        {
+          "label": 3,
+          "count": 50,
+          "baseline_correct": 5,
+          "candidate_correct": 9,
+          "recovered": 4,
+          "regressed": 0,
+          "accuracy_delta": 0.07999999821186066
+        },
+        {
+          "label": 4,
+          "count": 50,
+          "baseline_correct": 14,
+          "candidate_correct": 15,
+          "recovered": 3,
+          "regressed": 2,
+          "accuracy_delta": 0.019999999552965164
+        },
+        {
+          "label": 5,
+          "count": 50,
+          "baseline_correct": 11,
+          "candidate_correct": 8,
+          "recovered": 0,
+          "regressed": 3,
+          "accuracy_delta": -0.05999999865889549
+        },
+        {
+          "label": 6,
+          "count": 50,
+          "baseline_correct": 25,
+          "candidate_correct": 22,
+          "recovered": 0,
+          "regressed": 3,
+          "accuracy_delta": -0.05999999865889549
+        },
+        {
+          "label": 7,
+          "count": 50,
+          "baseline_correct": 2,
+          "candidate_correct": 3,
+          "recovered": 1,
+          "regressed": 0,
+          "accuracy_delta": 0.019999999552965164
+        },
+        {
+          "label": 8,
+          "count": 50,
+          "baseline_correct": 16,
+          "candidate_correct": 20,
+          "recovered": 4,
+          "regressed": 0,
+          "accuracy_delta": 0.07999999821186066
+        },
+        {
+          "label": 9,
+          "count": 50,
+          "baseline_correct": 13,
+          "candidate_correct": 9,
+          "recovered": 0,
+          "regressed": 4,
+          "accuracy_delta": -0.07999999821186066
+        }
+      ],
+      "baseline_prediction_counts": [
+        98,
+        25,
+        11,
+        14,
+        57,
+        56,
+        92,
+        19,
+        66,
+        62
+      ],
+      "candidate_prediction_counts": [
+        93,
+        18,
+        12,
+        34,
+        66,
+        46,
+        80,
+        24,
+        80,
+        47
+      ],
+      "confusion_delta": [
+        [
+          -2,
+          2,
+          0,
+          1,
+          0,
+          0,
+          -1,
+          -1,
+          3,
+          -2
+        ],
+        [
+          -1,
+          -2,
+          1,
+          1,
+          0,
+          -1,
+          -1,
+          3,
+          3,
+          -3
+        ],
+        [
+          -1,
+          0,
+          0,
+          6,
+          -3,
+          -3,
+          1,
+          1,
+          0,
+          -1
+        ],
+        [
+          0,
+          -2,
+          0,
+          4,
+          1,
+          -2,
+          -1,
+          1,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          -1,
+          -1
+        ],
+        [
+          0,
+          1,
+          0,
+          2,
+          3,
+          -3,
+          -3,
+          0,
+          1,
+          -1
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          2,
+          -1,
+          -3,
+          1,
+          0,
+          -1
+        ],
+        [
+          0,
+          -3,
+          0,
+          0,
+          3,
+          0,
+          -2,
+          1,
+          1,
+          0
+        ],
+        [
+          -1,
+          -2,
+          0,
+          2,
+          1,
+          0,
+          -2,
+          -1,
+          4,
+          -1
+        ],
+        [
+          0,
+          -2,
+          0,
+          2,
+          1,
+          0,
+          0,
+          0,
+          3,
+          -4
+        ]
+      ],
+      "limitation": "Descriptive differences on training rows with fixed classifier folds."
+    },
+    "one_4x4-minus-random": {
+      "count": 500,
+      "baseline_correct": 122,
+      "candidate_correct": 114,
+      "both_correct": 81,
+      "both_wrong": 345,
+      "recovered": 33,
+      "regressed": 41,
+      "predictions_changed": 169,
+      "accuracy_delta": -0.016,
+      "per_class": [
+        {
+          "label": 0,
+          "count": 50,
+          "baseline_correct": 21,
+          "candidate_correct": 25,
+          "recovered": 5,
+          "regressed": 1,
+          "accuracy_delta": 0.07999999821186066
+        },
+        {
+          "label": 1,
+          "count": 50,
+          "baseline_correct": 5,
+          "candidate_correct": 3,
+          "recovered": 3,
+          "regressed": 5,
+          "accuracy_delta": -0.03999999910593033
+        },
+        {
+          "label": 2,
+          "count": 50,
+          "baseline_correct": 10,
+          "candidate_correct": 0,
+          "recovered": 0,
+          "regressed": 10,
+          "accuracy_delta": -0.20000000298023224
+        },
+        {
+          "label": 3,
+          "count": 50,
+          "baseline_correct": 4,
+          "candidate_correct": 5,
+          "recovered": 2,
+          "regressed": 1,
+          "accuracy_delta": 0.019999999552965164
+        },
+        {
+          "label": 4,
+          "count": 50,
+          "baseline_correct": 14,
+          "candidate_correct": 14,
+          "recovered": 5,
+          "regressed": 5,
+          "accuracy_delta": 0.0
+        },
+        {
+          "label": 5,
+          "count": 50,
+          "baseline_correct": 5,
+          "candidate_correct": 11,
+          "recovered": 6,
+          "regressed": 0,
+          "accuracy_delta": 0.11999999731779099
+        },
+        {
+          "label": 6,
+          "count": 50,
+          "baseline_correct": 22,
+          "candidate_correct": 25,
+          "recovered": 5,
+          "regressed": 2,
+          "accuracy_delta": 0.05999999865889549
+        },
+        {
+          "label": 7,
+          "count": 50,
+          "baseline_correct": 7,
+          "candidate_correct": 2,
+          "recovered": 2,
+          "regressed": 7,
+          "accuracy_delta": -0.10000000149011612
+        },
+        {
+          "label": 8,
+          "count": 50,
+          "baseline_correct": 23,
+          "candidate_correct": 16,
+          "recovered": 1,
+          "regressed": 8,
+          "accuracy_delta": -0.14000000059604645
+        },
+        {
+          "label": 9,
+          "count": 50,
+          "baseline_correct": 11,
+          "candidate_correct": 13,
+          "recovered": 4,
+          "regressed": 2,
+          "accuracy_delta": 0.03999999910593033
+        }
+      ],
+      "baseline_prediction_counts": [
+        74,
+        25,
+        39,
+        23,
+        70,
+        35,
+        85,
+        40,
+        70,
+        39
+      ],
+      "candidate_prediction_counts": [
+        98,
+        25,
+        11,
+        14,
+        57,
+        56,
+        92,
+        19,
+        66,
+        62
+      ],
+      "confusion_delta": [
+        [
+          4,
+          -1,
+          -2,
+          1,
+          -1,
+          0,
+          0,
+          -1,
+          -3,
+          3
+        ],
+        [
+          0,
+          -2,
+          -1,
+          -3,
+          -3,
+          1,
+          1,
+          -3,
+          3,
+          7
+        ],
+        [
+          4,
+          0,
+          -10,
+          -2,
+          5,
+          3,
+          0,
+          -1,
+          0,
+          1
+        ],
+        [
+          1,
+          -1,
+          -1,
+          1,
+          -2,
+          1,
+          0,
+          -2,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          -5,
+          -1,
+          0,
+          2,
+          0,
+          -1,
+          3,
+          1
+        ],
+        [
+          3,
+          0,
+          -3,
+          -2,
+          -5,
+          6,
+          3,
+          -2,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          -2,
+          -1,
+          -2,
+          1,
+          3,
+          -2,
+          0,
+          1
+        ],
+        [
+          2,
+          1,
+          -3,
+          0,
+          -4,
+          4,
+          0,
+          -5,
+          0,
+          5
+        ],
+        [
+          6,
+          1,
+          0,
+          -1,
+          0,
+          2,
+          0,
+          -1,
+          -7,
+          0
+        ],
+        [
+          1,
+          2,
+          -1,
+          -1,
+          -1,
+          1,
+          0,
+          -3,
+          0,
+          2
+        ]
+      ],
+      "limitation": "Descriptive differences on training rows with fixed classifier folds."
+    },
+    "four_2x2-minus-random": {
+      "count": 500,
+      "baseline_correct": 122,
+      "candidate_correct": 110,
+      "both_correct": 79,
+      "both_wrong": 347,
+      "recovered": 31,
+      "regressed": 43,
+      "predictions_changed": 163,
+      "accuracy_delta": -0.024,
+      "per_class": [
+        {
+          "label": 0,
+          "count": 50,
+          "baseline_correct": 21,
+          "candidate_correct": 23,
+          "recovered": 3,
+          "regressed": 1,
+          "accuracy_delta": 0.03999999910593033
+        },
+        {
+          "label": 1,
+          "count": 50,
+          "baseline_correct": 5,
+          "candidate_correct": 1,
+          "recovered": 1,
+          "regressed": 5,
+          "accuracy_delta": -0.07999999821186066
+        },
+        {
+          "label": 2,
+          "count": 50,
+          "baseline_correct": 10,
+          "candidate_correct": 0,
+          "recovered": 0,
+          "regressed": 10,
+          "accuracy_delta": -0.20000000298023224
+        },
+        {
+          "label": 3,
+          "count": 50,
+          "baseline_correct": 4,
+          "candidate_correct": 9,
+          "recovered": 6,
+          "regressed": 1,
+          "accuracy_delta": 0.10000000149011612
+        },
+        {
+          "label": 4,
+          "count": 50,
+          "baseline_correct": 14,
+          "candidate_correct": 15,
+          "recovered": 5,
+          "regressed": 4,
+          "accuracy_delta": 0.019999999552965164
+        },
+        {
+          "label": 5,
+          "count": 50,
+          "baseline_correct": 5,
+          "candidate_correct": 8,
+          "recovered": 3,
+          "regressed": 0,
+          "accuracy_delta": 0.05999999865889549
+        },
+        {
+          "label": 6,
+          "count": 50,
+          "baseline_correct": 22,
+          "candidate_correct": 22,
+          "recovered": 4,
+          "regressed": 4,
+          "accuracy_delta": 0.0
+        },
+        {
+          "label": 7,
+          "count": 50,
+          "baseline_correct": 7,
+          "candidate_correct": 3,
+          "recovered": 2,
+          "regressed": 6,
+          "accuracy_delta": -0.07999999821186066
+        },
+        {
+          "label": 8,
+          "count": 50,
+          "baseline_correct": 23,
+          "candidate_correct": 20,
+          "recovered": 4,
+          "regressed": 7,
+          "accuracy_delta": -0.05999999865889549
+        },
+        {
+          "label": 9,
+          "count": 50,
+          "baseline_correct": 11,
+          "candidate_correct": 9,
+          "recovered": 3,
+          "regressed": 5,
+          "accuracy_delta": -0.03999999910593033
+        }
+      ],
+      "baseline_prediction_counts": [
+        74,
+        25,
+        39,
+        23,
+        70,
+        35,
+        85,
+        40,
+        70,
+        39
+      ],
+      "candidate_prediction_counts": [
+        93,
+        18,
+        12,
+        34,
+        66,
+        46,
+        80,
+        24,
+        80,
+        47
+      ],
+      "confusion_delta": [
+        [
+          2,
+          1,
+          -2,
+          2,
+          -1,
+          0,
+          -1,
+          -2,
+          0,
+          1
+        ],
+        [
+          -1,
+          -4,
+          0,
+          -2,
+          -3,
+          0,
+          0,
+          0,
+          6,
+          4
+        ],
+        [
+          3,
+          0,
+          -10,
+          4,
+          2,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          -3,
+          -1,
+          5,
+          -1,
+          -1,
+          -1,
+          -1,
+          0,
+          2
+        ],
+        [
+          1,
+          0,
+          -5,
+          0,
+          1,
+          2,
+          0,
+          -1,
+          2,
+          0
+        ],
+        [
+          3,
+          1,
+          -3,
+          0,
+          -2,
+          3,
+          0,
+          -2,
+          1,
+          -1
+        ],
+        [
+          2,
+          1,
+          -2,
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0
+        ],
+        [
+          2,
+          -2,
+          -3,
+          0,
+          -1,
+          4,
+          -2,
+          -4,
+          1,
+          5
+        ],
+        [
+          5,
+          -1,
+          0,
+          1,
+          1,
+          2,
+          -2,
+          -2,
+          -3,
+          -1
+        ],
+        [
+          1,
+          0,
+          -1,
+          1,
+          0,
+          1,
+          0,
+          -3,
+          3,
+          -2
+        ]
+      ],
+      "limitation": "Descriptive differences on training rows with fixed classifier folds."
+    }
+  },
+  "partition": "train",
+  "validation_images_indexed": false,
+  "test_images_indexed": false,
+  "limitation": "Exploratory classifier cross-fitting on fixed training rows. A single encoder seed and unequal predictor computation limit comparison. Independent confirmation is pending.",
+  "protocol_sha256": "9f61329e75f33df0ad4720d2ac729ebf2e454e74e958d3a63187f05b8869c9cb",
+  "existing_exposure_file_sha256": "a543abcf2bc09acd4d0561dfaf2f9ff68bcad9038e8883b967afa481ddf70bf5"
+}

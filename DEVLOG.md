@@ -1,5 +1,34 @@
 # Development log
 
+## November 11, 2026
+
+- Added verified CIFAR-10 training reads and deterministic image-order replay.
+  The multi-block API and CLI bind checkpoints to the manifest, mask schedule,
+  actual sampled images, model, optimizer and random state. A real 2+2-update
+  resume matched all fields of a continuous four-update checkpoint.
+- Added frozen encoder loading with source, configuration, initialization and
+  checkpoint checks. The paired driver validates existing arms before training
+  a missing arm. The fixed classifier folds use the same training rows for both
+  geometries, a matching random encoder and RGB statistics.
+- Committed the bounded protocol before training. One 4×4 block and four 2×2
+  blocks each used 32 updates and the same 128 images in the same order.
+  Four blocks scored 22.0% versus 22.8% for one block, 24.4% for random and
+  20.8% for RGB statistics. One scoring row overlaps encoder training.
+  Four blocks process 160 predictor tokens per image versus 52. The result
+  describes one seed and one fitting selection.
+  [Pilot results and reproduction](experiments/MULTIBLOCK-CIFAR-2026-11-11.md)
+- Recomputed the exact report from both saved encoders with encoder training
+  disabled. Both passes indexed only the declared training rows. The prior
+  objective study's 358 artifact hashes remained unchanged. Only aggregate
+  scores and provenance hashes are published.
+- All 282 local tests passed on Python 3.12.14 with Torch 2.8.0 (552.716 s).
+  The seeded mask demo, historical trainer, four-block synthetic smoke,
+  protocol preflight, aggregate arithmetic and whitespace checks passed.
+- Interview explanation — “I matched initialization, image order and visible
+  and target token counts, then compared frozen encoders with a random control
+  on identical folds. The extra predictor passes came with lower accuracy in
+  this small pilot.”
+
 ## November 8, 2026
 
 - Added a bounded, seeded multi-target-tile sampler with complete partition
