@@ -189,3 +189,38 @@ class MultiBlockCifarTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'declared training recipe'):
             train_pair(data, folder, pair_spec(data, steps=3, batch_size=2))
         self.assertEqual(8, len(Fixture.accessed))
+
+    def test_matched_evaluation_uses_common_folds_and_reads_each_fitting_image_once(self):
+        from jepa_lab.selection import make_pilot
+        from jepa_lab.variants.multiblock_evaluation import evaluate_pair
+        from jepa_lab.variants.multiblock_pair import pair_spec, train_pair
+
+        data = CifarTrainingData(self.root, self.path)
+        selection = make_pilot(data.manifest, data.labels, train_per_class=5, validation_per_class=2)
+        folder = self.root/'evaluation'
+        spec = pair_spec(data, steps=2, batch_size=2)
+        train_pair(data, folder, spec)
+        trained = {index for _, index in Fixture.accessed}
+        Fixture.accessed.clear()
+        report = evaluate_pair(data, folder, spec, selection)
+        fitting = selection['partitions']['train']['indices']
+        self.assertEqual([(True, index) for index in fitting], Fixture.accessed)
+        self.assertEqual(50, report['scoring_rows'])
+        self.assertEqual(len(trained.intersection(fitting)), report['scoring_rows_seen_in_encoder_training'])
+        self.assertEqual([52, 160], [row['predictor_tokens_per_image'] for row in report['arms'].values()])
+        self.assertEqual({'one_4x4', 'four_2x2', 'random', 'rgb_statistics'}, set(report['scores']))
+        for name, source in report['scores'].items():
+            score = source['score']
+            self.assertEqual(10*(6 if name == 'rgb_statistics' else 32), score['classifier_weight_parameters'])
+            self.assertEqual([10]*5, [fold['scoring_count'] for fold in score['folds']])
+            self.assertEqual(score['correct'], sum(fold['correct'] for fold in score['folds']))
+        errors = report['paired']['four_2x2-minus-one_4x4']
+        self.assertEqual(errors['candidate_correct']-errors['baseline_correct'],
+                         errors['recovered']-errors['regressed'])
+        self.assertFalse(report['validation_images_indexed'])
+        self.assertFalse(report['test_images_indexed'])
+        Fixture.accessed.clear()
+        selection['partitions']['train']['indices'][0] = selection['partitions']['validation']['indices'][0]
+        with self.assertRaisesRegex(ValueError, 'fixed balanced protocol'):
+            evaluate_pair(data, folder, spec, selection)
+        self.assertEqual([], Fixture.accessed)
