@@ -1,4 +1,4 @@
-"""Bounded synthetic multi-block training with exact, recipe-bound resume."""
+"""Bounded CPU multi-block training with exact, recipe-bound resume."""
 
 import argparse
 from dataclasses import asdict
@@ -11,9 +11,12 @@ import platform
 import torch
 from torch.nn import functional as F
 
+from ..cifar10 import patchify_rgb
 from ..cifar10_train import atomic_checkpoint
+from ..embeddings import rgb_config
 from ..model import JEPA, ModelConfig
 from ..train import embedding_stats, synthetic_batch
+from .cifar_batches import CifarTrainingData
 from .multiblock_masks import multi_block_mask
 from .multiblock_model import multi_block_forward
 
@@ -39,18 +42,22 @@ def _mask_digest(masks):
 
 def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2, target_cols=2,
                      context_fraction=.75, learning_rate=.001, momentum=.99, config=None,
-                     checkpoint=None, resume=None):
+                     checkpoint=None, resume=None, training_data=None):
     if (type(steps) is not int or not 1 <= steps <= 100 or type(batch_size) is not int
             or not 1 <= batch_size <= 8 or type(seed) is not int or not 0 <= seed < 2**63
             or type(learning_rate) not in (int, float) or not math.isfinite(learning_rate)
             or not 0 < learning_rate <= .1 or type(momentum) not in (int, float)
             or not math.isfinite(momentum) or not 0 <= momentum <= 1 or torch.get_num_threads() != 1):
         raise ValueError('Use 1-100 additional steps, batch 1-8, valid seed/rates and one CPU thread')
-    config = ModelConfig() if config is None else config
+    if training_data is not None and not isinstance(training_data, CifarTrainingData):
+        raise ValueError('Pass verified CIFAR-10 training data')
+    config = ModelConfig(patch_dim=48 if training_data is not None else 4) if config is None else config
     if (not isinstance(config, ModelConfig) or config.rows*config.cols > 64 or config.patch_dim > 48
             or not 8 <= config.embedding_dim <= 64 or config.heads > 8
             or config.encoder_depth > 2 or config.predictor_depth > 2):
-        raise ValueError('Synthetic variant allows <=64 patches, patch width <=48 and embedding width 8-64, depths <=2')
+        raise ValueError('Multi-block training allows <=64 patches, patch width <=48 and embedding width 8-64, depths <=2')
+    if training_data is not None:
+        rgb_config(config)
     settings = dict(seed=seed, batch_size=batch_size, learning_rate=learning_rate, momentum=momentum,
         mask=dict(blocks=blocks, target_rows=target_rows, target_cols=target_cols, context_fraction=context_fraction),
         sampler='disjoint_target_tiles_v1', optimizer='AdamW, weight_decay=.01', gradient_clip_norm=1.,
@@ -58,13 +65,16 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
     _masks(config, settings, 0)  # Validate the recipe before model allocation or checkpoint writes.
     identity = dict(format_version=1, kind='synthetic_multiblock_v1', config=asdict(config), settings=settings,
         runtime=dict(torch=str(torch.__version__), python=platform.python_version(), cpu_threads=1), code_sha256=_sources())
+    if training_data is not None:
+        identity.update(kind='cifar10_multiblock_v1', dataset='CIFAR-10',
+                        manifest_sha256=training_data.manifest['manifest_sha256'])
     start, history, saved = 0, [], None
     if checkpoint is not None and Path(checkpoint).exists() and (resume is None or Path(checkpoint).resolve() != Path(resume).resolve()):
         raise ValueError('Checkpoint destination already exists; resume it or choose a new path')
     if resume is not None:
         path = Path(resume)
         if path.stat().st_size > 64*1024*1024:
-            raise ValueError('Synthetic checkpoint exceeds 64 MiB')
+            raise ValueError('Multi-block checkpoint exceeds 64 MiB')
         saved = torch.load(path, map_location='cpu', weights_only=True)
         fields = set(identity) | {'step', 'model', 'optimizer', 'data_rng', 'torch_rng', 'history'}
         if (not isinstance(saved, dict) or set(saved) != fields
@@ -79,26 +89,37 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
         json.dumps(saved['history'], allow_nan=False)
         start, history = saved['step'], list(saved['history'])
     if start + steps > 1000:
-        raise ValueError('Synthetic checkpoint trajectory is bounded to 1000 total steps')
+        raise ValueError('Multi-block checkpoint trajectory is bounded to 1000 total steps')
+    if training_data is None:
+        generator = torch.Generator().manual_seed(seed)
+    else:
+        generator = training_data.replay_sampling(history, seed=seed, batch_size=batch_size)
+        if saved is not None and saved['data_rng'] != generator.getstate():
+            raise ValueError('Checkpoint sampling RNG differs from its observed image order')
     initial_count = len(history)
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(seed)
         model = JEPA(config).train()
         optimizer = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad),
                                      lr=learning_rate, weight_decay=.01)
-        generator = torch.Generator().manual_seed(seed)
         if saved is not None:
             try:
                 if saved['optimizer']['param_groups'] != optimizer.state_dict()['param_groups']:
                     raise ValueError('Saved optimizer settings differ from the declared recipe')
                 model.load_state_dict(saved['model'])
                 optimizer.load_state_dict(saved['optimizer'])
-                generator.set_state(saved['data_rng'])
+                if training_data is None:
+                    generator.set_state(saved['data_rng'])
                 torch.set_rng_state(saved['torch_rng'])
             except (ValueError, TypeError, RuntimeError, KeyError) as exc:
                 raise ValueError('Invalid multi-block model, optimizer or RNG state') from exc
         for step in range(start, start+steps):
-            patches = synthetic_batch(config, batch_size, generator)
+            if training_data is None:
+                patches = synthetic_batch(config, batch_size, generator)
+            else:
+                indices = generator.sample(training_data.indices, batch_size)
+                images, _ = training_data.read(indices)
+                patches = patchify_rgb(images)
             masks = _masks(config, settings, step)
             optimizer.zero_grad(set_to_none=True)
             predictions, targets = multi_block_forward(model, patches, masks)
@@ -115,16 +136,24 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
                 gradient_norm=float(norm), mask_sha256=_mask_digest(masks), context_tokens=len(masks[0].context),
                 target_tokens_per_image=sum(len(block) for block in masks[0].blocks),
                 predictor_passes=blocks, prediction=embedding_stats(predictions), target=embedding_stats(targets))
+            if training_data is not None:
+                row['train_indices'] = indices
             json.dumps(row, allow_nan=False)
             history.append(row)
         if checkpoint is not None:
+            data_rng = generator.get_state() if training_data is None else generator.getstate()
             atomic_checkpoint(Path(checkpoint), dict(identity, step=start+steps, model=model.state_dict(),
-                optimizer=optimizer.state_dict(), data_rng=generator.get_state(),
+                optimizer=optimizer.state_dict(), data_rng=data_rng,
                 torch_rng=torch.get_rng_state(), history=history))
-    return dict(dataset='synthetic spatial patterns', config=identity['config'], settings=settings,
+    result = dict(dataset='synthetic spatial patterns', config=identity['config'], settings=settings,
         runtime=identity['runtime'], start_step=start, completed_step=start+steps, history=history[initial_count:],
         limitation='Synthetic execution/resume check only; no public-data training or embedding-quality result. '
                    'Multiple predictor passes change compute; equal steps do not imply equal budget.')
+    if training_data is not None:
+        result.update(dataset='CIFAR-10', manifest_sha256=identity['manifest_sha256'],
+                      limitation='Training-only execution. Embedding quality requires downstream evaluation. '
+                                 'Predictor computation varies with the number and size of blocks.')
+    return result
 
 
 def main():

@@ -1,4 +1,5 @@
 import json
+import io
 from pathlib import Path
 import random
 import tempfile
@@ -8,11 +9,15 @@ from unittest.mock import patch
 import torch
 
 from jepa_lab.cifar10 import make_manifest
+from jepa_lab.model import ModelConfig
 from jepa_lab.variants.cifar_batches import CifarTrainingData
+from jepa_lab.variants.multiblock_train import train_multiblock
 from test_cifar10_train import Fixture
+import test_multiblock_train
 
 
 class MultiBlockCifarTests(unittest.TestCase):
+    assert_state_equal = test_multiblock_train.MultiBlockTrainTests.assert_state_equal
     @classmethod
     def setUpClass(cls):
         torch.set_num_threads(1)
@@ -59,4 +64,45 @@ class MultiBlockCifarTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'image order'):
             data.replay_sampling(history, seed=29, batch_size=4)
         self.assertEqual(original, random.getstate())
+        self.assertEqual([], Fixture.accessed)
+
+    def test_public_training_exact_resume_and_training_split_only(self):
+        data = CifarTrainingData(self.root, self.path)
+        whole, split = self.root/'whole.pt', self.root/'split.pt'
+        config = ModelConfig(patch_dim=48, embedding_dim=16, encoder_depth=1)
+        options = dict(training_data=data, config=config, batch_size=2, blocks=4)
+        initial_rng = torch.get_rng_state().clone()
+        full = train_multiblock(steps=3, checkpoint=whole, **options)
+        first = train_multiblock(steps=1, checkpoint=split, **options)
+        last = train_multiblock(steps=2, checkpoint=split, resume=split, **options)
+        self.assertEqual(full['history'], first['history']+last['history'])
+        self.assert_state_equal(torch.load(whole, weights_only=True), torch.load(split, weights_only=True))
+        self.assertTrue(torch.equal(initial_rng, torch.get_rng_state()))
+        self.assertEqual(data.manifest['manifest_sha256'], full['manifest_sha256'])
+        scheduled = [index for row in full['history'] for index in row['train_indices']]
+        self.assertEqual([(True, index) for index in scheduled*2], Fixture.accessed)
+
+    def test_public_resume_rejects_changed_manifest_image_order_and_rng_before_sampling(self):
+        data = CifarTrainingData(self.root, self.path)
+        path = self.root/'cifar.pt'
+        options = dict(training_data=data, steps=1, batch_size=2, checkpoint=path)
+        train_multiblock(**options)
+        original = path.read_bytes()
+        Fixture.accessed.clear()
+        changed = make_manifest(Fixture(self.root), Fixture(self.root, train=False), seed=31)
+        self.path.write_text(json.dumps(changed))
+        other = CifarTrainingData(self.root, self.path)
+        with self.assertRaisesRegex(ValueError, 'Checkpoint'):
+            train_multiblock(**(options | dict(resume=path, training_data=other)))
+        for field in ('history', 'data_rng'):
+            state = torch.load(io.BytesIO(original), weights_only=True)
+            if field == 'history':
+                state[field][0]['train_indices'].reverse()
+            else:
+                state[field] = random.Random(1).getstate()
+            torch.save(state, path)
+            before = path.read_bytes()
+            with self.assertRaisesRegex(ValueError, 'image order'):
+                train_multiblock(resume=path, **options)
+            self.assertEqual(before, path.read_bytes())
         self.assertEqual([], Fixture.accessed)
