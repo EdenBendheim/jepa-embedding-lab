@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "kind": "matched_multiblock_training_row_diagnostic",
+  "source_sha256": "971eb93bb97d4fc6a198be4c5744ef9be7b5621d6317bfc4c97c350ab4740d08",
+  "manifest_file_sha256": "97f4201d5d57ee4fcf58e98e291ad18a54a03f3995571213907e2e8b619893cc",
+  "pilot_selection_file_sha256": "a1e87b95e7fee9137c1568d26cd85d7845022b1a77524fd86aa49f68365265bf",
+  "existing_exposure_file_sha256": "a543abcf2bc09acd4d0561dfaf2f9ff68bcad9038e8883b967afa481ddf70bf5",
+  "runtime": {"torch": "2.8.0", "python": "3.12.14", "cpu_threads": 1},
+  "steps": 32,
+  "batch_size": 4,
+  "seed": 29,
+  "config": {
+    "rows": 8,
+    "cols": 8,
+    "patch_dim": 48,
+    "embedding_dim": 32,
+    "heads": 4,
+    "encoder_depth": 2,
+    "predictor_depth": 1,
+    "position_encoding": "learned",
+    "position_scale": 1.0
+  },
+  "scoring_rows": 500,
+  "folds": 5,
+  "fold_seed": 29,
+  "ridge_alpha": 0.1,
+  "partition": "train"
+}
