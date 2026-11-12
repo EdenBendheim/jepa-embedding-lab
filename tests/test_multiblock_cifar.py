@@ -1,5 +1,6 @@
-import json
+from contextlib import redirect_stderr, redirect_stdout
 import io
+import json
 from pathlib import Path
 import random
 import tempfile
@@ -11,7 +12,7 @@ import torch
 from jepa_lab.cifar10 import make_manifest
 from jepa_lab.model import ModelConfig
 from jepa_lab.variants.cifar_batches import CifarTrainingData
-from jepa_lab.variants.multiblock_train import train_multiblock
+from jepa_lab.variants.multiblock_train import main, train_multiblock
 from test_cifar10_train import Fixture
 import test_multiblock_train
 
@@ -106,3 +107,24 @@ class MultiBlockCifarTests(unittest.TestCase):
                 train_multiblock(resume=path, **options)
             self.assertEqual(before, path.read_bytes())
         self.assertEqual([], Fixture.accessed)
+
+    def test_cli_explicit_public_inputs_resume_and_input_path_protection(self):
+        dataset = self.root/'dataset'
+        checkpoint, metrics = self.root/'run.pt', self.root/'metrics.json'
+        args = ['multi-block', '--cifar-root', str(dataset), '--manifest', str(self.path),
+                '--steps', '1', '--checkpoint', str(checkpoint)]
+        original = self.path.read_bytes()
+        for invalid in (args[:3], args+['--output', str(self.path)],
+                        args+['--output', str(dataset/'data_batch_1.bin')]):
+            with patch('sys.argv', invalid), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+                main()
+        self.assertEqual([], Fixture.accessed)
+        self.assertEqual(original, self.path.read_bytes())
+        with patch('sys.argv', args+['--output', str(metrics)]), redirect_stdout(io.StringIO()):
+            main()
+        with patch('sys.argv', args+['--resume', str(checkpoint), '--output', str(metrics)]), redirect_stdout(io.StringIO()):
+            main()
+        result = json.loads(metrics.read_text())
+        self.assertEqual('CIFAR-10', result['dataset'])
+        self.assertEqual(2, result['completed_step'])
+        self.assertEqual(8, len(Fixture.accessed))

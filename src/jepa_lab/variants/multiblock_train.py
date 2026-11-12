@@ -167,15 +167,27 @@ def main():
     parser.add_argument('--context-fraction', type=float, default=.75)
     parser.add_argument('--learning-rate', type=float, default=.001)
     parser.add_argument('--momentum', type=float, default=.99)
+    parser.add_argument('--cifar-root', type=Path, help='Local CIFAR-10 binary directory')
+    parser.add_argument('--manifest', type=Path, help='Fixed CIFAR-10 manifest, required with --cifar-root')
     parser.add_argument('--checkpoint', type=Path)
     parser.add_argument('--resume', type=Path)
     parser.add_argument('--output', type=Path, help='Local aggregate metrics JSON, outside checkpoint destinations')
     args = parser.parse_args()
     torch.set_num_threads(1)
     try:
+        if (args.cifar_root is None) != (args.manifest is None):
+            raise ValueError('Specify --cifar-root and --manifest together')
         if args.output and any(args.output.resolve() == path.resolve() for path in (args.resume, args.checkpoint) if path):
             raise ValueError('Metrics output cannot overwrite a checkpoint')
-        result = train_multiblock(**{k: v for k, v in vars(args).items() if k != 'output'})
+        training_data = None
+        if args.cifar_root is not None:
+            for destination in (args.checkpoint, args.output):
+                if destination is not None and (destination.resolve() == args.manifest.resolve()
+                        or destination.resolve().is_relative_to(args.cifar_root.resolve())):
+                    raise ValueError('Write checkpoints and metrics outside the CIFAR-10 inputs')
+            training_data = CifarTrainingData(args.cifar_root, args.manifest)
+        result = train_multiblock(training_data=training_data,
+            **{k: v for k, v in vars(args).items() if k not in ('output', 'cifar_root', 'manifest')})
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(json.dumps(result, indent=2, allow_nan=False)+'\n')

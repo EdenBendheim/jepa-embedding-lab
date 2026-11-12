@@ -277,6 +277,21 @@ See [the experiment protocol](experiments/CIFAR10.md) and [version-one provenanc
 
 ## Resume a public-data training pilot
 
+For the tiled target variant, pass both dataset paths to the multi-block trainer.
+
+```sh
+PYTHONPATH=src .venv/bin/python -m jepa_lab.variants.multiblock_train \
+  --cifar-root data/cifar-10-batches-bin --manifest runs/cifar10-manifest.json \
+  --blocks 4 --steps 10 --checkpoint runs/multiblock/model.pt \
+  --output runs/multiblock/metrics.json
+```
+
+Add `--resume runs/multiblock/model.pt` with the same settings to continue that
+trajectory. The variant uses RGB patches, one CPU thread, and the fixed training
+split. Its checkpoint stores the actual sampled indices and validates their
+order and sampler state before resume. Keep local metrics and checkpoints
+outside the dataset directory.
+
 ```sh
 export PYTHONPATH=src
 .venv/bin/python -m jepa_lab.cifar10_train data/cifar-10-batches-bin \
