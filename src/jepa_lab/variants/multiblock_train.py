@@ -3,6 +3,7 @@
 import argparse
 from dataclasses import asdict
 import hashlib
+import io
 import json
 import math
 from pathlib import Path
@@ -40,15 +41,13 @@ def _mask_digest(masks):
     return _digest([dict(context=mask.context, blocks=mask.blocks, unused=mask.unused) for mask in masks])
 
 
-def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2, target_cols=2,
-                     context_fraction=.75, learning_rate=.001, momentum=.99, config=None,
-                     checkpoint=None, resume=None, training_data=None):
-    if (type(steps) is not int or not 1 <= steps <= 100 or type(batch_size) is not int
-            or not 1 <= batch_size <= 8 or type(seed) is not int or not 0 <= seed < 2**63
+def _recipe(*, batch_size, seed, blocks, target_rows, target_cols, context_fraction,
+            learning_rate, momentum, config, training_data):
+    if (type(batch_size) is not int or not 1 <= batch_size <= 8 or type(seed) is not int or not 0 <= seed < 2**63
             or type(learning_rate) not in (int, float) or not math.isfinite(learning_rate)
             or not 0 < learning_rate <= .1 or type(momentum) not in (int, float)
             or not math.isfinite(momentum) or not 0 <= momentum <= 1 or torch.get_num_threads() != 1):
-        raise ValueError('Use 1-100 additional steps, batch 1-8, valid seed/rates and one CPU thread')
+        raise ValueError('Use batch 1-8, valid seed/rates and one CPU thread')
     if training_data is not None and not isinstance(training_data, CifarTrainingData):
         raise ValueError('Pass verified CIFAR-10 training data')
     config = ModelConfig(patch_dim=48 if training_data is not None else 4) if config is None else config
@@ -68,34 +67,65 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
     if training_data is not None:
         identity.update(kind='cifar10_multiblock_v1', dataset='CIFAR-10',
                         manifest_sha256=training_data.manifest['manifest_sha256'])
+    return config, identity
+
+
+def _read_checkpoint(path, *, expected_sha256=None):
+    with Path(path).open('rb') as stream:
+        payload = stream.read(64*1024*1024+1)
+    if len(payload) > 64*1024*1024:
+        raise ValueError('Multi-block checkpoint exceeds 64 MiB')
+    checksum = hashlib.sha256(payload).hexdigest()
+    if expected_sha256 is not None and checksum != expected_sha256:
+        raise ValueError('Multi-block checkpoint checksum differs')
+    return checksum, torch.load(io.BytesIO(payload), map_location='cpu', weights_only=True)
+
+
+def _validate_history(saved, identity, config):
+    fields = set(identity) | {'step', 'model', 'optimizer', 'data_rng', 'torch_rng', 'history'}
+    if (not isinstance(saved, dict) or set(saved) != fields
+            or any(saved[key] != value for key, value in identity.items())
+            or type(saved['step']) is not int or not 1 <= saved['step'] <= 1000
+            or not isinstance(saved['history'], list) or len(saved['history']) != saved['step']):
+        raise ValueError('Checkpoint variant, model, recipe, runtime, source or journal range differs')
+    history = saved['history']
+    for step, row in enumerate(history, 1):
+        if (not isinstance(row, dict) or type(row.get('step')) is not int or row['step'] != step
+                or row.get('mask_sha256') != _mask_digest(_masks(config, identity['settings'], step-1))):
+            raise ValueError('Checkpoint journal differs from its deterministic mask schedule')
+    json.dumps(history, allow_nan=False)
+    return list(history)
+
+
+def _public_sampler(data, settings, history, saved):
+    generator = data.replay_sampling(history, seed=settings['seed'], batch_size=settings['batch_size'])
+    if saved is not None and saved['data_rng'] != generator.getstate():
+        raise ValueError('Checkpoint sampling RNG differs from its observed image order')
+    return generator
+
+
+def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2, target_cols=2,
+                     context_fraction=.75, learning_rate=.001, momentum=.99, config=None,
+                     checkpoint=None, resume=None, training_data=None):
+    if type(steps) is not int or not 1 <= steps <= 100:
+        raise ValueError('Use 1-100 additional multi-block training steps')
+    config, identity = _recipe(batch_size=batch_size, seed=seed, blocks=blocks, target_rows=target_rows,
+        target_cols=target_cols, context_fraction=context_fraction, learning_rate=learning_rate,
+        momentum=momentum, config=config, training_data=training_data)
+    settings = identity['settings']
     start, history, saved = 0, [], None
     if checkpoint is not None and Path(checkpoint).exists() and (resume is None or Path(checkpoint).resolve() != Path(resume).resolve()):
         raise ValueError('Checkpoint destination already exists; resume it or choose a new path')
     if resume is not None:
-        path = Path(resume)
-        if path.stat().st_size > 64*1024*1024:
-            raise ValueError('Multi-block checkpoint exceeds 64 MiB')
-        saved = torch.load(path, map_location='cpu', weights_only=True)
-        fields = set(identity) | {'step', 'model', 'optimizer', 'data_rng', 'torch_rng', 'history'}
-        if (not isinstance(saved, dict) or set(saved) != fields
-                or any(saved[key] != value for key, value in identity.items())
-                or type(saved['step']) is not int or not 1 <= saved['step'] <= 1000
-                or not isinstance(saved['history'], list) or len(saved['history']) != saved['step']):
-            raise ValueError('Checkpoint variant, model, recipe, runtime, source or journal range differs')
-        for step, row in enumerate(saved['history'], 1):
-            if (not isinstance(row, dict) or type(row.get('step')) is not int or row['step'] != step
-                    or row.get('mask_sha256') != _mask_digest(_masks(config, settings, step-1))):
-                raise ValueError('Checkpoint journal differs from its deterministic mask schedule')
-        json.dumps(saved['history'], allow_nan=False)
-        start, history = saved['step'], list(saved['history'])
+        _, saved = _read_checkpoint(resume)
+        history = _validate_history(saved, identity, config)
+        start = saved['step']
     if start + steps > 1000:
         raise ValueError('Multi-block checkpoint trajectory is bounded to 1000 total steps')
     if training_data is None:
         generator = torch.Generator().manual_seed(seed)
     else:
-        generator = training_data.replay_sampling(history, seed=seed, batch_size=batch_size)
-        if saved is not None and saved['data_rng'] != generator.getstate():
-            raise ValueError('Checkpoint sampling RNG differs from its observed image order')
+        generator = _public_sampler(training_data, settings, history, saved)
     initial_count = len(history)
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(seed)

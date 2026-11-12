@@ -128,3 +128,38 @@ class MultiBlockCifarTests(unittest.TestCase):
         self.assertEqual('CIFAR-10', result['dataset'])
         self.assertEqual(2, result['completed_step'])
         self.assertEqual(8, len(Fixture.accessed))
+
+    def test_frozen_encoder_validates_exact_checkpoint_and_replays_without_image_access(self):
+        from jepa_lab.embeddings import image_embeddings
+        from jepa_lab.variants.multiblock_features import load_cifar_encoder
+
+        data = CifarTrainingData(self.root, self.path)
+        checkpoint = self.root/'frozen.pt'
+        result = train_multiblock(training_data=data, steps=1, checkpoint=checkpoint)
+        original = checkpoint.read_bytes()
+        Fixture.accessed.clear()
+        rng = torch.get_rng_state().clone()
+        model, metadata, history = load_cifar_encoder(checkpoint, data)
+        self.assertEqual(result['history'], history)
+        self.assertEqual(1, metadata['completed_steps'])
+        self.assertFalse(model.training)
+        self.assertFalse(any(parameter.requires_grad for parameter in model.parameters()))
+        self.assertTrue(torch.equal(rng, torch.get_rng_state()))
+        embeddings = image_embeddings(model, torch.zeros(2, 3, 32, 32, dtype=torch.uint8))
+        self.assertEqual((2, 32), tuple(embeddings.shape))
+        self.assertTrue(torch.isfinite(embeddings).all())
+        with self.assertRaisesRegex(ValueError, 'checksum'):
+            load_cifar_encoder(checkpoint, data, expected_sha256='0'*64)
+
+        for field in ('kind', 'manifest_sha256', 'history', 'model'):
+            state = torch.load(io.BytesIO(original), weights_only=True)
+            if field == 'history':
+                state[field][0]['train_indices'].reverse()
+            elif field == 'model':
+                next(iter(state[field].values())).fill_(float('nan'))
+            else:
+                state[field] = 'changed'
+            torch.save(state, checkpoint)
+            with self.assertRaises(ValueError):
+                load_cifar_encoder(checkpoint, data)
+        self.assertEqual([], Fixture.accessed)
