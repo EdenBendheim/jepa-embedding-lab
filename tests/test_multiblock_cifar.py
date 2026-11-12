@@ -163,3 +163,29 @@ class MultiBlockCifarTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 load_cifar_encoder(checkpoint, data)
         self.assertEqual([], Fixture.accessed)
+
+    def test_matched_pair_reuses_completed_arm_after_interruption(self):
+        from jepa_lab.variants.multiblock_pair import pair_spec, train_pair, verify_pair
+
+        data = CifarTrainingData(self.root, self.path)
+        folder = self.root/'pair'
+        spec = pair_spec(data, steps=2, batch_size=2)
+        def interrupt(**options):
+            if options['blocks'] == 4:
+                raise RuntimeError('interrupted second arm')
+            return train_multiblock(**options)
+        with patch('jepa_lab.variants.multiblock_pair.train_multiblock', side_effect=interrupt), \
+                self.assertRaisesRegex(RuntimeError, 'second arm'):
+            train_pair(data, folder, spec)
+        first = (folder/'one_4x4.pt').read_bytes()
+        self.assertEqual(4, len(Fixture.accessed))
+        receipt = train_pair(data, folder, spec)
+        self.assertEqual(first, (folder/'one_4x4.pt').read_bytes())
+        self.assertEqual(Fixture.accessed[:4], Fixture.accessed[4:])
+        arms, verified = verify_pair(data, folder, spec)
+        self.assertEqual(receipt, verified)
+        self.assertEqual(8, len(Fixture.accessed))
+        self.assertEqual([1, 4], [arm[2][0]['predictor_passes'] for arm in arms.values()])
+        with self.assertRaisesRegex(ValueError, 'declared training recipe'):
+            train_pair(data, folder, pair_spec(data, steps=3, batch_size=2))
+        self.assertEqual(8, len(Fixture.accessed))

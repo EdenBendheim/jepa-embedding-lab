@@ -31,6 +31,14 @@ def _sources():
     return {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob('*.py'))}
 
 
+def _model_digest(model):
+    digest = hashlib.sha256()
+    for name, tensor in sorted(model.state_dict().items()):
+        digest.update(json.dumps([name, str(tensor.dtype), list(tensor.shape)]).encode())
+        digest.update(tensor.contiguous().numpy().tobytes())
+    return digest.hexdigest()
+
+
 def _masks(config, settings, step):
     return [multi_block_mask(config.rows, config.cols, **settings['mask'],
             seed=(settings['seed'] + step*settings['batch_size'] + image) % (2**63))
@@ -83,6 +91,8 @@ def _read_checkpoint(path, *, expected_sha256=None):
 
 def _validate_history(saved, identity, config):
     fields = set(identity) | {'step', 'model', 'optimizer', 'data_rng', 'torch_rng', 'history'}
+    if identity['kind'] == 'cifar10_multiblock_v1':
+        fields.add('initial_state_sha256')
     if (not isinstance(saved, dict) or set(saved) != fields
             or any(saved[key] != value for key, value in identity.items())
             or type(saved['step']) is not int or not 1 <= saved['step'] <= 1000
@@ -130,10 +140,13 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(seed)
         model = JEPA(config).train()
+        initial_state = {} if training_data is None else dict(initial_state_sha256=_model_digest(model))
         optimizer = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad),
                                      lr=learning_rate, weight_decay=.01)
         if saved is not None:
             try:
+                if any(saved[key] != value for key, value in initial_state.items()):
+                    raise ValueError('Saved initialization differs from the declared seed and architecture')
                 if saved['optimizer']['param_groups'] != optimizer.state_dict()['param_groups']:
                     raise ValueError('Saved optimizer settings differ from the declared recipe')
                 model.load_state_dict(saved['model'])
@@ -172,7 +185,7 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
             history.append(row)
         if checkpoint is not None:
             data_rng = generator.get_state() if training_data is None else generator.getstate()
-            atomic_checkpoint(Path(checkpoint), dict(identity, step=start+steps, model=model.state_dict(),
+            atomic_checkpoint(Path(checkpoint), dict(identity | initial_state, step=start+steps, model=model.state_dict(),
                 optimizer=optimizer.state_dict(), data_rng=data_rng,
                 torch_rng=torch.get_rng_state(), history=history))
     result = dict(dataset='synthetic spatial patterns', config=identity['config'], settings=settings,
