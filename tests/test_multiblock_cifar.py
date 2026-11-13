@@ -230,3 +230,30 @@ class MultiBlockCifarTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'fixed balanced protocol'):
             evaluate_pair(data, folder, spec, selection)
         self.assertEqual([], Fixture.accessed)
+
+    def test_grouping_comparison_shares_masks_and_scores_both_arms_on_same_rows(self):
+        from jepa_lab.selection import make_pilot
+        from jepa_lab.variants.multiblock_evaluation import evaluate_pair
+        from jepa_lab.variants.multiblock_pair import pair_spec, train_pair, verify_pair
+        from jepa_lab.variants.multiblock_train import _digest
+
+        data = CifarTrainingData(self.root, self.path)
+        directory = self.root/'grouping'
+        spec = pair_spec(data, steps=3, batch_size=2, contrast='grouping')
+        receipt = train_pair(data, directory, spec)
+        arms, verified = verify_pair(data, directory, spec)
+        self.assertEqual(receipt, verified)
+        masks = [[row['mask_sha256'] for row in arm[2]] for arm in arms.values()]
+        self.assertEqual(masks[0], masks[1])
+        self.assertEqual(_digest(masks[0]), receipt['mask_order_sha256'])
+        self.assertEqual(Fixture.accessed[:6], Fixture.accessed[6:])
+        self.assertEqual([4, 1], [arm[2][0]['predictor_passes'] for arm in arms.values()])
+        selection = make_pilot(data.manifest, data.labels, train_per_class=5, validation_per_class=2)
+        Fixture.accessed.clear()
+        report = evaluate_pair(data, directory, spec, selection)
+        self.assertEqual([(True, index) for index in selection['partitions']['train']['indices']], Fixture.accessed)
+        self.assertIn('joint_2x2-minus-separate_2x2', report['paired'])
+        self.assertEqual([160, 52], [arm['predictor_tokens_per_image'] for arm in report['arms'].values()])
+        self.assertEqual({'separate_2x2', 'joint_2x2', 'random', 'rgb_statistics'}, set(report['scores']))
+        with self.assertRaisesRegex(ValueError, 'declared training recipe'):
+            train_pair(data, directory, pair_spec(data, steps=3, batch_size=2))

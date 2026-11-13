@@ -20,8 +20,9 @@ def evaluate_pair(data, directory, spec, selection):
     labels = torch.tensor([data.labels[index] for index in indices], dtype=torch.long)
     assignments = stratified_folds(labels)
     arms, training = verify_pair(data, directory, spec)
+    reference, variant = arms
     models = {name: model for name, (model, _, _) in arms.items()}
-    config = models['one_4x4'].config
+    config = models[reference].config
     models['random'] = random_encoder(config, spec['settings']['seed'])
     feature_parts = {name: [] for name in (*models, 'rgb_statistics')}
     for start in range(0, len(indices), 16):
@@ -37,7 +38,7 @@ def evaluate_pair(data, directory, spec, selection):
         predictions[name], score = crossfit_ridge(features, labels, assignments)
         scores[name] = dict(score=score, geometry=feature_geometry(features))
     paired = {}
-    for baseline, candidate in (('one_4x4', 'four_2x2'), ('random', 'one_4x4'), ('random', 'four_2x2')):
+    for baseline, candidate in ((reference, variant), ('random', reference), ('random', variant)):
         errors = paired_diagnostics(labels, predictions[baseline], predictions[candidate])
         errors['limitation'] = 'Descriptive differences on training rows with fixed classifier folds.'
         paired[f'{candidate}-minus-{baseline}'] = errors
@@ -52,11 +53,11 @@ def evaluate_pair(data, directory, spec, selection):
             predictor_tokens_per_image=passes*tokens_per_pass,
             predictor_attention_pairs_per_head_per_layer=passes*tokens_per_pass**2)
 
-    first_journal = arms['one_4x4'][2]
+    first_journal = arms[reference][2]
     sampled = {index for row in first_journal for index in row['train_indices']}
     return dict(version=1, kind='matched_multiblock_training_row_diagnostic',
         manifest_sha256=data.manifest['manifest_sha256'], selection_sha256=selection['selection_sha256'],
-        code_sha256=_digest(arms['one_4x4'][1]['code_sha256']), training=training, arms=summaries,
+        code_sha256=_digest(arms[reference][1]['code_sha256']), training=training, arms=summaries,
         scoring_rows=len(indices), scoring_indices_sha256=_digest(indices),
         scoring_rows_seen_in_encoder_training=len(sampled.intersection(indices)),
         folds=5, fold_seed=29, fold_assignments_sha256=_digest(assignments.tolist()), alpha=.1,
