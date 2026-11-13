@@ -50,7 +50,7 @@ def _mask_digest(masks):
 
 
 def _recipe(*, batch_size, seed, blocks, target_rows, target_cols, context_fraction,
-            learning_rate, momentum, config, training_data):
+            learning_rate, momentum, config, training_data, predictor_grouping='separate'):
     if (type(batch_size) is not int or not 1 <= batch_size <= 8 or type(seed) is not int or not 0 <= seed < 2**63
             or type(learning_rate) not in (int, float) or not math.isfinite(learning_rate)
             or not 0 < learning_rate <= .1 or type(momentum) not in (int, float)
@@ -58,6 +58,8 @@ def _recipe(*, batch_size, seed, blocks, target_rows, target_cols, context_fract
         raise ValueError('Use batch 1-8, valid seed/rates and one CPU thread')
     if training_data is not None and not isinstance(training_data, CifarTrainingData):
         raise ValueError('Pass verified CIFAR-10 training data')
+    if predictor_grouping not in ('separate', 'joint'):
+        raise ValueError('Choose separate or joint predictor grouping')
     config = ModelConfig(patch_dim=48 if training_data is not None else 4) if config is None else config
     if (not isinstance(config, ModelConfig) or config.rows*config.cols > 64 or config.patch_dim > 48
             or not 8 <= config.embedding_dim <= 64 or config.heads > 8
@@ -69,6 +71,8 @@ def _recipe(*, batch_size, seed, blocks, target_rows, target_cols, context_fract
         mask=dict(blocks=blocks, target_rows=target_rows, target_cols=target_cols, context_fraction=context_fraction),
         sampler='disjoint_target_tiles_v1', optimizer='AdamW, weight_decay=.01', gradient_clip_norm=1.,
         loss='mean SmoothL1 over images, equal-sized blocks, tokens and channels')
+    if predictor_grouping != 'separate':
+        settings['predictor_grouping'] = predictor_grouping
     _masks(config, settings, 0)  # Validate the recipe before model allocation or checkpoint writes.
     identity = dict(format_version=1, kind='synthetic_multiblock_v1', config=asdict(config), settings=settings,
         runtime=dict(torch=str(torch.__version__), python=platform.python_version(), cpu_threads=1), code_sha256=_sources())
@@ -116,12 +120,12 @@ def _public_sampler(data, settings, history, saved):
 
 def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2, target_cols=2,
                      context_fraction=.75, learning_rate=.001, momentum=.99, config=None,
-                     checkpoint=None, resume=None, training_data=None):
+                     checkpoint=None, resume=None, training_data=None, predictor_grouping='separate'):
     if type(steps) is not int or not 1 <= steps <= 100:
         raise ValueError('Use 1-100 additional multi-block training steps')
     config, identity = _recipe(batch_size=batch_size, seed=seed, blocks=blocks, target_rows=target_rows,
         target_cols=target_cols, context_fraction=context_fraction, learning_rate=learning_rate,
-        momentum=momentum, config=config, training_data=training_data)
+        momentum=momentum, config=config, training_data=training_data, predictor_grouping=predictor_grouping)
     settings = identity['settings']
     start, history, saved = 0, [], None
     if checkpoint is not None and Path(checkpoint).exists() and (resume is None or Path(checkpoint).resolve() != Path(resume).resolve()):
@@ -165,7 +169,7 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
                 patches = patchify_rgb(images)
             masks = _masks(config, settings, step)
             optimizer.zero_grad(set_to_none=True)
-            predictions, targets = multi_block_forward(model, patches, masks)
+            predictions, targets = multi_block_forward(model, patches, masks, predictor_grouping=predictor_grouping)
             loss = F.smooth_l1_loss(predictions, targets)
             if not torch.isfinite(loss):
                 raise ValueError('Multi-block loss is not finite')
@@ -178,7 +182,8 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
             row = dict(step=step+1, loss=float(loss.detach()), block_losses=block_losses.tolist(),
                 gradient_norm=float(norm), mask_sha256=_mask_digest(masks), context_tokens=len(masks[0].context),
                 target_tokens_per_image=sum(len(block) for block in masks[0].blocks),
-                predictor_passes=blocks, prediction=embedding_stats(predictions), target=embedding_stats(targets))
+                predictor_passes=blocks if predictor_grouping == 'separate' else 1,
+                prediction=embedding_stats(predictions), target=embedding_stats(targets))
             if training_data is not None:
                 row['train_indices'] = indices
             json.dumps(row, allow_nan=False)
@@ -205,6 +210,7 @@ def main():
     parser.add_argument('--batch-size', type=int, default=4)
     parser.add_argument('--seed', type=int, default=29)
     parser.add_argument('--blocks', type=int, default=2)
+    parser.add_argument('--predictor-grouping', choices=('separate', 'joint'), default='separate')
     parser.add_argument('--target-rows', type=int, default=2)
     parser.add_argument('--target-cols', type=int, default=2)
     parser.add_argument('--context-fraction', type=float, default=.75)

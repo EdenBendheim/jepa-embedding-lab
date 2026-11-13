@@ -14,6 +14,7 @@ def load_cifar_encoder(checkpoint, training_data, *, expected_sha256=None):
     try:
         settings = saved['settings']
         config, identity = _recipe(config=ModelConfig(**saved['config']), training_data=training_data,
+            predictor_grouping=settings.get('predictor_grouping', 'separate'),
             **{key: settings[key] for key in ('batch_size', 'seed', 'learning_rate', 'momentum')},
             **settings['mask'])
     except (KeyError, TypeError, ValueError) as exc:

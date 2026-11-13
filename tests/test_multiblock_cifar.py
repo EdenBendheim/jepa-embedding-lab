@@ -71,7 +71,7 @@ class MultiBlockCifarTests(unittest.TestCase):
         data = CifarTrainingData(self.root, self.path)
         whole, split = self.root/'whole.pt', self.root/'split.pt'
         config = ModelConfig(patch_dim=48, embedding_dim=16, encoder_depth=1)
-        options = dict(training_data=data, config=config, batch_size=2, blocks=4)
+        options = dict(training_data=data, config=config, batch_size=2, blocks=4, predictor_grouping='joint')
         initial_rng = torch.get_rng_state().clone()
         full = train_multiblock(steps=3, checkpoint=whole, **options)
         first = train_multiblock(steps=1, checkpoint=split, **options)
@@ -80,6 +80,10 @@ class MultiBlockCifarTests(unittest.TestCase):
         self.assert_state_equal(torch.load(whole, weights_only=True), torch.load(split, weights_only=True))
         self.assertTrue(torch.equal(initial_rng, torch.get_rng_state()))
         self.assertEqual(data.manifest['manifest_sha256'], full['manifest_sha256'])
+        self.assertEqual('joint', full['settings']['predictor_grouping'])
+        self.assertTrue(all(row['predictor_passes'] == 1 for row in full['history']))
+        with self.assertRaisesRegex(ValueError, 'recipe'):
+            train_multiblock(steps=1, resume=split, **(options | dict(predictor_grouping='separate')))
         scheduled = [index for row in full['history'] for index in row['train_indices']]
         self.assertEqual([(True, index) for index in scheduled*2], Fixture.accessed)
 
@@ -112,7 +116,7 @@ class MultiBlockCifarTests(unittest.TestCase):
         dataset = self.root/'dataset'
         checkpoint, metrics = self.root/'run.pt', self.root/'metrics.json'
         args = ['multi-block', '--cifar-root', str(dataset), '--manifest', str(self.path),
-                '--steps', '1', '--checkpoint', str(checkpoint)]
+                '--steps', '1', '--checkpoint', str(checkpoint), '--predictor-grouping', 'joint']
         original = self.path.read_bytes()
         for invalid in (args[:3], args+['--output', str(self.path)],
                         args+['--output', str(dataset/'data_batch_1.bin')]):
@@ -126,6 +130,7 @@ class MultiBlockCifarTests(unittest.TestCase):
             main()
         result = json.loads(metrics.read_text())
         self.assertEqual('CIFAR-10', result['dataset'])
+        self.assertEqual('joint', result['settings']['predictor_grouping'])
         self.assertEqual(2, result['completed_step'])
         self.assertEqual(8, len(Fixture.accessed))
 
@@ -135,13 +140,14 @@ class MultiBlockCifarTests(unittest.TestCase):
 
         data = CifarTrainingData(self.root, self.path)
         checkpoint = self.root/'frozen.pt'
-        result = train_multiblock(training_data=data, steps=1, checkpoint=checkpoint)
+        result = train_multiblock(training_data=data, steps=1, checkpoint=checkpoint, predictor_grouping='joint')
         original = checkpoint.read_bytes()
         Fixture.accessed.clear()
         rng = torch.get_rng_state().clone()
         model, metadata, history = load_cifar_encoder(checkpoint, data)
         self.assertEqual(result['history'], history)
         self.assertEqual(1, metadata['completed_steps'])
+        self.assertEqual('joint', metadata['settings']['predictor_grouping'])
         self.assertFalse(model.training)
         self.assertFalse(any(parameter.requires_grad for parameter in model.parameters()))
         self.assertTrue(torch.equal(rng, torch.get_rng_state()))

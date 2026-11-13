@@ -299,6 +299,11 @@ split. Its checkpoint stores the actual sampled indices and validates their
 order and sampler state before resume. Keep local metrics and checkpoints
 outside the dataset directory.
 
+Use `--predictor-grouping joint` to predict the same target tiles in one
+sequence, with attention across all target tokens. The default processes each
+tile separately. The grouping is part of the checkpoint recipe and must match
+when resuming.
+
 ```sh
 export PYTHONPATH=src
 .venv/bin/python -m jepa_lab.cifar10_train data/cifar-10-batches-bin \
