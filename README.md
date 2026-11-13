@@ -2,6 +2,13 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 12 predictor grouping** — Joint prediction now handles all target
+tiles in one pass and records the choice in the checkpoint. Across three
+matched CIFAR-10 seeds, joint and separate prediction averaged 23.47% and
+23.80% on fixed training rows. The matching random encoder averaged 24.40%.
+Joint prediction processes 52 predictor tokens per image versus 160.
+[Results and replay](experiments/MULTIBLOCK-GROUPING-2026-11-12.md).
+
 **November 11 multi-block CIFAR-10 pilot** — Both geometries trained for 32
 updates with identical initialization and training image order. On 500 fixed
 training rows, four 2×2 blocks scored 22.0%, one 4×4 block scored 22.8%, and the

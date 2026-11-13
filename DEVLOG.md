@@ -1,5 +1,30 @@
 # Development log
 
+## November 12, 2026
+
+- Added joint target prediction to the forward pass, trainer, CLI and frozen
+  loader. Joint output matches the model's ordered-union forward pass.
+  Both modes exclude hidden pixels from predictions and stop teacher gradients.
+  Resume preserves grouping and rejects changes to it.
+- Predeclared three matched CIFAR-10 pairs with the same masks, initialization,
+  image order and 32 updates per arm. On the same 500 training rows, joint
+  averaged 23.47%, separate 23.80%, random 24.40%, and RGB statistics 20.80%.
+  Joint uses 52 predictor tokens per image versus 160. These are short training
+  runs scored on one fitting selection, with up to two rows overlapping
+  encoder training. [Results and replay](experiments/MULTIBLOCK-GROUPING-2026-11-12.md)
+- Reproduced all aggregates with encoder training disabled and verified the
+  exact matched journals. Both passes indexed zero held-out images.
+  The preceding 362 experiment artifacts retained their hashes. All 21
+  focused tests, protocol preflight, mask and training smoke runs, and
+  aggregate arithmetic checks passed.
+- A real CIFAR joint run resumed after two updates and matched every field of
+  a continuous four-update checkpoint. The November 11 layout report also
+  reproduced with its recorded source revision and saved encoders.
+- All 284 local tests passed on Python 3.12.14 and Torch 2.8.0 in 534.8 seconds.
+- Interview explanation — “I isolated predictor grouping by matching masks,
+  images and initialization. Joint prediction processed about two thirds
+  fewer predictor tokens, with a small accuracy drop on the fixed folds.”
+
 ## November 11, 2026
 
 - Added verified CIFAR-10 training reads and deterministic image-order replay.

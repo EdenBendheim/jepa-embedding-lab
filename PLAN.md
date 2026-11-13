@@ -51,6 +51,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Publish configurations, provenance, plots, a results table, and a small row-and-label embedding explorer.
 - [x] Train and resume multi-block CIFAR-10 checkpoints with replayed image order and frozen encoder provenance.
 - [x] Run a predeclared one-block versus four-block pilot on fixed fitting rows with matching random and RGB controls.
+- [x] Compare joint and separate prediction across three seeds with identical masks, initialization and image order.
 
 ## Next session
 
@@ -86,9 +87,12 @@ fixed CIFAR training rows, verified checkpoint loading and exact real-data
 resume. The matched 32-update runs produced 22.0% for four 2×2 blocks and
 22.8% for one 4×4 block versus 24.4% for matching random features on shared
 ridge folds. One of 500 scoring rows overlaps encoder training. Predictor
-sequence work differs. Next separate layout from predictor grouping with
-matched controls, and plan multiple seeds and a compute budget before
-reserving new held-out rows. Keep existing confirmation outcomes frozen.
+sequence work differs. The [November 12 grouping comparison](experiments/MULTIBLOCK-GROUPING-2026-11-12.md)
+fixes all masks while comparing one joint pass with four separate passes.
+Joint averages 23.47% versus 23.80% separate and 24.40% random over three
+seeds. It reduces predictor tokens from 160 to 52 per image. Next measure
+training latency and set a compute budget for a longer comparison before
+reserving independent scoring rows. Keep existing confirmation outcomes frozen.
 Use `runs/context-variance-20261031/observed-exposure.json` for any later
 reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
 paired errors and negative results; keep the official test reserved.
