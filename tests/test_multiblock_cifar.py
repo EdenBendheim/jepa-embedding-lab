@@ -257,3 +257,19 @@ class MultiBlockCifarTests(unittest.TestCase):
         self.assertEqual({'separate_2x2', 'joint_2x2', 'random', 'rgb_statistics'}, set(report['scores']))
         with self.assertRaisesRegex(ValueError, 'declared training recipe'):
             train_pair(data, directory, pair_spec(data, steps=3, batch_size=2))
+
+    def test_grouping_timing_balances_order_and_reads_the_same_training_batches(self):
+        from jepa_lab.variants.multiblock_timing import benchmark_grouping
+
+        data = CifarTrainingData(self.root, self.path)
+        result = benchmark_grouping(data, seeds=(29,), steps=3, warmup=1, batch_size=2)
+        self.assertEqual(2, result['measured_steps_per_trial'])
+        self.assertEqual(24, len(Fixture.accessed))
+        self.assertEqual(Fixture.accessed[:6]*4, Fixture.accessed)
+        first, second = result['trials']
+        self.assertEqual(['separate', 'joint'], first['order'])
+        self.assertEqual(['joint', 'separate'], second['order'])
+        self.assertEqual(first['identity'], second['identity'])
+        for trial in result['trials']:
+            self.assertGreater(trial['arms']['joint']['mean_step_ms'], 0)
+            self.assertGreater(trial['joint_over_separate_step_time'], 0)
