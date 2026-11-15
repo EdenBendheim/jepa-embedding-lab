@@ -8,6 +8,7 @@ import json
 import math
 from pathlib import Path
 import platform
+from time import perf_counter_ns
 
 import torch
 from torch.nn import functional as F
@@ -120,9 +121,12 @@ def _public_sampler(data, settings, history, saved):
 
 def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2, target_cols=2,
                      context_fraction=.75, learning_rate=.001, momentum=.99, config=None,
-                     checkpoint=None, resume=None, training_data=None, predictor_grouping='separate'):
+                     checkpoint=None, resume=None, training_data=None, predictor_grouping='separate',
+                     measure_steps=False):
     if type(steps) is not int or not 1 <= steps <= 100:
         raise ValueError('Use 1-100 additional multi-block training steps')
+    if type(measure_steps) is not bool:
+        raise ValueError('measure_steps must be a boolean')
     config, identity = _recipe(batch_size=batch_size, seed=seed, blocks=blocks, target_rows=target_rows,
         target_cols=target_cols, context_fraction=context_fraction, learning_rate=learning_rate,
         momentum=momentum, config=config, training_data=training_data, predictor_grouping=predictor_grouping)
@@ -141,6 +145,7 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
     else:
         generator = _public_sampler(training_data, settings, history, saved)
     initial_count = len(history)
+    timings = []
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(seed)
         model = JEPA(config).train()
@@ -161,6 +166,8 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
             except (ValueError, TypeError, RuntimeError, KeyError) as exc:
                 raise ValueError('Invalid multi-block model, optimizer or RNG state') from exc
         for step in range(start, start+steps):
+            if measure_steps:
+                batch_start = perf_counter_ns()
             if training_data is None:
                 patches = synthetic_batch(config, batch_size, generator)
             else:
@@ -168,6 +175,8 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
                 images, _ = training_data.read(indices)
                 patches = patchify_rgb(images)
             masks = _masks(config, settings, step)
+            if measure_steps:
+                update_start = perf_counter_ns()
             optimizer.zero_grad(set_to_none=True)
             predictions, targets = multi_block_forward(model, patches, masks, predictor_grouping=predictor_grouping)
             loss = F.smooth_l1_loss(predictions, targets)
@@ -178,6 +187,8 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
                                                   1., error_if_nonfinite=True)
             optimizer.step()
             model.update_target(momentum)
+            if measure_steps:
+                diagnostics_start = perf_counter_ns()
             block_losses = F.smooth_l1_loss(predictions.detach(), targets, reduction='none').mean(dim=(0, 2, 3))
             row = dict(step=step+1, loss=float(loss.detach()), block_losses=block_losses.tolist(),
                 gradient_norm=float(norm), mask_sha256=_mask_digest(masks), context_tokens=len(masks[0].context),
@@ -188,6 +199,9 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
                 row['train_indices'] = indices
             json.dumps(row, allow_nan=False)
             history.append(row)
+            if measure_steps:
+                timings.append(dict(step=step+1, batch_ns=update_start-batch_start,
+                    update_ns=diagnostics_start-update_start, diagnostics_ns=perf_counter_ns()-diagnostics_start))
         if checkpoint is not None:
             data_rng = generator.get_state() if training_data is None else generator.getstate()
             atomic_checkpoint(Path(checkpoint), dict(identity | initial_state, step=start+steps, model=model.state_dict(),
@@ -201,6 +215,9 @@ def train_multiblock(*, steps=10, batch_size=4, seed=29, blocks=2, target_rows=2
         result.update(dataset='CIFAR-10', manifest_sha256=identity['manifest_sha256'],
                       limitation='Training-only execution. Embedding quality requires downstream evaluation. '
                                  'Predictor computation varies with the number and size of blocks.')
+    if measure_steps:
+        result['timings'] = timings
+        result.update(initial_state)
     return result
 
 
@@ -211,6 +228,7 @@ def main():
     parser.add_argument('--seed', type=int, default=29)
     parser.add_argument('--blocks', type=int, default=2)
     parser.add_argument('--predictor-grouping', choices=('separate', 'joint'), default='separate')
+    parser.add_argument('--measure-steps', action='store_true', help='Report phase timings outside the checkpoint')
     parser.add_argument('--target-rows', type=int, default=2)
     parser.add_argument('--target-cols', type=int, default=2)
     parser.add_argument('--context-fraction', type=float, default=.75)

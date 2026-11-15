@@ -311,6 +311,10 @@ sequence, with attention across all target tokens. The default processes each
 tile separately. The grouping is part of the checkpoint recipe and must match
 when resuming.
 
+Add `--measure-steps` to report elapsed CPU wall time for batch preparation,
+the optimizer update, and journal diagnostics. Checkpoint state and replay
+remain deterministic. These timings exclude model setup and checkpoint writes.
+
 ```sh
 export PYTHONPATH=src
 .venv/bin/python -m jepa_lab.cifar10_train data/cifar-10-batches-bin \

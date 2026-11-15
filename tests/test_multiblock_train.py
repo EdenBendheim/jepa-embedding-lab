@@ -70,6 +70,18 @@ class MultiBlockTrainTests(unittest.TestCase):
         path.write_bytes(original)
         self.assertEqual(original, path.read_bytes())
 
+    def test_timing_is_observational_and_resumes_without_timing_state(self):
+        whole, split = self.root/'continuous.pt', self.root/'timed.pt'
+        expected = train_multiblock(steps=3, checkpoint=whole, **self.options)
+        first = train_multiblock(steps=1, checkpoint=split, **self.options)
+        with patch('jepa_lab.variants.multiblock_train.perf_counter_ns', side_effect=range(0, 80, 10)):
+            resumed = train_multiblock(steps=2, resume=split, checkpoint=split, measure_steps=True, **self.options)
+        self.assertNotIn('timings', first)
+        self.assertEqual([dict(step=step, batch_ns=10, update_ns=10, diagnostics_ns=10) for step in (2, 3)],
+                         resumed['timings'])
+        self.assertEqual(expected['history'], first['history'] + resumed['history'])
+        self.assert_state_equal(torch.load(whole, weights_only=True), torch.load(split, weights_only=True))
+
     def test_bounds_collision_and_failed_checkpoint_write_preserve_original(self):
         with patch('jepa_lab.variants.multiblock_train.JEPA', side_effect=AssertionError('allocation')):
             for change in (dict(steps=True), dict(steps=101), dict(batch_size=9), dict(blocks=4),
