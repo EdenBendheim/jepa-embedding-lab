@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "kind": "predictor_grouping_cpu_timing",
+  "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+  "steps_per_trial": 32,
+  "warmup_steps": 4,
+  "measured_steps_per_trial": 28,
+  "batch_size": 4,
+  "trials": [
+    {
+      "seed": 29,
+      "order": [
+        "separate",
+        "joint"
+      ],
+      "identity": {
+        "initial_state_sha256": "5b07766804dbfa30dcbce29f922c77201493d58cc32f6e0694efe761249bdf92",
+        "image_order_sha256": "bef4449cb3efdbc7e426684772159e6f4f9dd0eea634acd65af1dc754bfab691",
+        "mask_order_sha256": "5e2e50eee9b3e8a3bc96d98efc63e25cc0ba2821f3cb700ee88c65f1d083f64c"
+      },
+      "arms": {
+        "separate": {
+          "trial_wall_seconds": 0.687958167,
+          "mean_step_ms": 7.819601214285715,
+          "median_step_ms": 7.7203965,
+          "median_batch_ms": 0.526896,
+          "median_update_ms": 6.9829165,
+          "median_diagnostics_ms": 0.2221875
+        },
+        "joint": {
+          "trial_wall_seconds": 0.182996334,
+          "mean_step_ms": 5.420122071428572,
+          "median_step_ms": 5.381604,
+          "median_batch_ms": 0.4991245,
+          "median_update_ms": 4.644708,
+          "median_diagnostics_ms": 0.2167085
+        }
+      },
+      "joint_over_separate_step_time": 0.6931455866990367
+    },
+    {
+      "seed": 29,
+      "order": [
+        "joint",
+        "separate"
+      ],
+      "identity": {
+        "initial_state_sha256": "5b07766804dbfa30dcbce29f922c77201493d58cc32f6e0694efe761249bdf92",
+        "image_order_sha256": "bef4449cb3efdbc7e426684772159e6f4f9dd0eea634acd65af1dc754bfab691",
+        "mask_order_sha256": "5e2e50eee9b3e8a3bc96d98efc63e25cc0ba2821f3cb700ee88c65f1d083f64c"
+      },
+      "arms": {
+        "joint": {
+          "trial_wall_seconds": 0.181744042,
+          "mean_step_ms": 5.409005857142858,
+          "median_step_ms": 5.327104,
+          "median_batch_ms": 0.483708,
+          "median_update_ms": 4.6453125,
+          "median_diagnostics_ms": 0.2056245
+        },
+        "separate": {
+          "trial_wall_seconds": 0.251470458,
+          "mean_step_ms": 7.540333357142857,
+          "median_step_ms": 7.4971875,
+          "median_batch_ms": 0.512604,
+          "median_update_ms": 6.757542,
+          "median_diagnostics_ms": 0.217333
+        }
+      },
+      "joint_over_separate_step_time": 0.7173430670699696
+    },
+    {
+      "seed": 31,
+      "order": [
+        "separate",
+        "joint"
+      ],
+      "identity": {
+        "initial_state_sha256": "6467681392c346f5ce0cd12a5721ef44dc8c6cbd2625793910304aa1d81a639f",
+        "image_order_sha256": "b3515ba5185db7557c072039946f7393a3162a0ff6744c723a2a550e9cb0f4db",
+        "mask_order_sha256": "bbdddb2f1f77ae3b521cb5435a5b85e871f9cbd6f776116cb7a614e8f75fdb96"
+      },
+      "arms": {
+        "separate": {
+          "trial_wall_seconds": 0.254188417,
+          "mean_step_ms": 7.667444892857143,
+          "median_step_ms": 7.667979,
+          "median_batch_ms": 0.5079375,
+          "median_update_ms": 6.9425625,
+          "median_diagnostics_ms": 0.2245415
+        },
+        "joint": {
+          "trial_wall_seconds": 0.179264416,
+          "mean_step_ms": 5.304861535714285,
+          "median_step_ms": 5.251,
+          "median_batch_ms": 0.4759375,
+          "median_update_ms": 4.5895835,
+          "median_diagnostics_ms": 0.2092915
+        }
+      },
+      "joint_over_separate_step_time": 0.6918682311830113
+    },
+    {
+      "seed": 31,
+      "order": [
+        "joint",
+        "separate"
+      ],
+      "identity": {
+        "initial_state_sha256": "6467681392c346f5ce0cd12a5721ef44dc8c6cbd2625793910304aa1d81a639f",
+        "image_order_sha256": "b3515ba5185db7557c072039946f7393a3162a0ff6744c723a2a550e9cb0f4db",
+        "mask_order_sha256": "bbdddb2f1f77ae3b521cb5435a5b85e871f9cbd6f776116cb7a614e8f75fdb96"
+      },
+      "arms": {
+        "joint": {
+          "trial_wall_seconds": 0.182836292,
+          "mean_step_ms": 5.4222426071428576,
+          "median_step_ms": 5.3653335,
+          "median_batch_ms": 0.502312,
+          "median_update_ms": 4.6700835,
+          "median_diagnostics_ms": 0.211396
+        },
+        "separate": {
+          "trial_wall_seconds": 0.259384542,
+          "mean_step_ms": 7.754718821428572,
+          "median_step_ms": 7.6688125,
+          "median_batch_ms": 0.5186665,
+          "median_update_ms": 6.9214165,
+          "median_diagnostics_ms": 0.2293125
+        }
+      },
+      "joint_over_separate_step_time": 0.6992184671041334
+    },
+    {
+      "seed": 37,
+      "order": [
+        "separate",
+        "joint"
+      ],
+      "identity": {
+        "initial_state_sha256": "fe96a7f330f13aa48775e278db9b121f23defb5d36a024db3a2c13f0743cff1b",
+        "image_order_sha256": "ddca432305f6ea7601558b0dc56d0d246042c6e621870024bd04e38309ff6f37",
+        "mask_order_sha256": "95162c55a0f788e60cbe4bc25e96da9ce39dcf8a84a2989f217cb33ba19d0565"
+      },
+      "arms": {
+        "separate": {
+          "trial_wall_seconds": 0.279615417,
+          "mean_step_ms": 8.499678571428571,
+          "median_step_ms": 8.2655625,
+          "median_batch_ms": 0.558458,
+          "median_update_ms": 7.500208,
+          "median_diagnostics_ms": 0.233
+        },
+        "joint": {
+          "trial_wall_seconds": 0.198430125,
+          "mean_step_ms": 5.827487928571428,
+          "median_step_ms": 5.839479,
+          "median_batch_ms": 0.5377495,
+          "median_update_ms": 5.094042,
+          "median_diagnostics_ms": 0.2385835
+        }
+      },
+      "joint_over_separate_step_time": 0.685612741658298
+    },
+    {
+      "seed": 37,
+      "order": [
+        "joint",
+        "separate"
+      ],
+      "identity": {
+        "initial_state_sha256": "fe96a7f330f13aa48775e278db9b121f23defb5d36a024db3a2c13f0743cff1b",
+        "image_order_sha256": "ddca432305f6ea7601558b0dc56d0d246042c6e621870024bd04e38309ff6f37",
+        "mask_order_sha256": "95162c55a0f788e60cbe4bc25e96da9ce39dcf8a84a2989f217cb33ba19d0565"
+      },
+      "arms": {
+        "joint": {
+          "trial_wall_seconds": 0.190255291,
+          "mean_step_ms": 5.619133928571428,
+          "median_step_ms": 5.5490415,
+          "median_batch_ms": 0.4950415,
+          "median_update_ms": 4.8123125,
+          "median_diagnostics_ms": 0.2073125
+        },
+        "separate": {
+          "trial_wall_seconds": 0.258196541,
+          "mean_step_ms": 7.760412321428571,
+          "median_step_ms": 7.7035415,
+          "median_batch_ms": 0.5109585,
+          "median_update_ms": 6.9306455,
+          "median_diagnostics_ms": 0.2245625
+        }
+      },
+      "joint_over_separate_step_time": 0.7240767237399872
+    }
+  ],
+  "median_joint_over_separate_step_time": 0.696182026901585,
+  "limitation": "Steady-state CPU wall time on matched training rows. Trial wall time includes setup and warmup. Validation, test and checkpoint I/O are outside the measurement.",
+  "protocol_sha256": "6ba2aeb5c95df23cb96e5424573398ee16a424655849f5099d015d8cd20a424c",
+  "runtime": {
+    "torch": "2.8.0",
+    "python": "3.12.14",
+    "cpu_threads": 1
+  },
+  "platform": {
+    "os": "Darwin",
+    "architecture": "arm64"
+  },
+  "projected_budget": {
+    "seconds_per_arm": 10,
+    "margin": 1.25,
+    "estimated_seconds_per_step": {
+      "separate": 0.010624598214285713,
+      "joint": 0.007284359910714285
+    },
+    "equal_time_steps": {
+      "separate": 941,
+      "joint": 1000
+    },
+    "equal_update_steps": 941,
+    "limitation": "Planning estimate for steady-state training steps on this machine. Measure actual elapsed time separately from setup, checkpoint writes and evaluation."
+  }
+}

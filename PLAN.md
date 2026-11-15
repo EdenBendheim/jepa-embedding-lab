@@ -52,6 +52,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Train and resume multi-block CIFAR-10 checkpoints with replayed image order and frozen encoder provenance.
 - [x] Run a predeclared one-block versus four-block pilot on fixed fitting rows with matching random and RGB controls.
 - [x] Compare joint and separate prediction across three seeds with identical masks, initialization and image order.
+- [x] Time joint and separate training in both run orders and estimate a longer training budget.
 
 ## Next session
 
@@ -90,9 +91,13 @@ ridge folds. One of 500 scoring rows overlaps encoder training. Predictor
 sequence work differs. The [November 12 grouping comparison](experiments/MULTIBLOCK-GROUPING-2026-11-12.md)
 fixes all masks while comparing one joint pass with four separate passes.
 Joint averages 23.47% versus 23.80% separate and 24.40% random over three
-seeds. It reduces predictor tokens from 160 to 52 per image. Next measure
-training latency and set a compute budget for a longer comparison before
-reserving independent scoring rows. Keep existing confirmation outcomes frozen.
+seeds. It reduces predictor tokens from 160 to 52 per image. The
+[November 14 CPU timing](experiments/MULTIBLOCK-TIMING-2026-11-14.md) measures
+a 30.4% median reduction in step time across six pairs. The ten-second projection
+fits 941 separate and 1,000 joint updates, with the joint arm capped by the
+trainer. Next declare the longer training contrast, record realized time,
+and reserve independent scoring rows only after locking the evaluation.
+Keep existing confirmation outcomes frozen.
 Use `runs/context-variance-20261031/observed-exposure.json` for any later
 reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
 paired errors and negative results; keep the official test reserved.

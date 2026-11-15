@@ -1,5 +1,23 @@
 # Development log
 
+## November 14, 2026
+
+- Added optional batch preparation, optimizer update and diagnostic timing.
+  A timing-enabled resume reproduces the same weights, optimizer, RNG and
+  journal as continuous untimed training.
+- Timed both execution orders for three seeds in a predeclared CIFAR-10 run.
+  Verified all 1,536 image reads use training rows and matched the earlier
+  initialization, mask and image-order receipts. Joint used 69.6% of separate
+  step time by the median paired ratio. A ten-second planning estimate gives
+  941 equal updates or per-arm counts of 941 and a capped 1,000. The run
+  measured the training loop on one CPU and spent no held-out rows.
+  [Measurements and limits](experiments/MULTIBLOCK-TIMING-2026-11-14.md)
+- Focused multi-block tests, protocol preflight, seeded mask and training demos,
+  and aggregate and whitespace checks passed.
+- Interview explanation — “I timed each grouping in both orders with identical
+  masks and images. The joint pass cut CPU step time by 30%, giving me a
+  measured basis for planning a longer comparison.”
+
 ## November 12, 2026
 
 - Added joint target prediction to the forward pass, trainer, CLI and frozen

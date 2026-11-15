@@ -2,6 +2,11 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 14 CPU timing** — Joint prediction reduced training step time by
+30.4% on one Apple M1 Max CPU thread across six matched trial pairs. That
+measurement supports an estimate for a longer run with equal updates or
+similar elapsed training time. [Timing and budget](experiments/MULTIBLOCK-TIMING-2026-11-14.md).
+
 **November 12 predictor grouping** — Joint prediction now handles all target
 tiles in one pass and records the choice in the checkpoint. Across three
 matched CIFAR-10 seeds, joint and separate prediction averaged 23.47% and
