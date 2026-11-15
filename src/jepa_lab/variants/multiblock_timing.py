@@ -1,5 +1,6 @@
 """Measure steady-state training time with matched, counterbalanced CIFAR runs."""
 
+import math
 from statistics import median
 from time import perf_counter_ns
 
@@ -61,3 +62,26 @@ def benchmark_grouping(data, *, seeds=(29, 31, 37), steps=32, warmup=4, batch_si
                 median_joint_over_separate_step_time=median(trial['joint_over_separate_step_time'] for trial in trials),
                 limitation='Steady-state CPU wall time on matched training rows. Trial wall time includes setup '
                            'and warmup. Validation, test and checkpoint I/O are outside the measurement.')
+
+
+def estimate_step_budget(report, *, seconds_per_arm):
+    """Size a future run from the slowest observed trial mean plus a 25% margin."""
+    if (type(seconds_per_arm) not in (int, float) or not math.isfinite(seconds_per_arm)
+            or seconds_per_arm <= 0):
+        raise ValueError('Give a finite positive training-loop budget per arm')
+    try:
+        means = {grouping: [trial['arms'][grouping]['mean_step_ms'] for trial in report['trials']]
+                 for grouping in GROUPINGS}
+    except (KeyError, TypeError) as exc:
+        raise ValueError('Timing report is missing paired trial means') from exc
+    if any(not values or any(type(v) not in (int, float) or not math.isfinite(v) or v <= 0 for v in values)
+           for values in means.values()):
+        raise ValueError('Timing report requires positive finite trial means')
+    seconds_per_step = {grouping: (max(values) / 1000) * 1.25 for grouping, values in means.items()}
+    arm_steps = {grouping: math.floor(min(1000, seconds_per_arm / duration))
+                 for grouping, duration in seconds_per_step.items()}
+    return dict(seconds_per_arm=seconds_per_arm, margin=1.25,
+        estimated_seconds_per_step=seconds_per_step, equal_time_steps=arm_steps,
+        equal_update_steps=min(arm_steps.values()),
+        limitation='Planning estimate for steady-state training steps on this machine. '
+                   'Measure actual elapsed time separately from setup, checkpoint writes and evaluation.')
