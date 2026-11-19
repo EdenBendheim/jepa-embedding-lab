@@ -1,5 +1,24 @@
 # Development log
 
+## November 18, 2026
+
+- Added a measured budget schedule, bounded checkpoint chunks with timing
+  receipts, and shared-prefix verification. Three seeds matched masks, image
+  order and initialization through update 658. Joint continued to update 960.
+- Locked ridge heads on 500 fitting rows, then registered 300 validation images
+  outside the prior exposure ledger. Joint at 960 averaged 27.11%, separate at
+  658 averaged 25.22%, and joint at 658 averaged 25.00%. Random, RGB statistics
+  and pixels scored 25.44%, 27.33% and 20.33%. The extended joint loop took about
+  3–4% more time than separate. Trainer wall time took 10–20% more.
+- The 31 focused tests, protocol preflight, seeded mask demo, three-step smoke
+  run and aggregate checks passed. Replay matched all scores with training and
+  classifier fitting disabled. It indexed 300 registered validation images
+  and zero training or test images. The exposure record retains 3,546 rows.
+- Interview explanation — “I used a measured speed difference to plan a longer
+  joint trajectory, kept the common prefix matched, and evaluated the frozen
+  features against random, color and pixel baselines.”
+  [Experiment and results](experiments/MULTIBLOCK-BUDGET-2026-11-18.md)
+
 ## November 14, 2026
 
 - Added optional batch preparation, optimizer update and diagnostic timing.

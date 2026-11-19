@@ -53,6 +53,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Run a predeclared one-block versus four-block pilot on fixed fitting rows with matching random and RGB controls.
 - [x] Compare joint and separate prediction across three seeds with identical masks, initialization and image order.
 - [x] Time joint and separate training in both run orders and estimate a longer training budget.
+- [x] Run longer matched trajectories and a frozen comparison on unused validation rows.
 
 ## Next session
 
@@ -95,12 +96,17 @@ seeds. It reduces predictor tokens from 160 to 52 per image. The
 [November 14 CPU timing](experiments/MULTIBLOCK-TIMING-2026-11-14.md) measures
 a 30.4% median reduction in step time across six pairs. The ten-second projection
 fits 941 separate and 1,000 joint updates, with the joint arm capped by the
-trainer. Next declare the longer training contrast, record realized time,
-and reserve independent scoring rows only after locking the evaluation.
-Keep existing confirmation outcomes frozen.
-Use `runs/context-variance-20261031/observed-exposure.json` for any later
-reservation: 3,246 observed rows, 1,754 unused. Preserve all earlier source files. Report every control,
-paired errors and negative results; keep the official test reserved.
+trainer. The [November 18 longer comparison](experiments/MULTIBLOCK-BUDGET-2026-11-18.md)
+uses the uncapped seven-second projection, saving separate and joint at 658
+updates and joint again at 960. On 300 fresh rows, the longer arm averages
+27.11% versus 25.22% separate and 27.33% RGB statistics. Equal-update joint
+averages 25.00%. The longer run uses 3–4% more loop time and 10–20% more
+trainer wall time. The same frozen heads and scores replay.
+For future reservations, use `runs/multiblock-budget-20261118/observed-exposure.json`.
+It retains 3,546 observed rows and 1,454 unused. Preserve earlier source
+files. Keep the result frozen and the official test reserved. A next study
+can use training-only diagnostics to check what the longer encoders retain
+beyond color statistics before spending another validation sample.
 
 The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
 complete: three new fixed-position runs and three historical learned-position
@@ -141,9 +147,9 @@ specifies the contrast; the matched training driver and source pins now exist.
 Its downstream scoring path is complete; the intervention worsened fresh
 accuracy. No quality gain is established.
 Do not tune on the latest confirmation scores.
-For any future reservation, retain `runs/context-variance-20261031/observed-exposure.json`
+For historical replay, retain `runs/context-variance-20261031/observed-exposure.json`
 and its predecessor `runs/scale-20261020/observed-exposure.json` plus all original
-source files. The new bundle retains 3,246 observed rows with 1,754 unused; the
+source files. That historical bundle retains 3,246 observed rows with 1,754 unused; the
 500-row objective reservation is now observed. Fingerprints cannot detect omitted
 experiments; retain all original evidence. Keep the official test reserved.
 No raw images, features, weights or row-level evidence belong in public commits.

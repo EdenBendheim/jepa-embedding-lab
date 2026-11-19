@@ -2,6 +2,13 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 18 longer grouping comparison** — At 960 updates, joint prediction
+averaged 27.11% on 300 reserved validation images across three seeds. Separate
+prediction at 658 updates averaged 25.22%, and RGB statistics averaged 27.33%.
+The longer joint run used about 3–4% more training-loop time. Both arms shared
+initialization, images and masks through 658 updates. The frozen classifiers
+and scores replay from saved artifacts. [Results, timing and replay](experiments/MULTIBLOCK-BUDGET-2026-11-18.md).
+
 **November 14 CPU timing** — Joint prediction reduced training step time by
 30.4% on one Apple M1 Max CPU thread across six matched trial pairs. That
 measurement supports an estimate for a longer run with equal updates or
