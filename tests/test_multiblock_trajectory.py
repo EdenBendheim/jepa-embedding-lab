@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 import torch
 
+from experiments.multiblock_milestones import verify_milestones
 from experiments.multiblock_trajectory import checkpoint_path, run_trajectory
 from jepa_lab.cifar10 import make_manifest
 from jepa_lab.model import ModelConfig
@@ -60,3 +61,23 @@ class TrajectoryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'differs'):
             run_trajectory(self.data, self.root, replay=True, **self.options)
         self.assertEqual(6, len(Fixture.accessed))
+
+    def test_milestones_check_shared_prefix_and_report_realized_costs(self):
+        options = self.options | {'ends': [2]}
+        separate = run_trajectory(self.data, self.root/'separate', **(options | {'grouping': 'separate'}))
+        joint = run_trajectory(self.data, self.root/'joint', **(options | {'ends': [2, 3]}))
+        before = list(Fixture.accessed)
+        models, report = verify_milestones(self.data, self.root, dict(separate=separate, joint=joint))
+        self.assertEqual({'separate', 'joint_matched', 'joint_extended'}, models.keys())
+        self.assertEqual(2, report['shared_updates'])
+        costs = report['milestones']
+        self.assertEqual(costs['separate']['image_order_sha256'], costs['joint_matched']['image_order_sha256'])
+        self.assertEqual(costs['separate']['mask_order_sha256'], costs['joint_matched']['mask_order_sha256'])
+        self.assertEqual(3, costs['joint_extended']['updates'])
+        self.assertGreater(costs['joint_extended']['loop_seconds'], costs['joint_matched']['loop_seconds'])
+        self.assertEqual(before, Fixture.accessed)
+        wrong = self.root/'wrong'
+        other = run_trajectory(self.data, wrong/'joint', **(options | {'seed': 31}))
+        (wrong/'separate').symlink_to(self.root/'separate', target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, 'share initialization'):
+            verify_milestones(self.data, wrong, dict(separate=separate, joint=other))
