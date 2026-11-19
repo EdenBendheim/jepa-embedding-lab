@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "package_sha256": "6335940821cd57f3995ba4a0e8cd21fea44c274df729c9e97985b8d2c34ff352",
+  "runtime": {
+    "torch": "2.8.0",
+    "python": "3.12.14",
+    "cpu_threads": 1,
+    "architecture": "arm64"
+  },
+  "experiment_sources": {
+    "multiblock_budget.py": "bda5f4158d19a675d18c92eaab57820079365843940b851d6c1c4e958855ed69",
+    "multiblock_trajectory.py": "9a042871455138eaee92032439dc53a53535fbf127a2a031e65e8357596ef1d2",
+    "multiblock_milestones.py": "ee34897dd239800ec8e2b14eac919072daa0c882439c54495364eea2cf7033cc",
+    "multiblock_frozen.py": "d0a787987bef237d245048cf7cc94732a31735699493e13e348650b465517ead",
+    "run_multiblock_budget_20261118.py": "f33acd1f35cda333853e673fdedd751d27853f3b2cc6fb5b94afb44a52958639"
+  },
+  "input_sha256": {
+    "timing": "9827404646e09e5e2a9459df20eac0cb651098a8ccae5a844f0fd4d4b3d1a265",
+    "manifest": "97f4201d5d57ee4fcf58e98e291ad18a54a03f3995571213907e2e8b619893cc",
+    "selection": "a1e87b95e7fee9137c1568d26cd85d7845022b1a77524fd86aa49f68365265bf",
+    "exposure": "a543abcf2bc09acd4d0561dfaf2f9ff68bcad9038e8883b967afa481ddf70bf5"
+  },
+  "config": {
+    "rows": 8,
+    "cols": 8,
+    "patch_dim": 48,
+    "embedding_dim": 32,
+    "heads": 4,
+    "encoder_depth": 2,
+    "predictor_depth": 1,
+    "position_encoding": "learned",
+    "position_scale": 1.0
+  },
+  "batch_size": 4,
+  "seeds": [
+    29,
+    31,
+    37
+  ],
+  "orders": [
+    [
+      "separate",
+      "joint"
+    ],
+    [
+      "joint",
+      "separate"
+    ],
+    [
+      "separate",
+      "joint"
+    ]
+  ],
+  "projected_seconds_per_arm": 7,
+  "schedule": {
+    "planning": {
+      "seconds_per_arm": 7,
+      "margin": 1.25,
+      "estimated_seconds_per_step": {
+        "separate": 0.010624598214285713,
+        "joint": 0.007284359910714285
+      },
+      "equal_time_steps": {
+        "separate": 658,
+        "joint": 960
+      },
+      "equal_update_steps": 658,
+      "limitation": "Planning estimate for steady-state training steps on this machine. Measure actual elapsed time separately from setup, checkpoint writes and evaluation."
+    },
+    "chunk_steps": 100,
+    "checkpoints": {
+      "separate": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        658
+      ],
+      "joint": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        658,
+        758,
+        858,
+        958,
+        960
+      ]
+    }
+  },
+  "ridge_alpha": 0.1,
+  "validation_per_class": 30,
+  "validation_seed": 20261118
+}

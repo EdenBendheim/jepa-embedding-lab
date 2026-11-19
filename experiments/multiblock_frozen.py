@@ -131,9 +131,12 @@ def paired_scores(labels, predictions, *, seed, extended):
     pairs = [('separate', 'joint_matched'), ('random', 'separate'), ('random', 'joint_matched')]
     if extended:
         pairs += [('separate', 'joint_extended'), ('joint_matched', 'joint_extended'), ('random', 'joint_extended')]
+    trained = ['separate', 'joint_matched'] + (['joint_extended'] if extended else [])
+    pairs.extend((control, name) for control in ('rgb_statistics', 'pixels') for name in trained)
     result = {}
     for before, after in pairs:
-        report = paired_diagnostics(labels, predictions[f'{seed}/{before}'], predictions[f'{seed}/{after}'])
+        baseline = predictions[before] if before in ('rgb_statistics', 'pixels') else predictions[f'{seed}/{before}']
+        report = paired_diagnostics(labels, baseline, predictions[f'{seed}/{after}'])
         report['limitation'] = 'Descriptive paired errors on one reserved validation selection.'
         result[f'{after}-minus-{before}'] = report
     return result
