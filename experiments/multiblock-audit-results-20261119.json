@@ -1,0 +1,3511 @@
+{
+  "version": 1,
+  "kind": "multiblock_training_panel_representation_audit",
+  "protocol_sha256": "46e3dfa42b49e3deb0359fe8bbac6760b026adceacfff5a2579d7f7a01cf4833",
+  "sources": {
+    "manifest_sha256": "0333e4c2400a89a694e5b2f3b51ff39482e3cdf9397c5e6969fc9995ad1cec44",
+    "selection_sha256": "e0c4645e619917b1f001ea3382961906349995f8df8c9e0d3307569ef73e0e78",
+    "index_order_sha256": "cdbdd2f17778701453832a6f0930847e7fefd544e50cb387d16d50df184638bd",
+    "rows": 500,
+    "training_lock_sha256": "862aa832aa58e65b1496b5c860fef227c2777372f881315f37e87c2660ce892f",
+    "model_state_sha256": {
+      "29/separate": "dda8682d4bfade54642204fba2bde57ed6ef3f852f47609d976b8fb43db68a38",
+      "29/joint_matched": "0382ca5d9970ded840de519eb5fab783593dc1bcd9aa737ea7e2b5f7c4164716",
+      "29/joint_extended": "a986f00ec3d78d24342d2c5ebbef6322763565011211e842acaef9f91475e358",
+      "29/random": "5b07766804dbfa30dcbce29f922c77201493d58cc32f6e0694efe761249bdf92",
+      "31/separate": "add29d04a0bca9f0ed3e85e2fa70393b89dcbc7d109e8b03d3e90f8ec8b06963",
+      "31/joint_matched": "c0c6f1f039efe683a5f6c13c8bf8bf24bf650ba4eb84c7052e45af93b2319618",
+      "31/joint_extended": "3734f056ded38a923bce754a9a63ce7aeeaaf3ce362cc56f964de77698ee77a5",
+      "31/random": "6467681392c346f5ce0cd12a5721ef44dc8c6cbd2625793910304aa1d81a639f",
+      "37/separate": "d0db17be4090da3329bb3c81dee56bf0a4008749d2a489887ae34559f61ea780",
+      "37/joint_matched": "4faa56c4137d1b300a00a70608408d34e58f68469007835fbba1d2f6ca209c95",
+      "37/joint_extended": "bc4fa56128fed4e1cdfa07728eeca7439ec495ff36622209c12d89a8ce385b00",
+      "37/random": "fe96a7f330f13aa48775e278db9b121f23defb5d36a024db3a2c13f0743cff1b"
+    }
+  },
+  "audit": {
+    "folds": 5,
+    "fold_seed": 29,
+    "shuffle_seed": 41,
+    "batch_size": 16,
+    "reconstruction_alpha": 0.01,
+    "classifier_alpha": 0.1
+  },
+  "fold_assignments_sha256": "5f0358cc12cf0d3940c039d39891432b3e9f759cbaf98c99673d0f1e51a27e0b",
+  "panel_file_sha256": "880b0df89fb2222dd56f60ebb1c7d3806274565262c73f1868255a4fa6f22f7a",
+  "rows": 500,
+  "partition": "train",
+  "geometry": {
+    "views": {
+      "29/separate": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6450488874327099,
+          "mean_row_l2": 5.138445708900211,
+          "min_row_l2": 3.307379870820801,
+          "max_row_l2": 5.666683878676593,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.347199196534711,
+          "eigenvalue_tolerance": 4.781738338856748e-10,
+          "mean_nonzero_row_pair_cosine": 0.4346659297789038,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6441010955057882,
+          "mean_row_l2": 5.140790680703777,
+          "min_row_l2": 3.333536883315311,
+          "max_row_l2": 5.666687503596338,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.3458544885582087,
+          "eigenvalue_tolerance": 4.766257977489313e-10,
+          "mean_nonzero_row_pair_cosine": 0.4366574449655762,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "29/joint_matched": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6431301119218213,
+          "mean_row_l2": 5.100341528165417,
+          "min_row_l2": 3.1509080892464607,
+          "max_row_l2": 5.649916761324017,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.327497251918022,
+          "eigenvalue_tolerance": 4.715543918014632e-10,
+          "mean_nonzero_row_pair_cosine": 0.43912660689692334,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6418508236417038,
+          "mean_row_l2": 5.102573997962009,
+          "min_row_l2": 3.170184105214691,
+          "max_row_l2": 5.649958921981104,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.32519767465008,
+          "eigenvalue_tolerance": 4.697364272508879e-10,
+          "mean_nonzero_row_pair_cosine": 0.44159622173752344,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "29/joint_extended": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6344298134316304,
+          "mean_row_l2": 4.9181748887866235,
+          "min_row_l2": 2.8718951206680723,
+          "max_row_l2": 5.63377931797069,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 4.004785857378206,
+          "eigenvalue_tolerance": 3.6536356647542756e-10,
+          "mean_nonzero_row_pair_cosine": 0.42830694645571254,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6326008531411175,
+          "mean_row_l2": 4.927248256761153,
+          "min_row_l2": 2.907812398541029,
+          "max_row_l2": 5.632499207951117,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.992625287386793,
+          "eigenvalue_tolerance": 3.632077449639277e-10,
+          "mean_nonzero_row_pair_cosine": 0.43296817838875507,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "29/random": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.5726453499030197,
+          "mean_row_l2": 4.954805650625942,
+          "min_row_l2": 2.967821285393135,
+          "max_row_l2": 5.649125627765907,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.129005922162581,
+          "eigenvalue_tolerance": 4.617534463975439e-10,
+          "mean_nonzero_row_pair_cosine": 0.523240019486157,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.5726846227022167,
+          "mean_row_l2": 4.9546079211764695,
+          "min_row_l2": 2.9689018397695,
+          "max_row_l2": 5.6487971514572255,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.1289286726833825,
+          "eigenvalue_tolerance": 4.618396904664273e-10,
+          "mean_nonzero_row_pair_cosine": 0.5231881443365171,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "31/separate": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.7102966511823601,
+          "mean_row_l2": 5.0735120978096635,
+          "min_row_l2": 2.979368749258581,
+          "max_row_l2": 5.65319578095752,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 2.6618945032311196,
+          "eigenvalue_tolerance": 6.368667625654012e-10,
+          "mean_nonzero_row_pair_cosine": 0.28902154546129677,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.710195544023335,
+          "mean_row_l2": 5.0751372359942,
+          "min_row_l2": 2.981576274277558,
+          "max_row_l2": 5.653346790158047,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 2.665970465814797,
+          "eigenvalue_tolerance": 6.354097015888277e-10,
+          "mean_nonzero_row_pair_cosine": 0.29020003530563515,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "31/joint_matched": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.7239964035713846,
+          "mean_row_l2": 5.256912043738407,
+          "min_row_l2": 3.4789661370058744,
+          "max_row_l2": 5.6560359908234625,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 2.614081850593533,
+          "eigenvalue_tolerance": 6.466137399419172e-10,
+          "mean_nonzero_row_pair_cosine": 0.30932199035023333,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.7235518427185524,
+          "mean_row_l2": 5.255793373567396,
+          "min_row_l2": 3.471989708893083,
+          "max_row_l2": 5.6561456379387,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 2.6167505042028845,
+          "eigenvalue_tolerance": 6.448999617696043e-10,
+          "mean_nonzero_row_pair_cosine": 0.3103582427039501,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "31/joint_extended": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6697483135998666,
+          "mean_row_l2": 5.146885403274314,
+          "min_row_l2": 2.9820663758079,
+          "max_row_l2": 5.637236379008001,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 2.8571958811363456,
+          "eigenvalue_tolerance": 4.780056193107288e-10,
+          "mean_nonzero_row_pair_cosine": 0.3855432687305033,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6697668666738572,
+          "mean_row_l2": 5.156077233699568,
+          "min_row_l2": 3.038157515856761,
+          "max_row_l2": 5.637212396617447,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 2.8611787390439574,
+          "eigenvalue_tolerance": 4.765310462566981e-10,
+          "mean_nonzero_row_pair_cosine": 0.3878906225819152,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "31/random": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.4728581144331708,
+          "mean_row_l2": 5.124365218890078,
+          "min_row_l2": 3.9690879945829076,
+          "max_row_l2": 5.647934521895937,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.0248234831056644,
+          "eigenvalue_tolerance": 3.1012965626249367e-10,
+          "mean_nonzero_row_pair_cosine": 0.6955828953493883,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.47298217256327335,
+          "mean_row_l2": 5.124479258732708,
+          "min_row_l2": 3.9700369479508777,
+          "max_row_l2": 5.64869962874529,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.0221276980033642,
+          "eigenvalue_tolerance": 3.104521060323534e-10,
+          "mean_nonzero_row_pair_cosine": 0.6953793002811987,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "37/separate": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.729997574584106,
+          "mean_row_l2": 5.124616976897005,
+          "min_row_l2": 2.8672696347178714,
+          "max_row_l2": 5.643940220241815,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.16413119726314,
+          "eigenvalue_tolerance": 4.826933757491141e-10,
+          "mean_nonzero_row_pair_cosine": 0.28853108307085096,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.7295294317489096,
+          "mean_row_l2": 5.125341947296767,
+          "min_row_l2": 2.864930968421249,
+          "max_row_l2": 5.643973544240623,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.16586511560677,
+          "eigenvalue_tolerance": 4.82243540969855e-10,
+          "mean_nonzero_row_pair_cosine": 0.2896835587362835,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "37/joint_matched": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.7206621065918051,
+          "mean_row_l2": 5.174947652487508,
+          "min_row_l2": 3.3600977588594443,
+          "max_row_l2": 5.6416430109256055,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.080565444466272,
+          "eigenvalue_tolerance": 4.825974620437981e-10,
+          "mean_nonzero_row_pair_cosine": 0.31820049731897293,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.7200157858821843,
+          "mean_row_l2": 5.174573314193184,
+          "min_row_l2": 3.342664364042467,
+          "max_row_l2": 5.64167168909813,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.0818818634001466,
+          "eigenvalue_tolerance": 4.817227070548804e-10,
+          "mean_nonzero_row_pair_cosine": 0.31941125208229215,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "37/joint_extended": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6792748220036461,
+          "mean_row_l2": 5.068336844701088,
+          "min_row_l2": 3.150292126942334,
+          "max_row_l2": 5.6209933895483175,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.3541322753832197,
+          "eigenvalue_tolerance": 4.0598418764321337e-10,
+          "mean_nonzero_row_pair_cosine": 0.37370605458794676,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.6788287730167524,
+          "mean_row_l2": 5.072319234276385,
+          "min_row_l2": 3.161761481864382,
+          "max_row_l2": 5.620846874695858,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.3559652535208326,
+          "eigenvalue_tolerance": 4.051058785645906e-10,
+          "mean_nonzero_row_pair_cosine": 0.37538251048923665,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      },
+      "37/random": {
+        "original": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.5424653795070155,
+          "mean_row_l2": 4.704805577587862,
+          "min_row_l2": 2.3893812465207986,
+          "max_row_l2": 5.645524302836232,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.4413456578603783,
+          "eigenvalue_tolerance": 3.0587445143321084e-10,
+          "mean_nonzero_row_pair_cosine": 0.5344764582706302,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        },
+        "shuffled": {
+          "count": 500,
+          "feature_dim": 32,
+          "zero_norm_rows": 0,
+          "zero_variance_columns": 0,
+          "mean_feature_population_std": 0.5422397389538876,
+          "mean_row_l2": 4.704636378802062,
+          "min_row_l2": 2.387450291862315,
+          "max_row_l2": 5.645092454415117,
+          "centered_numerical_rank": 31,
+          "covariance_entropy_effective_rank": 3.4455428320481185,
+          "eigenvalue_tolerance": 3.0547553013635427e-10,
+          "mean_nonzero_row_pair_cosine": 0.5350229702437143,
+          "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+        }
+      }
+    },
+    "paired_layout": {
+      "29/separate": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.012560486116103687,
+        "mean_paired_cosine": 0.9999074523526524,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9998593676613682,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "29/joint_matched": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.013098714371813477,
+        "mean_paired_cosine": 0.9998989006564225,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.999834818925569,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "29/joint_extended": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.020764642181822064,
+        "mean_paired_cosine": 0.9997348446614421,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9995852197447339,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "29/random": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.009405205887779083,
+        "mean_paired_cosine": 0.9999398298529,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9999616169464689,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "31/separate": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.015234066829613497,
+        "mean_paired_cosine": 0.9998484130714796,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9997302664193255,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "31/joint_matched": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.014690146774133488,
+        "mean_paired_cosine": 0.9998717767990154,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9997166437977728,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "31/joint_extended": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.016594731226089097,
+        "mean_paired_cosine": 0.9998394179672482,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9996928967166611,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "31/random": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.007723949198606695,
+        "mean_paired_cosine": 0.9999633047690298,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9999364547496269,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "37/separate": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.01293754844597565,
+        "mean_paired_cosine": 0.9998944638359526,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9998491696929445,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "37/joint_matched": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.011255873974932865,
+        "mean_paired_cosine": 0.9999230346656615,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9998713011106124,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "37/joint_extended": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.012428756462236809,
+        "mean_paired_cosine": 0.9999038959247314,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9998625860781756,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      },
+      "37/random": {
+        "count": 500,
+        "feature_dim": 32,
+        "rmse": 0.008943333204267033,
+        "mean_paired_cosine": 0.9999350318369402,
+        "cosine_defined_rows": 500,
+        "centered_linear_cka": 0.9999359898463743,
+        "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+      }
+    },
+    "paired_milestones": {
+      "29": {
+        "joint_matched-vs-separate": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.19524653449004484,
+          "mean_paired_cosine": 0.9762927576512864,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9968740444007544,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "joint_extended-vs-joint_matched": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.2133550240465269,
+          "mean_paired_cosine": 0.9720518331144852,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9658300287313742,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "joint_extended-vs-random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.9272965565649445,
+          "mean_paired_cosine": 0.4372774435004813,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.8718291553404331,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        }
+      },
+      "31": {
+        "joint_matched-vs-separate": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.23911823913482494,
+          "mean_paired_cosine": 0.9651383592859191,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9926029439282638,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "joint_extended-vs-joint_matched": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.20347568837419464,
+          "mean_paired_cosine": 0.9758272506502214,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9687898378877905,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "joint_extended-vs-random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.8958493068566089,
+          "mean_paired_cosine": 0.5227396182220614,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.8585437143816322,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        }
+      },
+      "37": {
+        "joint_matched-vs-separate": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.23334731580351803,
+          "mean_paired_cosine": 0.9672043209902583,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9973880771217319,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "joint_extended-vs-joint_matched": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.20603429140069987,
+          "mean_paired_cosine": 0.9749656695749626,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9692896850142985,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        },
+        "joint_extended-vs-random": {
+          "count": 500,
+          "feature_dim": 32,
+          "rmse": 0.9375589902490528,
+          "mean_paired_cosine": 0.4107185649773705,
+          "cosine_defined_rows": 500,
+          "centered_linear_cka": 0.9483441853461859,
+          "limitation": "Aligned supplied rows only; similarity is not downstream quality or evidence of temporal stability"
+        }
+      }
+    }
+  },
+  "rgb_reconstruction": {
+    "29/separate": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.100771898953045,
+        "fitting_mean_reference_mse": 0.4834601952684028,
+        "reconstruction_r2": 0.7915611255294773,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.4887995960697805,
+        "fitting_mean_reference_mse": 0.4834601952684028,
+        "reconstruction_r2": -0.011044137353259265,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.29628637387901735,
+        "mean_row_l2": 1.643896577388182,
+        "min_row_l2": 0.37878543078743915,
+        "max_row_l2": 4.362013777989198,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.843522574603033,
+        "eigenvalue_tolerance": 9.734446210478409e-11,
+        "mean_nonzero_row_pair_cosine": 0.0036507486643280944,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "29/joint_matched": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.10376610477349078,
+        "fitting_mean_reference_mse": 0.4738798417877474,
+        "reconstruction_r2": 0.7810286582733181,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.47714957134064956,
+        "fitting_mean_reference_mse": 0.4738798417877474,
+        "reconstruction_r2": -0.006899912730127689,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.3005344024347174,
+        "mean_row_l2": 1.6588060222384358,
+        "min_row_l2": 0.39603998914513944,
+        "max_row_l2": 4.517387258286978,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.5609443099198477,
+        "eigenvalue_tolerance": 1.0939725048372395e-10,
+        "mean_nonzero_row_pair_cosine": 0.007283008813521156,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "29/joint_extended": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.10630492443933798,
+        "fitting_mean_reference_mse": 0.45422402787634153,
+        "reconstruction_r2": 0.7659636700939155,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.45740840361481594,
+        "fitting_mean_reference_mse": 0.45422402787634153,
+        "reconstruction_r2": -0.007010584079760074,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.3064837855475747,
+        "mean_row_l2": 1.691850741117824,
+        "min_row_l2": 0.39378105616636155,
+        "max_row_l2": 4.4994476723759105,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 4.171717961105773,
+        "eigenvalue_tolerance": 9.992010012923677e-11,
+        "mean_nonzero_row_pair_cosine": 0.004692028497725603,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "29/random": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.07965902493681708,
+        "fitting_mean_reference_mse": 0.38186201226422156,
+        "reconstruction_r2": 0.7913931672216228,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.3792072118622874,
+        "fitting_mean_reference_mse": 0.38186201226422156,
+        "reconstruction_r2": 0.0069522505949013436,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.26143641051609107,
+        "mean_row_l2": 1.4989759754124647,
+        "min_row_l2": 0.41515706701341765,
+        "max_row_l2": 4.06719485091324,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 5.55250712749275,
+        "eigenvalue_tolerance": 5.143034613758105e-11,
+        "mean_nonzero_row_pair_cosine": 0.00042666571849141877,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "31/separate": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.1261153300611623,
+        "fitting_mean_reference_mse": 0.5948247106022402,
+        "reconstruction_r2": 0.7879789998410209,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.5948366841784863,
+        "fitting_mean_reference_mse": 0.5948247106022402,
+        "reconstruction_r2": -2.0129587814388117e-05,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.3345821089768315,
+        "mean_row_l2": 1.8653825972403442,
+        "min_row_l2": 0.44277264506798053,
+        "max_row_l2": 5.494802873504868,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.509829887421845,
+        "eigenvalue_tolerance": 1.0257163905943846e-10,
+        "mean_nonzero_row_pair_cosine": 0.0004804561952085105,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "31/joint_matched": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.12948549561731795,
+        "fitting_mean_reference_mse": 0.6095820376657249,
+        "reconstruction_r2": 0.7875831510502551,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.6074161998742701,
+        "fitting_mean_reference_mse": 0.6095820376657249,
+        "reconstruction_r2": 0.003552988207704555,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.3373775595998816,
+        "mean_row_l2": 1.8989986581661904,
+        "min_row_l2": 0.5946262087186023,
+        "max_row_l2": 5.6503995917556304,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.3041353451559137,
+        "eigenvalue_tolerance": 1.0708006304519443e-10,
+        "mean_nonzero_row_pair_cosine": 0.0005458244267939801,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "31/joint_extended": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.10767013061260462,
+        "fitting_mean_reference_mse": 0.5240893548063011,
+        "reconstruction_r2": 0.7945576844383748,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.5249257964966971,
+        "fitting_mean_reference_mse": 0.5240893548063011,
+        "reconstruction_r2": -0.0015959906125266876,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.3085451141957686,
+        "mean_row_l2": 1.7179298569129842,
+        "min_row_l2": 0.4777403860003673,
+        "max_row_l2": 4.905392593827982,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.530834242737433,
+        "eigenvalue_tolerance": 9.274528751478711e-11,
+        "mean_nonzero_row_pair_cosine": 0.00010779526565126529,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "31/random": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.04405316103817648,
+        "fitting_mean_reference_mse": 0.25843632544076967,
+        "reconstruction_r2": 0.8295395936966574,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.2564088370266404,
+        "fitting_mean_reference_mse": 0.25843632544076967,
+        "reconstruction_r2": 0.007845214524975663,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.20399954866429393,
+        "mean_row_l2": 1.1066748117227598,
+        "min_row_l2": 0.3397541334252354,
+        "max_row_l2": 3.1409816312379375,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 6.063432131692381,
+        "eigenvalue_tolerance": 3.10563362012762e-11,
+        "mean_nonzero_row_pair_cosine": 0.00026778975490570175,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "37/separate": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.1340042066876283,
+        "fitting_mean_reference_mse": 0.5993046611052177,
+        "reconstruction_r2": 0.7764005265026602,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.6055489589652202,
+        "fitting_mean_reference_mse": 0.5993046611052177,
+        "reconstruction_r2": -0.010419237935655135,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.34203837558990724,
+        "mean_row_l2": 1.922595942767625,
+        "min_row_l2": 0.6131345641307837,
+        "max_row_l2": 5.625883585242234,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 4.071478153771128,
+        "eigenvalue_tolerance": 1.0411677613382018e-10,
+        "mean_nonzero_row_pair_cosine": 0.0029845936871928285,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "37/joint_matched": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.13115954343794492,
+        "fitting_mean_reference_mse": 0.584307451319413,
+        "reconstruction_r2": 0.775529914701967,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.5889483777911061,
+        "fitting_mean_reference_mse": 0.584307451319413,
+        "reconstruction_r2": -0.007942610454844568,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.338264378657576,
+        "mean_row_l2": 1.8927561301829305,
+        "min_row_l2": 0.5290695608439818,
+        "max_row_l2": 5.535087275179953,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 3.8107381043546664,
+        "eigenvalue_tolerance": 1.1097081589189963e-10,
+        "mean_nonzero_row_pair_cosine": 0.0041870567846200215,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "37/joint_extended": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.11148905487388049,
+        "fitting_mean_reference_mse": 0.5192412043976544,
+        "reconstruction_r2": 0.7852846539726882,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.5197171687734781,
+        "fitting_mean_reference_mse": 0.5192412043976544,
+        "reconstruction_r2": -0.0009166537088978188,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.31203527062836195,
+        "mean_row_l2": 1.7488636776477051,
+        "min_row_l2": 0.3769241627100733,
+        "max_row_l2": 4.725959146931656,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 4.2818378344144525,
+        "eigenvalue_tolerance": 9.568976183294925e-11,
+        "mean_nonzero_row_pair_cosine": 0.0011756143291754616,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    },
+    "37/random": {
+      "aligned": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "aligned",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.06460053689944184,
+        "fitting_mean_reference_mse": 0.34078641411529464,
+        "reconstruction_r2": 0.8104368771062973,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "permuted": {
+        "count": 500,
+        "target_dim": 32,
+        "alpha": 0.01,
+        "training_mapping": "permuted within fitting fold",
+        "permutation_seed_rule": "41 + fold",
+        "folds": [
+          {
+            "fold": 0,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 1,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 2,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 3,
+            "fitting_count": 400,
+            "scoring_count": 100
+          },
+          {
+            "fold": 4,
+            "fitting_count": 400,
+            "scoring_count": 100
+          }
+        ],
+        "mean_squared_error": 0.3384445816472099,
+        "fitting_mean_reference_mse": 0.34078641411529464,
+        "reconstruction_r2": 0.00687184808750152,
+        "r2_reference": "Each scored row uses the target mean of its fitting folds",
+        "limitation": "Descriptive reconstruction within the supplied sample and fixed folds"
+      },
+      "residual_geometry": {
+        "count": 500,
+        "feature_dim": 32,
+        "zero_norm_rows": 0,
+        "zero_variance_columns": 0,
+        "mean_feature_population_std": 0.24553424427997111,
+        "mean_row_l2": 1.3207594723549705,
+        "min_row_l2": 0.3977616796510933,
+        "max_row_l2": 3.256657801401241,
+        "centered_numerical_rank": 31,
+        "covariance_entropy_effective_rank": 6.2498888809667035,
+        "eigenvalue_tolerance": 4.579366567191864e-11,
+        "mean_nonzero_row_pair_cosine": 0.0007851592521454022,
+        "limitation": "Descriptive geometry of the supplied rows; no fitted transform, quality claim, significance test, or guarantee against collapse"
+      }
+    }
+  },
+  "residual_classification": {
+    "rgb": {
+      "count": 500,
+      "correct": 104,
+      "accuracy": 0.208,
+      "alpha": 0.1,
+      "folds": [
+        {
+          "fold": 0,
+          "fitting_count": 400,
+          "scoring_count": 100,
+          "scoring_class_counts": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "correct": 23
+        },
+        {
+          "fold": 1,
+          "fitting_count": 400,
+          "scoring_count": 100,
+          "scoring_class_counts": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "correct": 18
+        },
+        {
+          "fold": 2,
+          "fitting_count": 400,
+          "scoring_count": 100,
+          "scoring_class_counts": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "correct": 22
+        },
+        {
+          "fold": 3,
+          "fitting_count": 400,
+          "scoring_count": 100,
+          "scoring_class_counts": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "correct": 21
+        },
+        {
+          "fold": 4,
+          "fitting_count": 400,
+          "scoring_count": 100,
+          "scoring_class_counts": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "correct": 20
+        }
+      ],
+      "confusion_matrix": [
+        [
+          23,
+          3,
+          5,
+          0,
+          0,
+          0,
+          1,
+          0,
+          11,
+          7
+        ],
+        [
+          11,
+          1,
+          2,
+          1,
+          2,
+          4,
+          3,
+          0,
+          8,
+          18
+        ],
+        [
+          9,
+          1,
+          5,
+          2,
+          15,
+          1,
+          9,
+          0,
+          3,
+          5
+        ],
+        [
+          8,
+          4,
+          6,
+          2,
+          7,
+          1,
+          6,
+          2,
+          1,
+          13
+        ],
+        [
+          3,
+          2,
+          9,
+          1,
+          19,
+          2,
+          9,
+          0,
+          1,
+          4
+        ],
+        [
+          5,
+          8,
+          1,
+          3,
+          6,
+          0,
+          9,
+          2,
+          1,
+          15
+        ],
+        [
+          6,
+          2,
+          6,
+          2,
+          18,
+          2,
+          9,
+          2,
+          0,
+          3
+        ],
+        [
+          8,
+          5,
+          2,
+          0,
+          6,
+          1,
+          7,
+          2,
+          0,
+          19
+        ],
+        [
+          23,
+          2,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          17,
+          5
+        ],
+        [
+          4,
+          4,
+          2,
+          2,
+          2,
+          1,
+          2,
+          0,
+          7,
+          26
+        ]
+      ],
+      "classifier_weight_parameters": 60,
+      "limitation": "Cross-fitted classifier scores on encoder-training images; not held-out representation quality"
+    },
+    "comparisons": {
+      "29/separate": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 83,
+          "recovered": 64,
+          "regressed": 85,
+          "accuracy_delta": -0.042
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 117,
+          "recovered": 63,
+          "regressed": 50,
+          "accuracy_delta": 0.026
+        }
+      },
+      "29/joint_matched": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 83,
+          "recovered": 62,
+          "regressed": 83,
+          "accuracy_delta": -0.042
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 125,
+          "recovered": 67,
+          "regressed": 46,
+          "accuracy_delta": 0.042
+        }
+      },
+      "29/joint_extended": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 86,
+          "recovered": 61,
+          "regressed": 79,
+          "accuracy_delta": -0.036
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 123,
+          "recovered": 65,
+          "regressed": 46,
+          "accuracy_delta": 0.038
+        }
+      },
+      "29/random": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 86,
+          "recovered": 63,
+          "regressed": 81,
+          "accuracy_delta": -0.036
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 125,
+          "recovered": 70,
+          "regressed": 49,
+          "accuracy_delta": 0.042
+        }
+      },
+      "31/separate": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 92,
+          "recovered": 67,
+          "regressed": 79,
+          "accuracy_delta": -0.024
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 123,
+          "recovered": 62,
+          "regressed": 43,
+          "accuracy_delta": 0.038
+        }
+      },
+      "31/joint_matched": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 92,
+          "recovered": 66,
+          "regressed": 78,
+          "accuracy_delta": -0.024
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 118,
+          "recovered": 56,
+          "regressed": 42,
+          "accuracy_delta": 0.028
+        }
+      },
+      "31/joint_extended": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 101,
+          "recovered": 72,
+          "regressed": 75,
+          "accuracy_delta": -0.006
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 122,
+          "recovered": 62,
+          "regressed": 44,
+          "accuracy_delta": 0.036
+        }
+      },
+      "31/random": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 80,
+          "recovered": 60,
+          "regressed": 84,
+          "accuracy_delta": -0.048
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 119,
+          "recovered": 63,
+          "regressed": 48,
+          "accuracy_delta": 0.03
+        }
+      },
+      "37/separate": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 90,
+          "recovered": 61,
+          "regressed": 75,
+          "accuracy_delta": -0.028
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 122,
+          "recovered": 63,
+          "regressed": 45,
+          "accuracy_delta": 0.036
+        }
+      },
+      "37/joint_matched": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 89,
+          "recovered": 64,
+          "regressed": 79,
+          "accuracy_delta": -0.03
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 115,
+          "recovered": 59,
+          "regressed": 48,
+          "accuracy_delta": 0.022
+        }
+      },
+      "37/joint_extended": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 95,
+          "recovered": 70,
+          "regressed": 79,
+          "accuracy_delta": -0.018
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 126,
+          "recovered": 72,
+          "regressed": 50,
+          "accuracy_delta": 0.044
+        }
+      },
+      "37/random": {
+        "residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 94,
+          "recovered": 65,
+          "regressed": 75,
+          "accuracy_delta": -0.02
+        },
+        "rgb_plus_residual": {
+          "count": 500,
+          "baseline_correct": 104,
+          "candidate_correct": 125,
+          "recovered": 67,
+          "regressed": 46,
+          "accuracy_delta": 0.042
+        }
+      }
+    },
+    "reconstruction_alpha": 0.01,
+    "classifier_alpha": 0.1
+  },
+  "layout_transfer": {
+    "comparisons": {
+      "29/separate": {
+        "count": 500,
+        "baseline_correct": 115,
+        "candidate_correct": 115,
+        "recovered": 3,
+        "regressed": 3,
+        "predictions_changed": 14,
+        "accuracy_delta": 0.0,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 22,
+            "candidate_correct": 22,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 3,
+            "candidate_correct": 2,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 0,
+            "candidate_correct": 0,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 6,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 15,
+            "candidate_correct": 15,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 9,
+            "candidate_correct": 11,
+            "recovered": 2,
+            "regressed": 0,
+            "accuracy_delta": 0.03999999910593033
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 21,
+            "candidate_correct": 20,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 2,
+            "candidate_correct": 2,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 27,
+            "candidate_correct": 27,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 11,
+            "candidate_correct": 10,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          }
+        ]
+      },
+      "29/joint_matched": {
+        "count": 500,
+        "baseline_correct": 113,
+        "candidate_correct": 113,
+        "recovered": 3,
+        "regressed": 3,
+        "predictions_changed": 17,
+        "accuracy_delta": 0.0,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 24,
+            "candidate_correct": 24,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 3,
+            "candidate_correct": 3,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 1,
+            "candidate_correct": 1,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 7,
+            "recovered": 2,
+            "regressed": 0,
+            "accuracy_delta": 0.03999999910593033
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 12,
+            "candidate_correct": 13,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 12,
+            "candidate_correct": 12,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 21,
+            "candidate_correct": 20,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 3,
+            "candidate_correct": 2,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 20,
+            "candidate_correct": 20,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 12,
+            "candidate_correct": 11,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          }
+        ]
+      },
+      "29/joint_extended": {
+        "count": 500,
+        "baseline_correct": 114,
+        "candidate_correct": 110,
+        "recovered": 3,
+        "regressed": 7,
+        "predictions_changed": 19,
+        "accuracy_delta": -0.008,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 21,
+            "candidate_correct": 21,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 6,
+            "candidate_correct": 5,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 0,
+            "candidate_correct": 0,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 8,
+            "candidate_correct": 8,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 14,
+            "candidate_correct": 14,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 10,
+            "candidate_correct": 10,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 17,
+            "candidate_correct": 14,
+            "recovered": 0,
+            "regressed": 3,
+            "accuracy_delta": -0.05999999865889549
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 4,
+            "recovered": 1,
+            "regressed": 2,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 20,
+            "candidate_correct": 21,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 13,
+            "candidate_correct": 13,
+            "recovered": 1,
+            "regressed": 1,
+            "accuracy_delta": 0.0
+          }
+        ]
+      },
+      "29/random": {
+        "count": 500,
+        "baseline_correct": 122,
+        "candidate_correct": 122,
+        "recovered": 3,
+        "regressed": 3,
+        "predictions_changed": 14,
+        "accuracy_delta": 0.0,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 21,
+            "candidate_correct": 21,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 5,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 10,
+            "candidate_correct": 8,
+            "recovered": 0,
+            "regressed": 2,
+            "accuracy_delta": -0.03999999910593033
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 4,
+            "candidate_correct": 4,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 14,
+            "candidate_correct": 15,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 6,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 22,
+            "candidate_correct": 22,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 7,
+            "candidate_correct": 7,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 23,
+            "candidate_correct": 24,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 11,
+            "candidate_correct": 10,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          }
+        ]
+      },
+      "31/separate": {
+        "count": 500,
+        "baseline_correct": 119,
+        "candidate_correct": 118,
+        "recovered": 0,
+        "regressed": 1,
+        "predictions_changed": 8,
+        "accuracy_delta": -0.002,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 24,
+            "candidate_correct": 24,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 9,
+            "candidate_correct": 9,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 2,
+            "candidate_correct": 2,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 7,
+            "candidate_correct": 7,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 18,
+            "candidate_correct": 18,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 4,
+            "candidate_correct": 4,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 20,
+            "candidate_correct": 19,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 12,
+            "candidate_correct": 12,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 18,
+            "candidate_correct": 18,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 5,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          }
+        ]
+      },
+      "31/joint_matched": {
+        "count": 500,
+        "baseline_correct": 116,
+        "candidate_correct": 116,
+        "recovered": 1,
+        "regressed": 1,
+        "predictions_changed": 9,
+        "accuracy_delta": 0.0,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 25,
+            "candidate_correct": 25,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 10,
+            "candidate_correct": 10,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 3,
+            "candidate_correct": 3,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 4,
+            "candidate_correct": 4,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 15,
+            "candidate_correct": 14,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 4,
+            "candidate_correct": 4,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 23,
+            "candidate_correct": 23,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 8,
+            "candidate_correct": 8,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 18,
+            "candidate_correct": 18,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 6,
+            "candidate_correct": 7,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          }
+        ]
+      },
+      "31/joint_extended": {
+        "count": 500,
+        "baseline_correct": 122,
+        "candidate_correct": 125,
+        "recovered": 4,
+        "regressed": 1,
+        "predictions_changed": 16,
+        "accuracy_delta": 0.006,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 22,
+            "candidate_correct": 22,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 7,
+            "candidate_correct": 8,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 5,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 6,
+            "candidate_correct": 6,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 16,
+            "candidate_correct": 16,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 1,
+            "candidate_correct": 2,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 20,
+            "candidate_correct": 20,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 14,
+            "candidate_correct": 15,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 18,
+            "candidate_correct": 18,
+            "recovered": 1,
+            "regressed": 1,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 13,
+            "candidate_correct": 13,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          }
+        ]
+      },
+      "31/random": {
+        "count": 500,
+        "baseline_correct": 123,
+        "candidate_correct": 124,
+        "recovered": 2,
+        "regressed": 1,
+        "predictions_changed": 7,
+        "accuracy_delta": 0.002,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 27,
+            "candidate_correct": 27,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 7,
+            "candidate_correct": 7,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 8,
+            "candidate_correct": 8,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 6,
+            "candidate_correct": 5,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 19,
+            "candidate_correct": 20,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 11,
+            "candidate_correct": 11,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 18,
+            "candidate_correct": 18,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 7,
+            "candidate_correct": 8,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 17,
+            "candidate_correct": 17,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 3,
+            "candidate_correct": 3,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          }
+        ]
+      },
+      "37/separate": {
+        "count": 500,
+        "baseline_correct": 118,
+        "candidate_correct": 117,
+        "recovered": 1,
+        "regressed": 2,
+        "predictions_changed": 11,
+        "accuracy_delta": -0.002,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 24,
+            "candidate_correct": 24,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 8,
+            "candidate_correct": 8,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 2,
+            "candidate_correct": 2,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 9,
+            "candidate_correct": 8,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 5,
+            "recovered": 1,
+            "regressed": 1,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 2,
+            "candidate_correct": 2,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 25,
+            "candidate_correct": 25,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 15,
+            "candidate_correct": 15,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 19,
+            "candidate_correct": 19,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 9,
+            "candidate_correct": 9,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          }
+        ]
+      },
+      "37/joint_matched": {
+        "count": 500,
+        "baseline_correct": 106,
+        "candidate_correct": 104,
+        "recovered": 0,
+        "regressed": 2,
+        "predictions_changed": 7,
+        "accuracy_delta": -0.004,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 22,
+            "candidate_correct": 22,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 8,
+            "candidate_correct": 7,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 1,
+            "candidate_correct": 1,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 9,
+            "candidate_correct": 9,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 4,
+            "candidate_correct": 4,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 3,
+            "candidate_correct": 2,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 25,
+            "candidate_correct": 25,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 8,
+            "candidate_correct": 8,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 15,
+            "candidate_correct": 15,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 11,
+            "candidate_correct": 11,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          }
+        ]
+      },
+      "37/joint_extended": {
+        "count": 500,
+        "baseline_correct": 118,
+        "candidate_correct": 116,
+        "recovered": 1,
+        "regressed": 3,
+        "predictions_changed": 14,
+        "accuracy_delta": -0.004,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 23,
+            "candidate_correct": 23,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 7,
+            "candidate_correct": 7,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 3,
+            "candidate_correct": 3,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 12,
+            "candidate_correct": 11,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 5,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 5,
+            "candidate_correct": 4,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 21,
+            "candidate_correct": 22,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 10,
+            "candidate_correct": 9,
+            "recovered": 0,
+            "regressed": 1,
+            "accuracy_delta": -0.019999999552965164
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 23,
+            "candidate_correct": 23,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 9,
+            "candidate_correct": 9,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          }
+        ]
+      },
+      "37/random": {
+        "count": 500,
+        "baseline_correct": 121,
+        "candidate_correct": 124,
+        "recovered": 3,
+        "regressed": 0,
+        "predictions_changed": 9,
+        "accuracy_delta": 0.006,
+        "per_class": [
+          {
+            "label": 0,
+            "count": 50,
+            "baseline_correct": 24,
+            "candidate_correct": 25,
+            "recovered": 1,
+            "regressed": 0,
+            "accuracy_delta": 0.019999999552965164
+          },
+          {
+            "label": 1,
+            "count": 50,
+            "baseline_correct": 8,
+            "candidate_correct": 8,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 2,
+            "count": 50,
+            "baseline_correct": 6,
+            "candidate_correct": 6,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 3,
+            "count": 50,
+            "baseline_correct": 3,
+            "candidate_correct": 5,
+            "recovered": 2,
+            "regressed": 0,
+            "accuracy_delta": 0.03999999910593033
+          },
+          {
+            "label": 4,
+            "count": 50,
+            "baseline_correct": 11,
+            "candidate_correct": 11,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 5,
+            "count": 50,
+            "baseline_correct": 9,
+            "candidate_correct": 9,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 6,
+            "count": 50,
+            "baseline_correct": 21,
+            "candidate_correct": 21,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 7,
+            "count": 50,
+            "baseline_correct": 7,
+            "candidate_correct": 7,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 8,
+            "count": 50,
+            "baseline_correct": 18,
+            "candidate_correct": 18,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          },
+          {
+            "label": 9,
+            "count": 50,
+            "baseline_correct": 14,
+            "candidate_correct": 14,
+            "recovered": 0,
+            "regressed": 0,
+            "accuracy_delta": 0.0
+          }
+        ]
+      }
+    },
+    "alpha": 0.1,
+    "interpretation": "A shuffled view is a distribution shift. The score change measures sensitivity of a fixed head to this particular intervention."
+  },
+  "validation_images_indexed": false,
+  "test_images_indexed": false,
+  "limitation": "Exploratory fixed-fold analysis on encoder-training partition rows. RGB residuals remove a fitted linear component, and shuffling shifts the input distribution. Classification here does not establish generalization or explain the earlier held-out difference.",
+  "seed_means": {
+    "separate": {
+      "rgb_r2": 0.7853135506243861,
+      "permuted_rgb_r2": -0.007161168292242929,
+      "effective_rank": 3.05774163234299,
+      "residual_effective_rank": 3.808276871932002,
+      "layout_cka": 0.9998129345912127,
+      "original_accuracy": 0.23466666666666666,
+      "shuffled_accuracy": 0.23333333333333334,
+      "residual_accuracy": 0.17666666666666667,
+      "rgb_plus_residual_accuracy": 0.24133333333333334
+    },
+    "joint_matched": {
+      "rgb_r2": 0.7813805746751801,
+      "permuted_rgb_r2": -0.0037631783257559004,
+      "effective_rank": 3.007381515659276,
+      "residual_effective_rank": 3.5586059198101427,
+      "layout_cka": 0.9998075879446514,
+      "original_accuracy": 0.22333333333333333,
+      "shuffled_accuracy": 0.222,
+      "residual_accuracy": 0.176,
+      "rgb_plus_residual_accuracy": 0.23866666666666667
+    },
+    "joint_extended": {
+      "rgb_r2": 0.7819353361683262,
+      "permuted_rgb_r2": -0.0031744094670615266,
+      "effective_rank": 3.405371337965924,
+      "residual_effective_rank": 3.9947966794192196,
+      "layout_cka": 0.9997135675131902,
+      "original_accuracy": 0.236,
+      "shuffled_accuracy": 0.234,
+      "residual_accuracy": 0.188,
+      "rgb_plus_residual_accuracy": 0.24733333333333332
+    },
+    "random": {
+      "rgb_r2": 0.8104565460081925,
+      "permuted_rgb_r2": 0.007223104402459509,
+      "effective_rank": 3.1983916877095413,
+      "residual_effective_rank": 5.9552760467172785,
+      "layout_cka": 0.9999446871808234,
+      "original_accuracy": 0.244,
+      "shuffled_accuracy": 0.24666666666666667,
+      "residual_accuracy": 0.17333333333333334,
+      "rgb_plus_residual_accuracy": 0.246
+    }
+  },
+  "encoder_training_overlap": {
+    "29/separate": 27,
+    "31/separate": 20,
+    "37/separate": 29,
+    "29/joint_matched": 27,
+    "31/joint_matched": 20,
+    "37/joint_matched": 29,
+    "29/joint_extended": 41,
+    "31/joint_extended": 35,
+    "37/joint_extended": 46
+  },
+  "verification": {
+    "first_run": {
+      "fitting_rows_indexed": 500,
+      "validation_rows_indexed": 0,
+      "test_rows_indexed": 0,
+      "training_updates": 0,
+      "encoder_forward_passes_on_replay": null,
+      "prior_artifacts_unchanged": true,
+      "replay": false,
+      "report_sha256": "9e387eba0cc08c64ee54db36491be2e53b9766f5b778fef5cd7aa63a253b3ef9"
+    },
+    "replay": {
+      "fitting_rows_indexed": 0,
+      "validation_rows_indexed": 0,
+      "test_rows_indexed": 0,
+      "training_updates": 0,
+      "encoder_forward_passes_on_replay": 0,
+      "prior_artifacts_unchanged": true,
+      "replay": true,
+      "report_sha256": "9e387eba0cc08c64ee54db36491be2e53b9766f5b778fef5cd7aa63a253b3ef9"
+    }
+  }
+}

@@ -2,6 +2,13 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 19 color and layout audit** — Global RGB statistics predicted about
+78% of the longer joint encoder’s feature variation on the original fitting
+panel. RGB plus its residual features scored 24.73%, close to 24.60% with
+matching random residuals. A color-preserving patch shuffle barely changed
+scores. All diagnostics replay from an ignored feature cache, and no new
+validation rows were used. [Audit and limits](experiments/MULTIBLOCK-AUDIT-2026-11-19.md).
+
 **November 18 longer grouping comparison** — At 960 updates, joint prediction
 averaged 27.11% on 300 reserved validation images across three seeds. Separate
 prediction at 658 updates averaged 25.22%, and RGB statistics averaged 27.33%.

@@ -54,6 +54,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Compare joint and separate prediction across three seeds with identical masks, initialization and image order.
 - [x] Time joint and separate training in both run orders and estimate a longer training budget.
 - [x] Run longer matched trajectories and a frozen comparison on unused validation rows.
+- [x] Diagnose color association and patch layout sensitivity on the original fitting panel.
 
 ## Next session
 
@@ -104,9 +105,13 @@ averages 25.00%. The longer run uses 3–4% more loop time and 10–20% more
 trainer wall time. The same frozen heads and scores replay.
 For future reservations, use `runs/multiblock-budget-20261118/observed-exposure.json`.
 It retains 3,546 observed rows and 1,454 unused. Preserve earlier source
-files. Keep the result frozen and the official test reserved. A next study
-can use training-only diagnostics to check what the longer encoders retain
-beyond color statistics before spending another validation sample.
+files. Keep the result frozen and the official test reserved. The
+[November 19 fitting-panel audit](experiments/MULTIBLOCK-AUDIT-2026-11-19.md)
+finds RGB reconstruction R² of .782 for joint at 960 updates. RGB plus its
+residual features scores 24.73%, close to the 24.60% matching random control.
+Patch shuffling barely changes the mean-pooled scores. These findings leave
+the validation difference unexplained. A spatially sensitive readout or
+position control can be studied on training rows before any further reservation.
 
 The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
 complete: three new fixed-position runs and three historical learned-position

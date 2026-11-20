@@ -1,5 +1,24 @@
 # Development log
 
+## November 19, 2026
+
+- Reopened 12 verified frozen sources from the November 18 study, including
+  random initialization controls. Added color-preserving patch permutations,
+  immutable feature caching, geometry, RGB reconstruction, fold-local residual
+  classifiers and original-to-shuffled probe transfer.
+- Global RGB statistics explain 78.2% of longer-joint feature variation.
+  RGB plus learned residuals scores 24.73% on fixed fitting folds, versus
+  24.60% with random residuals and 20.80% with RGB alone. A patch shuffle
+  changes the longer-joint accuracy by −0.20 percentage points.
+- The 39 focused tests, protocol preflight, model and mask smoke checks, and
+  aggregate audits passed. Cache replay reproduced the exact report with
+  no images indexed or encoder calls. Original scoring and exposure artifacts
+  kept their hashes. The audit used only the prior 500 fitting images.
+- Interview explanation — “I separated color association from layout sensitivity
+  and kept the folding and random controls matched. The trained residuals added
+  predictive signal, but the random baseline added almost as much.”
+  [Results and replay](experiments/MULTIBLOCK-AUDIT-2026-11-19.md)
+
 ## November 18, 2026
 
 - Added a measured budget schedule, bounded checkpoint chunks with timing
