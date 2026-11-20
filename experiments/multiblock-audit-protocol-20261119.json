@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "budget_results_sha256": "7b270c19f4a2fe02b659ac427dd94f7918f8e130e46a2cbc59385e713f04f8ab",
+  "fitting_rows": 500,
+  "experiment_sources": {
+    "multiblock_patch_control.py": "54a303dc7a9bff5939b6bd5d3394c3494f2206be408795cd1f206ccdfde73fc5",
+    "multiblock_audit_sources.py": "872ad95513cfb0bf317ca2da39a25b1a6dd3e4030f0cbad9004b4a711e28c7d4",
+    "multiblock_audit_panel.py": "374f3a76a749d024bc9a1e41bc56864374ca57daa925f374b4877008638234e0",
+    "multiblock_audit_geometry.py": "19a492ae9df6f62634427c4ba9b21fd37f7663c7d13f43092c4144ab7291a22d",
+    "multiblock_audit_color.py": "5d935650627356da4f5f757344cbee46c1aa75272f52777292449db9f91269aa",
+    "multiblock_audit_layout.py": "979c169d1475bcf6442d947ff14d2dd19955f0138cb5baef2eb9bed328276917",
+    "run_multiblock_audit_20261119.py": "437b97aed0dcf091cac9e14cbbd12d3ffc60d70ea2e5445ff40b632748808569"
+  },
+  "audit": {
+    "folds": 5,
+    "fold_seed": 29,
+    "shuffle_seed": 41,
+    "batch_size": 16,
+    "reconstruction_alpha": 0.01,
+    "classifier_alpha": 0.1
+  }
+}
