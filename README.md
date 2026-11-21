@@ -2,6 +2,12 @@
 
 A small, reproducible representation-learning experiment: predict target embeddings from visible context, then test whether custom embeddings help a downstream task.
 
+**November 20 spatial readout audit** — The longer joint encoder improved
+from 23.60% to 25.13% when its context tokens were pooled into four ordered
+quadrants. Random encoder quadrants reached 25.20% and regional RGB reached
+27.20% on the same fitting folds. Fixed-head shuffle tests and cache replay
+are available. [Results and reproduction](experiments/MULTIBLOCK-SPATIAL-2026-11-20.md).
+
 **November 19 color and layout audit** — Global RGB statistics predicted about
 78% of the longer joint encoder’s feature variation on the original fitting
 panel. RGB plus its residual features scored 24.73%, close to 24.60% with

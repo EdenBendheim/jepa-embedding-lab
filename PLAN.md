@@ -55,6 +55,7 @@ Started September 29, 2026; model implementation completed its first working syn
 - [x] Time joint and separate training in both run orders and estimate a longer training budget.
 - [x] Run longer matched trajectories and a frozen comparison on unused validation rows.
 - [x] Diagnose color association and patch layout sensitivity on the original fitting panel.
+- [x] Compare position-sensitive quadrant readouts with matched random and regional RGB controls.
 
 ## Next session
 
@@ -110,8 +111,14 @@ files. Keep the result frozen and the official test reserved. The
 finds RGB reconstruction R² of .782 for joint at 960 updates. RGB plus its
 residual features scores 24.73%, close to the 24.60% matching random control.
 Patch shuffling barely changes the mean-pooled scores. These findings leave
-the validation difference unexplained. A spatially sensitive readout or
-position control can be studied on training rows before any further reservation.
+the validation difference unexplained. The
+[November 20 spatial readout audit](experiments/MULTIBLOCK-SPATIAL-2026-11-20.md)
+finds that joint quadrant features improve fixed-fold accuracy from 23.60% to
+25.13%, close to matching random at 25.20%. Regional RGB leads at 27.20%.
+Shuffling either patches or feature-cell order lowers quadrant scores.
+This fitting-panel result does not warrant another validation reservation
+for pooling alone. A future position-aware training contrast can retain
+regional RGB and random controls.
 
 The [October 18 position comparison](experiments/POSITION-2026-10-18.md) is
 complete: three new fixed-position runs and three historical learned-position

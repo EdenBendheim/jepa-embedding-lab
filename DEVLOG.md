@@ -1,5 +1,23 @@
 # Development log
 
+## November 20, 2026
+
+- Added global and ordered quadrant readouts with matched random and regional
+  RGB features, fixed-fold ridge heads and two layout controls. The same
+  head scores each original and perturbed view.
+- The longer joint encoder improves from 23.60% to 25.13% with quadrant
+  pooling. Matching random quadrants reach 25.20% and regional RGB reaches
+  27.20%. Both shuffles reduce the longer joint quadrant score by more than
+  two points. The results concern the original fitting images.
+- All 44 focused tests, protocol preflight, mask and model smoke checks and
+  aggregate checks passed. All prior global counts reproduce. Cache replay
+  matches the report with image access and encoder calls disabled. Previous
+  evidence and the validation exposure ledger retain their hashes.
+- Interview explanation — “I compared two readouts of the same frozen tokens
+  and used shuffled layout and color controls to see where the gains came
+  from. Regional color features still scored highest.”
+  [Results and replay](experiments/MULTIBLOCK-SPATIAL-2026-11-20.md)
+
 ## November 19, 2026
 
 - Reopened 12 verified frozen sources from the November 18 study, including
