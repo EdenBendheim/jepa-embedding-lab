@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "prior_audit_sha256": "1a6f9577427ae0ac43ed30c60c8adf9fac6c07c505df3b542db425b1540eb3a8",
+  "fitting_rows": 500,
+  "experiment_sources": {
+    "multiblock_spatial_readout.py": "50e0cd7650382c522fccf92311d22869e7ab9c650d3d8ad9345df7855424b17c",
+    "multiblock_spatial_panel.py": "6140e04738a8ee1839f3f033525d3e0560fd759cf301e23f31e7d5257f6146c1",
+    "multiblock_spatial_scoring.py": "15f8c22ff39409b7d9a67b8c9b251c978ba329cb44087e3b6e1b18838417b4da",
+    "multiblock_spatial_comparison.py": "535fbf9b063078e008988ebf6d57d35af941f3660b2ccd2fb01ab92ce19bde41",
+    "run_multiblock_spatial_20261120.py": "9173cb10b3a48fb87a874ced4afe16764b13cd4765817ff662aa750f59756b63"
+  },
+  "settings": {
+    "folds": 5,
+    "fold_seed": 29,
+    "batch_size": 16,
+    "patch_seed": 41,
+    "quadrant_seed": 43,
+    "alpha": 0.1
+  }
+}
