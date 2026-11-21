@@ -25,3 +25,19 @@ class SpatialReadoutTests(unittest.TestCase):
             self.assertTrue(torch.equal(views[view]['mean'], image_embeddings(model, batch)))
             cells = views[view]['quadrants'].reshape(3, 4, 16)
             self.assertTrue(torch.allclose(cells.mean(1), views[view]['mean'], atol=1e-6))
+
+    def test_regional_rgb_retains_fixed_order_and_global_control(self):
+        from experiments.multiblock_spatial_readout import rgb_views
+
+        image = torch.zeros(1, 3, 32, 32, dtype=torch.uint8)
+        image[:, 0, :16, :16] = 255
+        image[:, 1, :16, 16:] = 255
+        image[:, 2, 16:, :16] = 255
+        rgb = rgb_views(image, (7,), patch_seed=41)
+        original = rgb['original']
+        expected = torch.tensor([[1., 0., 0.], [0., 1., 0.], [0., 0., 1.], [0., 0., 0.]])
+        cells = original['quadrants'].reshape(4, 6)
+        self.assertTrue(torch.equal(expected, cells[:, :3]))
+        self.assertEqual(0, torch.count_nonzero(cells[:, 3:]))
+        self.assertTrue(torch.equal(original['mean'], rgb['patch_shuffle']['mean']))
+        self.assertFalse(torch.equal(original['quadrants'], rgb['patch_shuffle']['quadrants']))
